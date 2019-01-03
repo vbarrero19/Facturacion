@@ -71,7 +71,7 @@ public class Homepage extends MultiActionController{
 //        session.setAttribute("schoolCode", BambooConfig.schoolCode);
 ////        User user = new User();
 ////        LoginVerification login = new LoginVerification();
-       ModelAndView mv = new ModelAndView("customerView");
+       ModelAndView mv = new ModelAndView("clientesView");
 ////        String message = "Username or Password incorrect";
 ////
 ////        try {

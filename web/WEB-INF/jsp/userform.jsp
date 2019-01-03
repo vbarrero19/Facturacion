@@ -26,7 +26,7 @@
                             <img class="img-responsive center-block" src="recursos/img/iconos/logoBamboo_Inicio.svg" alt="logo"/>
                         </div>
                         <div class="panel-body" >
-                            <form name ="form1" action="userform.htm?opcion=login" method="post" >
+                            <form name ="form1" action="userform.htm?opcion=login" method="post" >                            
                                 <div
                                     <c:if test="${message != null}">
                                     <h5 style="color:blue">

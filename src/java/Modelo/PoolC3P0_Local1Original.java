@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Connection;
 
-public class PoolC3P0_Local {
+public class PoolC3P0_Local1Original {
     // Notara que el pool es un miembro *estatico* esto es para evitar duplicidad
 
-    private static PoolC3P0_Local datasource;
+    private static PoolC3P0_Local1Original datasource;
     // Esta es la fuente de datos que conecta con la base de datos
     private final ComboPooledDataSource cpds;
 
@@ -35,7 +35,7 @@ public class PoolC3P0_Local {
                      "eduweb","Madrid2016",
                     "org.postgresql.Driver");
      */
-    private PoolC3P0_Local() throws IOException, SQLException, PropertyVetoException {
+    private PoolC3P0_Local1Original() throws IOException, SQLException, PropertyVetoException {
         // Configuramos la conexion a base de datos
         // Creamos la fuente de datos
         cpds = new ComboPooledDataSource();
@@ -48,13 +48,13 @@ public class PoolC3P0_Local {
         // Contraseña de la base de datos
        //cpds.setPassword("Madrid2016");
 
-        cpds.setDriverClass("org.postgresql.Driver");
+        cpds.setDriverClass("");
            // La url de la base de datos a la que nos conectaremos
-        cpds.setJdbcUrl("jdbc:postgresql://dbase02.eduwebgroup.com/pgAdmin");
+        cpds.setJdbcUrl("");
            // Usuario de esa base de datos
-        cpds.setUser("postgres");
+        cpds.setUser("");
            // Contraseña de la base de datos
-        cpds.setPassword("postgres");
+        cpds.setPassword("");
 
         
         /* 
@@ -116,10 +116,10 @@ public class PoolC3P0_Local {
      * @throws SQLException
      * @throws PropertyVetoException
      */
-    public static synchronized PoolC3P0_Local getInstance() throws IOException, SQLException, PropertyVetoException {
+    public static synchronized PoolC3P0_Local1Original getInstance() throws IOException, SQLException, PropertyVetoException {
 
         if (datasource == null) {
-            datasource = new PoolC3P0_Local();
+            datasource = new PoolC3P0_Local1Original();
             return datasource;
         } else {
             return datasource;
