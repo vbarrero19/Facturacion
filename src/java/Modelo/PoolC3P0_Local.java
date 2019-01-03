@@ -35,9 +35,10 @@ public class PoolC3P0_Local {
                      "eduweb","Madrid2016",
                     "org.postgresql.Driver");
      */
-    private PoolC3P0_Local() throws IOException, SQLException, PropertyVetoException {
+    private PoolC3P0_Local() throws IOException, SQLException, PropertyVetoException, Exception {
         // Configuramos la conexion a base de datos
         // Creamos la fuente de datos
+        
         cpds = new ComboPooledDataSource();
         // Que driver de base de datos usaremos
         //cpds.setDriverClass("org.postgresql.Driver");
@@ -116,7 +117,7 @@ public class PoolC3P0_Local {
      * @throws SQLException
      * @throws PropertyVetoException
      */
-    public static synchronized PoolC3P0_Local getInstance() throws IOException, SQLException, PropertyVetoException {
+    public static synchronized PoolC3P0_Local getInstance() throws IOException, SQLException, PropertyVetoException, Exception {
 
         if (datasource == null) {
             datasource = new PoolC3P0_Local();
