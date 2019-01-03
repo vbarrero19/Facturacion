@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class Clientes  { 
     private String id_cliente;
     private String direccion;
-    private String col3;
-    private String col4;
+    private String telefono;
+    private String mail;
     private String col5;
     private String col6; 
      
@@ -35,20 +35,20 @@ public class Clientes  {
         this.direccion = col2;
     }
 
-    public String getCol3() {
-        return col3;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setCol3(String col3) {
-        this.col3 = col3;
+    public void setTelefono(String col3) {
+        this.telefono = col3;
     }
 
-    public String getCol4() {
-        return col4;
+    public String getMail() {
+        return mail;
     }
 
-    public void setCol4(String col4) {
-        this.col4 = col4;
+    public void setMail(String col4) {
+        this.mail = col4;
     }
 
     public String getCol5() {

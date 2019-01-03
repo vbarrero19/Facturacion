@@ -29,9 +29,9 @@
                 var myObj = {};
                 myObj["id_cliente"] = $("#id_cliente").val().trim();
                 myObj["direccion"] = $("#direccion").val().trim();
-                /*myObj["col3"] = $("#mobile").val().trim();
-                myObj["col4"] = $("#subject").val().trim();
-                myObj["col5"] = $("#message").val().trim();*/
+                myObj["telefono"] = $("#telefono").val().trim();
+                myObj["mail"] = $("#mail").val().trim();
+                /*myObj["col5"] = $("#message").val().trim();*/
  
                 /*  var myObj = {
                  "col1": "$scope.usuario.dni", 
@@ -66,12 +66,18 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario de contacto</h3>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador" required>
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
                             <!--
                             <div class="form-group">
