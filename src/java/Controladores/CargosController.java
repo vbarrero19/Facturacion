@@ -30,21 +30,21 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CargosController {
     
-    @RequestMapping("/clientesController/start.htm")
+    @RequestMapping("/cargosController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
-        ModelAndView mv = new ModelAndView("clientesView");
+        ModelAndView mv = new ModelAndView("cargosView");
        
         return mv;
     }  
     
-    @RequestMapping("/clientesController/addResources.htm")
+    @RequestMapping("/cargosController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         
         return null;
     }
     
-    @RequestMapping("/clientesController/newCustomer.htm")  
+    @RequestMapping("/cargosController/newCustomer.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody Clientes cliente, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Clientes resourceLoad = new Clientes();

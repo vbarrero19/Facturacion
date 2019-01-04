@@ -13,7 +13,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>CLIENTES VIEW</title> 
+        <title>CARGOS VIEW</title> 
     </head>
     <script>
         $(document).ready(function () {
