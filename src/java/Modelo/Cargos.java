@@ -23,7 +23,7 @@ public class Cargos  {
     private Date fecha_vencimiento; 
     
     
-    
+        
     /*
     
      
