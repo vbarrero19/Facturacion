@@ -17,65 +17,11 @@ public class Cargos  {
     private String id_items;
     private String id_factura;
     private String id_cliente;
-    private String cantidad;
+    private Double cantidad;
     private String impuesto; 
     private Date fecha_cargo; 
     private Date fecha_vencimiento; 
     
-    
-        
-    /*
-    
-     
-    public String getId_cliente() {
-        return id_cliente;
-    }
-
-    public void setId_cliente(String col1) {
-        this.id_cliente = col1;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String col2) {
-        this.direccion = col2;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String col3) {
-        this.telefono = col3;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String col4) {
-        this.mail = col4;
-    }
-
-    public String getCol5() {
-        return col5;
-    }
-
-    public void setCol5(String col5) {
-        this.col5 = col5;
-    }
-
-    public String getCol6() {
-        return col6;
-    }
-
-    public void setCol6(String col6) {
-        this.col6 = col6;
-    }
-
-          */
 
     public String getId_cargo() {
         return id_cargo;
@@ -109,11 +55,11 @@ public class Cargos  {
         this.id_cliente = id_cliente;
     }
 
-    public String getCantidad() {
+    public Double getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -139,7 +85,6 @@ public class Cargos  {
 
     public void setFecha_vencimiento(Date fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
-    }
-    
+    }    
     
 }

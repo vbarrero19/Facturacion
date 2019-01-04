@@ -40,7 +40,7 @@
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/clientesController/newCustomer.htm',
+                    url: '/Facturacion/cargosController/newCustomer.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -79,7 +79,6 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
-                            <!--
                             <div class="form-group">
                                 <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
                             </div>
@@ -90,7 +89,7 @@
                                 <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
                                 <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
                             </div>
-                            -->
+                            
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
                     </div>

@@ -46,8 +46,8 @@ public class CargosController {
     
     @RequestMapping("/cargosController/newCustomer.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Clientes cliente, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Clientes resourceLoad = new Clientes();
+    public String saveNewCustomer(@RequestBody Cargos cargo, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Cargos resourceLoad = new Cargos();
         
         Connection con = null;
         ResultSet rs = null;
@@ -59,12 +59,18 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente,direccion, telefono, mail) VALUES (?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,fecha_cargo,fecha_vencimiento)"
+                                        + "VALUES (?,?,?,?,?,?,?,?)");
             
-            stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));  
-            stAux.setString(2, cliente.getDireccion());  
-            stAux.setInt(3, Integer.parseInt(cliente.getTelefono()));
-            stAux.setString(4, cliente.getMail());
+            stAux.setInt(1, Integer.parseInt(cargo.getId_cargo()));  
+            stAux.setInt(2, Integer.parseInt(cargo.getId_items()));  
+            stAux.setInt(3, Integer.parseInt(cargo.getId_factura()));
+            stAux.setInt(4, Integer.parseInt(cargo.getId_cliente()));
+            stAux.setDouble(5, cargo.getCantidad());
+            stAux.setInt(6, Integer.parseInt(cargo.getImpuesto()));
+            stAux.setDate(7, new java.sql.Date(cargo.getFecha_cargo().getTime()));
+            stAux.setDate(8, new java.sql.Date(cargo.getFecha_vencimiento().getTime()));            
+            
             rs = stAux.executeQuery();
             
             /*Resource rRespuesta = new Resource();
@@ -75,7 +81,7 @@ public class CargosController {
                 rRespuesta.setCol3(""+rs.getInt("Edad"));
             } */
         } catch (SQLException ex) {
-             resp = "Alta correcta"; // ex.getMessage();
+            resp = "Alta correcta"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {
