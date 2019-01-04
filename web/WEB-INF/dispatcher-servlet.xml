@@ -42,6 +42,7 @@
  
    <bean class="Controladores.CustomerController" id="customerctrl"/>
    <bean class="Controladores.ClientesController" id="clientes"/>
+   <bean class="Controladores.MenuController" id="menu"/>
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -55,6 +56,7 @@
                 <prop key="userform.htm">homepage</prop>
                 <prop key="customerController.htm">customerctrl</prop>
                 <prop key="clientesController.htm">clientes</prop>
+                <prop key="menuController.htm">menu</prop>
             </props>
         </property>
     </bean>
