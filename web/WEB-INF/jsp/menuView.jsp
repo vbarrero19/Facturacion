@@ -39,7 +39,7 @@
                     <div class="col-xs-7" id="childrensNav">
                         <div class="row">
                             <div class="divName col-xs-3">
-                                <button type="button" class="btn btn-primary">Clientes</button>
+                                <a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>
                             </div> 
                             <div class="divName col-xs-3">
                                 <button type="button" class="btn btn-primary">Cargos</button>

@@ -32,7 +32,7 @@ public class ClientesController {
     
     @RequestMapping("/clientesController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
-        ModelAndView mv = new ModelAndView("customerView");
+        ModelAndView mv = new ModelAndView("clientesView");
        
         return mv;
     }  
