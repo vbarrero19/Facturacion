@@ -66,7 +66,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario de contacto</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador" required>
                             </div>                            
