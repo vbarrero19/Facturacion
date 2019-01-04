@@ -16,8 +16,8 @@ public class Items  {
     private String abreviatura;
     private String nombre;
     private String precio;
-    private String col5;
-    private String col6; 
+    private String id_impuesto;
+
      
     public String getId_items() {
         return id_items;
@@ -51,21 +51,11 @@ public class Items  {
         this.precio = col4;
     }
 
-    public String getCol5() {
-        return col5;
+    public String getId_impuesto() {
+        return id_impuesto;
     }
 
-    public void setCol5(String col5) {
-        this.col5 = col5;
-    }
-
-    public String getCol6() {
-        return col6;
-    }
-
-    public void setCol6(String col6) {
-        this.col6 = col6;
-    }
-
-          
+    public void setId_impuesto(String col5) {
+        this.id_impuesto = col5;
+    }         
 }

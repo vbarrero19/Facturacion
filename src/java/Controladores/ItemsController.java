@@ -30,23 +30,23 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ItemsController {
     
-    @RequestMapping("/ItemsController/start.htm")
+    @RequestMapping("/itemsController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("itemsView");
        
         return mv;
     }  
     
-    @RequestMapping("/ItemsController/addResources.htm")
+    @RequestMapping("/itemsController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         
         return null;
     }
     
-    @RequestMapping("/ItemsController/newCustomer.htm")  
+    @RequestMapping("/itemsController/newCustomer.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Items items, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String saveNewCustomer(@RequestBody Items item, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Items resourceLoad = new Items();
         
         Connection con = null;
@@ -59,13 +59,15 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO items (id_items,abreviatura, nombre, precio) VALUES (?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (id_items, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
             
-            stAux.setInt(1, Integer.parseInt(items.getId_items()));  
-            stAux.setString(2, items.getAbreviatura());  
-            stAux.setString(4, items.getNombre());            
-            stAux.setInt(3, Integer.parseInt(items.getPrecio()));
+            stAux.setInt(1, Integer.parseInt(item.getId_items()));  
+            stAux.setString(2, item.getAbreviatura());
+            stAux.setString(3, item.getNombre());  
+            stAux.setInt(4, Integer.parseInt(item.getPrecio()));
+            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));
             rs = stAux.executeQuery();
+            
             
             /*Resource rRespuesta = new Resource();
             

@@ -28,15 +28,12 @@
 
                 var myObj = {};
                 myObj["id_cliente"] = $("#id_cliente").val().trim();
+                myObj["id_ident"] = $("#id_ident").val().trim();
+                myObj["id_tipo"] = $("#id_tipo").val().trim();
                 myObj["direccion"] = $("#direccion").val().trim();
                 myObj["telefono"] = $("#telefono").val().trim();
                 myObj["mail"] = $("#mail").val().trim();
-                /*myObj["col5"] = $("#message").val().trim();*/
- 
-                /*  var myObj = {
-                 "col1": "$scope.usuario.dni", 
-                 "col2": "$scope.usuario.contrasenia"
-                 };*/
+                
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -66,10 +63,16 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario de contacto</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CLIENTES</h3>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador" required>
-                            </div>                            
+                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                            </div>         
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_ident" name="id_ident" placeholder="Identificador empresa(CIF)" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_tipo" name="id_tipo" placeholder="Tipo de empresa" required>
+                            </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
                             </div>
@@ -79,18 +82,8 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
-                            <!--
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
-                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
-                            </div>
-                            -->
+                            
+                             <a href="<c:url value='/menuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
                     </div>

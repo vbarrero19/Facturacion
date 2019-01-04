@@ -59,12 +59,13 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente,direccion, telefono, mail) VALUES (?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente,id_ident, direccion, telefono, mail) VALUES (?,?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));  
-            stAux.setString(2, cliente.getDireccion());  
-            stAux.setInt(3, Integer.parseInt(cliente.getTelefono()));
-            stAux.setString(4, cliente.getMail());
+            stAux.setInt(2, Integer.parseInt(cliente.getId_ident())); 
+            stAux.setString(3, cliente.getDireccion());  
+            stAux.setInt(4, Integer.parseInt(cliente.getTelefono()));
+            stAux.setString(5, cliente.getMail());
             rs = stAux.executeQuery();
             
             /*Resource rRespuesta = new Resource();
@@ -74,8 +75,10 @@ public class ClientesController {
                 rRespuesta.setCol2(rs.getString("Apellido"));
                 rRespuesta.setCol3(""+rs.getInt("Edad"));
             } */
+            resp = "Correcto";
+            
         } catch (SQLException ex) {
-             resp = "Alta correcta"; // ex.getMessage();
+             resp = "Incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {

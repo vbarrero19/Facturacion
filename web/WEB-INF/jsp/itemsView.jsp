@@ -31,7 +31,7 @@
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
                 myObj["precio"] = $("#precio").val().trim();
-                /*myObj["col5"] = $("#message").val().trim();*/
+                myObj["id_impuesto"] = $("#id_impuesto").val().trim();
  
                 /*  var myObj = {
                  "col1": "$scope.usuario.dni", 
@@ -66,7 +66,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Items</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ITEMS</h3>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_items" name="id_items" placeholder="Identificador" required>
                             </div>                            
@@ -78,6 +78,9 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Identificador impuesto" required>
                             </div>
                             <!--
                             <div class="form-group">
