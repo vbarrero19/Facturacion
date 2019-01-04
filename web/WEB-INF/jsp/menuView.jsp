@@ -3,75 +3,87 @@
     Created on : 04-ene-2019, 9:23:26
     Author     : Javier
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
+    <%@ include file="infouser.jsp" %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Menu principal</title>
+        <title>Menu principal</title><script>
+//    $(document).ready(function () {
+//        $('logoutmodal').hide();
+//    });
+            function logout() {
+                document.location.href = "<c:url value="/cerrarLogin.htm"/>";
+            }
+
+        </script>
+
     </head>
-    <body>
-        <h1>Facturación</h1>
-        <nav class="navbar navbar-default" role="navigation">
-  <!-- El logotipo y el icono que despliega el menú se agrupan
-       para mostrarlos mejor en los dispositivos móviles -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse"
-            data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Desplegar navegación</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">Logotipo</a>
-  </div>
 
-  <!-- Agrupar los enlaces de navegación, los formularios y cualquier
-       otro elemento que se pueda ocultar al minimizar la barra -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Enlace #1</a></li>
-      <li><a href="#">Enlace #2</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Menú #1 <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Acción #1</a></li>
-          <li><a href="#">Acción #2</a></li>
-          <li><a href="#">Acción #3</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Acción #4</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Acción #5</a></li>
-        </ul>
-      </li>
-    </ul>
+    <body> 
+        <style>
+            .navUsuario{
+                background-color: #020202;
+                color: white;
+            }
+        </style>
+        <header>
+            <div class="navUsuario" id="infousuario">   
 
-    <form class="navbar-form navbar-left" role="search">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Buscar">
-      </div>
-      <button type="submit" class="btn btn-default">Enviar</button>
-    </form>
+                <div class="row">
+                    <div class="col-xs-7" id="childrensNav">
+                        <div class="row">
+                            <div class="divName col-xs-3">
+                                <button type="button" class="btn btn-primary">Clientes</button>
+                            </div> 
+                            <div class="divName col-xs-3">
+                                <button type="button" class="btn btn-primary">Cargos</button>
+                            </div> 
+                            <div class="divName col-xs-3">
+                                <button type="button" class="btn btn-primary">Items</button>
+                            </div> 
+                            <div class="divName col-xs-3">
+                                <button type="button" class="btn btn-primary">Facturas</button>
+                            </div> 
+                        </div>
+                    </div>
 
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Enlace #3</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          Menú #2 <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Acción #1</a></li>
-          <li><a href="#">Acción #2</a></li>
-          <li><a href="#">Acción #3</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Acción #4</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+                    <div class="divName col-xs-3">
+                        <div class="row">
+
+                        </div>
+                    </div>
+                    <div class="logOut col-xs-2">
+                        <a onclick="$('#logoutmodal').modal('show');" role="button" aria-haspopup="true" aria-expanded="false"><img class="imgUser" src="<c:url value="/recursos/img/iconos/logoBamboo_IconLogout.svg"/>"></a>
+                    </div>
+                </div>
+            </div>    
+        </header>
+
+
+
+        <div id="logoutmodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header modal-header-delete">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Are you sure you want to logout?</h4>
+                    </div>
+                    <div class="modal-footer text-center">
+                        <button id="buttonDelete" type="button" class="btn btn-danger" data-dismiss="modal" onclick="logout()">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </body>
 </html>
