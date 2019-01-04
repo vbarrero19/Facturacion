@@ -68,26 +68,32 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador" required>
+                                <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
                             </div>                            
                             <div class="form-group">
-                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
+                                <input type="text" class="form-control" id="id_items" name="id_items" placeholder="Identificador items" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
+                                <input type="text" class="form-control" id="id_factura" name="id_factura" placeholder="Identificador factura" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
+                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
+                                <input type="text" class="form-control" id="mobile" name="cantidad" placeholder="Cantidad" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
+                                <input type="text" class="form-control" id="subject" name="impuesto" placeholder="Impuesto" required>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
+                                <textarea class="form-control" type="textarea" id="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>
                                 <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fecha_cargo" name="fecha_cargo" placeholder="Fecha cargo" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha vencimiento" required>
                             </div>
                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
