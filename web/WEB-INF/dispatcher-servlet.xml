@@ -43,7 +43,8 @@
    <bean class="Controladores.CustomerController" id="customerctrl"/>
    <bean class="Controladores.ClientesController" id="clientes"/>
    <bean class="Controladores.MenuController" id="menu"/>
-   <bean class="Controladores.CargosController" id="cargos"/>
+   <bean class="Controladores.CargosController" id="cargos"/> 
+   <bean class="Controladores.ItemsController" id="items"/>
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -58,7 +59,8 @@
                 <prop key="customerController.htm">customerctrl</prop>
                 <prop key="clientesController.htm">clientes</prop>
                 <prop key="menuController.htm">menu</prop>
-                <prop key="cargosController.htm">cargos</prop>
+                <prop key="cargosController.htm">cargos</prop>                
+                <prop key="itemsController.htm">items</prop>
             </props>
         </property>
     </bean>

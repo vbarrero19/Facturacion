@@ -45,7 +45,7 @@
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
                             </div> 
                             <div class="divName col-xs-3">
-                                <button type="button" class="btn btn-primary">Items</button>
+                                <a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Items</a>
                             </div> 
                             <div class="divName col-xs-3">
                                 <button type="button" class="btn btn-primary">Facturas</button>
