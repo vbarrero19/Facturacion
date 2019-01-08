@@ -9,11 +9,15 @@ import Modelo.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,17 +63,28 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo) VALUES (?,?,?,?,?,?,?)");
+            //stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo) VALUES (?,?,?,?,?,?,?,?)");
             
+            /**********/
+            //Calendar calendar = Calendar.getInstance();
+            //java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
+            /**********/
             stAux.setInt(1, Integer.parseInt(cargo.getId_cargo()));  
             stAux.setInt(2, Integer.parseInt(cargo.getId_items()));  
             stAux.setInt(3, Integer.parseInt(cargo.getId_factura()));
             stAux.setInt(4, Integer.parseInt(cargo.getId_cliente()));
             stAux.setDouble(5, cargo.getCantidad());
             stAux.setInt(6, Integer.parseInt(cargo.getImpuesto()));
-            stAux.setString(7, cargo.getImpuesto());
-            /*stAux.setTimestamp(7, new java.sql.Timestamp(cargo.getFecha_cargo().getTime()));
-            stAux.setTimestamp(8, new java.sql.Timestamp(cargo.getFecha_vencimiento().getTime()));   */         
+            stAux.setString(7, cargo.getCargo());
+            String test = cargo.getFecha_cargo();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+            Date parsedDate = dateFormat.parse(test);
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+//           stAux.setTimestamp(8, new java.sql.Timestamp(cargo.getFecha_cargo().getTime()));
+            
+            stAux.setTimestamp(8, timestamp);
+            //stAux.setTimestamp(9, new java.sql.Timestamp(cargo.getFecha_vencimiento().getTime())); 
             
             stAux.executeUpdate();
             
@@ -84,7 +99,7 @@ public class CargosController {
             resp = "Correcto";
             
         } catch (SQLException ex) {
-            resp = "Alta correcta"; // ex.getMessage();
+            resp = "incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {

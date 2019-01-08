@@ -20,7 +20,7 @@ public class Cargos  {
     private Double cantidad;
     private String impuesto; 
     private String cargo;
-    private Date fecha_cargo; 
+    private String fecha_cargo; 
     private Date fecha_vencimiento; 
     
 
@@ -80,11 +80,11 @@ public class Cargos  {
         this.cargo = cargo;
     }    
     
-    public Date getFecha_cargo() {
+    public String getFecha_cargo() {
         return fecha_cargo;
     }
 
-    public void setFecha_cargo(Date fecha_cargo) {
+    public void setFecha_cargo(String fecha_cargo) {
         this.fecha_cargo = fecha_cargo;
     }
 

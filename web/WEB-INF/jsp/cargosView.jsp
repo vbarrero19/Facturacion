@@ -34,7 +34,11 @@
                 myObj["cantidad"] = $("#cantidad").val().trim();
                 myObj["impuesto"] = $("#impuesto").val().trim();
                 myObj["cargo"] = $("#cargo").val().trim();
-                //myObj["fecha_cargo"] = $("#fecha_cargo").val().trim();
+                
+                //myObj["fecha_cargo"] = "01-02-02";
+                //myObj["fecha_vencimiento"] = "01-02-02";
+                
+                myObj["fecha_cargo"] = $("#fecha_cargo").val().trim();
                 //myObj["fecha_vencimiento"] = $("#fecha_vencimiento").val().trim();
  
               
