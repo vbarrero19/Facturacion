@@ -59,8 +59,7 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,fecha_cargo,fecha_vencimiento)"
-                                        + "VALUES (?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo) VALUES (?,?,?,?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(cargo.getId_cargo()));  
             stAux.setInt(2, Integer.parseInt(cargo.getId_items()));  
@@ -68,10 +67,11 @@ public class CargosController {
             stAux.setInt(4, Integer.parseInt(cargo.getId_cliente()));
             stAux.setDouble(5, cargo.getCantidad());
             stAux.setInt(6, Integer.parseInt(cargo.getImpuesto()));
-            stAux.setDate(7, new java.sql.Date(cargo.getFecha_cargo().getTime()));
-            stAux.setDate(8, new java.sql.Date(cargo.getFecha_vencimiento().getTime()));            
+            stAux.setString(7, cargo.getImpuesto());
+            /*stAux.setTimestamp(7, new java.sql.Timestamp(cargo.getFecha_cargo().getTime()));
+            stAux.setTimestamp(8, new java.sql.Timestamp(cargo.getFecha_vencimiento().getTime()));   */         
             
-            rs = stAux.executeQuery();
+            stAux.executeUpdate();
             
             /*Resource rRespuesta = new Resource();
             
@@ -80,6 +80,9 @@ public class CargosController {
                 rRespuesta.setCol2(rs.getString("Apellido"));
                 rRespuesta.setCol3(""+rs.getInt("Edad"));
             } */
+            
+            resp = "Correcto";
+            
         } catch (SQLException ex) {
             resp = "Alta correcta"; // ex.getMessage();
             StringWriter errors = new StringWriter();

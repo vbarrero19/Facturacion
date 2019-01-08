@@ -27,16 +27,17 @@
                 }
 
                 var myObj = {};
+                myObj["id_cargo"] = $("#id_cargo").val().trim();
+                myObj["id_items"] = $("#id_items").val().trim();
+                myObj["id_factura"] = $("#id_factura").val().trim();
                 myObj["id_cliente"] = $("#id_cliente").val().trim();
-                myObj["direccion"] = $("#direccion").val().trim();
-                myObj["telefono"] = $("#telefono").val().trim();
-                myObj["mail"] = $("#mail").val().trim();
-                /*myObj["col5"] = $("#message").val().trim();*/
+                myObj["cantidad"] = $("#cantidad").val().trim();
+                myObj["impuesto"] = $("#impuesto").val().trim();
+                myObj["cargo"] = $("#cargo").val().trim();
+                //myObj["fecha_cargo"] = $("#fecha_cargo").val().trim();
+                //myObj["fecha_vencimiento"] = $("#fecha_vencimiento").val().trim();
  
-                /*  var myObj = {
-                 "col1": "$scope.usuario.dni", 
-                 "col2": "$scope.usuario.contrasenia"
-                 };*/
+              
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -80,13 +81,13 @@
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="mobile" name="cantidad" placeholder="Cantidad" required>
+                                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="subject" name="impuesto" placeholder="Impuesto" required>
+                                <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control" type="textarea" id="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>
+                                <textarea class="form-control" type="textarea" id="cargo" name="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>
                                 <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
                             </div>
                             <div class="form-group">

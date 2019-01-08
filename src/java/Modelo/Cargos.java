@@ -19,6 +19,7 @@ public class Cargos  {
     private String id_cliente;
     private Double cantidad;
     private String impuesto; 
+    private String cargo;
     private Date fecha_cargo; 
     private Date fecha_vencimiento; 
     
@@ -71,6 +72,14 @@ public class Cargos  {
         this.impuesto = impuesto;
     }
 
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }    
+    
     public Date getFecha_cargo() {
         return fecha_cargo;
     }
