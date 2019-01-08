@@ -67,7 +67,7 @@ public class ClientesController {
             stAux.setString(4, cliente.getDireccion());  
             stAux.setInt(5, Integer.parseInt(cliente.getTelefono()));
             stAux.setString(6, cliente.getMail());
-            rs = stAux.executeQuery();
+            stAux.executeUpdate();
             
             /*Resource rRespuesta = new Resource();
             

@@ -59,15 +59,14 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO items (id_items, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
             
-            stAux.setInt(1, Integer.parseInt(item.getId_items()));  
-            stAux.setString(2, item.getAbreviatura());
-            stAux.setString(3, item.getNombre());  
-            stAux.setInt(4, Integer.parseInt(item.getPrecio()));
-            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));
-            rs = stAux.executeQuery();
-            
+            stAux.setInt(1, Integer.parseInt(item.getId_item()));  
+            stAux.setString(2, item.getAbreviatura()); 
+            stAux.setString(3, item.getNombre()); 
+            stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
+            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));            
+            stAux.executeUpdate();
             
             /*Resource rRespuesta = new Resource();
             
@@ -76,8 +75,10 @@ public class ItemsController {
                 rRespuesta.setCol2(rs.getString("Apellido"));
                 rRespuesta.setCol3(""+rs.getInt("Edad"));
             } */
+            resp = "Correcto";
+            
         } catch (SQLException ex) {
-             resp = "Alta correcta"; // ex.getMessage();
+             resp = "Incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {

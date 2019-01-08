@@ -13,7 +13,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>CLIENTES VIEW</title> 
+        <title>ITEMS VIEW</title> 
     </head>
     <script>
         $(document).ready(function () {
@@ -27,25 +27,22 @@
                 }
 
                 var myObj = {};
-                myObj["id_items"] = $("#id_items").val().trim();
+
+                myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
                 myObj["precio"] = $("#precio").val().trim();
                 myObj["id_impuesto"] = $("#id_impuesto").val().trim();
- 
-                /*  var myObj = {
-                 "col1": "$scope.usuario.dni", 
-                 "col2": "$scope.usuario.contrasenia"
-                 };*/
+          
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/ItemsController/newCustomer.htm',
+                    url: '/Facturacion/itemsController/newCustomer.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
                     success: function (data) {
-                       alert(data); 
+                        alert(data);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -68,7 +65,7 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ITEMS</h3>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="id_items" name="id_items" placeholder="Identificador" required>
+                                <input type="text" class="form-control" id="id_item" name="id_item" placeholder="Identificador" required>
                             </div>                            
                             <div class="form-group">
                                 <input type="text" class="form-control" id="abreviatura" name="abreviatura" placeholder="Abreviatura" required>

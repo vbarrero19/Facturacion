@@ -12,19 +12,18 @@ import java.io.Serializable;
  * @author nmohamed
  */
 public class Items  { 
-    private String id_items;
+    private String id_item;
     private String abreviatura;
     private String nombre;
     private String precio;
     private String id_impuesto;
-
-     
-    public String getId_items() {
-        return id_items;
+ 
+    public String getId_item() {
+        return id_item;
     }
 
-    public void setId_items(String col1) {
-        this.id_items = col1;
+    public void setId_item(String col1) {
+        this.id_item = col1;
     }
 
     public String getAbreviatura() {
