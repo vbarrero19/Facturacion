@@ -59,13 +59,14 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente,id_ident, direccion, telefono, mail) VALUES (?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente,id_ident,id_tipo, direccion, telefono, mail) VALUES (?,?,?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));  
             stAux.setInt(2, Integer.parseInt(cliente.getId_ident())); 
-            stAux.setString(3, cliente.getDireccion());  
-            stAux.setInt(4, Integer.parseInt(cliente.getTelefono()));
-            stAux.setString(5, cliente.getMail());
+            stAux.setInt(3, Integer.parseInt(cliente.getId_tipo())); 
+            stAux.setString(4, cliente.getDireccion());  
+            stAux.setInt(5, Integer.parseInt(cliente.getTelefono()));
+            stAux.setString(6, cliente.getMail());
             rs = stAux.executeQuery();
             
             /*Resource rRespuesta = new Resource();

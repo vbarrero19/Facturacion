@@ -83,7 +83,7 @@
                                 <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
                             
-                             <a href="<c:url value='/menuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
                     </div>
