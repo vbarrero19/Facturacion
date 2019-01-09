@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controladores;
 
 import Modelo.*;
@@ -32,8 +28,9 @@ public class ItemsController {
     
     @RequestMapping("/itemsController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
-        ModelAndView mv = new ModelAndView("itemsView");
-       
+        ModelAndView mv = new ModelAndView("itemsView"); 
+            
+                    
         return mv;
     }  
     
@@ -57,7 +54,7 @@ public class ItemsController {
         //ModelAndView mv = new ModelAndView("lessonresources");
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();
+            con = pool_local.getConnection();                                 
             
             stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
             
@@ -66,15 +63,8 @@ public class ItemsController {
             stAux.setString(3, item.getNombre()); 
             stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
             stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));            
-            stAux.executeUpdate();
+            stAux.executeUpdate();            
             
-            /*Resource rRespuesta = new Resource();
-            
-            while (rs.next()) {
-                rRespuesta.setCol1(rs.getString("Nombre"));
-                rRespuesta.setCol2(rs.getString("Apellido"));
-                rRespuesta.setCol3(""+rs.getInt("Edad"));
-            } */
             resp = "Correcto";
             
         } catch (SQLException ex) {

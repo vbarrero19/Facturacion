@@ -49,8 +49,6 @@
                         console.log(xhr.responseText);
                         console.log(thrownError);
                     }
-
-
                 });
             })
         });
@@ -80,7 +78,7 @@
                                 <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Identificador impuesto" required>
                             </div>  
                             <div class="form-group">
-                                <select class="form-control">
+                                <select class="form-control" id="impuesto" name="impuesto">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
