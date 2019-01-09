@@ -38,16 +38,19 @@
                 <div class="row">
                     <div class="col-xs-7" id="childrensNav">
                         <div class="row">
-                            <div class="divName col-xs-3">
+                            <div class="divName col-xs-2">
                                 <a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>
                             </div> 
-                            <div class="divName col-xs-3">
+                            <div class="divName col-xs-2">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
                             </div> 
-                            <div class="divName col-xs-3">
+                            <div class="divName col-xs-2">
                                 <a href="<c:url value='/itemsController/start.htm'/>" class="btn btn-info" role="button">Items</a>
-                            </div> 
-                            <div class="divName col-xs-3">
+                            </div>
+                            <div class="divName col-xs-2">
+                                <a href="<c:url value='/tipoImpuestoController/start.htm'/>" class="btn btn-info" role="button">Tipo Impuesto</a>
+                            </div>
+                            <div class="divName col-xs-4">
                                 <button type="button" class="btn btn-primary">Facturas</button>
                             </div> 
                         </div>
