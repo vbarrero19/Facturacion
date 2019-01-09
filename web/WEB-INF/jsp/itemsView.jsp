@@ -78,19 +78,8 @@
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Identificador impuesto" required>
-                            </div>
-                            <!--
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" required>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
-                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
-                            </div>
-                            -->
+                            </div>                            
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
                     </div>
