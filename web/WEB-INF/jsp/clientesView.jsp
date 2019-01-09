@@ -13,7 +13,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>CLIENTES VIEW</title> 
+        <title>CLIENTES</title> 
     </head>
     <script>
         $(document).ready(function () {
@@ -28,12 +28,14 @@
 
                 var myObj = {};
                 myObj["id_cliente"] = $("#id_cliente").val().trim();
+                myObj["nombreEmpresa"] = $("#nombreEmpresa").val().trim();
+                myObj["nombrePersona"] = $("#nombrePersona").val().trim();
                 myObj["id_ident"] = $("#id_ident").val().trim();
                 myObj["id_tipo"] = $("#id_tipo").val().trim();
                 myObj["direccion"] = $("#direccion").val().trim();
                 myObj["telefono"] = $("#telefono").val().trim();
                 myObj["mail"] = $("#mail").val().trim();
-                
+
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -42,15 +44,13 @@
                     datatype: "json",
                     contentType: "application/json",
                     success: function (data) {
-                       alert(data); 
+                        alert(data);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
                         console.log(xhr.responseText);
                         console.log(thrownError);
                     }
-
-
                 });
             })
         });
@@ -66,13 +66,59 @@
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CLIENTES</h3>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
-                            </div>         
+                            </div> 
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre empresa" required>
+                            </div>
+                            <!--FALTA CREAR TODO EN JAVA Y JSP -->
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>
+                                        Mr
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="opciones" id="opciones_2" value="opcion_2">
+                                        Mrs
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- *********** -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="nombrePersona" name="nombrePersona" placeholder="Nombre persona" required>
+                            </div>
+                            
+                            <!--FALTA CREAR TODO EN JAVA Y JSP -->
+                            <div class="form-group">
+                                <select class="form-control" id="tipo_ident">
+                                    <option></option>
+                                    <option>CIF</option>
+                                    <option>NIT</option>
+                                    <option>IDENT3</option>
+                                </select>
+                            </div>
+                            
+                            <!-- *********** -->
+                            
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_ident" name="id_ident" placeholder="Identificador empresa(CIF)" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <input type="text" class="form-control" id="id_tipo" name="id_tipo" placeholder="Tipo de empresa" required>
                             </div>
+                            -->
+                            
+                            <!--FALTA CREAR TODO EN JAVA Y JSP, tenemos que sutituirlo en id_tipo y quitar la forma de caja a combo -->
+                            <div class="form-group">
+                                <select class="form-control" id="id_tipo_empresa">
+                                    <option></option>
+                                    <option>Cliente</option>
+                                    <option>Proveedor</option>
+                                    <option>Nosotros</option>
+                                </select>
+                            </div>
+                            
+                            <!-- *********** -->
                             <div class="form-group">
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
                             </div>
@@ -82,8 +128,8 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
-                            
-                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
                     </div>

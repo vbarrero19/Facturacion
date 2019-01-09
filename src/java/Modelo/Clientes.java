@@ -14,6 +14,8 @@ import java.io.Serializable;
 public class Clientes {
 
     private String id_cliente;
+    private String nombreEmpresa;
+    private String nombrePersona;
     private String id_ident;
     private String id_tipo;
     private String direccion;
@@ -27,6 +29,23 @@ public class Clientes {
     public void setId_cliente(String col1) {
         this.id_cliente = col1;
     }
+
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
+    }   
+
+    public String getNombrePersona() {
+        return nombrePersona;
+    }
+
+    public void setNombrePersona(String nombrePersona) {
+        this.nombrePersona = nombrePersona;
+    }  
+        
 
     public String getId_ident() {
         return id_ident;

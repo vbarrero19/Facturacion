@@ -59,14 +59,16 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente,id_ident,id_tipo, direccion, telefono, mail) VALUES (?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa,nombre_persona, id_ident,id_tipo, direccion, telefono, mail) VALUES (?,?,?,?,?,?,?,?)");
             
-            stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));  
-            stAux.setInt(2, Integer.parseInt(cliente.getId_ident())); 
-            stAux.setInt(3, Integer.parseInt(cliente.getId_tipo())); 
-            stAux.setString(4, cliente.getDireccion());  
-            stAux.setInt(5, Integer.parseInt(cliente.getTelefono()));
-            stAux.setString(6, cliente.getMail());
+            stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
+            stAux.setString(2, cliente.getNombreEmpresa());
+            stAux.setString(3, cliente.getNombrePersona());
+            stAux.setInt(4, Integer.parseInt(cliente.getId_ident())); 
+            stAux.setInt(5, Integer.parseInt(cliente.getId_tipo())); 
+            stAux.setString(6, cliente.getDireccion());  
+            stAux.setInt(7, Integer.parseInt(cliente.getTelefono()));
+            stAux.setString(8, cliente.getMail());
             stAux.executeUpdate();
             
             /*Resource rRespuesta = new Resource();
@@ -76,7 +78,7 @@ public class ClientesController {
                 rRespuesta.setCol2(rs.getString("Apellido"));
                 rRespuesta.setCol3(""+rs.getInt("Edad"));
             } */
-            resp = "Correcto";
+         
             
         } catch (SQLException ex) {
              resp = "Incorrecto"; // ex.getMessage();
