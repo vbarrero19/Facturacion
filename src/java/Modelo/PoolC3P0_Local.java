@@ -77,16 +77,16 @@ public class PoolC3P0_Local {
         */
         cpds.setAcquireIncrement(1);
         cpds.setCheckoutTimeout(3000);
-         cpds.setIdleConnectionTestPeriod(5);
-          cpds.setMaxIdleTime(3);
-          cpds.setMaxIdleTimeExcessConnections(1);
-          cpds.setMaxPoolSize(20);  cpds.setMaxStatements(20000);  cpds.setMaxStatementsPerConnection(1000);
+        cpds.setIdleConnectionTestPeriod(5);
+        cpds.setMaxIdleTime(3);
+        cpds.setMaxIdleTimeExcessConnections(1);
+        cpds.setMaxPoolSize(20);  cpds.setMaxStatements(20000);  cpds.setMaxStatementsPerConnection(1000);
         cpds.setMinPoolSize(1);
         cpds.setNumHelperThreads(1000);
-          cpds.setPropertyCycle(3);
-          cpds.setStatementCacheNumDeferredCloseThreads(1);
-          cpds.setTestConnectionOnCheckin(true);
-          cpds.setUnreturnedConnectionTimeout(7);
+        cpds.setPropertyCycle(3);
+        cpds.setStatementCacheNumDeferredCloseThreads(1);
+        cpds.setTestConnectionOnCheckin(true);
+        cpds.setUnreturnedConnectionTimeout(7);
           /*
         // Configuramos el pool
         // Numero de conexiones con las que iniciara el pool
