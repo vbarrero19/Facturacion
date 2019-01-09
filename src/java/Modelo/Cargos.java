@@ -21,7 +21,7 @@ public class Cargos  {
     private String impuesto; 
     private String cargo;
     private String fecha_cargo; 
-    private Date fecha_vencimiento; 
+    private String fecha_vencimiento; 
     
 
     public String getId_cargo() {
@@ -88,11 +88,11 @@ public class Cargos  {
         this.fecha_cargo = fecha_cargo;
     }
 
-    public Date getFecha_vencimiento() {
+    public String getFecha_vencimiento() {
         return fecha_vencimiento;
     }
 
-    public void setFecha_vencimiento(Date fecha_vencimiento) {
+    public void setFecha_vencimiento(String fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
     }    
     

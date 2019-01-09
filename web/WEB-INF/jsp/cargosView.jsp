@@ -30,6 +30,14 @@
                         //defaultDate: '08:32:33',
                         //                });
             });
+            $('#fecha_vencimiento').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false//Important! See issue #1075
+                        //defaultDate: '08:32:33',
+                        //                });
+            });
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -47,15 +55,10 @@
                 myObj["cantidad"] = $("#cantidad").val().trim();
                 myObj["impuesto"] = $("#impuesto").val().trim();
                 myObj["cargo"] = $("#cargo").val().trim();
-
-                //myObj["fecha_cargo"] = "01-02-02";
-                //myObj["fecha_vencimiento"] = "01-02-02";
-
-
-
+                
                 //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
                 myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
-                //myObj["fecha_vencimiento"] = $("#fecha_vencimiento").val().trim();
+                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
 
 
                 var json = JSON.stringify(myObj);
@@ -117,7 +120,7 @@
                                     <div class='col-xs-12 col-md-4'>
                                         <div class="form-group">
                                             <div class='input-group date' id='fecha_cargo'>
-                                                <input type='text' class="form-control" />
+                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -133,7 +136,7 @@
                             </div>
                             <!-- ************************************* -->
                             
-                            <!--
+                           
                             <div class="container">
                                 <div class="row">
                                     <div class='col-xs-12 col-md-4'>
@@ -153,17 +156,17 @@
                                     </script>
                                 </div>
                             </div>
-                            -->
+                           
                             <!--
                             <div class="form-group">
                                 <input type="text" class="form-control" id="fecha_cargo" name="fecha_cargo" placeholder="Fecha cargo" required>
-                            </div>                            
-                            -->
+                            </div>          
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha vencimiento" required>
                             </div>
-
+                            -->
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
                     </div>

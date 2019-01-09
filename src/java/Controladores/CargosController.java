@@ -63,9 +63,8 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            //stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
-            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo) VALUES (?,?,?,?,?,?,?,?)");
             
+            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
             /**********/
             //Calendar calendar = Calendar.getInstance();
             //java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
@@ -76,20 +75,25 @@ public class CargosController {
             stAux.setInt(4, Integer.parseInt(cargo.getId_cliente()));
             stAux.setDouble(5, cargo.getCantidad());
             stAux.setInt(6, Integer.parseInt(cargo.getImpuesto()));
-            stAux.setString(7, cargo.getCargo());
+            stAux.setString(7, cargo.getCargo());            
+            
             String test = cargo.getFecha_cargo();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");            
             Date parsedDate = dateFormat.parse(test);
             Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-//           stAux.setTimestamp(8, new java.sql.Timestamp(cargo.getFecha_cargo().getTime()));
+                       
+            stAux.setTimestamp(8, timestamp);            
             
-            stAux.setTimestamp(8, timestamp);
-            //stAux.setTimestamp(9, new java.sql.Timestamp(cargo.getFecha_vencimiento().getTime())); 
-            
+            String test2 = cargo.getFecha_vencimiento();
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");            
+            Date parsedDate2 = dateFormat2.parse(test2);
+            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+                       
+            stAux.setTimestamp(9, timestamp2);
+                        
             stAux.executeUpdate();
             
-            /*Resource rRespuesta = new Resource();
-            
+            /*Resource rRespuesta = new Resource();            
             while (rs.next()) {
                 rRespuesta.setCol1(rs.getString("Nombre"));
                 rRespuesta.setCol2(rs.getString("Apellido"));
@@ -99,7 +103,7 @@ public class CargosController {
             resp = "Correcto";
             
         } catch (SQLException ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto SQLException"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {
