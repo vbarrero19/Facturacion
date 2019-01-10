@@ -119,14 +119,20 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required>
                             </div>
-<!--                        <div class="form-group">
-                                <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Identificador impuesto" required>
-                            </div>  -->
+
                             <div class="form-group">
                                 <select class="form-control" id="impuesto" name="impuesto">
-
                                 </select>
                             </div>
+                            
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>Puntual</label>
+                                    <label><input type="radio" name="opciones" id="opciones_2" value="opcion_2">Periodico</label>
+                                </div>
+                            </div>
+
+
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
