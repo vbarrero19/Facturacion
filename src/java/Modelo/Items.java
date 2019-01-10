@@ -17,6 +17,7 @@ public class Items  {
     private String nombre;
     private String precio;
     private String id_impuesto;
+    private int periodo;
  
     public String getId_item() {
         return id_item;
@@ -57,4 +58,13 @@ public class Items  {
     public void setId_impuesto(String col5) {
         this.id_impuesto = col5;
     }         
+
+    public int getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(int periodo) {
+        this.periodo = periodo;
+    }    
+    
 }

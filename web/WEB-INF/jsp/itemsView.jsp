@@ -32,10 +32,12 @@
                 myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
-                myObj["precio"] = $("#precio").val().trim();             
+                myObj["precio"] = $("#precio").val().trim();  
+                //Cogemos el valor del Combo y lo guardamos en id_impuesto.
+                myObj["id_impuesto"] = $("#impuesto").val();
+                //Cogemos valor radiobuttons
                 
-                
-                myObj["id_impuesto"] = $("#impuesto").val();// .val().trim();
+                myObj["opciones"] = $("#opciones").val();
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -127,8 +129,8 @@
                             
                             <div class="form-group">
                                 <div class="radio">
-                                    <label><input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>Puntual</label>
-                                    <label><input type="radio" name="opciones" id="opciones_2" value="opcion_2">Periodico</label>
+                                    <label><input type="radio" name="opciones" id="opciones_1" value="1" checked>Puntual</label>
+                                    <label><input type="radio" name="opciones" id="opciones_2" value="2">Periodico</label>
                                 </div>
                             </div>
 
