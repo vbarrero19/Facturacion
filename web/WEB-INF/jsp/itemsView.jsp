@@ -32,10 +32,11 @@
                 myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
-                myObj["precio"] = $("#precio").val().trim();  
+                myObj["precio"] = $("#precio").val().trim();
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
                 myObj["id_impuesto"] = $("#impuesto").val();
                 //Cogemos valor radiobuttons
+                
                 
                 myObj["opciones"] = $("#opciones").val();
 
@@ -58,7 +59,9 @@
             })
 
         });
-
+        
+       
+        
         function getImpuesto() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -74,18 +77,18 @@
                 success: function (data) {
                     //alert(data);
                     var aux = JSON.parse(data);
-                    
+
                     select = document.getElementById('impuesto');
 
                     aux.forEach(function (valor, indice) {
-                        var aux2 = JSON.parse(valor);                                            
+                        var aux2 = JSON.parse(valor);
 
                         var opt = document.createElement('option');
                         opt.value = aux2.id_impuesto;
                         opt.innerHTML = aux2.impuesto;
-                        select.appendChild(opt);    
+                        select.appendChild(opt);
                     });
-                    
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -93,10 +96,6 @@
                     console.log(thrownError);
                 }
             });
-
-
-
-
         }
 
 
@@ -126,7 +125,7 @@
                                 <select class="form-control" id="impuesto" name="impuesto">
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <div class="radio">
                                     <label><input type="radio" name="opciones" id="opciones_1" value="1" checked>Puntual</label>

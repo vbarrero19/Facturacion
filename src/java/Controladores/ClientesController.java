@@ -6,6 +6,7 @@
 package Controladores;
 
 import Modelo.*;
+import com.google.gson.Gson;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -71,14 +72,7 @@ public class ClientesController {
             stAux.setString(8, cliente.getMail());
             stAux.executeUpdate();
             
-            /*Resource rRespuesta = new Resource();
-            
-            while (rs.next()) {
-                rRespuesta.setCol1(rs.getString("Nombre"));
-                rRespuesta.setCol2(rs.getString("Apellido"));
-                rRespuesta.setCol3(""+rs.getInt("Edad"));
-            } */
-         
+           
             
         } catch (SQLException ex) {
              resp = "Incorrecto"; // ex.getMessage();
@@ -109,5 +103,69 @@ public class ClientesController {
             }
         }
         return resp;
+    }
+    
+    
+    @RequestMapping("/itemsController/getTipoEmpresa.htm")  
+    @ResponseBody
+    public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Items resourceLoad = new Items();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "incorrecto";
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();   
+        
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT ID_TIPO, DESC_TIPO FROM TIPO_EMPRESA");
+           
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
+            }
+            
+          
+            resp = new Gson().toJson(arrayTipo);
+            
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+        
+   
+        
+        
     }
 }
