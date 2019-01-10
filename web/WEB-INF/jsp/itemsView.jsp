@@ -17,6 +17,7 @@
     </head>
     <script>
         $(document).ready(function () {
+            getImpuesto();
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -51,8 +52,33 @@
                     }
                 });
             })
+            
         });
-        ;
+        
+        function getImpuesto(){
+            if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }                
+                
+                $.ajax({
+                    type: 'GET',
+                    url: '/Facturacion/itemsController/getImpuesto.htm',                    
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+        }
+    
+        
     </script>
     <body>
         <div class="container">

@@ -54,7 +54,7 @@ public class ItemsController {
         //ModelAndView mv = new ModelAndView("lessonresources");
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();                                 
+            con = pool_local.getConnection();          
             
             stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
             
@@ -64,6 +64,63 @@ public class ItemsController {
             stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
             stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));            
             stAux.executeUpdate();            
+            
+            resp = "Correcto";
+            
+        } catch (SQLException ex) {
+             resp = "Incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
+    
+    @RequestMapping("/itemsController/getImpuesto.htm")  
+    @ResponseBody
+    public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Items resourceLoad = new Items();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+       
+        //ModelAndView mv = new ModelAndView("lessonresources");
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            /*stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
+            
+            stAux.setInt(1, Integer.parseInt(item.getId_item()));  
+            stAux.setString(2, item.getAbreviatura()); 
+            stAux.setString(3, item.getNombre()); 
+            stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
+            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));            
+            stAux.executeUpdate();  */          
             
             resp = "Correcto";
             
