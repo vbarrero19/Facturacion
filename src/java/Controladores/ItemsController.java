@@ -2,6 +2,7 @@
 package Controladores;
 
 import Modelo.*;
+import com.google.gson.Gson;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -106,26 +107,33 @@ public class ItemsController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
-       
+        String resp = "incorrecto";
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();   
+        
+        
         //ModelAndView mv = new ModelAndView("lessonresources");
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
-            /*stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT ID_IMPUESTO, IMPUESTO FROM TIPO_IMPUESTO");
+           
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
+            }
             
-            stAux.setInt(1, Integer.parseInt(item.getId_item()));  
-            stAux.setString(2, item.getAbreviatura()); 
-            stAux.setString(3, item.getNombre()); 
-            stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
-            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));            
-            stAux.executeUpdate();  */          
             
-            resp = "Correcto";
+            //Gson gson = new Gson();
+            //String StringTipoImpuesto = gson.toJson(TipoImpuesto);
+            
+            resp = new Gson().toJson(arrayTipo);
+            
+            
             
         } catch (SQLException ex) {
-             resp = "Incorrecto"; // ex.getMessage();
+             resp = "incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {
@@ -153,5 +161,9 @@ public class ItemsController {
             }
         }
         return resp;
+        
+   
+        
+        
     }
 }

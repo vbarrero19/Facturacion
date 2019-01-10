@@ -1,0 +1,14 @@
+public class Test {
+	public static void main(String[] args) { //Pasamos un objeto a JSON y viceversa		
+		//Creamos un objeto GSON que sirve para poder usar los métodos de la librería GSON		
+		Gson gson = new Gson();		
+		Bombilla b1 = new Bombilla(30, "E27", "entrada");
+		System.out.println(b1);		
+		//Pasamos el objeto bombilla a JSON 
+		String bombillaB1EnJSON = gson.toJson(b1);
+		System.out.println(bombillaB1EnJSON);		
+		//Pasamos de JSON a codigo normal
+		Bombilla b2 = gson.fromJson(bombillaB1EnJSON, Bombilla.class);
+		System.out.println(b2);		
+	}	
+}

@@ -32,9 +32,11 @@
                 myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
-                myObj["precio"] = $("#precio").val().trim();
-                myObj["id_impuesto"] = $("#id_impuesto").val().trim();
-          
+                myObj["precio"] = $("#precio").val().trim();             
+                
+                
+                myObj["id_impuesto"] = $("#impuesto").val();// .val().trim();
+
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -52,33 +54,50 @@
                     }
                 });
             })
-            
+
         });
-        
-        function getImpuesto(){
+
+        function getImpuesto() {
             if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }                
-                
-                $.ajax({
-                    type: 'GET',
-                    url: '/Facturacion/itemsController/getImpuesto.htm',                    
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                type: 'GET',
+                url: '/Facturacion/itemsController/getImpuesto.htm',
+                success: function (data) {
+                    //alert(data);
+                    var aux = JSON.parse(data);
+                    
+                    select = document.getElementById('impuesto');
+
+                    aux.forEach(function (valor, indice) {
+                        var aux2 = JSON.parse(valor);                                            
+
+                        var opt = document.createElement('option');
+                        opt.value = aux2.id_impuesto;
+                        opt.innerHTML = aux2.impuesto;
+                        select.appendChild(opt);    
+                    });
+                    
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+
+
+
         }
-    
-        
+
+
     </script>
     <body>
         <div class="container">
@@ -100,16 +119,12 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required>
                             </div>
-                            <div class="form-group">
+<!--                        <div class="form-group">
                                 <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Identificador impuesto" required>
-                            </div>  
+                            </div>  -->
                             <div class="form-group">
                                 <select class="form-control" id="impuesto" name="impuesto">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+
                                 </select>
                             </div>
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
