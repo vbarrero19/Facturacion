@@ -105,7 +105,7 @@ public class ClientesController {
         return resp;
     }
     
-    
+    /*
     @RequestMapping("/itemsController/getTipoEmpresa.htm")  
     @ResponseBody
     public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -163,9 +163,8 @@ public class ClientesController {
             }
         }
         return resp;
-        
-   
-        
+     
         
     }
+*/
 }

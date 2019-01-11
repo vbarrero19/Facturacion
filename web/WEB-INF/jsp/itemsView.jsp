@@ -28,19 +28,18 @@
                 }
 
                 var myObj = {};
-
                 myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
                 myObj["precio"] = $("#precio").val().trim();
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
                 myObj["id_impuesto"] = $("#impuesto").val();
-                //Cogemos valor radiobuttons
+ 
+                myObj["periodo"] = $(".form-check input:checked").val();
+                //alert($(".form-check input:checked").val());
+                //$(".form-check input:checked").next().text().trim()
+                var json = JSON.stringify(myObj); 
                 
-                
-                myObj["opciones"] = $("#opciones").val();
-
-                var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
                     url: '/Facturacion/itemsController/newCustomer.htm',
@@ -59,9 +58,6 @@
             })
 
         });
-        
-       
-        
         function getImpuesto() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -77,18 +73,14 @@
                 success: function (data) {
                     //alert(data);
                     var aux = JSON.parse(data);
-
                     select = document.getElementById('impuesto');
-
                     aux.forEach(function (valor, indice) {
                         var aux2 = JSON.parse(valor);
-
                         var opt = document.createElement('option');
                         opt.value = aux2.id_impuesto;
                         opt.innerHTML = aux2.impuesto;
                         select.appendChild(opt);
                     });
-
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -127,9 +119,13 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="radio">
-                                    <label><input type="radio" name="opciones" id="opciones_1" value="1" checked>Puntual</label>
-                                    <label><input type="radio" name="opciones" id="opciones_2" value="2">Periodico</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="periodico" checked>
+                                    <label class="form-check-label" for="1">Periodico</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="puntual">
+                                    <label class="form-check-label" for="2">Puntual</label>
                                 </div>
                             </div>
 

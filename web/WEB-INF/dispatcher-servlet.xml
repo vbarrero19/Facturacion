@@ -44,7 +44,7 @@
    <bean class="Controladores.ClientesController" id="clientes"/>
    <bean class="Controladores.MenuController" id="menu"/>
    <bean class="Controladores.CargosController" id="cargos"/> 
-   <bean class="Controladores.ItemsController" id="items"/>
+   <bean class="Controladores.ItemsController" id="items"/>   
    <bean class="Controladores.TipoImpuestoController" id="tipoImpuesto"/>
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
@@ -62,7 +62,8 @@
                 <prop key="menuController.htm">menu</prop>
                 <prop key="cargosController.htm">cargos</prop>                
                 <prop key="itemsController.htm">items</prop>
-                <prop key="itemsController.htm">tipoImpuesto</prop>
+                <prop key="tipoImpuestoController.htm">tipoImpuesto</prop>
+                <!--<prop key="tipoImpuestoController.htm">tipoImpuesto</prop>-->
             </props>
         </property>
     </bean>

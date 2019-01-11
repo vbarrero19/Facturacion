@@ -57,13 +57,15 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
-            stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto) VALUES (?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto, periodo) VALUES (?,?,?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(item.getId_item()));  
             stAux.setString(2, item.getAbreviatura()); 
             stAux.setString(3, item.getNombre()); 
             stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
-            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));            
+            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));   
+            stAux.setString(6, item.getPeriodo());    
+            
             stAux.executeUpdate();            
             
             resp = "Correcto";
