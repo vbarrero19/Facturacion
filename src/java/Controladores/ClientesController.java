@@ -105,11 +105,11 @@ public class ClientesController {
         return resp;
     }
     
-    /*
+    
     @RequestMapping("/itemsController/getTipoEmpresa.htm")  
     @ResponseBody
     public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Items resourceLoad = new Items();
+        Clientes resourceLoad = new Clientes();
         
         Connection con = null;
         ResultSet rs = null;
@@ -166,5 +166,5 @@ public class ClientesController {
      
         
     }
-*/
+
 }

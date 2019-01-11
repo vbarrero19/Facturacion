@@ -3,14 +3,14 @@ package Modelo;
 
 
 public class TipoImpuesto {
+    
+    private int id_impuesto;
+    private String impuesto;
 
     public TipoImpuesto(int id_impuesto, String impuesto) {
         this.id_impuesto = id_impuesto;
         this.impuesto = impuesto;
-    } 
-    
-    private int id_impuesto;
-    private String impuesto;
+    }
 
     public int getId_impuesto() {
         return id_impuesto;
@@ -26,6 +26,9 @@ public class TipoImpuesto {
 
     public void setImpuesto(String impuesto) {
         this.impuesto = impuesto;
-    }    
+    }
+    
+    
+
     
 }

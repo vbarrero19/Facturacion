@@ -123,7 +123,7 @@ public class ItemsController {
             rs = sentencia.executeQuery("SELECT ID_IMPUESTO, IMPUESTO FROM TIPO_IMPUESTO");
            
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
+                arrayTipo.add(new Gson().toJson(new TipoEmpresa(rs.getInt(1),rs.getString(2)))); 
             }
             
             

@@ -47,7 +47,7 @@ public class TipoImpuestoController {
     @RequestMapping("/tipoImpuestoController/newCustomer.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody TipoImpuesto tipoImp, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Items resourceLoad = new Items();
+        //TipoImpuesto resourceLoad = new TipoImpuesto();
         
         Connection con = null;
         ResultSet rs = null;

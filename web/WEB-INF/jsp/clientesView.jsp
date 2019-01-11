@@ -77,7 +77,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/Facturacion/itemsController/getTipoEmpresa.htm',
+                url: '/Facturacion/clientesController/getTipoEmpresa.htm',
                 success: function (data) {
                     //alert(data);
                     var aux = JSON.parse(data);
