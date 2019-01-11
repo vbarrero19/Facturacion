@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- *
- * @author David
- */
+
 @Controller
 public class ClientesController {
     
@@ -60,12 +57,13 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa,nombre_persona, id_ident,id_tipo, direccion, telefono, mail) VALUES (?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, id_persona, nombre_persona,id_tipo ,direccion ,telefono, mail) VALUES (?,?,?,?,?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
             stAux.setString(2, cliente.getNombreEmpresa());
-            stAux.setString(3, cliente.getNombrePersona());
-            stAux.setInt(4, Integer.parseInt(cliente.getId_ident())); 
+            stAux.setString(3, cliente.getId_persona()); 
+            stAux.setString(4, cliente.getNombrePersona());
+            //stAux.setInt(4, Integer.parseInt(cliente.getId_ident())); 
             stAux.setInt(5, Integer.parseInt(cliente.getId_tipo())); 
             stAux.setString(6, cliente.getDireccion());  
             stAux.setInt(7, Integer.parseInt(cliente.getTelefono()));
@@ -127,9 +125,8 @@ public class ClientesController {
             rs = sentencia.executeQuery("SELECT ID_TIPO, DESC_TIPO FROM TIPO_EMPRESA");
            
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
-            }
-            
+                arrayTipo.add(new Gson().toJson(new TipoEmpresa(rs.getInt(1),rs.getString(2)))); 
+            }            
           
             resp = new Gson().toJson(arrayTipo);
             

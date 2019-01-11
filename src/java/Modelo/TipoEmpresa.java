@@ -9,7 +9,7 @@ public class TipoEmpresa {
         this.id_ident = id_ident;
         this.desc_tipo = desc_tipo;
     }
- 
+
     public int getId_ident() {
         return id_ident;
     }
@@ -18,14 +18,11 @@ public class TipoEmpresa {
         this.id_ident = id_ident;
     }
 
-    public String getDescr_tipo() {
+    public String getDesc_tipo() {
         return desc_tipo;
     }
 
-    public void setDescr_tipo(String desc_tipo) {
+    public void setDesc_tipo(String desc_tipo) {
         this.desc_tipo = desc_tipo;
     }
-
-    
-    
 }

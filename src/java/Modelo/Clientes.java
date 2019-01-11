@@ -15,6 +15,7 @@ public class Clientes {
 
     private String id_cliente;
     private String nombreEmpresa;
+    private String id_persona;
     private String nombrePersona;
     private String id_ident;
     private String id_tipo;
@@ -38,6 +39,14 @@ public class Clientes {
         this.nombreEmpresa = nombreEmpresa;
     }   
 
+    public String getId_persona() {
+        return id_persona;
+    }
+
+    public void setId_persona(String id_persona) {
+        this.id_persona = id_persona;
+    }
+    
     public String getNombrePersona() {
         return nombrePersona;
     }

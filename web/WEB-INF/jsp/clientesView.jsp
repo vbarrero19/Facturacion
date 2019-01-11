@@ -13,7 +13,7 @@
     <script>
         $(document).ready(function () {
             getTipoEmpresa();
-            
+
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -29,16 +29,16 @@
                 //nombre de la empresa
                 myObj["nombreEmpresa"] = $("#nombreEmpresa").val().trim();
                 //identificador persona(mr/mrs)
-                ////////*****//////
-                
+                myObj["id_persona"] = $(".form-check input:checked").val();
+
                 //nombre persona de contacto
                 myObj["nombrePersona"] = $("#nombrePersona").val().trim();
                 //identificador empresa (cif, nit...)
-                myObj["id_ident"] = $("#id_ident").val();
+                //myObj["id_ident"] = $("#id_ident").val();
                 //Numero identificador de la empresa
-                
+
                 //tipo de empresa (cliente, proveedor, nosotros)
-                myObj["id_tipo"] = $("#desc_tipo").val().trim();
+                //myObj["id_tipo"] = "2";
                 //Direccion de la empresa
                 myObj["direccion"] = $("#direccion").val().trim();
                 //telefono de la empresa
@@ -64,9 +64,9 @@
                 });
             })
         });
-        
-        
-         function getTipoEmpresa() {
+
+
+        function getTipoEmpresa() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -76,35 +76,31 @@
             }
 
             $.ajax({
-                type: 'GET',
-                url: '/Facturacion/clientesController/getTipoEmpresa.htm',
-                success: function (data) {
-                    //alert(data);
-                    var aux = JSON.parse(data);
+            type: 'GET',
+                    url: '/Facturacion/clientesController/getTipoEmpresa.htm',
+                    success: function (data) {
+                        var aux = JSON.parse(data);
 
-                    select = document.getElementById('desc_tipo');
+                        select = document.getElementById('desc_tipo');
 
-                    aux.forEach(function (valor, indice) {
-                        var aux2 = JSON.parse(valor);
-                        alert(aux2);
-                        var opt = document.createElement('option');
-                        opt.value = aux2.id_tipo;
-                        opt.innerHTML = aux2.desc_tipo;
-                        select.appendChild(opt);
-                        
-                        
-                    });
-
-                }
+                        aux.forEach(function (valor, indice) {
+                            var aux2 = JSON.parse(valor);
+                            alert(aux2);
+                            var opt = document.createElement('option');
+                            opt.value = aux2.id_tipo;
+                            opt.innerHTML = aux2.desc_tipo;
+                            select.appendChild(opt);
+                        });
+                        }
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
+                console.log(xhr.status);
+                console.log(xhr.responseText);
+                console.log(thrownError);
                 }
             });
         }
-        
-        
+
+
 
     </script>
     <body>
@@ -120,26 +116,25 @@
                             </div> 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre empresa" required>
-                            </div>
-                            <!--FALTA CREAR TODO EN JAVA Y JSP -->
+                            </div>                            
+
+
                             <div class="form-group">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="opciones" id="opciones_1" value="opcion_1" checked>
-                                        Mr
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="opciones" id="opciones_2" value="opcion_2">
-                                        Mrs
-                                    </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="mr" checked>
+                                    <label class="form-check-label" for="1">Mr</label>
                                 </div>
-                            </div>
-                            
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="mrs">
+                                    <label class="form-check-label" for="2">Mrs</label>
+                                </div>
+                            </div>               
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="nombrePersona" name="nombrePersona" placeholder="Nombre persona" required>
                             </div>
-                            
-                            <!--FALTA CREAR TODO EN JAVA Y JSP -->
+
+                            <!--FALTA CREAR TODO EN JAVA Y JSP 
                             <div class="form-group">
                                 <select class="form-control" id="tipo_ident">
                                     <option></option>
@@ -148,19 +143,21 @@
                                     <option>IDENT3</option>
                                 </select>
                             </div>
+
                             
-                            <!-- *********** -->
-                            
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_ident" name="id_ident" placeholder="Identificador empresa(CIF)" required>
                             </div>
                             
-                            <!--FALTA RECOGER LOS DATOS AL CREAR EL OBJETO DESDE EL STRING  -->
+                          
+
+                            <!--FALTA RECOGER LOS DATOS AL CREAR EL OBJETO DESDE EL STRING  
                             <div class="form-group">
                                 <select class="form-control" id="id_tipo" name="id_tipo">
                                 </select>
                             </div>
-                            
+                             -->
                             <!-- *********** -->
                             <div class="form-group">
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
