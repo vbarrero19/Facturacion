@@ -14,85 +14,43 @@ import java.io.Serializable;
 public class Clientes {
 
     private String id_cliente;
-    private String nombreEmpresa;
-    private String id_persona;
-    private String nombrePersona;
-    private String id_ident;
-    private String id_tipo;
-    private String direccion;
-    private String telefono;
-    private String mail;
-
+    private String nombre_empresa;
+    private String tratamiento;
+    private String nombre_persona;
+    
+    
     public String getId_cliente() {
         return id_cliente;
     }
-
     public void setId_cliente(String col1) {
         this.id_cliente = col1;
     }
 
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
+    public String getNombre_empresa() {
+        return nombre_empresa;
     }
 
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }   
-
-    public String getId_persona() {
-        return id_persona;
+    public void setNombre_empresa(String nombre_empresa) {
+        this.nombre_empresa = nombre_empresa;
     }
 
-    public void setId_persona(String id_persona) {
-        this.id_persona = id_persona;
+    public String getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(String tratamiento) {
+        this.tratamiento = tratamiento;
+    }
+
+    public String getNombre_persona() {
+        return nombre_persona;
+    }
+
+    public void setNombre_persona(String nombre_persona) {
+        this.nombre_persona = nombre_persona;
     }
     
-    public String getNombrePersona() {
-        return nombrePersona;
-    }
-
-    public void setNombrePersona(String nombrePersona) {
-        this.nombrePersona = nombrePersona;
-    }  
-        
-
-    public String getId_ident() {
-        return id_ident;
-    }
-
-    public void setId_ident(String col2) {
-        this.id_ident = col2;
-    }
     
-     public String getId_tipo() {
-        return id_tipo;
-    }
-
-    public void setId_tipo(String col3) {
-        this.id_tipo = col3;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String col4) {
-        this.direccion = col4;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String col5) {
-        this.telefono = col5;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String col6) {
-        this.mail = col6;
-    }
+    
+  
 }

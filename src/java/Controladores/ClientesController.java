@@ -57,17 +57,13 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, id_persona, nombre_persona,id_tipo ,direccion ,telefono, mail) VALUES (?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento,nombre_persona) VALUES (?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
-            stAux.setString(2, cliente.getNombreEmpresa());
-            stAux.setString(3, cliente.getId_persona()); 
-            stAux.setString(4, cliente.getNombrePersona());
-            //stAux.setInt(4, Integer.parseInt(cliente.getId_ident())); 
-            stAux.setInt(5, Integer.parseInt(cliente.getId_tipo())); 
-            stAux.setString(6, cliente.getDireccion());  
-            stAux.setInt(7, Integer.parseInt(cliente.getTelefono()));
-            stAux.setString(8, cliente.getMail());
+            stAux.setString(2, cliente.getNombre_empresa());
+            stAux.setString(3,cliente.getTratamiento());
+            stAux.setString(4, cliente.getNombre_persona());
+            
             stAux.executeUpdate();
             
            
@@ -103,65 +99,4 @@ public class ClientesController {
         return resp;
     }
     
-    
-    @RequestMapping("/itemsController/getTipoEmpresa.htm")  
-    @ResponseBody
-    public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Clientes resourceLoad = new Clientes();
-        
-        Connection con = null;
-        ResultSet rs = null;
-        PreparedStatement stAux = null;
-        String resp = "incorrecto";
-        
-        ArrayList<String> arrayTipo = new ArrayList<>();   
-        
-        
-        try {
-            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();          
-            
-            Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT ID_TIPO, DESC_TIPO FROM TIPO_EMPRESA");
-           
-            while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new TipoEmpresa(rs.getInt(1),rs.getString(2)))); 
-            }            
-          
-            resp = new Gson().toJson(arrayTipo);
-            
-            
-        } catch (SQLException ex) {
-             resp = "incorrecto"; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors)); 
-        }catch (Exception ex) {
-             resp = "incorrecto"; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors)); 
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (stAux != null) {
-                    stAux.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-            }
-        }
-        return resp;
-     
-        
-    }
-
 }

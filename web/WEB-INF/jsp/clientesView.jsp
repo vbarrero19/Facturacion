@@ -12,7 +12,7 @@
     </head>
     <script>
         $(document).ready(function () {
-            getTipoEmpresa();
+            // getTipoEmpresa();
 
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
@@ -24,27 +24,15 @@
                 }
 
                 var myObj = {};
-                //id cliente autoincrement
+                //id cliente 
                 myObj["id_cliente"] = $("#id_cliente").val().trim();
-                //nombre de la empresa
-                myObj["nombreEmpresa"] = $("#nombreEmpresa").val().trim();
-                //identificador persona(mr/mrs)
-                myObj["id_persona"] = $(".form-check input:checked").val();
+                //nombre empresa
+                myObj["nombre_empresa"] = $("#nombre_empresa").val().trim();
+                //tratamiento persona
+                myObj["tratamiento"] = $(".form-check input:checked").val();
+                //nombre de la persona  
+                myObj["nombre_persona"] = $("#nombre_persona").val().trim();
 
-                //nombre persona de contacto
-                myObj["nombrePersona"] = $("#nombrePersona").val().trim();
-                //identificador empresa (cif, nit...)
-                //myObj["id_ident"] = $("#id_ident").val();
-                //Numero identificador de la empresa
-
-                //tipo de empresa (cliente, proveedor, nosotros)
-                //myObj["id_tipo"] = "2";
-                //Direccion de la empresa
-                myObj["direccion"] = $("#direccion").val().trim();
-                //telefono de la empresa
-                myObj["telefono"] = $("#telefono").val().trim();
-                //mail de la empresa
-                myObj["mail"] = $("#mail").val().trim();
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -66,41 +54,6 @@
         });
 
 
-        function getTipoEmpresa() {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-            type: 'GET',
-                    url: '/Facturacion/clientesController/getTipoEmpresa.htm',
-                    success: function (data) {
-                        var aux = JSON.parse(data);
-
-                        select = document.getElementById('desc_tipo');
-
-                        aux.forEach(function (valor, indice) {
-                            var aux2 = JSON.parse(valor);
-                            alert(aux2);
-                            var opt = document.createElement('option');
-                            opt.value = aux2.id_tipo;
-                            opt.innerHTML = aux2.desc_tipo;
-                            select.appendChild(opt);
-                        });
-                        }
-                error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                console.log(thrownError);
-                }
-            });
-        }
-
-
 
     </script>
     <body>
@@ -114,51 +67,52 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div> 
+
                             <div class="form-group">
-                                <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa" placeholder="Nombre empresa" required>
+                                <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre empresa" required>
                             </div>                            
 
 
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="mr" checked>
+                                    <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
                                     <label class="form-check-label" for="1">Mr</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="mrs">
+                                    <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
                                     <label class="form-check-label" for="2">Mrs</label>
                                 </div>
-                            </div>               
+                            </div>   
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="nombrePersona" name="nombrePersona" placeholder="Nombre persona" required>
+                                <input type="text" class="form-control" id="nombre_persona" name="nombre_persona" placeholder="Nombre persona" required>
                             </div>
 
-                            <!--FALTA CREAR TODO EN JAVA Y JSP 
-                            <div class="form-group">
-                                <select class="form-control" id="tipo_ident">
-                                    <option></option>
-                                    <option>CIF</option>
-                                    <option>NIT</option>
-                                    <option>IDENT3</option>
-                                </select>
-                            </div>
-
-                            
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_ident" name="id_ident" placeholder="Identificador empresa(CIF)" required>
-                            </div>
-                            
-                          
-
+                            <!--    FALTA CREAR TODO EN JAVA Y JSP 
+                                <div class="form-group">
+                                    <select class="form-control" id="tipo_ident">
+                                        <option></option>
+                                        <option>CIF</option>
+                                        <option>NIT</option>
+                                        <option>IDENT3</option>
+                                    </select>
+                                </div>
+    
+                                
+    
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="id_ident" name="id_ident" placeholder="Identificador empresa(CIF)" required>
+                                </div>
+                                
+                              
+    
                             <!--FALTA RECOGER LOS DATOS AL CREAR EL OBJETO DESDE EL STRING  
                             <div class="form-group">
                                 <select class="form-control" id="id_tipo" name="id_tipo">
                                 </select>
                             </div>
-                             -->
-                            <!-- *********** -->
+                            
+                            <!-- *********** 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
                             </div>
@@ -168,7 +122,7 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
-
+                            -->
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
