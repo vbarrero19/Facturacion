@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TipoFiscalController {
     
-    //Mostramos la vista. Viene del jsp menuView, Creamos un ModelAndView("tipoFiscalView")
+    //Mostramos la vista. Viene del jsp menuView, Creamos un ModelAndView("tipoFiscalView")**
     @RequestMapping("/tipoFiscalController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("tipoFiscalView");
