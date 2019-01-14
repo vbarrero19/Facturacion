@@ -32,7 +32,19 @@
                 myObj["tratamiento"] = $(".form-check input:checked").val();
                 //nombre de la persona  
                 myObj["nombre_persona"] = $("#nombre_persona").val().trim();
-
+                //inicial del segundo nombre de la persona
+                myObj["mi_persona"] = $("#mi_persona").val().trim();
+                //Apellido de la persona de contacto
+                myObj["apellido_persona"] = $("#apellido_persona").val().trim();
+                //Numero de identificador de la empresa.
+                myObj["num_ident"] = $("#num_ident").val().trim();
+                //Direccion fisica
+                myObj["dir_fisica"] = $("#dir_fisica").val().trim();
+                //Direccion fiscal
+                myObj["dir_fiscal"] = $("#dir_fiscal").val().trim();
+                //Pais
+                myObj["pais"] = $("#pais").val().trim();
+                
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -88,34 +100,53 @@
                                 <input type="text" class="form-control" id="nombre_persona" name="nombre_persona" placeholder="Nombre persona" required>
                             </div>
 
-                            <!--    FALTA CREAR TODO EN JAVA Y JSP 
-                                <div class="form-group">
-                                    <select class="form-control" id="tipo_ident">
-                                        <option></option>
-                                        <option>CIF</option>
-                                        <option>NIT</option>
-                                        <option>IDENT3</option>
-                                    </select>
-                                </div>
-    
-                                
-    
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="id_ident" name="id_ident" placeholder="Identificador empresa(CIF)" required>
-                                </div>
-                                
-                              
-    
-                            <!--FALTA RECOGER LOS DATOS AL CREAR EL OBJETO DESDE EL STRING  
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="mi_persona" name="mi_persona" placeholder="Inicial" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="apellido_persona" name="apellido_persona" placeholder="Apellido" required>
+                            </div>
+
+                            <!--  FALTA CREAR TODO EN JAVA Y JSP -->
+                            <!--                            <div class="form-group">
+                                                            <select class="form-control" id="tipo_ident">
+                                                                <option></option>
+                                                                <option>CIF</option>
+                                                                <option>NIT</option>
+                                                                <option>RFC</option>
+                                                            </select>
+                                                        </div>   -->
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="num_ident" name="num_ident" placeholder="Numero identificador de empresa" required>
+                            </div>
+
+
+
+                            <!--CREAR COMBO, JSP Y CONTROLLER   
                             <div class="form-group">
                                 <select class="form-control" id="id_tipo" name="id_tipo">
                                 </select>
                             </div>
-                            
-                            <!-- *********** 
+                            --->
+
+
                             <div class="form-group">
-                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" required>
+                                <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="Dirección física" required>
                             </div>
+
+                            <!--       poner radio button. Si la direccion fiscal es igual a la fisica y luego que autocomplete(buscar). -->
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="pais" name="pais" placeholder="País" required>
+                            </div>
+
+                            <!--
                             <div class="form-group">
                                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
                             </div>

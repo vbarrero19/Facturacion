@@ -57,16 +57,23 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento,nombre_persona) VALUES (?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento, nombre_persona, mi_persona, apellido_persona, num_ident, dir_fisica, dir_fiscal, pais) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
             stAux.setString(2, cliente.getNombre_empresa());
             stAux.setString(3,cliente.getTratamiento());
             stAux.setString(4, cliente.getNombre_persona());
+            stAux.setString(5,cliente.getMi_persona());
+            stAux.setString(6, cliente.getApellido_persona());
+            stAux.setString(7, cliente.getNum_ident());
+            stAux.setString(8, cliente.getDir_fisica());
+            stAux.setString(9, cliente.getDir_fiscal());
+            stAux.setString(10, cliente.getPais());
             
             stAux.executeUpdate();
             
-           
+            
             
         } catch (SQLException ex) {
              resp = "Incorrecto"; // ex.getMessage();
