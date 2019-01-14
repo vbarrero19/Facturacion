@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TipoEmpresaController {
     
+    //Mostramos la vista. Viene del jsp menuView, Creamos un ModelAndView("tipoEmpresaView")
     @RequestMapping("/tipoEmpresaController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("tipoEmpresaView");
@@ -44,6 +45,7 @@ public class TipoEmpresaController {
         return null;
     }
     
+    //Codigo para añadir una nueva Empresa. Viene pulsar submit en el formulario
     @RequestMapping("/tipoEmpresaController/newCustomer.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody TipoEmpresa tipoEmp, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -52,32 +54,19 @@ public class TipoEmpresaController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
-       
-        //ModelAndView mv = new ModelAndView("lessonresources");
+        String resp = "correcto";       
+        
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            
-//            stAux = con.prepareStatement("INSERT INTO tipo_impuesto (id_impuesto, impuesto) VALUES (?,?)");       
+        
+            //Creamos la consulta preparada
             stAux = con.prepareStatement("INSERT INTO tipo_empresa (empresa) VALUES (?)");      
-            
-//            stAux.setInt(1, tipoImp.getId_Impuesto());            
-//            stAux.setString(2, tipoImp.getImpuesto()); 
-            
-     
+            //Asignamos valores
             stAux.setString(1, tipoEmp.getEmpresa()); 
+            //Ejecutamos                 
+            stAux.executeUpdate();            
             
-                             
-            stAux.executeUpdate();
-            
-            /*Resource rRespuesta = new Resource();
-            
-            while (rs.next()) {
-                rRespuesta.setCol1(rs.getString("Nombre"));
-                rRespuesta.setCol2(rs.getString("Apellido"));
-                rRespuesta.setCol3(""+rs.getInt("Edad"));
-            } */
             resp = "Correcto";
             
         } catch (SQLException ex) {

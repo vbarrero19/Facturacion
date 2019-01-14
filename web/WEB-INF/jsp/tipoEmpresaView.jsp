@@ -12,6 +12,7 @@
     </head>
     <script>
         $(document).ready(function () {
+            //Evento .click en el boton submit
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -21,15 +22,17 @@
                     ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
+                //Variable para guardar los valores del formulario
                 var myObj = {};
                
-//                myObj["id_Impuesto"] = $("#id_impuesto").val().trim();    
+                //Cargamos el contenido de los campos del formulario    
                 myObj["empresa"] = $("#empresa").val().trim();                
-                 
+                
+                //Convertimos la variable myObj a String
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/tipoEmpresaController/newCustomer.htm',
+                    url: '/Facturacion/tipoEmpresaController/newCustomer.htm',//Vamos a newCustomer de tipoEmpresaController
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -53,12 +56,9 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para IMPUESTOS</h3>
-                                                        
-<!--                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Id Impuesto" required>
-                            </div>-->
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para EMPRESAS</h3>
                             
+                            <!--Campo para recoger el tipoo de la empresa-->
                             <div class="form-group">
                                 <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa" required>
                             </div>

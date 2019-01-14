@@ -17,7 +17,9 @@
     </head>
     <script>
         $(document).ready(function () {
+            //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
             getImpuesto();
+            //Evento .click en el boton submit
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -27,22 +29,25 @@
                     ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
+                //Variable para guardar los valores del formulario
                 var myObj = {};
+                
+                //Cargamos el contenido de los campos del formulario
                 myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["nombre"] = $("#nombre").val().trim();
                 myObj["precio"] = $("#precio").val().trim();
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
                 myObj["id_impuesto"] = 2;//$("#impuesto").val();
- 
+                //Cogemos el valor del radio seleccionado y lo guardamos en periodo
                 myObj["periodo"] = $(".form-check input:checked").val();
-                //alert($(".form-check input:checked").val());
-                //$(".form-check input:checked").next().text().trim()
+                
+                //Convertimos la variable myObj a String
                 var json = JSON.stringify(myObj); 
                 
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/itemsController/newCustomer.htm',
+                    url: '/Facturacion/itemsController/newCustomer.htm',//Vamos a newCustomer de itemsController
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -58,6 +63,9 @@
             })
 
         });
+        
+        //Funcion para llenar el combo de impuestos. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
+        //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
         function getImpuesto() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -68,17 +76,26 @@
             }
 
             $.ajax({
+                //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/itemsController/getImpuesto.htm',
+                url: '/Facturacion/itemsController/getImpuesto.htm', //Vamos a itemsController/getImpuesto.htm a recoger los datos
                 success: function (data) {
-                    //alert(data);
+                    
+                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
+                    //Identificamos el combo
                     select = document.getElementById('impuesto');
+                    //Lo vamos cargando
                     aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                         var aux2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
                         var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
                         opt.value = aux2.id_impuesto;
+                        //Guardamos el impuesto en el nombre de cada opcion
                         opt.innerHTML = aux2.impuesto;
+                        //Añadimos la opcion
                         select.appendChild(opt);
                     });
                 },
@@ -112,12 +129,14 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required>
                             </div>
-
+                            
+                            <!--Combo para tipo de impuestos-->
                             <div class="form-group">
                                 <select class="form-control" id="impuesto" name="impuesto">
                                 </select>
                             </div>
 
+                            <!--Radio button para tipo de periodicidad--> 
                             <div class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="periodico" checked>

@@ -12,6 +12,7 @@
     </head>
     <script>
         $(document).ready(function () {
+            //Evento .click en el boton submit
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -20,16 +21,18 @@
                 {
                     ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-
+                
+                //Variable para guardar los valores del formulario
                 var myObj = {};
-               
-//                myObj["id_Impuesto"] = $("#id_impuesto").val().trim();    
+                
+                //Cargamos el contenido de los campos del formulario
                 myObj["impuesto"] = $("#impuesto").val().trim();                
-                 
+                
+                //Convertimos la variable myObj a String
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/tipoImpuestoController/newCustomer.htm',
+                    url: '/Facturacion/tipoImpuestoController/newCustomer.htm', //Vamos a newCustomer de tipoImpuestoController
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -53,12 +56,9 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para IMPUESTOS</h3>
-                                                        
-<!--                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Id Impuesto" required>
-                            </div>-->
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para IMPUESTOS</h3>                                                      
                             
+                            <!--Campo para recoger el nombre del impuesto-->
                             <div class="form-group">
                                 <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
                             </div>
