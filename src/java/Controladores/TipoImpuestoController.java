@@ -47,7 +47,7 @@ public class TipoImpuestoController {
     @RequestMapping("/tipoImpuestoController/newCustomer.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody TipoImpuesto tipoImp, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        //TipoImpuesto resourceLoad = new TipoImpuesto();
+     //   TipoImpuesto resourceLoad = new TipoImpuesto();
         
         Connection con = null;
         ResultSet rs = null;
@@ -61,11 +61,12 @@ public class TipoImpuestoController {
             
             stAux = con.prepareStatement("INSERT INTO tipo_impuesto (id_impuesto, impuesto) VALUES (?,?)");
             
-            stAux.setInt(1, Integer.parseInt(tipoImp.getId_impuesto()));            
+            //int dato = Integer.parseInt(tipoImp.getId_impuesto());
+            
+            stAux.setInt(1, tipoImp.getId_Impuesto());            
             stAux.setString(2, tipoImp.getImpuesto()); 
             
-            
-                  
+                             
             stAux.executeUpdate();
             
             /*Resource rRespuesta = new Resource();

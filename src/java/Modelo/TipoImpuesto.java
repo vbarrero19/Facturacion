@@ -1,24 +1,18 @@
 package Modelo;
 
 
-
 public class TipoImpuesto {
     
-    private int id_impuesto;
+    private int id_Impuesto;
     private String impuesto;
+    
+    public TipoImpuesto(){
 
-    public TipoImpuesto(int id_impuesto, String impuesto) {
-        this.id_impuesto = id_impuesto;
-        this.impuesto = impuesto;
     }
-
-    public int getId_impuesto() {
-        return id_impuesto;
-    }
-
-    public void setId_impuesto(int id_impuesto) {
-        this.id_impuesto = id_impuesto;
-    }
+    public TipoImpuesto(int a,String b){
+       this.id_Impuesto = a;
+       this.impuesto = b;
+   }
 
     public String getImpuesto() {
         return impuesto;
@@ -27,8 +21,13 @@ public class TipoImpuesto {
     public void setImpuesto(String impuesto) {
         this.impuesto = impuesto;
     }
-    
-    
+ 
+    public int getId_Impuesto() {
+        return id_Impuesto;
+    }
 
-    
+    public void setId_Impuesto(int id_Impuesto) {
+        this.id_Impuesto = id_Impuesto;
+    }
+ 
 }
