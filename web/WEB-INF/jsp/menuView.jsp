@@ -55,7 +55,7 @@
                             </div>
                             <div class="divName col-xs-4">
                                 <button type="button" class="btn btn-primary">Facturas</button>
-                            </div> 
+                            </div>  
                         </div>
                     </div>
 
