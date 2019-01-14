@@ -23,6 +23,7 @@
 
                 var myObj = {};
                
+                myObj["id_impuesto"] = $("#id_impuesto").val().trim();    
                 myObj["impuesto"] = $("#impuesto").val().trim();                
           
                 var json = JSON.stringify(myObj);
@@ -54,6 +55,10 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para IMPUESTOS</h3>
                                                         
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_impuesto" name="id_impuesto" placeholder="Id Impuesto" required>
+                            </div>
+                            
                             <div class="form-group">
                                 <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
                             </div>
