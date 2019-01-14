@@ -28,25 +28,25 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class TipoImpuestoController {
+public class TipoEmpresaController {
     
-    @RequestMapping("/tipoImpuestoController/start.htm")
+    @RequestMapping("/tipoEmpresaController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
-        ModelAndView mv = new ModelAndView("tipoImpuestoView");
+        ModelAndView mv = new ModelAndView("tipoEmpresaView");
        
         return mv;
     }  
     
-    @RequestMapping("/tipoImpuestoController/addResources.htm")
+    @RequestMapping("/tipoEmpresaController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         
         return null;
     }
     
-    @RequestMapping("/tipoImpuestoController/newCustomer.htm")  
+    @RequestMapping("/tipoEmpresaController/newCustomer.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody TipoImpuesto tipoImp, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String saveNewCustomer(@RequestBody TipoEmpresa tipoEmp, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
      //   TipoImpuesto resourceLoad = new TipoImpuesto();
         
         Connection con = null;
@@ -60,13 +60,13 @@ public class TipoImpuestoController {
             con = pool_local.getConnection();
             
 //            stAux = con.prepareStatement("INSERT INTO tipo_impuesto (id_impuesto, impuesto) VALUES (?,?)");       
-            stAux = con.prepareStatement("INSERT INTO tipo_impuesto (impuesto) VALUES (?)");      
+            stAux = con.prepareStatement("INSERT INTO tipo_empresa (empresa) VALUES (?)");      
             
 //            stAux.setInt(1, tipoImp.getId_Impuesto());            
 //            stAux.setString(2, tipoImp.getImpuesto()); 
             
      
-            stAux.setString(1, tipoImp.getImpuesto()); 
+            stAux.setString(1, tipoEmp.getEmpresa()); 
             
                              
             stAux.executeUpdate();

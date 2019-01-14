@@ -8,7 +8,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>TIPO IMPUESTO VIEW</title> 
+        <title>TIPO EMPRESA VIEW</title> 
     </head>
     <script>
         $(document).ready(function () {
@@ -24,12 +24,12 @@
                 var myObj = {};
                
 //                myObj["id_Impuesto"] = $("#id_impuesto").val().trim();    
-                myObj["impuesto"] = $("#impuesto").val().trim();                
+                myObj["empresa"] = $("#empresa").val().trim();                
                  
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/tipoImpuestoController/newCustomer.htm',
+                    url: '/Facturacion/tipoEmpresaController/newCustomer.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -60,7 +60,7 @@
                             </div>-->
                             
                             <div class="form-group">
-                                <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
+                                <input type="text" class="form-control" id="empresa" name="empresa" placeholder="Empresa" required>
                             </div>
                             
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
