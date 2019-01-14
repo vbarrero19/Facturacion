@@ -33,7 +33,7 @@
                 myObj["nombre"] = $("#nombre").val().trim();
                 myObj["precio"] = $("#precio").val().trim();
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
-                myObj["id_impuesto"] = $("#impuesto").val();
+                myObj["id_impuesto"] = 2;//$("#impuesto").val();
  
                 myObj["periodo"] = $(".form-check input:checked").val();
                 //alert($(".form-check input:checked").val());

@@ -59,9 +59,7 @@ public class TipoImpuestoController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO tipo_impuesto (id_impuesto, impuesto) VALUES (?,?)");
-            
-            //int dato = Integer.parseInt(tipoImp.getId_impuesto());
+            stAux = con.prepareStatement("INSERT INTO tipo_impuesto (id_impuesto, impuesto) VALUES (?,?)");       
             
             stAux.setInt(1, tipoImp.getId_Impuesto());            
             stAux.setString(2, tipoImp.getImpuesto()); 
