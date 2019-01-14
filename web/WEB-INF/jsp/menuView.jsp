@@ -54,6 +54,10 @@
                             <div class="divName col-xs-2">
                                 <a href="<c:url value='/tipoEmpresaController/start.htm'/>" class="btn btn-info" role="button">Tipo Empresa</a>
                             </div>
+                            
+                            <div class="divName col-xs-2">
+                                <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Identificador empresa(cif)</a>
+                            </div>
 
                             <div class="divName col-xs-4">
                                 <button type="button" class="btn btn-primary">Facturas</button>

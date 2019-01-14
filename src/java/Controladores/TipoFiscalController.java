@@ -1,4 +1,3 @@
-
 package Controladores;
 
 import Modelo.*;
@@ -18,29 +17,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 /**
  *
- * @author vbarr
+ * @author David
  */
+@Controller
 public class TipoFiscalController {
     
-    
-    @RequestMapping("/fiscalController/start.htm")
+    //Mostramos la vista. Viene del jsp menuView, Creamos un ModelAndView("tipoFiscalView")
+    @RequestMapping("/tipoFiscalController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
-        ModelAndView mv = new ModelAndView("tipoImpuestoView");
+        ModelAndView mv = new ModelAndView("tipoFiscalView");
        
         return mv;
     }  
     
-    @RequestMapping("/fiscalController/addResources.htm")
+    @RequestMapping("/tipoFiscalController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         
         return null;
     }
     
-    
-    @RequestMapping("/fiscalController/newCustomer.htm")  
+    //Codigo para añadir una nueva Empresa. Viene pulsar submit en el formulario
+    @RequestMapping("/tipoFiscalController/newCustomer.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody TipoFiscal tipoFis, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
      //   TipoImpuesto resourceLoad = new TipoImpuesto();
@@ -48,19 +49,19 @@ public class TipoFiscalController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
-       
-        //ModelAndView mv = new ModelAndView("lessonresources");
+        String resp = "correcto";       
+        
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
+        
+            //Creamos la consulta preparada
+            stAux = con.prepareStatement("INSERT INTO tipo_fiscal (fiscal) VALUES (?)");      
+            //Asignamos valores
+            stAux.setString(1, tipoFis.getFiscal());
             
-            stAux = con.prepareStatement("INSERT INTO tipo_fiscal (id_fiscal, nombre_id) VALUES (?,?)");       
-            
-            stAux.setInt(1,tipoFis.getId_fiscal());
-            stAux.setString(2,tipoFis.getNombre_id());
-                          
-            stAux.executeUpdate();
+            //Ejecutamos                 
+            stAux.executeUpdate();            
             
             resp = "Correcto";
             
@@ -94,5 +95,4 @@ public class TipoFiscalController {
         }
         return resp;
     }
-    
 }

@@ -32,23 +32,22 @@
 
 
 
-   <bean class="Controladores.Homepage" id="homepage">
-     <property name="methodNameResolver">
-        <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
-           <property name="paramName" value="opcion"/>
-        </bean>
-    </property> 
+    <bean class="Controladores.Homepage" id="homepage">
+        <property name="methodNameResolver">
+            <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+                <property name="paramName" value="opcion"/>
+            </bean>
+        </property> 
     </bean>
  
-   <bean class="Controladores.CustomerController" id="customerctrl"/>
-   <bean class="Controladores.ClientesController" id="clientes"/>
-   <bean class="Controladores.MenuController" id="menu"/>
-   <bean class="Controladores.CargosController" id="cargos"/> 
-   <bean class="Controladores.ItemsController" id="items"/>   
-   <bean class="Controladores.TipoImpuestoController" id="tipoImpuesto"/>
-   <bean class="Controladores.TipoEmpresaController" id="tipoEmpresa"/>
-   <bean class="Controladores.TipoFiscalController" id="tipoFiscal"/>
-   
+    <bean class="Controladores.CustomerController" id="customerctrl"/>
+    <bean class="Controladores.ClientesController" id="clientes"/>
+    <bean class="Controladores.MenuController" id="menu"/>
+    <bean class="Controladores.CargosController" id="cargos"/> 
+    <bean class="Controladores.ItemsController" id="items"/>   
+    <bean class="Controladores.TipoImpuestoController" id="tipoImpuesto"/>
+    <bean class="Controladores.TipoEmpresaController" id="tipoEmpresa"/>    
+    <bean class="Controladores.TipoFiscalController" id="tipoFiscal"/>
    
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -67,7 +66,7 @@
                 <prop key="itemsController.htm">items</prop>
                 <prop key="tipoImpuestoController.htm">tipoImpuesto</prop>
                 <prop key="tipoEmpresaController.htm">tipoEmpresa</prop>
-                <prop key="TipoFiscalController.htm">tipoFiscal</prop>
+                <prop key="tipoFiscalController.htm">tipoFiscal</prop>
             </props>
         </property>
     </bean>
