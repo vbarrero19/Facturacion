@@ -23,9 +23,9 @@
 
                 var myObj = {};
                
-                myObj["id_impuesto"] = $("#id_impuesto").val().trim();    
+                myObj["id_Impuesto"] = $("#id_impuesto").val().trim();    
                 myObj["impuesto"] = $("#impuesto").val().trim();                
-          
+                 
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
