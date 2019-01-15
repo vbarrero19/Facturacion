@@ -37,7 +37,7 @@
                 //Apellido de la persona de contacto
                 myObj["apellido_persona"] = $("#apellido_persona").val().trim();
                 //Tipo de identificacion fiscal
-                myObj["id_fiscal"] = $("#id_fiscal").val();
+                myObj["id_fiscal"] = $("#fiscal").val();
                 //Numero de identificador de la empresa.
                 myObj["num_ident"] = $("#num_ident").val().trim();
                 //Direccion fisica
@@ -69,7 +69,7 @@
         
         
         
-        function getFsical() {
+        function getFiscal() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -94,7 +94,7 @@
                         var aux2 = JSON.parse(valor);
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_Fiscal;
+                        opt.value = aux2.id_fiscal;
                         //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
                         opt.innerHTML = aux2.fiscal;
                         //Añadimos la opcion

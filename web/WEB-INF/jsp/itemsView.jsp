@@ -86,7 +86,7 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_Impuesto    ;
+                        opt.value = aux2.id_Impuesto;
                         //Guardamos el impuesto en el nombre de cada opcion
        //                 opt.innerHTML = aux2.id_impuesto;
                         opt.innerHTML = aux2.impuesto;
