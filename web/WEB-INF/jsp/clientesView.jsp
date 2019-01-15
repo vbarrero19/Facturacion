@@ -12,8 +12,8 @@
     </head>
     <script>
         $(document).ready(function () {
-            // getTipoEmpresa();
-
+            getFiscal();
+            
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -36,6 +36,8 @@
                 myObj["mi_persona"] = $("#mi_persona").val().trim();
                 //Apellido de la persona de contacto
                 myObj["apellido_persona"] = $("#apellido_persona").val().trim();
+                //Tipo de identificacion fiscal
+                myObj["id_fiscal"] = $("#id_fiscal").val();
                 //Numero de identificador de la empresa.
                 myObj["num_ident"] = $("#num_ident").val().trim();
                 //Direccion fisica
@@ -44,7 +46,7 @@
                 myObj["dir_fiscal"] = $("#dir_fiscal").val().trim();
                 //Pais
                 myObj["pais"] = $("#pais").val().trim();
-                
+
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -64,7 +66,48 @@
                 });
             })
         });
+        
+        
+        
+function getFsical() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //Recogemos los datos de clientesController/getFiscal.htm 
+                url: '/Facturacion/clientesController/getFiscal.htm', 
+                success: function (data) {
+                    
+                    //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
+                    var aux = JSON.parse(data);
+                    select = document.getElementById('id_fiscal');
+                    //Carga del combo
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a tipoFiscal
+                        var aux2 = JSON.parse(valor);
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = aux2.id_fiscal;
+                        //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
+                        opt.innerHTML = aux2.fiscal;
+                        //Creamos un hijo para cargar el siguiente.
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
 
 
     </script>
@@ -84,7 +127,7 @@
                                 <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre empresa" required>
                             </div>                            
 
-
+                            <!-- Creamos radio button para seleccionar el tipo de tratamiento del cliente -->
                             <div class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
@@ -108,15 +151,11 @@
                                 <input type="text" class="form-control" id="apellido_persona" name="apellido_persona" placeholder="Apellido" required>
                             </div>
 
-                            <!--  FALTA CREAR TODO EN JAVA Y JSP -->
-                            <!--                            <div class="form-group">
-                                                            <select class="form-control" id="tipo_ident">
-                                                                <option></option>
-                                                                <option>CIF</option>
-                                                                <option>NIT</option>
-                                                                <option>RFC</option>
-                                                            </select>
-                                                        </div>   -->
+                            <!-- Creamos un combo para cargar el tipo de identificacion fiscal -->
+                            <div class="form-group">
+                                <select class="form-control" id="id_fiscal">
+                                </select>
+                            </div>  
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="num_ident" name="num_ident" placeholder="Numero identificador de empresa" required>

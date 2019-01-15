@@ -56,7 +56,7 @@
                             </div>
                             
                             <div class="divName col-xs-2">
-                                <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Identificador empresa(cif)</a>
+                                <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Identificacion fiscal</a>
                             </div>
 
                             <div class="divName col-xs-4">

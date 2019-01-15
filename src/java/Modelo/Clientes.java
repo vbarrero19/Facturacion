@@ -19,7 +19,7 @@ public class Clientes {
     private String nombre_persona;
     private String mi_persona;
     private String apellido_persona;
-    //private String ident_empresa;
+    private String id_fiscal;
     private String num_ident;
     //private String tipo_empresa;
     private String dir_fisica;
@@ -74,14 +74,14 @@ public class Clientes {
         this.apellido_persona = apellido_persona;
     }
 
-//    public String getIdent_empresa() {
-//        return ident_empresa;
-//    }
-//
-//    public void setIdent_empresa(String ident_empresa) {
-//        this.ident_empresa = ident_empresa;
-//    }
-    
+    public String getId_fiscal() {
+        return id_fiscal;
+    }
+
+    public void setId_fiscal(String id_fiscal) {
+        this.id_fiscal = id_fiscal;
+    }
+   
     
     public String getNum_ident() {
         return num_ident;
