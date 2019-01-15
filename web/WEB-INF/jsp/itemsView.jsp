@@ -1,9 +1,3 @@
-<%-- 
-    Document   : userform
-    Created on : 24-ene-2017, 12:05:12
-    Author     : nmohamed
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -38,7 +32,7 @@
                 myObj["nombre"] = $("#nombre").val().trim();
                 myObj["precio"] = $("#precio").val().trim();
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
-                myObj["id_impuesto"] = 2;//$("#impuesto").val();
+                myObj["id_impuesto"] = $("#impuesto").val();
                 //Cogemos el valor del radio seleccionado y lo guardamos en periodo
                 myObj["periodo"] = $(".form-check input:checked").val();
                 
@@ -92,8 +86,9 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_impuesto;
+                        opt.value = aux2.id_Impuesto    ;
                         //Guardamos el impuesto en el nombre de cada opcion
+       //                 opt.innerHTML = aux2.id_impuesto;
                         opt.innerHTML = aux2.impuesto;
                         //Añadimos la opcion
                         select.appendChild(opt);

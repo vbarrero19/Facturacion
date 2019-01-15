@@ -109,7 +109,7 @@ public class ItemsController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "incorrecto";
+        String resp = "correcto";
         
         ArrayList<String> arrayTipo = new ArrayList<>();   
         
@@ -126,12 +126,7 @@ public class ItemsController {
                 arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
             }
             
-            
-            //Gson gson = new Gson();
-            //String StringTipoImpuesto = gson.toJson(TipoImpuesto);
-            
             resp = new Gson().toJson(arrayTipo);
-            
             
             
         } catch (SQLException ex) {

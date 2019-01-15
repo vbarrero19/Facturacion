@@ -8,11 +8,11 @@ public class TipoFiscal {
     public TipoFiscal(){
 
     }
+    
     public TipoFiscal(int a,String b){
        this.id_fiscal = a;
        this.fiscal = b;
-   }
-    
+   }    
     
     public int getId_fiscal() {
         return id_fiscal;

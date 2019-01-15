@@ -69,7 +69,7 @@
         
         
         
-function getFsical() {
+        function getFsical() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -87,7 +87,7 @@ function getFsical() {
                     
                     //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
                     var aux = JSON.parse(data);
-                    select = document.getElementById('id_fiscal');
+                    select = document.getElementById('fiscal');
                     //Carga del combo
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a tipoFiscal
@@ -97,7 +97,7 @@ function getFsical() {
                         opt.value = aux2.id_fiscal;
                         //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
                         opt.innerHTML = aux2.fiscal;
-                        //Creamos un hijo para cargar el siguiente.
+                        //Añadimos la opcion
                         select.appendChild(opt);
                     });
                 },
@@ -153,7 +153,7 @@ function getFsical() {
 
                             <!-- Creamos un combo para cargar el tipo de identificacion fiscal -->
                             <div class="form-group">
-                                <select class="form-control" id="id_fiscal">
+                                <select class="form-control" id="fiscal" name="fiscal">
                                 </select>
                             </div>  
 

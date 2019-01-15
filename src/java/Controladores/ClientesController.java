@@ -107,7 +107,8 @@ public class ClientesController {
         return resp;
     }
     
-    
+    @RequestMapping("/clientesController/getFiscal.htm")  
+    @ResponseBody
     public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Clientes resourceLoad = new Clientes();
         
