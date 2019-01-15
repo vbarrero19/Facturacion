@@ -14,12 +14,16 @@
         $(document).ready(function () {
             getFiscal();
             getEmpresa();
-            $( "#dir_fisica" ).keyup(function() {
-   document.getElementById('dir_fiscal').value=this.value;
-});
+            
+            //Funcion que autocompleta el campo de la direccion fiscal en caso de que el radiobutton este check en SI.
+           // if($("#tratamiento .form-check input:checked").atrr("id"))
            
+            $("#dir_fisica").keyup(function () {
+                document.getElementById('dir_fiscal').value = this.value;
+            });
+            
             $("#submit").click(function () {
-                
+
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -77,9 +81,9 @@
                 });
             })
         });
-        
-        
-        
+
+
+
         function getFiscal() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -93,9 +97,9 @@
                 //Usamos GET ya que recibimos.
                 type: 'GET',
                 //Recogemos los datos de clientesController/getFiscal.htm 
-                url: '/Facturacion/clientesController/getFiscal.htm', 
+                url: '/Facturacion/clientesController/getFiscal.htm',
                 success: function (data) {
-                    
+
                     //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
                     var aux = JSON.parse(data);
                     select = document.getElementById('fiscal');
@@ -121,7 +125,7 @@
         }
 
 
-function getEmpresa() {
+        function getEmpresa() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -134,9 +138,9 @@ function getEmpresa() {
                 //Usamos GET ya que recibimos.
                 type: 'GET',
                 //Recogemos los datos de clientesController/getFiscal.htm 
-                url: '/Facturacion/clientesController/getEmpresa.htm', 
+                url: '/Facturacion/clientesController/getEmpresa.htm',
                 success: function (data) {
-                    
+
                     //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
                     var aux = JSON.parse(data);
                     select = document.getElementById('empresa');
@@ -160,7 +164,7 @@ function getEmpresa() {
                 }
             });
         }
-        
+
 
 
 
@@ -182,7 +186,7 @@ function getEmpresa() {
                             </div>                            
 
                             <!-- Creamos radio button para seleccionar el tipo de tratamiento del cliente -->
-                            <div class="form-group">
+                            <div id="tratamiento" class="form-group">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
                                     <label class="form-check-label" for="1">Mr</label>
@@ -219,26 +223,25 @@ function getEmpresa() {
                                 <select class="form-control" id="empresa" name="empresa">
                                 </select>
                             </div>
-                           
-<!--                            <div class="form-group">
-                                <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="Dirección física" required>
-                            </div>
--->
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="dir_fisica" name="dir_fisica"  placeholder="Dirección física"  required>
-                            </div>
-
+                            
+                            <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
                             <div id= "dir" class="form-group">
+                                <label> ¿La direccion fisica es igual a la fiscal? </label>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="tratamiento" id="si" value="si" checked>
+                                    <input class="form-check-input" type="radio" name="check_dir" id="si" value="si" checked>
                                     <label class="form-check-label" for="1">Si</label>
                                 </div>
                                 <div id="dir" class="form-check">
-                                    <input class="form-check-input" type="radio" name="tratamiento" id="no" value="no">
+                                    <input class="form-check-input" type="radio" name="check_dir" id="no" value="no">
                                     <label class="form-check-label" for="2">No</label>
                                 </div>
                             </div>
-                        
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="dir_fisica" name="dir_fisica"  placeholder="Dirección física"  required>
+                            </div>
+                            
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
                             </div>
@@ -246,25 +249,24 @@ function getEmpresa() {
                             <div class="form-group">
                                 <input type="text" class="form-control" id="pais" name="pais" placeholder="País" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <input type="email" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="telefono1" name="telefono1" placeholder="Teléfono" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Teléfono" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
                             </div>
-                            
-                            
-                            
+
+
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>
