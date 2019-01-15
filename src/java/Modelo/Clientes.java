@@ -20,6 +20,9 @@ public class Clientes {
     private String dir_fiscal;
     private String pais;
     private String mail;
+    private String telefono1;
+    private String telefono2;
+    private String fax;
     
     
     public String getId_cliente() {
@@ -127,7 +130,32 @@ public class Clientes {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
+    public String getTelefono1() {
+        return telefono1;
+    }
+
+    public void setTelefono1(String telefono1) {
+        this.telefono1 = telefono1;
+    }
+
+    public String getTelefono2() {
+        return telefono2;
+    }
+
+    public void setTelefono2(String telefono2) {
+        this.telefono2 = telefono2;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
   
+    
 
 }
 

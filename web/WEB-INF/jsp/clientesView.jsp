@@ -48,9 +48,12 @@
                 myObj["pais"] = $("#pais").val().trim();
                 //correo electronico    
                 myObj["mail"] = $("#mail").val().trim();
-
-
-
+                //Telefono 1
+                myObj["telefono1"] = $("#telefono1").val().trim();
+                //Telefono 2
+                myObj["telefono2"] = $("#telefono2").val().trim();
+                //fax
+                myObj["fax"] = $("#fax").val().trim();
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -214,7 +217,7 @@ function getEmpresa() {
                                 <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="Dirección física" required>
                             </div>
 
-                            <!--       poner radio button. Si la direccion fiscal es igual a la fisica y luego que autocomplete(buscar). -->
+                            <!--poner radio button. Si la direccion fiscal es igual a la fisica y luego que autocomplete(buscar). -->
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
@@ -227,12 +230,21 @@ function getEmpresa() {
                             <div class="form-group">
                                 <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
-                            <!--
+                            
                             <div class="form-group">
-                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
+                                <input type="text" class="form-control" id="telefono1" name="telefono1" placeholder="Teléfono" required>
                             </div>
                             
-                            -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Teléfono" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
+                            </div>
+                            
+                            
+                            
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
                         </form>

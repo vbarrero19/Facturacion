@@ -57,7 +57,7 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento, nombre_persona, mi_persona, apellido_persona, id_fiscal, num_ident, id_empresa, dir_fisica, dir_fiscal, pais, mail) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento, nombre_persona, mi_persona, apellido_persona, id_fiscal, num_ident, id_empresa, dir_fisica, dir_fiscal, pais, mail, telefono1, telefono2, fax) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
@@ -73,6 +73,10 @@ public class ClientesController {
             stAux.setString(11, cliente.getDir_fiscal());
             stAux.setString(12, cliente.getPais());
             stAux.setString(13, cliente.getMail());
+            stAux.setString(14, cliente.getTelefono1());
+            stAux.setString(15,cliente.getTelefono2());
+            stAux.setString(16,cliente.getFax());
+            
             
             stAux.executeUpdate();
             
