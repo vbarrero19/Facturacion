@@ -14,7 +14,12 @@
         $(document).ready(function () {
             getFiscal();
             getEmpresa();
+            $( "#dir_fisica" ).keyup(function() {
+   document.getElementById('dir_fiscal').value=this.value;
+});
+           
             $("#submit").click(function () {
+                
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -155,6 +160,8 @@ function getEmpresa() {
                 }
             });
         }
+        
+
 
 
     </script>
@@ -213,12 +220,25 @@ function getEmpresa() {
                                 </select>
                             </div>
                            
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="Dirección física" required>
                             </div>
+-->
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="dir_fisica" name="dir_fisica"  placeholder="Dirección física"  required>
+                            </div>
 
-                            <!--poner radio button. Si la direccion fiscal es igual a la fisica y luego que autocomplete(buscar). -->
-
+                            <div id= "dir" class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tratamiento" id="si" value="si" checked>
+                                    <label class="form-check-label" for="1">Si</label>
+                                </div>
+                                <div id="dir" class="form-check">
+                                    <input class="form-check-input" type="radio" name="tratamiento" id="no" value="no">
+                                    <label class="form-check-label" for="2">No</label>
+                                </div>
+                            </div>
+                        
                             <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
                             </div>
@@ -228,7 +248,7 @@ function getEmpresa() {
                             </div>
                             
                             <div class="form-group">
-                                <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
+                                <input type="email" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
                             </div>
                             
                             <div class="form-group">
