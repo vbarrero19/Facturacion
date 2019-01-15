@@ -94,7 +94,7 @@
                         var aux2 = JSON.parse(valor);
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_fiscal;
+                        opt.value = aux2.id_Fiscal;
                         //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
                         opt.innerHTML = aux2.fiscal;
                         //Añadimos la opcion
