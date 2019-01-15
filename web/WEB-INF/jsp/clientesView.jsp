@@ -13,7 +13,7 @@
     <script>
         $(document).ready(function () {
             getFiscal();
-            
+            getEmpresa();
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -46,6 +46,9 @@
                 myObj["dir_fiscal"] = $("#dir_fiscal").val().trim();
                 //Pais
                 myObj["pais"] = $("#pais").val().trim();
+                //correo electronico    
+                myObj["mail"] = $("#mail").val().trim();
+
 
 
                 var json = JSON.stringify(myObj);
@@ -110,6 +113,47 @@
         }
 
 
+function getEmpresa() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //Recogemos los datos de clientesController/getFiscal.htm 
+                url: '/Facturacion/clientesController/getEmpresa.htm', 
+                success: function (data) {
+                    
+                    //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
+                    var aux = JSON.parse(data);
+                    select = document.getElementById('empresa');
+                    //Carga del combo
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a tipoFiscal
+                        var aux2 = JSON.parse(valor);
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = aux2.id_empresa;
+                        //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
+                        opt.innerHTML = aux2.empresa;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+
+
     </script>
     <body>
         <div class="container">
@@ -161,16 +205,11 @@
                                 <input type="text" class="form-control" id="num_ident" name="num_ident" placeholder="Numero identificador de empresa" required>
                             </div>
 
-
-
-                            <!--CREAR COMBO, JSP Y CONTROLLER   
                             <div class="form-group">
-                                <select class="form-control" id="id_tipo" name="id_tipo">
+                                <select class="form-control" id="empresa" name="empresa">
                                 </select>
                             </div>
-                            --->
-
-
+                           
                             <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="Dirección física" required>
                             </div>
@@ -184,14 +223,15 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="pais" name="pais" placeholder="País" required>
                             </div>
-
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
+                            </div>
                             <!--
                             <div class="form-group">
                                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
-                            </div>
+                            
                             -->
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>

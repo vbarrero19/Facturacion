@@ -8,7 +8,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>TIPO EMPRESA VIEW</title> 
+        <title>TIPO EMPRESA</title> 
     </head>
     <script>
         $(document).ready(function () {

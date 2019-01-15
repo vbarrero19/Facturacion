@@ -57,7 +57,7 @@ public class ClientesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento, nombre_persona, mi_persona, apellido_persona, id_fiscal, num_ident, dir_fisica, dir_fiscal, pais) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento, nombre_persona, mi_persona, apellido_persona, id_fiscal, num_ident, id_empresa, dir_fisica, dir_fiscal, pais, mail) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
             
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
@@ -68,9 +68,11 @@ public class ClientesController {
             stAux.setString(6, cliente.getApellido_persona());
             stAux.setInt(7,Integer.parseInt(cliente.getId_fiscal()));
             stAux.setString(8, cliente.getNum_ident());
-            stAux.setString(9, cliente.getDir_fisica());
-            stAux.setString(10, cliente.getDir_fiscal());
-            stAux.setString(11, cliente.getPais());
+            stAux.setString(9,cliente.getNum_ident());
+            stAux.setString(10, cliente.getDir_fisica());
+            stAux.setString(11, cliente.getDir_fiscal());
+            stAux.setString(12, cliente.getPais());
+            stAux.setString(13, cliente.getMail());
             
             stAux.executeUpdate();
             
@@ -164,10 +166,66 @@ public class ClientesController {
             }
         }
         return resp;
-        
+
+    }
+    
    
+    @RequestMapping("/clientesController/getEmpresa.htm")  
+    @ResponseBody
+    public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Clientes resourceLoad = new Clientes();
         
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
         
+        ArrayList<String> arrayTipo = new ArrayList<>();   
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT ID_EMPRESA, EMPRESA FROM TIPO_EMPRESA");
+           
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new TipoEmpresa(rs.getInt(1),rs.getString(2)))); 
+            }
+                        
+            resp = new Gson().toJson(arrayTipo);
+                        
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
     }
     
 }

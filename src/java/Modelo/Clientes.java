@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
 package Modelo;
 
 import java.io.Serializable;
 
-/**
- *
- * @author nmohamed
- */
+
 public class Clientes {
 
     private String id_cliente;
@@ -21,10 +15,12 @@ public class Clientes {
     private String apellido_persona;
     private String id_fiscal;
     private String num_ident;
-    //private String tipo_empresa;
+    private String tipo_empresa;
     private String dir_fisica;
     private String dir_fiscal;
     private String pais;
+    private String mail;
+    
     
     public String getId_cliente() {
         return id_cliente;
@@ -91,13 +87,13 @@ public class Clientes {
         this.num_ident = num_ident;
     }
 
-//    public String getTipo_empresa() {
-//        return tipo_empresa;
-//    }
-//
-//    public void setTipo_empresa(String tipo_empresa) {
-//        this.tipo_empresa = tipo_empresa;
-//    }
+    public String getTipo_empresa() {
+        return tipo_empresa;
+    }
+
+    public void setTipo_empresa(String tipo_empresa) {
+        this.tipo_empresa = tipo_empresa;
+    }
 
     
     public String getDir_fisica() {
@@ -107,7 +103,6 @@ public class Clientes {
     public void setDir_fisica(String dir_fisica) {
         this.dir_fisica = dir_fisica;
     }
-
 
     public String getDir_fiscal() {
         return dir_fiscal;
@@ -125,8 +120,15 @@ public class Clientes {
         this.pais = pais;
     }
 
-    
-    
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+  
+
 }
 
 
