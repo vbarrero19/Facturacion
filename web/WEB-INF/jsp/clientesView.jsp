@@ -16,29 +16,96 @@
             getEmpresa();
 
 
-        //Al cambiar la opcion del radio direc(igual direccion fisica y fiscal)
-        //activamos la funcion que repite el texto en los dos campos de texto
-        $('input[name=direc]').change(function () {//          
+            //Al cambiar la opcion del radio direc(igual direccion fisica y fiscal)
+            //activamos la funcion que repite el texto en los dos campos de texto
+            $('input[name=direc]').change(function () {//          
 
-            if ($("#direc2").is(':checked')) {
-                //cuando activamos el boton del si.
-                $("#dir_fisica").keyup(function () {
-                    document.getElementById('dir_fiscal').value = this.value;
+                if ($("#direc2").is(':checked')) {
+                    //cuando activamos el boton del si.
+                    $("#dir_fisica").keyup(function () {
+                        document.getElementById('dir_fiscal').value = this.value;
+                    });
+                    //desactivamos el boton del input2.
+                    $("#dir_fiscal").prop('disabled', true);
+                    
+                    //copiamos el texto del input1 al input2.
+                    
+                    
+                    var text= $('#dir_fisica').val();
+                    var text2;
+                    text = text2;
+                    $('#dir_fiscal') = text2;
+                    alert(text);
+
+                } else {
+                    // cuando activamos el botón del no
+                    $("#dir_fiscal").prop('disabled', false);
+                    $('#dir_fiscal').val('');
+                }
+            })
+
+            /**********************************************/
+
+            $("#submit").click(function () {
+
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+                //id cliente 
+                myObj["id_cliente"] = $("#id_cliente").val().trim();
+                //nombre empresa
+                myObj["nombre_empresa"] = $("#nombre_empresa").val().trim();
+                //tratamiento persona
+                myObj["tratamiento"] = $(".form-check input:checked").val();
+                //nombre de la persona  
+                myObj["nombre_persona"] = $("#nombre_persona").val().trim();
+                //inicial del segundo nombre de la persona
+                myObj["mi_persona"] = $("#mi_persona").val().trim();
+                //Apellido de la persona de contacto
+                myObj["apellido_persona"] = $("#apellido_persona").val().trim();
+                //Tipo de identificacion fiscal
+                myObj["id_fiscal"] = $("#fiscal").val();
+                //Numero de identificador de la empresa.
+                myObj["num_ident"] = $("#num_ident").val().trim();
+                //Direccion fisica
+                myObj["dir_fisica"] = $("#dir_fisica").val().trim();
+                //Direccion fiscal
+                myObj["dir_fiscal"] = $("#dir_fiscal").val().trim();
+                //Pais
+                myObj["pais"] = $("#pais").val().trim();
+                //correo electronico    
+                myObj["mail"] = $("#mail").val().trim();
+                //Telefono 1
+                myObj["telefono1"] = $("#telefono1").val().trim();
+                //Telefono 2
+                myObj["telefono2"] = $("#telefono2").val().trim();
+                //fax
+                myObj["fax"] = $("#fax").val().trim();
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/clientesController/newCustomer.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
                 });
-                $("#dir_fiscal").prop('disabled', true);
-            }else{
-                // cuando activamos el botón del no
-                $("#dir_fiscal").prop('disabled', false);
-                $('#dir_fiscal').val('');
-                
-            }
-
-        })
-
-        /**********************************************/
-
-        $("#submit").click(function () {
-
+            })
+        });
+        function getFiscal() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -47,46 +114,28 @@
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
-            var myObj = {};
-            //id cliente 
-            myObj["id_cliente"] = $("#id_cliente").val().trim();
-            //nombre empresa
-            myObj["nombre_empresa"] = $("#nombre_empresa").val().trim();
-            //tratamiento persona
-            myObj["tratamiento"] = $(".form-check input:checked").val();
-            //nombre de la persona  
-            myObj["nombre_persona"] = $("#nombre_persona").val().trim();
-            //inicial del segundo nombre de la persona
-            myObj["mi_persona"] = $("#mi_persona").val().trim();
-            //Apellido de la persona de contacto
-            myObj["apellido_persona"] = $("#apellido_persona").val().trim();
-            //Tipo de identificacion fiscal
-            myObj["id_fiscal"] = $("#fiscal").val();
-            //Numero de identificador de la empresa.
-            myObj["num_ident"] = $("#num_ident").val().trim();
-            //Direccion fisica
-            myObj["dir_fisica"] = $("#dir_fisica").val().trim();
-            //Direccion fiscal
-            myObj["dir_fiscal"] = $("#dir_fiscal").val().trim();
-            //Pais
-            myObj["pais"] = $("#pais").val().trim();
-            //correo electronico    
-            myObj["mail"] = $("#mail").val().trim();
-            //Telefono 1
-            myObj["telefono1"] = $("#telefono1").val().trim();
-            //Telefono 2
-            myObj["telefono2"] = $("#telefono2").val().trim();
-            //fax
-            myObj["fax"] = $("#fax").val().trim();
-            var json = JSON.stringify(myObj);
             $.ajax({
-                type: 'POST',
-                url: '/Facturacion/clientesController/newCustomer.htm',
-                data: json,
-                datatype: "json",
-                contentType: "application/json",
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //Recogemos los datos de clientesController/getFiscal.htm 
+                url: '/Facturacion/clientesController/getFiscal.htm',
                 success: function (data) {
-                    alert(data);
+
+                    //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
+                    var aux = JSON.parse(data);
+                    select = document.getElementById('fiscal');
+                    //Carga del combo
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a tipoFiscal
+                        var aux2 = JSON.parse(valor);
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = aux2.id_fiscal;
+                        //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
+                        opt.innerHTML = aux2.fiscal;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -94,47 +143,7 @@
                     console.log(thrownError);
                 }
             });
-        })
-        });
-                function getFiscal() {
-                    if (window.XMLHttpRequest) //mozilla
-                    {
-                        ajax = new XMLHttpRequest(); //No Internet explorer
-                    } else
-                    {
-                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    $.ajax({
-                        //Usamos GET ya que recibimos.
-                        type: 'GET',
-                        //Recogemos los datos de clientesController/getFiscal.htm 
-                        url: '/Facturacion/clientesController/getFiscal.htm',
-                        success: function (data) {
-
-                            //Recogemos los datos del combo y los pasamos a objetos tipoFiscal  
-                            var aux = JSON.parse(data);
-                            select = document.getElementById('fiscal');
-                            //Carga del combo
-                            aux.forEach(function (valor, indice) {
-                                //Cada objeto esta en String y lo pasmoa a tipoFiscal
-                                var aux2 = JSON.parse(valor);
-                                var opt = document.createElement('option');
-                                //Guardamos el id en el value de cada opcion
-                                opt.value = aux2.id_fiscal;
-                                //Guardamos el tipo de identificacion fiscal en el nombre de cada opcion
-                                opt.innerHTML = aux2.fiscal;
-                                //Añadimos la opcion
-                                select.appendChild(opt);
-                            });
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            console.log(xhr.status);
-                            console.log(xhr.responseText);
-                            console.log(thrownError);
-                        }
-                    });
-                }
+        }
 
 
         function getEmpresa() {
