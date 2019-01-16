@@ -13,7 +13,6 @@
     <script>
         $(document).ready(function () {
             var userLang = navigator.language || navigator.userLanguage;
-
             //*************************************//
             //ejecutarlo dentro del ready porque se ejecuta cada vez que entramos en la pagina.
             //constructor para el calendario. uno por cada calendario.
@@ -34,6 +33,7 @@
                         //                });
             });
             $("#submit").click(function () {
+
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -46,7 +46,7 @@
 //                myObj["id_cargo"] = $("#id_cargo").val().trim();
 //                myObj["id_items"] = $("#id_items").val().trim();
 //                myObj["id_factura"] = $("#id_factura").val().trim();
-                  myObj["id_cliente"] = $("#id_cliente").val().trim();
+                myObj["id_cliente"] = $("#id_cliente").val().trim();
 //                myObj["cantidad"] = $("#cantidad").val().trim();
 //                myObj["impuesto"] = $("#impuesto").val().trim();
 //                myObj["cargo"] = $("#cargo").val().trim();
@@ -54,6 +54,7 @@
 //                //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
 //                myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
 //                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+
 
 
                 var json = JSON.stringify(myObj);
@@ -64,7 +65,52 @@
                     datatype: "json",
                     contentType: "application/json",
                     success: function (data) {
-                        alert(data);
+
+                        /*
+                         *   <div class="col-xs-12" id="tableContainer">
+                         <table class="table table-striped">
+                         <thead class="thead-dark">
+                         <tr>
+                         <th scope="col">#</th>
+                         <th scope="col">id_cargo</th>
+                         <th scope="col">cargo</th> 
+                         </tr>
+                         </thead>
+                         <tbody>
+                         <tr>
+                         <th scope="row">1</th>
+                         <td>Mark</td>
+                         <td>Otto</td>
+                         <td>@mdo</td>
+                         </tr>
+                         </tbody>
+                         </table> 
+                         </div>
+                         
+                         * @type Array|Object
+                         * 
+                         * 
+                         */  
+                        var aux = JSON.parse(data);
+                        //Identificamos el combo
+                        select = document.getElementById('id_cargo');
+                        //Lo vamos cargando
+                        
+                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                          $('#tableContainer tbody').empty();
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var item = JSON.parse(valor);
+                           //cargamos de forma dinamica la tabla
+                            $('#tableContainer tbody').append(" <tr>\n\
+                                                                    <th scope=\"row\">"+(indice+1)+"</th>              \n\
+                                                                    <td>"+item.id_cargo+"</td>                       \n\
+                                                                    <td>"+item.cargo+"</td>                       \n\ \n\
+                                                                </tr>");
+                            /* $('#id_cargo ').val(aux2.id_cargo);
+                             $('#cargo').val(aux2.cargo);*/
+
+                        });
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -75,6 +121,49 @@
             })
         });
         ;
+        function getCargos() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/facturasController/getFacturas.htm', //Vamos a itemsController/getImpuesto.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    var aux = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('id_cargo');
+                    //Lo vamos cargando
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var aux2 = JSON.parse(valor);
+                        $('#id_cargo').text(aux2.id_cargo);
+                        $('#cargo').text(aux2.cargo);
+                        //Creamos las opciones del combo
+                        //var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        //opt.value = aux2.id_Impuesto;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        //opt.innerHTML = aux2.id_impuesto;
+                        //opt.innerHTML = aux2.impuesto;
+                        //Añadimos la opcion
+                        //select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
 
     </script>
     <body>
@@ -85,85 +174,101 @@
                         <form role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>
-                         
-                            
-                                                        
-                            
+
+
+
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div>
                             <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
-                            
-                            
+
+
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
-                            </div>                            
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_items" name="id_items" placeholder="Identificador items" required>
-                            </div>
-                            <div class="form-group">
+                                <!--                            </div>                            
+                                                            <div class="form-group">-->
+                                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Identificador items" required>
+                                <!--                            </div>
+                                                            <div class="form-group">-->
                                 <input type="text" class="form-control" id="id_factura" name="id_factura" placeholder="Identificador factura" required>
                             </div>
-                            
-                            
-                            
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+
+                            <div class="col-xs-12" id="tableContainer">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">id_cargo</th>
+                                            <th scope="col">cargo</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" type="textarea" id="cargo" name="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>
-                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
-                            </div>
-                            
-                            
-                            <!-- ************************************* -->
-                            <div class="container">
-                                <div class="row">
-                                    <div class='col-xs-12 col-md-4'>
-                                        <div class="form-group">
-                                            <div class='input-group date' id='fecha_cargo'>
-                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#fecha_cargo').datetimepicker();
-                                        });
-                                    </script>
-                                </div>
-                            </div>
-                            <!-- ************************************* -->
-                            
-                           
-                            <div class="container">
-                                <div class="row">
-                                    <div class='col-xs-12 col-md-4'>
-                                        <div class="form-group">
-                                            <div class='input-group date' id='fecha_vencimiento'>
-                                                <input type='text' class="form-control" />
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#fecha_vencimiento').datetimepicker();
-                                        });
-                                    </script>
-                                </div>
-                            </div>                           
-                           
+
+
+                            <!--                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <textarea class="form-control" type="textarea" id="cargo" name="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>
+                                                            <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
+                                                        </div>
+                                                        
+                                                        
+                                                         ************************************* 
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class='col-xs-12 col-md-4'>
+                                                                    <div class="form-group">
+                                                                        <div class='input-group date' id='fecha_cargo'>
+                                                                            <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <script type="text/javascript">
+                                                                    $(function () {
+                                                                        $('#fecha_cargo').datetimepicker();
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                         ************************************* 
+                                                        
+                                                       
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class='col-xs-12 col-md-4'>
+                                                                    <div class="form-group">
+                                                                        <div class='input-group date' id='fecha_vencimiento'>
+                                                                            <input type='text' class="form-control" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <script type="text/javascript">
+                                                                    $(function () {
+                                                                        $('#fecha_vencimiento').datetimepicker();
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                        </div>                           -->
+
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
-                            
+
                         </form>
                     </div>
                 </div>

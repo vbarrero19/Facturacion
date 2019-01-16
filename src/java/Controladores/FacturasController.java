@@ -63,22 +63,24 @@ public class FacturasController {
         
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();
-            
-            int valor = Integer.parseInt(factura.getId_cliente());
-            System.out.println(valor);
-            
-            Statement sentencia = con.createStatement();           
+            con = pool_local.getConnection();        
+                 
             
             
             /*************Hacer prepare statement???****************/
-            rs = sentencia.executeQuery("SELECT ID_CARGO, CARGO FROM CARGOS WHERE ID_CLIENTE = valor");
+            stAux = con.prepareStatement("SELECT ID_CARGO, CARGO FROM CARGOS WHERE ID_CLIENTE = ?");
            
+            stAux.setInt(1, Integer.parseInt(factura.getId_cliente())); 
+            //Ejecutamos                 
+            rs = stAux.executeQuery();             
+                  
+            
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
+                arrayTipo.add(new Gson().toJson(new Cargos(rs.getString(1),rs.getString(2)))); 
             }
             
             resp = new Gson().toJson(arrayTipo);
+            
         } catch (SQLException ex) {
             resp = "incorrecto SQLException"; // ex.getMessage();
             StringWriter errors = new StringWriter();

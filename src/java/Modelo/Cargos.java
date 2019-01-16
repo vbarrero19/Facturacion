@@ -22,7 +22,17 @@ public class Cargos  {
     private String cargo;
     private String fecha_cargo; 
     private String fecha_vencimiento; 
-    
+
+    public Cargos(String id_cargo, String cargo) {
+        this.id_cargo = id_cargo;        
+        this.cargo = cargo;        
+    }
+
+    public Cargos() {
+        
+    }
+
+        
 
     public String getId_cargo() {
         return id_cargo;

@@ -11,6 +11,11 @@ public class Facturas {
     private String fecha_emision;
     private String fecha_vencimiento;
 
+    public Facturas() {
+    }
+
+    
+
     public String getId_factura() {
         return id_factura;
     }
