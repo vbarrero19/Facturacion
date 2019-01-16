@@ -60,7 +60,7 @@
                             </div>
 
                             <div class="divName col-xs-4">
-                                <button type="button" class="btn btn-primary">Facturas</button>
+                                <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>  
                         </div>
                     </div>

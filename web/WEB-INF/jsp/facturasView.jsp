@@ -8,7 +8,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>CARGOS VIEW</title> 
+        <title>FACTURAS GENERAR VIEW</title> 
     </head>
     <script>
         $(document).ready(function () {
@@ -43,23 +43,23 @@
                 }
 
                 var myObj = {};
-                myObj["id_cargo"] = $("#id_cargo").val().trim();
-                myObj["id_items"] = $("#id_items").val().trim();
-                myObj["id_factura"] = $("#id_factura").val().trim();
-                myObj["id_cliente"] = $("#id_cliente").val().trim();
-                myObj["cantidad"] = $("#cantidad").val().trim();
-                myObj["impuesto"] = $("#impuesto").val().trim();
-                myObj["cargo"] = $("#cargo").val().trim();
-                
-                //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
-                myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
-                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+//                myObj["id_cargo"] = $("#id_cargo").val().trim();
+//                myObj["id_items"] = $("#id_items").val().trim();
+//                myObj["id_factura"] = $("#id_factura").val().trim();
+                  myObj["id_cliente"] = $("#id_cliente").val().trim();
+//                myObj["cantidad"] = $("#cantidad").val().trim();
+//                myObj["impuesto"] = $("#impuesto").val().trim();
+//                myObj["cargo"] = $("#cargo").val().trim();
+//                
+//                //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
+//                myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
+//                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
 
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/cargosController/newCustomer.htm',
+                    url: '/Facturacion/facturasController/getFacturas.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -85,6 +85,16 @@
                         <form role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>
+                         
+                            
+                                                        
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                            </div>
+                            <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+                            
+                            
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
                             </div>                            
@@ -94,9 +104,9 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_factura" name="id_factura" placeholder="Identificador factura" required>
                             </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
-                            </div>
+                            
+                            
+                            
                             <div class="form-group">
                                 <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
                             </div>
@@ -150,19 +160,10 @@
                                         });
                                     </script>
                                 </div>
-                            </div>
+                            </div>                           
                            
-                            <!--
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="fecha_cargo" name="fecha_cargo" placeholder="Fecha cargo" required>
-                            </div>          
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha vencimiento" required>
-                            </div>
-                            -->
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
-                            <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+                            
                         </form>
                     </div>
                 </div>

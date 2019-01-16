@@ -45,6 +45,7 @@
     <bean class="Controladores.MenuController" id="menu"/>
     <bean class="Controladores.CargosController" id="cargos"/> 
     <bean class="Controladores.ItemsController" id="items"/>   
+    <bean class="Controladores.FacturasController" id="facturas"/> 
     <bean class="Controladores.TipoImpuestoController" id="tipoImpuesto"/>
     <bean class="Controladores.TipoEmpresaController" id="tipoEmpresa"/>    
     <bean class="Controladores.TipoFiscalController" id="tipoFiscal"/>
@@ -64,6 +65,7 @@
                 <prop key="menuController.htm">menu</prop>
                 <prop key="cargosController.htm">cargos</prop>                
                 <prop key="itemsController.htm">items</prop>
+                <prop key="facturasController.htm">facturas</prop>
                 <prop key="tipoImpuestoController.htm">tipoImpuesto</prop>
                 <prop key="tipoEmpresaController.htm">tipoEmpresa</prop>
                 <prop key="tipoFiscalController.htm">tipoFiscal</prop>
