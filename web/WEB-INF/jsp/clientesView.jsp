@@ -30,12 +30,7 @@
                     
                     //copiamos el texto del input1 al input2.
                     
-                    
-                    var text= $('#dir_fisica').val();
-                    var text2;
-                    text = text2;
-                    $('#dir_fiscal') = text2;
-                    alert(text);
+///////////////////  ENLACE WEB:  https://stackoverflow.com/questions/5896287/jquery-passing-value-from-one-input-to-another
 
                 } else {
                     // cuando activamos el botón del no
