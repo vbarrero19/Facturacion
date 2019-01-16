@@ -14,14 +14,38 @@
         $(document).ready(function () {
             getFiscal();
             getEmpresa();
-            
+
+//            $("#dir_fisica").keyup(function () {
+//                document.getElementById('dir_fiscal').value = this.value;
+//            });
+
+
+
+
+            /*******************/
             //Funcion que autocompleta el campo de la direccion fiscal en caso de que el radiobutton este check en SI.
-           // if($("#tratamiento .form-check input:checked").atrr("id"))
-           
-            $("#dir_fisica").keyup(function () {
+
+
+            function getDir (){
+                var dire = document.getElementById("direc2").value;
+                
+            if(dire = 
+             $("#dir_fisica").keyup(function () {
                 document.getElementById('dir_fiscal').value = this.value;
             });
+            };
+                
+                
+                
+            }
             
+
+            //con esto recoge el valor del check
+            //$("#direc .form-check input:checked").val() 
+
+
+            /**********************************************/
+
             $("#submit").click(function () {
 
                 if (window.XMLHttpRequest) //mozilla
@@ -223,24 +247,25 @@
                                 <select class="form-control" id="empresa" name="empresa">
                                 </select>
                             </div>
-                            
+
+
+                            <label> ¿La direccion fisica es igual a la fiscal? </label>
                             <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
-                            <div id= "dir" class="form-group">
-                                <label> ¿La direccion fisica es igual a la fiscal? </label>
+                            <div id="direc" class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="check_dir" id="si" value="si" checked>
-                                    <label class="form-check-label" for="1">Si</label>
+                                    <input class="form-check-input" type="radio" name="direc" id="direc1" value="no" checked>
+                                    <label class="form-check-label" for="1">No</label>
                                 </div>
-                                <div id="dir" class="form-check">
-                                    <input class="form-check-input" type="radio" name="check_dir" id="no" value="no">
-                                    <label class="form-check-label" for="2">No</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="direc" id="direc2" value="si">
+                                    <label class="form-check-label" for="2">Si</label>
                                 </div>
-                            </div>
+                            </div>   
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fisica" name="dir_fisica"  placeholder="Dirección física"  required>
                             </div>
-                            
+
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
