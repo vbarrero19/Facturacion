@@ -16,25 +16,24 @@
             getEmpresa();
 
 
-     
-
-
         //Al cambiar la opcion del radio direc(igual direccion fisica y fiscal)
         //activamos la funcion que repite el texto en los dos campos de texto
         $('input[name=direc]').change(function () {//          
 
             if ($("#direc2").is(':checked')) {
+                //cuando activamos el boton del si.
                 $("#dir_fisica").keyup(function () {
                     document.getElementById('dir_fiscal').value = this.value;
                 });
                 $("#dir_fiscal").prop('disabled', true);
             }else{
+                // cuando activamos el botón del no
                 $("#dir_fiscal").prop('disabled', false);
+                $('#dir_fiscal').val('');
                 
             }
 
         })
-
 
         /**********************************************/
 
