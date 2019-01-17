@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ 
 package Modelo;
 
 import java.io.Serializable;
 
-/**
- *
- * @author nmohamed
- */
 public class Resource  { 
     private String col1;
     private String col2;
@@ -19,6 +11,7 @@ public class Resource  {
     private String col5;
     private String col6; 
      
+    
     public String getCol1() {
         return col1;
     }
@@ -67,5 +60,6 @@ public class Resource  {
         this.col6 = col6;
     }
 
+    
           
 }
