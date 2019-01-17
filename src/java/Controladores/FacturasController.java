@@ -67,7 +67,7 @@ public class FacturasController {
                  
             
             
-            /*************Hacer prepare statement???****************/
+            
             stAux = con.prepareStatement("SELECT ID_CARGO, CARGO FROM CARGOS WHERE ID_CLIENTE = ?");
            
             stAux.setInt(1, Integer.parseInt(factura.getId_cliente())); 
