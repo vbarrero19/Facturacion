@@ -2633,6 +2633,12 @@ input[type="search"] {
 .form-group {
   margin-bottom: 15px;
 }
+
+#tratamiento.form-group{
+    display: inline-block;
+    
+}
+
 .radio,
 .checkbox {
   position: relative;
