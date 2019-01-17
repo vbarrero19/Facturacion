@@ -21,25 +21,22 @@
             $('input[name=direc]').change(function () {//          
 
                 if ($("#direc2").is(':checked')) {
-                    //cuando activamos el boton del si.
+                    //CUANDO ACTIVAMOS EL BOTON DEL SI
                     $("#dir_fisica").keyup(function () {
                         document.getElementById('dir_fiscal').value = this.value;
                     });
-                    //desactivamos el boton del input2.
+                    //DESHABILITAMOS EL CAJON2 DE LA DIRECCION FISCAL
                     $("#dir_fiscal").prop('disabled', true);
 
-                    //copiamos el texto del input1 al input2.
-
-
                 } else {
-                    // cuando activamos el botón del no
+                    // CUANDO CLICKAMOS EN EL BOTON DEL NO
                     $("#dir_fiscal").prop('disabled', false);
                     $('#dir_fiscal').val('');
                 }
             })
 
-            /**********************************************/
 
+            // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
             $("#submit").click(function () {
 
                 if (window.XMLHttpRequest) //mozilla
@@ -191,8 +188,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CLIENTES</h3>
-
+                            <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA CLIENTES</h3>
 
                             <!--EL ID DE CLIENTE TENEMOS QUE CAMBIARLO Y PONERLO SERIAL EN LA BASE DE DATOS PARA QUE SE AUTOINCREMENTE SOLO -->
                             <div class="form-group">
@@ -200,45 +196,31 @@
                             </div> 
 
                             <!-- ALMACENAMOS EL NOMBRE DEL CLIENTE -->
-
                             <div class="form-group">
                                 <input type="text" class="form-control" id="nombre_persona" name="nombre_persona" placeholder="Nombre persona" required>
                             </div>
 
-
                             <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CLIENTES -->
-                            <div class="form-group">
-                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <div class="form-group">						
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-item nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Adress Info</a>
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Adress Info</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Additional Info</a>
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Additional Info</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Payment Info</a>
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Payment Info</a>
                                     </li>
                                 </ul>
-                            </div>                            
-                            <!--************************************************-->
-
+                            </div>  
 
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
-
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade  active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-
-                                    <!--                                    <div class="form-group">
-                                                                            <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre empresa" required>
-                                                                        </div>                            -->
-
-                                    <!-- Creamos radio button para seleccionar el tipo de tratamiento del cliente -->
-
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre empresa" required>
                                     </div>  
-
 
                                     <div id="tratamiento" class="form_radio_button">
                                         <div class="form-check">
@@ -249,21 +231,7 @@
                                             <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
                                             <label class="form-check-label" for="2">Mrs</label>
                                         </div>
-                                    </div>  
-                                    
-                                    
-<!--                                    <div id="tratamiento" class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input inline-block" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
-                                            <label class="form-check-label" for="1">Mr</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
-                                            <label class="form-check-label" for="2">Mrs</label>
-                                        </div>
-                                    </div> -->
-
-
+                                    </div> 
 
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="mi_persona" name="mi_persona" placeholder="Inicial" required>
@@ -273,17 +241,17 @@
                                         <input type="text" class="form-control" id="apellido_persona" name="apellido_persona" placeholder="Apellido" required>
                                     </div>
 
-                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
-                                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
-                                </div> 
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Main menu</a>                             
+                                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+                                </div>
 
-                                    <div class="form-group">
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="form-group-cif">
                                         <select class="form-control" id="fiscal" name="fiscal">
                                         </select>
-                                    </div>  
+                                    <!-- </div>   
 
-                                    <div class="form-group">
+                                    <div class="form-group"> -->
                                         <input type="text" class="form-control" id="num_ident" name="num_ident" placeholder="Numero identificador de empresa" required>
                                     </div>
 
@@ -291,7 +259,6 @@
                                         <select class="form-control" id="empresa" name="empresa">
                                         </select>
                                     </div>
-
 
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
                                     <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
@@ -310,7 +277,6 @@
                                         <input type="text" class="form-control" id="dir_fisica" name="dir_fisica"  placeholder="Dirección física"  required>
                                     </div>
 
-
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
                                     </div>
@@ -319,11 +285,8 @@
                                         <input type="text" class="form-control" id="pais" name="pais" placeholder="País" required>
                                     </div>
 
-
-
                                 </div>
-                                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
                                     <div class="form-group">
                                         <input type="email" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
@@ -340,107 +303,8 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
                                     </div>
-
-
-
                                 </div>
                             </div>
-
-
-                            <!--************************************************ -->                          
-
-                            <!--                            <div class="form-group">
-                                                            <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
-                                                        </div> 
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre empresa" required>
-                                                        </div>                            
-                            
-                                                         Creamos radio button para seleccionar el tipo de tratamiento del cliente 
-                                                        <div id="tratamiento" class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
-                                                                <label class="form-check-label" for="1">Mr</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
-                                                                <label class="form-check-label" for="2">Mrs</label>
-                                                            </div>
-                                                        </div>   
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="nombre_persona" name="nombre_persona" placeholder="Nombre persona" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="mi_persona" name="mi_persona" placeholder="Inicial" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="apellido_persona" name="apellido_persona" placeholder="Apellido" required>
-                                                        </div>-->
-
-                            <!-- Creamos un combo para cargar el tipo de identificacion fiscal -->
-                            <!--                            <div class="form-group">
-                                                            <select class="form-control" id="fiscal" name="fiscal">
-                                                            </select>
-                                                        </div>  
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="num_ident" name="num_ident" placeholder="Numero identificador de empresa" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <select class="form-control" id="empresa" name="empresa">
-                                                            </select>
-                                                        </div>
-                            
-                            
-                                                        <label> ¿La direccion fisica es igual a la fiscal? </label>
-                                                         Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo 
-                                                        <div id="direc" class="form-group">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="direc" id="direc1" value="no" checked>
-                                                                <label class="form-check-label" for="1">No</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="direc" id="direc2" value="si">
-                                                                <label class="form-check-label" for="2">Si</label>
-                                                            </div>
-                                                        </div>   
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="dir_fisica" name="dir_fisica"  placeholder="Dirección física"  required>
-                                                        </div>
-                            
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="dir_fiscal" name="dir_fiscal" placeholder="Dirección fiscal" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="pais" name="pais" placeholder="País" required>
-                                                        </div>-->
-
-                            <!--                            <div class="form-group">
-                                                            <input type="email" class="form-control" id="mail" name="mail" placeholder="E-mail" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="telefono1" name="telefono1" placeholder="Teléfono" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Teléfono" required>
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
-                                                        </div>-->
-
-
-
                         </form>
                     </div>
                 </div>
