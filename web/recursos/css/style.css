@@ -423,7 +423,7 @@ textarea
 }
 
 #precio.form-control{
-     display: inline;
+    display: inline;
     width: 80%;
     margin-left: 5%;
     
@@ -433,4 +433,15 @@ textarea
 #impuesto.form-control{
     width: 20%; 
 }
+
+#consultarFac{
+    margin-top: 25px;
+}
+
+#subtotal, #impuesto, #total{
+    text-align: right;
+}
+
+
+
 /* ********************************************  */    

@@ -97,7 +97,7 @@
                                     <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                                 </div> 
 
-                                <button type="button" id="consultarFac" name="submit" class="btn btn-primary pull-right">Consultar Factura</button>
+                                <button type="button" id="consultarFac" name="consultarFac" class="btn btn-primary pull-right">Consultar Factura</button>
                             </div>
 
                             <br style="clear:both">
@@ -108,15 +108,15 @@
 
                                 <div class="form-group col-xs-4">
                                     <label for="nombre_empresa">Nombre de empresa</label>
-                                    <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Identificador cargo" required>
+                                    <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa">
                                 </div>                            
                                 <div class="form-group col-xs-4">
                                     <label for="dir_fisica">Dirección de empresa</label>
-                                    <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="Identificador items" required>
+                                    <input type="text" class="form-control" id="dir_fisica" name="dir_fisica">
                                 </div>
                                 <div class="form-group col-xs-4">
                                     <label for="pais">Pais de empresa</label>
-                                    <input type="text" class="form-control" id="pais" name="pais" placeholder="Identificador factura" required>
+                                    <input type="text" class="form-control" id="pais" name="pais">
                                 </div>
 
                             </div>
@@ -153,16 +153,16 @@
                                         <label>Subtotal:</label>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input type="text" class="form-control derecha" id="subtotal" name="subtotal" disabled="true">
+                                        <input type="text" class="form-control" id="subtotal" name="subtotal" disabled="true">
                                     </div>
                                 </div>           
                                 <br style="clear:both">
                                 <div class="form-group">
                                     <div class="col-xs-3">
-                                        <label>Impuesto:</label>
+                                        <label>Impuesto;</label>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input type="text" class="form-control derecha" id="impuesto" name="impuesto" disabled="true">
+                                        <input type="text" class="form-control" id="impuesto" name="impuesto" disabled="true">
                                     </div>
                                 </div>       
                                 <br style="clear:both">
@@ -171,7 +171,7 @@
                                         <label>Total:</label>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input type="text" class="form-control derecha" id="total" name="total" disabled="true">
+                                        <input type="text" class="form-control" id="total" name="total" disabled="true">
                                     </div>
                                 </div>       
 
