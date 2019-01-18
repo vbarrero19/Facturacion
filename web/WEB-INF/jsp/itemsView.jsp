@@ -162,7 +162,7 @@
                                             <label class="form-check-label" for="2">Puntual</label>
                                         </div>
                                     </div>
-                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Main menu</a>                             
+                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                                     <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 </div>
                                 <!--INFORMACION DE LA PESTAÑA 2 -->
