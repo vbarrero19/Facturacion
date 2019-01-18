@@ -34,42 +34,44 @@
         </style>
         <header>
             <div class="navUsuario" id="infousuario">   
-
-                <div class="row">
+                <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
+                <div class="row" style="height: 75px;display: flex;">
                     <div class="col-xs-10" id="childrensNav">
-<!--                        <div class="row">-->
-                            <div class="divName col-xs-1">
+                        <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
+                        <div class="row" style="display: flex;/*! flex-direction: unset; */justify-content: space-between;align-items:  center;height: 100%;">
+                            
+                            <div class="divName ">
                                 <a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>
                             </div> 
-                            <div class="divName col-xs-1">
+                            <div class="divName">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
                             </div> 
-                            <div class="divName col-xs-1">
+                            <div class="divName ">
                                 <a href="<c:url value='/itemsController/start.htm'/>" class="btn btn-info" role="button">Items</a>
                             </div>
-                            <div class="divName col-xs-2">
+                            <div class="divName ">
                                 <a href="<c:url value='/tipoImpuestoController/start.htm'/>" class="btn btn-info" role="button">Tipo Impuesto</a>
                             </div>
 
-                            <div class="divName col-xs-2">
+                            <div class="divName">
                                 <a href="<c:url value='/tipoEmpresaController/start.htm'/>" class="btn btn-info" role="button">Tipo Empresa</a>
                             </div>
                             
-                            <div class="divName col-xs-2">
+                            <div class="divName">
                                 <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Identificacion fiscal</a>
                             </div>
-
-                            <div class="divName col-xs-1">
-                                <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
-                            </div>  
-<!--                        </div>-->
-                    </div>
-
-                    <div class="divName col-xs-2">
-                        <div class="row">
-
+                            
+                            <div class="divName ">
+                                <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
+                            </div>
                         </div>
                     </div>
+
+                   
+
+
+
+
                     <div class="logOut col-xs-2">
                         <a onclick="$('#logoutmodal').modal('show');" role="button" aria-haspopup="true" aria-expanded="false"><img class="imgUser" src="<c:url value="/recursos/img/iconos/logoBamboo_IconLogout.svg"/>"></a>
                     </div>
