@@ -49,12 +49,13 @@ public class FacturasController {
         return null;
     }
     
-    /*************ESTO FUNCIONA********************
-    
+       
+   /*****************ESTO FUNCIONA**************/
+    /*
     @RequestMapping("/facturasController/getFacturas.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Facturas factura, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Facturas resourceLoad = new Facturas();
+    public String saveNewCustomer(@RequestBody ClienteCargos clienteCargos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ClienteCargos resourceLoad = new ClienteCargos();
         
         Connection con = null;
         ResultSet rs = null;
@@ -65,17 +66,16 @@ public class FacturasController {
         
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();      
+            con = pool_local.getConnection();  
             
-            stAux = con.prepareStatement("SELECT ID_CARGO, CARGO FROM CARGOS WHERE ID_CLIENTE = ?");
-           
-            stAux.setInt(1, Integer.parseInt(factura.getId_cliente())); 
+            stAux = con.prepareStatement("SELECT c.id_cliente, c.id_cargo, cargo, cantidad, nombre_empresa, dir_fisica, pais FROM CARGOS c inner join clientes t on c.id_cliente = t.id_cliente and c.ID_CLIENTE = ?");
+            
+            stAux.setInt(1, Integer.parseInt(clienteCargos.getId_cliente())); 
             //Ejecutamos                 
-            rs = stAux.executeQuery();             
-                  
+            rs = stAux.executeQuery();
             
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Cargos(rs.getString(1),rs.getString(2)))); 
+                arrayTipo.add(new Gson().toJson(new ClienteCargos(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)))); 
             }
             
             resp = new Gson().toJson(arrayTipo);
@@ -85,11 +85,11 @@ public class FacturasController {
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {
-             resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         } finally {
-            try { 
+            try {
                 if (rs != null) {
                     rs.close();
                 }
@@ -109,16 +109,10 @@ public class FacturasController {
             }
         }
         return resp;
-    }
-        
+    }*/
     
+    /********************************************/
     
-    
-    *********************************/
-    
-    
-    
-   
     @RequestMapping("/facturasController/getFacturas.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody ClienteCargos clienteCargos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -177,6 +171,9 @@ public class FacturasController {
         }
         return resp;
     }
+    
+    
+    
 }
     
     
