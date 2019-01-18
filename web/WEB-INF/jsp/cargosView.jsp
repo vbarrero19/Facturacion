@@ -13,6 +13,8 @@
     <script>
         $(document).ready(function () {
             var userLang = navigator.language || navigator.userLanguage;
+            
+            $("#home-tab").click();
 
             //*************************************//
             //ejecutarlo dentro del ready porque se ejecuta cada vez que entramos en la pagina.

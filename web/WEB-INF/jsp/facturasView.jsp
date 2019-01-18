@@ -12,6 +12,8 @@
     </head>
     <script>
         $(document).ready(function () {
+            //al cargar la pagina llamamos a la funcion getCliente() para llenar el combo 
+            getCliente();
             var userLang = navigator.language || navigator.userLanguage;
 
             $("#consultarFac").click(function () {
@@ -25,10 +27,10 @@
                 }
 
                 var myObj = {};
-//              
-                myObj["id_cliente"] = $("#id_cliente").val().trim();
 
-//              
+//                myObj["id_cliente"] = $("#id_cliente").val().trim();
+                myObj["id_cliente"] = $("#comboClientes").val().trim();
+                // myObj["id_impuesto"] = $("#impuesto").val();
                 var json = JSON.stringify(myObj);
 
                 $.ajax({
@@ -40,7 +42,7 @@
                     success: function (data) {
 
                         var aux = JSON.parse(data);
-                        
+
                         var cantidad = 0;
                         var subtotal = 0;
 
@@ -50,7 +52,7 @@
                             //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                             var item = JSON.parse(valor);
 
-                            $("#nombre_empresa").val(item.nombre_empresa);
+                            $("#id_cliente").val(item.id_cliente);
                             $("#dir_fisica").val(item.dir_fisica);
                             $("#pais").val(item.pais);
                             subtotal = parseInt(item.cantidad);
@@ -66,8 +68,8 @@
 
                         });
                         $("#subtotal").val(cantidad);
-                        $("#impuesto21").val(cantidad*0.21);                        
-                        $("#total").val(cantidad*1.21);
+                        $("#impuesto21").val(cantidad * 0.21);
+                        $("#total").val(cantidad * 1.21);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -77,7 +79,52 @@
                 });
             })
         });
-        ;
+
+        //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
+        //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
+        function getCliente() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/facturasController/getCliente.htm', //Vamos a itemsController/getImpuesto.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    var aux = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboClientes');
+                    //Lo vamos cargando
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var aux2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = aux2.id_Impuesto;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        //                 opt.innerHTML = aux2.id_impuesto;
+                        opt.innerHTML = aux2.impuesto;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+
+
 
 
     </script>
@@ -90,13 +137,26 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Facturas</h3>
 
+<!--                            <div class="form-group-combo">
+                                Combo para tipo de impuestos
+                                <select class="form-control" id="comboClientes" name="comboClientes">
+                                </select>                                                            
+                            </div>-->
+
                             <div class="col-xs-12">
 
-                                <div class="col-xs-6 form-group">
-                                    <label for="id_cliente">Identificador de cliente</label>
-                                    <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
-                                </div> 
-
+<!--                        <div class="col-xs-6 form-group">
+                                <label for="id_cliente">Identificador de cliente</label>
+                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                            </div> -->
+                            <div class="col-xs-6 form-group">
+                                <label for="comboClientes">Nombre de empresa</label>
+                                <div class="form-group-combo">
+                                    <!--Combo para clientes-->
+                                    <select class="form-control" id="comboClientes" name="comboClientes">
+                                    </select>                                                            
+                                </div>
+                            </div>
                                 <button type="button" id="consultarFac" name="consultarFac" class="btn btn-primary pull-right">Consultar Factura</button>
                             </div>
 
@@ -107,8 +167,8 @@
                             <div class="col-xs-12" id="datos">
 
                                 <div class="form-group col-xs-4">
-                                    <label for="nombre_empresa">Nombre de empresa</label>
-                                    <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa">
+                                    <label for="nombre_empresa">Identificador Cliente</label>
+                                    <input type="text" class="form-control" id="id_cliente" name="id_cliente">
                                 </div>                            
                                 <div class="form-group col-xs-4">
                                     <label for="dir_fisica">Dirección de empresa</label>

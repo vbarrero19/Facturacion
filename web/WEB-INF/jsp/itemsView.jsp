@@ -13,6 +13,9 @@
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
             getImpuesto();
+            
+            $("#home-tab").click();
+
             //Evento .click en el boton submit
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
