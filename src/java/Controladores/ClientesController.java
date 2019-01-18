@@ -52,14 +52,14 @@ public class ClientesController {
         PreparedStatement stAux = null;
         String resp = "correcto";
        
-      
+       /*CODIGO PARA AÑADIR UN NUEVO CLIENTE*/ 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            
+            /*REALIZAMOS LA CONSULTA PREPARADA PARA EL NUEVO CLIENTE*/
             stAux = con.prepareStatement("INSERT INTO clientes (id_cliente, nombre_empresa, tratamiento, nombre_persona, mi_persona, apellido_persona, id_fiscal, num_ident, id_empresa, dir_fisica, dir_fiscal, pais, mail, telefono1, telefono2, fax) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
-            
+            /*VAMOS ASIGNANDO LOS VALORES*/
             stAux.setInt(1, Integer.parseInt(cliente.getId_cliente()));
             stAux.setString(2, cliente.getNombre_empresa());
             stAux.setString(3,cliente.getTratamiento());
@@ -113,6 +113,8 @@ public class ClientesController {
         return resp;
     }
     
+    
+    /*CODIGO PARA AÑADIR UN NUEVO TIPO DE IDENTIFICACION FISCAL*/
     @RequestMapping("/clientesController/getFiscal.htm")  
     @ResponseBody
     public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -132,8 +134,9 @@ public class ClientesController {
             con = pool_local.getConnection();          
             
             Statement sentencia = con.createStatement();
+            /*REALIZAMOS LA CONSULTA PREPARADA*/
             rs = sentencia.executeQuery("SELECT ID_FISCAL, FISCAL FROM TIPO_FISCAL");
-           
+           /*ASIGNAMOS LOS VALORES QUE CARGAREMOS EN UN COMBO*/
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new TipoFiscal(rs.getInt(1),rs.getString(2)))); 
             }
@@ -173,7 +176,7 @@ public class ClientesController {
 
     }
     
-   
+   /*CODIGO PARA AÑADIR UN NUEVO TIPO DE CLIENTE*/
     @RequestMapping("/clientesController/getEmpresa.htm")  
     @ResponseBody
     public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -191,8 +194,9 @@ public class ClientesController {
             con = pool_local.getConnection();          
             
             Statement sentencia = con.createStatement();
+            /*REALIZAMOS LA CONSULTA PREPARADA*/ 
             rs = sentencia.executeQuery("SELECT ID_EMPRESA, EMPRESA FROM TIPO_EMPRESA");
-           
+           /*ASIGNAMOS LOS VALORES QUE CARGAREMOS EN UN COMBO*/
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new TipoEmpresa(rs.getInt(1),rs.getString(2)))); 
             }
