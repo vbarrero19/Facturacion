@@ -66,7 +66,7 @@
 
                         });
                         $("#subtotal").val(cantidad);
-                        $("#impuesto").val(cantidad*0.21);
+                        $("#impuesto21").val(cantidad*0.21);                        
                         $("#total").val(cantidad*1.21);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -159,10 +159,10 @@
                                 <br style="clear:both">
                                 <div class="form-group">
                                     <div class="col-xs-3">
-                                        <label>Impuesto;</label>
+                                        <label>Impuesto:</label>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input type="text" class="form-control" id="impuesto" name="impuesto" disabled="true">
+                                        <input type="text" class="form-control" id="impuesto21" name="impuesto21" disabled="true">
                                     </div>
                                 </div>       
                                 <br style="clear:both">

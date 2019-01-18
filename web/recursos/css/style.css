@@ -438,7 +438,7 @@ textarea
     margin-top: 25px;
 }
 
-#subtotal, #impuesto, #total{
+#subtotal, #impuesto21, #total{
     text-align: right;
 }
 
