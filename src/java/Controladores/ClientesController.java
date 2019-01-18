@@ -52,7 +52,7 @@ public class ClientesController {
         PreparedStatement stAux = null;
         String resp = "correcto";
        
-        //ModelAndView mv = new ModelAndView("lessonresources");
+      
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();

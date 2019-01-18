@@ -84,8 +84,30 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>
-                            <div class="form-group">
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>                            
+                            
+                                <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CARGOS -->
+                            <div class="form-group">						
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pestaña2</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Pestaña3 </a>
+                                    </li>
+                                </ul>
+                            </div> 
+                                
+                                                        
+                              <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
+                            <div class="tab-content" id="myTabContent">
+                                <!--INFORMACION DE LA PESTAÑA 1 -->
+                                <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    
+                                    <div class="form-group">
                                 <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
                             </div>                            
                             <div class="form-group">
@@ -105,14 +127,15 @@
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" type="textarea" id="cargo" name="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>
-                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
-                            </div>
-                            
-                            
-                            <!-- ************************************* -->
-                            <div class="container">
+<!--                                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    -->
+                            </div>                                    
+                                <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
+                               
+                                 <label class="fechaGeneral">FECHAS DE LOS CARGOS</label>
+                                <div class="container2">                                   
                                 <div class="row">
                                     <div class='col-xs-12 col-md-4'>
+                                        <label class="fechaCargos"> PAGO </label>
                                         <div class="form-group">
                                             <div class='input-group date' id='fecha_cargo'>
                                                 <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
@@ -128,13 +151,12 @@
                                         });
                                     </script>
                                 </div>
-                            </div>
-                            <!-- ************************************* -->
-                            
-                           
-                            <div class="container">
+                            <!--</div>                                     
+                                    
+                                    <div class="container">   -->
                                 <div class="row">
                                     <div class='col-xs-12 col-md-4'>
+                                        <label class="fechaCargos"> VENCIMIENTO </label>
                                         <div class="form-group">
                                             <div class='input-group date' id='fecha_vencimiento'>
                                                 <input type='text' class="form-control" />
@@ -151,18 +173,22 @@
                                     </script>
                                 </div>
                             </div>
-                           
-                            <!--
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="fecha_cargo" name="fecha_cargo" placeholder="Fecha cargo" required>
-                            </div>          
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" placeholder="Fecha vencimiento" required>
-                            </div>
-                            -->
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
-                            <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+                            
+                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Main menu</a>                             
+                                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+                                </div>
+                                 <!--INFORMACION DE LA PESTAÑA 2 -->
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">                                 
+                                    <!--AQUI METEMOS LA INFORMACION DE LA PESTAÑA 2 -->
+                                    <label>INFORMACION DE LA PESTAÑA 2 </label>
+                                </div>
+                                 
+                                <!--INFORMACION DE LA PESTAÑA 3 -->
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <!-- AQUI METEMOS LA INFORMACION DE LA PESTAÑA 3 -->
+                                    <label>INFORMACION DE LA PESTAÑA 3</label>
+                                </div>                               
+                            </div>                            
                         </form>
                     </div>
                 </div>

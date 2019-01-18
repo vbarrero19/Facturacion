@@ -375,7 +375,7 @@ textarea
 
 
 
-.form-group-cif{
+.form-group-combo{
     display:flex; 
     margin-bottom:4%;
 }
@@ -393,6 +393,44 @@ textarea
 
 }
 
+.container2{
+     width: 970px;
+    display: flex;  
+}
+
+.input-group{
+
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    width: 200px;
+}
+
+.col-md-4{
+    width: 33.33333333%;
+    margin-right: 30px;
+}
+
+.fechaGeneral{
+    display:block;
+    margin-left: 25%;
+    margin-bottom: 5%;
+}
+
+.fechaCargos{
+    display:flex;
+    
+}
+
+#precio.form-control{
+     display: inline;
+    width: 80%;
+    margin-left: 5%;
+    
+}
 
 
-/* ***********  */
+#impuesto.form-control{
+    width: 20%; 
+}
+/* ********************************************  */

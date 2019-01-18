@@ -217,6 +217,7 @@
 
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
                             <div class="tab-content" id="myTabContent">
+                                <!--INFORMACION DE LA PESTAÑA 1 -->
                                 <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="nombre_empresa" name="nombre_empresa" placeholder="Nombre empresa" required>
@@ -244,9 +245,12 @@
                                     <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Main menu</a>                             
                                     <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 </div>
-
+                                 <!--INFORMACION DE LA PESTAÑA 2 -->
+                                 
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="form-group-cif">
+                                    
+                                    <!--CARGAMOS EL COMBO CON LA INFORMACION DEL TIPO DE IDENTIFICACION FISCAL DE LA EMRPESA -->
+                                    <div class="form-group-combo">
                                         <select class="form-control" id="fiscal" name="fiscal">
                                         </select>
                                     <!-- </div>   
@@ -284,8 +288,8 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="pais" name="pais" placeholder="País" required>
                                     </div>
-
                                 </div>
+                                 <!--INFORMACION DE LA PESTAÑA 3 -->
                                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
                                     <div class="form-group">
@@ -297,9 +301,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Teléfono" required>
+                                        <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Teléfono2" required>
                                     </div>
-
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
                                     </div>
