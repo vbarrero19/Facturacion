@@ -14,7 +14,8 @@
         $(document).ready(function () {
             getFiscal();
             getEmpresa();
-
+            
+            $("#home-tab").click();
 
             //Al cambiar la opcion del radio direc(igual direccion fisica y fiscal)
             //activamos la funcion que repite el texto en los dos campos de texto
