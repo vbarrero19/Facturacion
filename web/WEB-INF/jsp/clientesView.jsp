@@ -185,7 +185,11 @@
     <body>
         <div class="container">
             <div class="col-xs-12">
-                <div class="col-md-5">
+                <!-- con col elegimos el tamaño xs:moviles md:tablets lg:pantallas de ordenador.
+                para empujar las columnas usamos offset y el numero de columnas que queremos desplazar. tiene que estar 
+                colocado por orden: tamaño de columnas y luego el offset con las que empujamos-->
+                
+                <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
