@@ -7,7 +7,7 @@
 <html>
     <%@ include file="infouser.jsp" %> 
     <head> 
-        <title>ITEMS VIEW</title> 
+        <title>ITEMS VIEW</title>  
     </head>
     <script>
         $(document).ready(function () {
