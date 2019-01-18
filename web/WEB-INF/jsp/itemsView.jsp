@@ -115,7 +115,7 @@
                         <form role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ITEMS</h3>
-
+                            <!--CARGAMOS LAS PESTAÑAS DE LA PARTE DE ARRIBA -->
                             <div class="form-group">						
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
