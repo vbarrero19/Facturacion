@@ -66,7 +66,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
                     <div class="logOut col-xs-2" style="margin-top: 10px;">
                         <a onclick="$('#logoutmodal').modal('show');" role="button" aria-haspopup="true" aria-expanded="false"><img class="imgUser" src="<c:url value="/recursos/img/iconos/logoBamboo_IconLogout.svg"/>"></a>
@@ -79,7 +78,6 @@
 
         <div id="logoutmodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header modal-header-delete">
@@ -91,9 +89,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </body>
 </html>

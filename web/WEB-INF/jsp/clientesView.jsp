@@ -246,8 +246,7 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="apellido_persona" name="apellido_persona" placeholder="Apellido" required>
                                     </div>
-
-                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                            
                                     <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 </div>
                                  <!--INFORMACION DE LA PESTAÑA 2 -->
@@ -312,6 +311,8 @@
                                         <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
                                     </div>
                                 </div>
+                                 
+                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                             </div>
                         </form>
                     </div>

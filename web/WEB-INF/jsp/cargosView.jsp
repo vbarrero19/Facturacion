@@ -86,7 +86,7 @@
 
             $("#comboClientes").change(function () {
 
-
+                /*COMBO DE CLIENTES */
                 if ($("#comboClientes").val() != "0") {
 
 
@@ -143,10 +143,60 @@
 
             });
 
+            /*COMBO DE EMPRESAS*/
+
+            if ($("#comboEmpresas").val() != "0") {
+
+
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+
+                myObj["id_cliente"] = $("#comboEmpresas").val().trim();
+
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/cargosController/getEmpresa.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+
+                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                        var aux = JSON.parse(data);
+
+                        aux.forEach(function (valor, indice) {
+                            var aux2 = JSON.parse(valor);
+
+                            $("#id_empresa").val(aux2.id_cliente);
+                            $("#dir_fisica2").val(aux2.dir_fisica);
+                            $("#pais2").val(aux2.pais);
+
+                        });
+
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+
+            } else {
+                $("#id_empresa").val("");
+                $("#dir_fisica2").val("");
+                $("#pais2").val("");
+            }
         });
-
-
-
 
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
@@ -201,9 +251,9 @@
             });
         }
         ;
-        
-        
-                //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
+
+
+        //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
         function getEmpresa() {
             if (window.XMLHttpRequest) //mozilla
@@ -287,43 +337,59 @@
                                 <!--INFORMACION DE LA PESTAÑA 1 -->
                                 <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                                    <!--Combo para clientes-->
-                                    <label for="comboClientes">Nombre de cliente:</label>
-                                    <div class="form-group-combo">                                        
-                                        <select class="form-control" id="comboClientes" name="comboClientes">
-                                        </select>                                                            
-                                    </div>
+                                   <div class="datos" class="col-xs-12">
+                                       <div class="form-group col-xs-8">
+                                           <label for="comboClientes"> Nombre cliente </label>
+                                           <div class="form-group-combo">                                        
+                                                <select class="form-control" id="comboClientes" name="comboClientes">
+                                                </select>                                                            
+                                            </div>
+                                       </div>
+                                       
+                                       <div class="form-group col-xs-4">
+                                          <label for="comboClientes"> Id.cliente </label>
+                                          <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
+                                       </div> 
+                                       
+                                       <div class="form-group col-xs-8">
+                                            <label for="idCliente>">Dirección física cliente</label>
+                                            <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
+                                        </div>
+                                        <div class="form-group col-xs-4">
+                                            <label for="idCliente>">País cliente</label>
+                                            <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" disabled = "true">
+                                        </div>
+                                       
+                                       <div class="form-group col-xs-8">
+                                            <!--Combo para clientes-->
+                                            <label for="comboClientes">Nombre de empresa</label>
+                                            <div class="form-group-combo">                                        
+                                                <select class="form-control" id="comboEmpresas" name="comboEmpresas">
+                                                </select>                                                            
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-4">
+                                            <label for="idEmpresa>">Id.Empresa</label>
+                                            <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador empresa" disabled = "true">
+                                        </div>
 
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" disabled = "true">
-                                    </div>
-                                    
-                                    
-                                    <!--Combo para clientes-->
-                                    <label for="comboClientes">Nombre de Empresa</label>
-                                    <div class="form-group-combo">                                        
-                                        <select class="form-control" id="comboEmpresas" name="comboEmpresas">
-                                        </select>                                                            
-                                    </div>
 
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador cliente" disabled = "true">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica"  disabled = "true">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais"  disabled = "true">
-                                    </div>
+                                        <div class="form-group col-xs-8">
+                                            <label for="idEmpresa>">Dirección física empresa</label>
+                                            <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" disabled = "true">
+                                        </div>
+                                        <div class="form-group col-xs-4">
+                                            <label for="idEmpresa>">País empresa</label>
+                                            <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais" disabled = "true">
+                                        </div>
+                                       
+                                       
+                                   </div>
+
+                                   
                                     
-                                    <hr>
                                     
+
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
                                     </div>                            
@@ -388,11 +454,10 @@
                                                 });
                                             </script>
                                         </div>
-                                    </div>
-
-                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                                    </div>                            
                                     <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 </div>
+
                                 <!--INFORMACION DE LA PESTAÑA 2 -->
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">                                 
                                     <!--AQUI METEMOS LA INFORMACION DE LA PESTAÑA 2 -->
@@ -403,7 +468,8 @@
                                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                     <!-- AQUI METEMOS LA INFORMACION DE LA PESTAÑA 3 -->
                                     <label>INFORMACION DE LA PESTAÑA 3</label>
-                                </div>                               
+                                </div>  
+                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                             </div>                            
                         </form>
                     </div>
