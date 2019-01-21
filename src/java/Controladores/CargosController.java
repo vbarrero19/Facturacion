@@ -136,7 +136,7 @@ public class CargosController {
     
     @RequestMapping("/cargosController/getCliente.htm")  
     @ResponseBody
-    public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String cargarComboCliente(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Clientes resourceLoad = new Clientes();
         
         Connection con = null;
@@ -153,6 +153,65 @@ public class CargosController {
             
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '1'");
+           
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
+            }
+            
+            resp = new Gson().toJson(arrayTipo);
+            
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;           
+        
+    }
+    
+    @RequestMapping("/cargosController/getEmpresa.htm")  
+    @ResponseBody
+    public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Clientes resourceLoad = new Clientes();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();         
+        
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '2'");
            
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
@@ -223,15 +282,6 @@ public class CargosController {
             }
             
             resp = new Gson().toJson(arrayTipo);
-            
-            
-            
-                
-            
-            
-            
-            
-            
             
             
         } catch (SQLException ex) {

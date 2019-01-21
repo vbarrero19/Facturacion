@@ -14,6 +14,7 @@
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getCliente() para llenar el combo 
             getCliente();
+            getEmpresa();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -200,6 +201,60 @@
             });
         }
         ;
+        
+        
+                //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
+        //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
+        function getEmpresa() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/getEmpresa.htm', //Vamos a cargosController/getImpuesto.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    var aux = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboEmpresas');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+                    //Lo vamos cargando
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var aux2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = aux2.id_cliente;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        //                 opt.innerHTML = aux2.id_impuesto;
+                        opt.innerHTML = aux2.nombre_empresa;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
 
     </script>
     <body>
@@ -240,33 +295,35 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente"  disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" required>
+                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica"  disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" required>
+                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais"  disabled = "true">
                                     </div>
                                     
                                     
                                     <!--Combo para clientes-->
-                                    <label for="comboClientes">Nombre de cliente:</label>
+                                    <label for="comboClientes">Nombre de Empresa</label>
                                     <div class="form-group-combo">                                        
-                                        <select class="form-control" id="comboClientes" name="comboClientes">
+                                        <select class="form-control" id="comboEmpresas" name="comboEmpresas">
                                         </select>                                                            
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                                        <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador cliente" disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" required>
+                                        <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" required>
+                                        <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais" required>
                                     </div>
-
+                                    
+                                    <hr>
+                                    
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
                                     </div>                            
