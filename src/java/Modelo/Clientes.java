@@ -23,8 +23,25 @@ public class Clientes {
     private String telefono1;
     private String telefono2;
     private String fax;
+
+    public Clientes() {
+    }
+        
+//    public Clientes(String id_cliente, String tipo_empresa) {
+//        this.id_cliente = id_cliente;
+//        this.tipo_empresa = tipo_empresa;
+//    }
+
+    public Clientes(String id_cliente, String nombre_empresa, String dir_fisica, String pais) {
+        this.id_cliente = id_cliente;
+        this.nombre_empresa = nombre_empresa;
+        this.dir_fisica = dir_fisica;
+        this.pais = pais;
+    }
     
     
+    
+        
     public String getId_cliente() {
         return id_cliente;
     }
