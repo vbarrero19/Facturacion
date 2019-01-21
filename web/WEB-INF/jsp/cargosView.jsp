@@ -295,13 +295,13 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente"  disabled = "true">
+                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica"  disabled = "true">
+                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais"  disabled = "true">
+                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" disabled = "true">
                                     </div>
                                     
                                     
@@ -316,10 +316,10 @@
                                         <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador cliente" disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" required>
+                                        <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica"  disabled = "true">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais" required>
+                                        <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais"  disabled = "true">
                                     </div>
                                     
                                     <hr>
