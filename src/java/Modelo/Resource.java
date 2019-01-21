@@ -10,7 +10,7 @@ public class Resource  {
     private String col4;
     private String col5;
     private String col6; 
-     
+    
     
     public String getCol1() {
         return col1;

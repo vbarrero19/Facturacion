@@ -28,9 +28,8 @@
 
                 var myObj = {};
 
-//                myObj["id_cliente"] = $("#id_cliente").val().trim();
                 myObj["id_cliente"] = $("#comboClientes").val().trim();
-                // myObj["id_impuesto"] = $("#impuesto").val();
+ 
                 var json = JSON.stringify(myObj);
 
                 $.ajax({
@@ -94,7 +93,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/facturasController/getCliente.htm', //Vamos a itemsController/getImpuesto.htm a recoger los datos
+                url: '/Facturacion/facturasController/getCliente.htm', //Vamos a facturasController/getCliente.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
@@ -108,10 +107,10 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_Impuesto;
+                        opt.value = aux2.id_cliente;
                         //Guardamos el impuesto en el nombre de cada opcion
                         //                 opt.innerHTML = aux2.id_impuesto;
-                        opt.innerHTML = aux2.impuesto;
+                        opt.innerHTML = aux2.nombre_empresa;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -150,7 +149,7 @@
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div> -->
                             <div class="col-xs-6 form-group">
-                                <label for="comboClientes">Nombre de empresa</label>
+                                <label for="comboClientes">Nombre de cliente</label>
                                 <div class="form-group-combo">
                                     <!--Combo para clientes-->
                                     <select class="form-control" id="comboClientes" name="comboClientes">

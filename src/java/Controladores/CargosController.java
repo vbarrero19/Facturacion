@@ -6,6 +6,7 @@
 package Controladores;
 
 import Modelo.*;
+import com.google.gson.Gson;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
@@ -131,5 +132,139 @@ public class CargosController {
             }
         }
         return resp;
+    }
+    
+    @RequestMapping("/cargosController/getCliente.htm")  
+    @ResponseBody
+    public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Clientes resourceLoad = new Clientes();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();         
+        
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes");
+           
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
+            }
+            
+            resp = new Gson().toJson(arrayTipo);
+            
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;           
+        
+    }
+    
+    @RequestMapping("/cargosController/getDatosCliente.htm")  
+    @ResponseBody
+    public String cargarDatosCliente(@RequestBody Clientes clientes, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Clientes resourceLoad = new Clientes();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();         
+        
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            //Statement sentencia = con.createStatement();
+            stAux = con.prepareStatement("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes WHERE id_cliente = ?");
+            
+            stAux.setInt(1, Integer.parseInt(clientes.getId_cliente())); 
+            rs = stAux.executeQuery();
+            
+            
+            
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
+            }
+            
+            resp = new Gson().toJson(arrayTipo);
+            
+            
+            
+                
+            
+            
+            
+            
+            
+            
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;   
+   
+        
+        
     }
 }

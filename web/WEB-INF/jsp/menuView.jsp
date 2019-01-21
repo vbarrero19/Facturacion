@@ -62,7 +62,7 @@
                             </div>
                             
                             <div class="divName ">
-                                <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
+                                <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>
                         </div>
                     </div>
