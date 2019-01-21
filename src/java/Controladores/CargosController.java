@@ -152,7 +152,7 @@ public class CargosController {
             con = pool_local.getConnection();          
             
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes");
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '1'");
            
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 

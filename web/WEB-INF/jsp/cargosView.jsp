@@ -82,66 +82,64 @@
                 });
             })
 
-           
+
             $("#comboClientes").change(function () {
-                
-                //$("#id_cliente1").val("AAA")                
-                
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+
+
+                if ($("#comboClientes").val() != "0") {
+
+
+                    if (window.XMLHttpRequest) //mozilla
+                    {
+                        ajax = new XMLHttpRequest(); //No Internet explorer
+                    } else
+                    {
+                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    var myObj = {};
+
+                    myObj["id_cliente"] = $("#comboClientes").val().trim();
+
+                    var json = JSON.stringify(myObj);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Facturacion/cargosController/getDatosCliente.htm',
+                        data: json,
+                        datatype: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+                            //alert(data);
+
+                            //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                            var aux = JSON.parse(data);
+
+                            aux.forEach(function (valor, indice) {
+                                var aux2 = JSON.parse(valor);
+
+                                $("#id_cliente").val(aux2.id_cliente);
+                                $("#dir_fisica").val(aux2.dir_fisica);
+                                $("#pais").val(aux2.pais);
+
+                            });
+
+
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+
+
+                } else {//alert($("#id_cliente").val("AAA"));
+
+                    $("#id_cliente").val("");
+                    $("#dir_fisica").val("");
+                    $("#pais").val("");
                 }
 
-                var myObj = {};
-                
-                myObj["id_cliente"] = $("#comboClientes").val().trim();
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/cargosController/getDatosCliente.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        //alert(data);
-                        
-                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
-                    var aux = JSON.parse(data);
-                    
-                    aux.forEach(function (valor, indice) {
-                        var aux2 = JSON.parse(valor);
-                        //$("#id_cliente1").val("AAA");   
-                        $("#id_cliente1").val(aux2.id_cliente);
-                        $("#dir_fisica").val(aux2.dir_fisica);
-                        $("#pais").val(aux2.pais);
-                        
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-//                        var aux2 = JSON.parse(valor);
-//                        //Creamos las opciones del combo
-//                        var opt = document.createElement('option');
-//                        //Guardamos el id en el value de cada opcion
-//                        opt.value = aux2.id_cliente;
-//                        //Guardamos el impuesto en el nombre de cada opcion
-//                        //                 opt.innerHTML = aux2.id_impuesto;
-//                        opt.innerHTML = aux2.nombre_empresa;
-//                        //Añadimos la opcion
-//                        select.appendChild(opt);
-                    });
-                        
-                        
-                        
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                }); 
-                
             });
 
         });
@@ -207,7 +205,7 @@
     <body>
         <div class="container">
             <div class="col-xs-12">
-                <div class="col-md-5">
+                <div class="col-md-8 col-xs-5">
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
@@ -242,7 +240,25 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="id_cliente1" name="id_cliente" placeholder="Identificador cliente" required>
+                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" required>
+                                    </div>
+                                    
+                                    
+                                    <!--Combo para clientes-->
+                                    <label for="comboClientes">Nombre de cliente:</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboClientes" name="comboClientes">
+                                        </select>                                                            
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" required>
