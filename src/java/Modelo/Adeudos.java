@@ -12,8 +12,8 @@ import java.util.Date;
  *
  * @author nmohamed
  */
-public class Cargos  { 
-    private String id_cargo;
+public class Adeudos  { 
+    private String id_adeudo;
     private String id_empresa;
     private String id_factura;
     private String id_cliente;
@@ -23,21 +23,21 @@ public class Cargos  {
     private String fecha_cargo; 
     private String fecha_vencimiento; 
 
-    public Cargos(String id_cargo, String cargo) {
-        this.id_cargo = id_cargo;        
-        this.cargo = cargo;        
+    public Adeudos(String id_adeudo, String cargo) {
+        this.id_adeudo = id_adeudo;
+        this.cargo = cargo;
     }
-
-    public Cargos() {
+    
+    public Adeudos() {
         
     }        
 
-    public String getId_cargo() {
-        return id_cargo;
+    public String getId_adeudo() {
+        return id_adeudo;
     }
 
-    public void setId_cargo(String id_cargo) {
-        this.id_cargo = id_cargo;
+    public void setId_adeudo(String id_adeudo) {
+        this.id_adeudo = id_adeudo;
     }
 
     public String getId_empresa() {

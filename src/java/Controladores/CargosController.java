@@ -51,44 +51,36 @@ public class CargosController {
 
     @RequestMapping("/cargosController/newCustomer.htm")
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Cargos cargo, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Cargos resourceLoad = new Cargos();
+    public String saveNewCustomer(@RequestBody Adeudos adeudo, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        //Adeudos resourceLoad = new Adeudos();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
 
-        //ModelAndView mv = new ModelAndView("lessonresources");
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_empresa,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
-            /**
-             * *******
-             */
-            //Calendar calendar = Calendar.getInstance();
-            //java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
-            /**
-             * *******
-             */
-            stAux.setInt(1, Integer.parseInt(cargo.getId_cargo()));
-            stAux.setInt(2, Integer.parseInt(cargo.getId_empresa()));
-            stAux.setInt(3, Integer.parseInt(cargo.getId_factura()));
-            stAux.setInt(4, Integer.parseInt(cargo.getId_cliente()));
-            stAux.setDouble(5, cargo.getCantidad());
-            stAux.setInt(6, Integer.parseInt(cargo.getImpuesto()));
-            stAux.setString(7, cargo.getCargo());
+            stAux = con.prepareStatement("INSERT INTO adeudos (id_adeudo,id_empresa,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
+            
+            stAux.setInt(1, Integer.parseInt(adeudo.getId_adeudo()));
+            stAux.setInt(2, Integer.parseInt(adeudo.getId_empresa()));
+            stAux.setInt(3, Integer.parseInt(adeudo.getId_factura()));
+            stAux.setInt(4, Integer.parseInt(adeudo.getId_cliente()));
+            stAux.setDouble(5, adeudo.getCantidad());
+            stAux.setInt(6, Integer.parseInt(adeudo.getImpuesto()));
+            stAux.setString(7, adeudo.getCargo());
 
-            String test = cargo.getFecha_cargo();
+            String test = adeudo.getFecha_cargo();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(test);
             Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
             stAux.setTimestamp(8, timestamp);
 
-            String test2 = cargo.getFecha_vencimiento();
+            String test2 = adeudo.getFecha_vencimiento();
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate2 = dateFormat2.parse(test2);
             Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
@@ -96,13 +88,7 @@ public class CargosController {
             stAux.setTimestamp(9, timestamp2);
 
             stAux.executeUpdate();
-
-            /*Resource rRespuesta = new Resource();            
-            while (rs.next()) {
-                rRespuesta.setCol1(rs.getString("Nombre"));
-                rRespuesta.setCol2(rs.getString("Apellido"));
-                rRespuesta.setCol3(""+rs.getInt("Edad"));
-            } */
+            
             resp = "Correcto";
 
         } catch (SQLException ex) {
@@ -270,7 +256,64 @@ public class CargosController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '2'");
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '2' ORDER BY nombre_empresa");
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    @RequestMapping("/cargosController/getItem.htm")
+    @ResponseBody
+    public String cargarComboItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Items resourceLoad = new Items();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM items where id_empresa = '2' ORDER BY nombre_empresa");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
