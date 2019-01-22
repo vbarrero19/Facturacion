@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Cargos  { 
     private String id_cargo;
-    private String id_items;
+    private String id_empresa;
     private String id_factura;
     private String id_cliente;
     private Double cantidad;
@@ -30,9 +30,7 @@ public class Cargos  {
 
     public Cargos() {
         
-    }
-
-        
+    }        
 
     public String getId_cargo() {
         return id_cargo;
@@ -42,12 +40,12 @@ public class Cargos  {
         this.id_cargo = id_cargo;
     }
 
-    public String getId_items() {
-        return id_items;
+    public String getId_empresa() {
+        return id_empresa;
     }
 
-    public void setId_items(String id_items) {
-        this.id_items = id_items;
+    public void setId_empresa(String id_empresa) {
+        this.id_empresa = id_empresa;
     }
 
     public String getId_factura() {

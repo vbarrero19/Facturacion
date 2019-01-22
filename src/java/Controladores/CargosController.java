@@ -65,13 +65,13 @@ public class CargosController {
             con = pool_local.getConnection();
             
             
-            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_items,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO cargos (id_cargo,id_empresa,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
             /**********/
             //Calendar calendar = Calendar.getInstance();
             //java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
             /**********/
             stAux.setInt(1, Integer.parseInt(cargo.getId_cargo()));  
-            stAux.setInt(2, Integer.parseInt(cargo.getId_items()));  
+            stAux.setInt(2, Integer.parseInt(cargo.getId_empresa()));  
             stAux.setInt(3, Integer.parseInt(cargo.getId_factura()));
             stAux.setInt(4, Integer.parseInt(cargo.getId_cliente()));
             stAux.setDouble(5, cargo.getCantidad());
@@ -193,64 +193,7 @@ public class CargosController {
         
     }
     
-    @RequestMapping("/cargosController/getEmpresa.htm")  
-    @ResponseBody
-    public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Clientes resourceLoad = new Clientes();
-        
-        Connection con = null;
-        ResultSet rs = null;
-        PreparedStatement stAux = null;
-        String resp = "correcto";
-        
-        ArrayList<String> arrayTipo = new ArrayList<>();         
-        
-        
-        try {
-            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();          
-            
-            Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '2'");
-           
-            while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
-            }
-            
-            resp = new Gson().toJson(arrayTipo);
-            
-            
-        } catch (SQLException ex) {
-             resp = "incorrecto"; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors)); 
-        }catch (Exception ex) {
-             resp = "incorrecto"; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors)); 
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (stAux != null) {
-                    stAux.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-            }
-        }
-        return resp;           
-        
-    }
+   
     
     @RequestMapping("/cargosController/getDatosCliente.htm")  
     @ResponseBody
@@ -313,8 +256,66 @@ public class CargosController {
             }
         }
         return resp;   
-   
         
+    }
+    
+    
+    @RequestMapping("/cargosController/getEmpresa.htm")  
+    @ResponseBody
+    public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Clientes resourceLoad = new Clientes();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();         
+        
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM clientes where id_empresa = '2'");
+           
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
+            }
+            
+            resp = new Gson().toJson(arrayTipo);
+            
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;           
         
     }
 }
