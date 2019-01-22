@@ -128,7 +128,7 @@ public class CargosController {
                 if (con != null) {
                     con.close();
                 }
-            } catch (Exception e) {
+            } catch (Exception e) { 
             }
         }
         return resp;
