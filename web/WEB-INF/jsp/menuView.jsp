@@ -39,21 +39,22 @@
                     <div class="col-xs-10" id="childrensNav">
                         <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
                         <div class="row" style="display: flex;/*! flex-direction: unset; */justify-content: space-between;align-items:  center;height: 100%;">
-
+                            <!-- Menu desplegable de clientes donde aparecen las opciones a realizar -->
                             <div class="divName ">
                                 <!--<a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>  -->
                                 <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Clientes
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Clientes
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Alta cliente</a></li>
+                                        <li><a href="<c:url value='/clientesController/start.htm'/>">Alta cliente</a></li>
+                                        <!--meter href la direccion del controlador que realiza las acciones -->
                                         <li><a href="#">Ver cliente</a></li>
                                         <li><a href="#">Modificar cliente</a></li>
                                         <li><a href="#">Baja cliente</a></li>
                                     </ul>
                                 </div>
                                 
-                                <!--  -->
+                                <!-- Fin del menu de clientes -->
                             </div> 
                             <div class="divName">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
