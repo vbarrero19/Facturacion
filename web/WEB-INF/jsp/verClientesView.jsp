@@ -69,6 +69,70 @@
                     }
                 });
             })
+            
+            
+            /* VAMOS COMPLETANDO LA TABLA CON LOS DATOS DE LOS CLIENTES PARA QUE SE VISUALICEN TODOS.  */
+            $("#consultarFac").click(function () {
+
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+
+                myObj["id_cliente"] = $("#comboClientes").val().trim();
+ 
+                var json = JSON.stringify(myObj);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/facturasController/getFacturas.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+
+                        var aux = JSON.parse(data);
+
+                        var cantidad = 0;
+                        var subtotal = 0;
+
+                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                        $('#tableContainer tbody').empty();
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var item = JSON.parse(valor);
+
+                            $("#id_cliente").val(item.id_cliente);
+                            $("#dir_fisica").val(item.dir_fisica);
+                            $("#pais").val(item.pais);
+                            subtotal = parseInt(item.cantidad);
+                            cantidad = cantidad + subtotal;
+                            //cargamos de forma dinamica la tabla
+                            $('#tableContainer tbody').append(" <tr>\n\
+                                                                    <th scope=\"row\">" + (indice + 1) + "</th>              \n\
+                                                                    <td>" + item.id_cargo + "</td>                       \n\
+                                                                    <td>" + item.cargo + "</td>                        \n\
+                                                                    <td>" + item.cantidad + "</td>                       \n\ \n\
+                                                                </tr>");
+
+
+                        });
+                        $("#subtotal").val(cantidad);
+                        $("#impuesto21").val(cantidad * 0.21);
+                        $("#total").val(cantidad * 1.21);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+            })
         });
 
 
