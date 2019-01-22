@@ -7,10 +7,6 @@ package Modelo;
 
 import java.io.Serializable;
 
-/**
- *
- * @author nmohamed
- */
 public class Items  { 
     private String id_item;
     private String abreviatura;

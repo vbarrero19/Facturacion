@@ -15,6 +15,7 @@
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getCliente();
             getEmpresa();
+            getItem();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -54,7 +55,7 @@
                 }
 
                 var myObj = {};
-                myObj["id_cargo"] = $("#id_cargo").val().trim();
+                myObj["id_adeudo"] = $("#id_adeudo").val().trim();
                 myObj["id_empresa"] = $("#id_empresa").val().trim();
                 myObj["id_factura"] = $("#id_factura").val().trim();
                 myObj["id_cliente"] = $("#id_cliente").val().trim();
@@ -110,11 +111,11 @@
                         data: json,
                         datatype: "json",
                         contentType: "application/json",
-                        success: function (data) {                        
+                        success: function (data) {
 
-                        //En el data viene la informacion del combo en forma de String.
-                        //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-                        
+                            //En el data viene la informacion del combo en forma de String.
+                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+
                             //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
                             var aux = JSON.parse(data);
 
@@ -135,7 +136,7 @@
                         }
                     });
 
-                //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
                 } else {
                     $("#id_cliente").val("");
                     $("#dir_fisica").val("");
@@ -146,7 +147,7 @@
 
             //Muestra datos de la empresa al seleccionar en el combo
             $("#comboEmpresas").change(function () {
-                
+
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
                 if ($("#comboEmpresas").val() != "0") {
 
@@ -170,13 +171,13 @@
                         datatype: "json",
                         contentType: "application/json",
                         success: function (data) {
-                            
-                        //En el data viene la informacion del combo en forma de String.
-                        //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-                        
+
+                            //En el data viene la informacion del combo en forma de String.
+                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+
                             //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
                             var aux = JSON.parse(data);
-                            
+
                             aux.forEach(function (valor, indice) {
                                 //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
                                 var aux2 = JSON.parse(valor);
@@ -194,7 +195,7 @@
                         }
                     });
 
-                //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
                 } else {
                     $("#id_empresa").val("");
                     $("#dir_fisica2").val("");
@@ -203,7 +204,7 @@
             });
 
         });
-        
+
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
         function getCliente() {
@@ -255,7 +256,7 @@
         }
         ;
 
-        //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
+        //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
         function getEmpresa() {
             if (window.XMLHttpRequest) //mozilla
@@ -306,6 +307,55 @@
         }
         ;
 
+        function getItem() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var aux = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboEmpresas');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+                    //Lo vamos cargando
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var aux2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = aux2.id_cliente;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = aux2.nombre_empresa;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
     </script>
     <body>
         <div class="container">
@@ -314,158 +364,158 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>                            
-
-                            <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CARGOS -->
-                            <div class="form-group">						
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pestaña2</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Pestaña3 </a>
-                                    </li>
-                                </ul>
-                            </div> 
-
-                            <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CARGO PARA CADA UNA DE ELLAS -->                        
-                            <div class="tab-content" id="myTabContent">
-                                <!--INFORMACION DE LA PESTAÑA 1 -->
-                                <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-                                    <div class="datos" class="col-xs-12">
-                                        <div class="form-group col-xs-8">
-                                            <label for="comboClientes"> Nombre cliente </label>
-                                            <div class="form-group-combo">                                        
-                                                <select class="form-control" id="comboClientes" name="comboClientes">
-                                                </select>                                                            
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-xs-4">
-                                            <label for="comboClientes"> Id.cliente </label>
-                                            <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
-                                        </div> 
-
-                                        <div class="form-group col-xs-8">
-                                            <label for="idCliente>">Dirección física cliente</label>
-                                            <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <label for="idCliente>">País cliente</label>
-                                            <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" disabled = "true">
-                                        </div>
-
-                                        <div class="form-group col-xs-8">
-                                            <!--Combo para clientes-->
-                                            <label for="comboClientes">Nombre de empresa</label>
-                                            <div class="form-group-combo">                                        
-                                                <select class="form-control" id="comboEmpresas" name="comboEmpresas">
-                                                </select>                                                            
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <label for="idEmpresa>">Id.Empresa</label>
-                                            <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador empresa" disabled = "true">
-                                        </div>
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ADEUDOS</h3>                            
 
 
-                                        <div class="form-group col-xs-8">
-                                            <label for="idEmpresa>">Dirección física empresa</label>
-                                            <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" disabled = "true">
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <label for="idEmpresa>">País empresa</label>
-                                            <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais" disabled = "true">
-                                        </div>
+
+                            <div class="datos" class="col-xs-12">
+                                <div class="form-group col-xs-3">
+                                    <label for="comboClientes"> Nombre cliente </label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboClientes" name="comboClientes">
+                                        </select>                                                            
                                     </div>
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="id_cargo" name="id_cargo" placeholder="Identificador cargo" required>
-                                    </div>                          
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="id_factura" name="id_factura" placeholder="Identificador factura" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <textarea class="form-control" type="textarea" id="cargo" name="cargo" placeholder="Cargo" maxlength="140" rows="7"></textarea>                                                         
-                                    </div>
-
-                                    <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
-                                    <label class="fechaGeneral">FECHAS DE LOS CARGOS</label>
-                                    <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
-                                    <div class="container2">                                   
-                                        <div class="row">
-                                            <div class='col-xs-12 col-md-4'>
-                                                <label class="fechaCargos"> PAGO </label>
-                                                <div class="form-group">
-                                                    <div class='input-group date' id='fecha_cargo'>
-                                                        <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#fecha_cargo').datetimepicker();
-                                                });
-                                            </script>
-                                        </div>
-                                        
-                                        <div class="row">
-                                            <div class='col-xs-12 col-md-4'>
-                                                <label class="fechaCargos"> VENCIMIENTO </label>
-                                                <div class="form-group">
-                                                    <div class='input-group date' id='fecha_vencimiento'>
-                                                        <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#fecha_vencimiento').datetimepicker();
-                                                });
-                                            </script>
-                                        </div>
-                                        
-                                    </div>                            
-                                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 </div>
 
-                                <!--INFORMACION DE LA PESTAÑA 2 -->
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">                                 
-                                    <!--AQUI METEMOS LA INFORMACION DE LA PESTAÑA 2 -->
-                                    <label>INFORMACION DE LA PESTAÑA 2 </label>
+                                <div class="form-group col-xs-2">
+                                    <label for="comboClientes"> Id.cliente </label>
+                                    <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
+                                </div> 
+
+                                <div class="form-group col-xs-4">
+                                    <label for="idCliente>">Dirección física cliente</label>
+                                    <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="idCliente>">País cliente</label>
+                                    <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" disabled = "true">
+                                </div>
+                                `
+                            </div>   
+                            <div class="datos" class="col-xs-12">
+                                <div class="form-group col-xs-3">
+                                    <!--Combo para clientes-->
+                                    <label for="comboClientes">Nombre de empresa</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboEmpresas" name="comboEmpresas">
+                                        </select>                                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <label for="idEmpresa>">Id.Empresa</label>
+                                    <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador empresa" disabled = "true">
                                 </div>
 
-                                <!--INFORMACION DE LA PESTAÑA 3 -->
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                    <!-- AQUI METEMOS LA INFORMACION DE LA PESTAÑA 3 -->
-                                    <label>INFORMACION DE LA PESTAÑA 3</label>
-                                </div>  
-                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+
+                                <div class="form-group col-xs-4">
+                                    <label for="idEmpresa>">Dirección física empresa</label>
+                                    <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" disabled = "true">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="idEmpresa>">País empresa</label>
+                                    <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais" disabled = "true">
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-12" id="tableContainer">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Id_cargo</th>
+                                            <th scope="col">Cargo</th> 
+                                            <th scope="col">Importe</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                            <div class="form-group col-xs-3">
+                                <label for="comboItems"> Nombre item </label>
+                                <div class="form-group-combo">                                        
+                                    <select class="form-control" id="comboItems" name="comboItems">
+                                    </select>                                                            
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_adeudo" name="id_adeudo" placeholder="Identificador adeudo" required>
+                            </div>                          
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="id_factura" name="id_factura" placeholder="Identificador factura" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Adeudo" required>                                                    
+                            </div>
+
+                            <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
+                            <label class="fechaGeneral">FECHAS DE LOS CARGOS</label>
+                            <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
+                            <div class="container2">                                   
+                                <div class="row">
+                                    <div class='col-xs-12 col-md-4'>
+                                        <label class="fechaCargos"> PAGO </label>
+                                        <div class="form-group">
+                                            <div class='input-group date' id='fecha_cargo'>
+                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#fecha_cargo').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
+
+                                <div class="row">
+                                    <div class='col-xs-12 col-md-4'>
+                                        <label class="fechaCargos"> VENCIMIENTO </label>
+                                        <div class="form-group">
+                                            <div class='input-group date' id='fecha_vencimiento'>
+                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#fecha_vencimiento').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
+
                             </div>                            
-                        </form>
-                    </div>
+                            <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                    </div>                            
+                    </form>
                 </div>
             </div>
-        </div>                  
-    </body>
+        </div>
+    </div>                  
+</body>
 </html>
