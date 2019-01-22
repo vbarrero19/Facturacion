@@ -43,7 +43,7 @@ public class VerClientesController {
         return null;
     }
     
-    @RequestMapping("/verClientesController/newCustomer.htm")  
+    @RequestMapping("/verClientesController/verCliente.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody Clientes clientes, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Clientes resourceLoad = new Clientes();

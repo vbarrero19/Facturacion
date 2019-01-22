@@ -12,127 +12,60 @@
     </head>
     <script>
         $(document).ready(function () {
-            getFiscal();
-            getEmpresa();
-
-            $("#home-tab").click();
-
-            //Al cambiar la opcion del radio direc(igual direccion fisica y fiscal)
-            //activamos la funcion que repite el texto en los dos campos de texto
-            $('input[name=direc]').change(function () {//          
-
-                if ($("#direc2").is(':checked')) {
-                    //CUANDO ACTIVAMOS EL BOTON DEL SI
-                    $("#dir_fisica").keyup(function () {
-                        document.getElementById('dir_fiscal').value = this.value;
-                    });
-                    //DESHABILITAMOS EL CAJON2 DE LA DIRECCION FISCAL
-                    $("#dir_fiscal").prop('disabled', true);
-
-                } else {
-                    // CUANDO CLICKAMOS EN EL BOTON DEL NO
-                    $("#dir_fiscal").prop('disabled', false);
-                    $('#dir_fiscal').val('');
-                }
-            })
-
-
-            // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
-            $("#submit").click(function () {
-
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                var myObj = {};
-                //id cliente 
-                myObj["id_cliente"] = $("#id_cliente").val().trim();
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/clientesController/newCustomer.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            })
-            
-            
+  
             /* VAMOS COMPLETANDO LA TABLA CON LOS DATOS DE LOS CLIENTES PARA QUE SE VISUALICEN TODOS.  */
-            $("#consultarFac").click(function () {
 
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
+            $("#tableContainer").click(function ()(){
 
-                var myObj = {};
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
-                myObj["id_cliente"] = $("#comboClientes").val().trim();
- 
-                var json = JSON.stringify(myObj);
+//            var myObj = {};
+//
+//            myObj["id_cliente"] = $("#id_cliente").val().trim();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/facturasController/getFacturas.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
+            var json = JSON.stringify(myObj);
 
-                        var aux = JSON.parse(data);
+            $.ajax({
+                type: 'POST',
+                url: '/Facturacion/verClientesController/verCliente.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
 
-                        var cantidad = 0;
-                        var subtotal = 0;
+                    var aux = JSON.parse(data);
+                    alert(data);
+                    //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                    $('#tableContainer tbody').empty();
+                    //recorremos la tabla.
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        var clientes = JSON.parse(valor);
 
-                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
-                        $('#tableContainer tbody').empty();
-                        aux.forEach(function (valor, indice) {
-                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                            var item = JSON.parse(valor);
-
-                            $("#id_cliente").val(item.id_cliente);
-                            $("#dir_fisica").val(item.dir_fisica);
-                            $("#pais").val(item.pais);
-                            subtotal = parseInt(item.cantidad);
-                            cantidad = cantidad + subtotal;
-                            //cargamos de forma dinamica la tabla
-                            $('#tableContainer tbody').append(" <tr>\n\
+                        //cargamos de forma dinamica la tabla
+                        $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
-                                                                    <td>" + item.id_cargo + "</td>                       \n\
-                                                                    <td>" + item.cargo + "</td>                        \n\
-                                                                    <td>" + item.cantidad + "</td>                       \n\ \n\
+                                                                    <td>" + clientes.nombre_empresa + "</td>                       \n\
+                                                                    <td>" + clientes.num_ident + "</td>                        \n\
+                                                                    <td>" + clientes.pais + "</td>                       \n\ \n\
                                                                 </tr>");
 
 
-                        });
-                        $("#subtotal").val(cantidad);
-                        $("#impuesto21").val(cantidad * 0.21);
-                        $("#total").val(cantidad * 1.21);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            })
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        });
         });
 
 
@@ -151,9 +84,9 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div> 
-                            
+
                             <!--CREAMOS TABLA DONDE VISUALIZAREMOS LA LISTA DE LOS CLIENTES -->                            
-                            
+
                             <div class="col-xs-12" id="tableContainer">
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
@@ -169,7 +102,7 @@
                                     </tbody>
                                 </table>
                             </div>                            
-                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                         </form>
                     </div>
                 </div>
