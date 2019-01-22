@@ -32,7 +32,7 @@
                 color: white;
             }
         </style>
-        <header>
+        <header> 
             <div class="navUsuario" id="infousuario">   
                 <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
                 <div class="row" style="height: 75px;display: flex;">
