@@ -156,7 +156,7 @@
                                     </select>                                                            
                                 </div>
                             </div>
-                                <button type="button" id="consultarFac" name="consultarFac" class="btn btn-primary pull-right">Consultar Factura</button>
+                                <button type="button" id="consultarFac" name="consultarFac" class="btn btn-primary pull-right">Consultar datos</button>
                             </div>
 
                             <br style="clear:both">
@@ -232,16 +232,15 @@
                                     <div class="col-xs-5">
                                         <input type="text" class="form-control" id="total" name="total" disabled="true">
                                     </div>
-                                </div>       
-
+                                </div>  
                             </div>
 
                             <br style="clear:both">
                             <hr>
-
+                            <div id="datos" class="col-xs-12">
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
-                            <button type="button" class="btn btn-primary">Primary</button> 
-
+                            <button type="button" id="generarFact" class="btn btn-primary">Generar factura</button> 
+                            </div>
                         </form>
                     </div>
                 </div>

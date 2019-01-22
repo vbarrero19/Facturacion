@@ -365,9 +365,9 @@ textarea
     padding-right: 0px;
 }
 
-/**************** Estilos que estoy modificando yo **/
+/**************** Estilos que estamos modificando  **/
 
-/*CSS DE LA PESTAÑA CLIENTES */
+/*CSS DE LA PESTAÑA CLIENTES*/
 .form_radio_button{
     display: flex;
     padding-right:10px;
@@ -388,6 +388,8 @@ textarea
     width: 80%;
     margin-left: 5%;
 }
+
+
 /*CSS DE LA PESTAÑA CARGOS */
 .container2{
      width: 970px;
@@ -435,6 +437,19 @@ textarea
 #subtotal, #impuesto21, #total{
     text-align: right;
 }
+
+/*CSS DE LA PESTAÑA FACTURAS */
+
+.datos.col-xs-12{
+    display:flex;
+    
+}
+
+#generarFact{
+    margin-left: 60%;
+    
+}
+
 
 
 
