@@ -39,9 +39,21 @@
                     <div class="col-xs-10" id="childrensNav">
                         <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
                         <div class="row" style="display: flex;/*! flex-direction: unset; */justify-content: space-between;align-items:  center;height: 100%;">
-                            
+
                             <div class="divName ">
-                                <a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>
+                                <!--<a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>  -->
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Clientes
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Alta cliente</a></li>
+                                        <li><a href="#">Ver cliente</a></li>
+                                        <li><a href="#">Modificar cliente</a></li>
+                                        <li><a href="#">Baja cliente</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <!--  -->
                             </div> 
                             <div class="divName">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
@@ -56,11 +68,11 @@
                             <div class="divName">
                                 <a href="<c:url value='/tipoEmpresaController/start.htm'/>" class="btn btn-info" role="button">Tipo Empresa</a>
                             </div>
-                            
+
                             <div class="divName">
                                 <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Identificacion fiscal</a>
                             </div>
-                            
+
                             <div class="divName ">
                                 <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>
