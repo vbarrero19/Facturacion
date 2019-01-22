@@ -114,7 +114,7 @@ public class FacturasController {
         ArrayList<String> arrayTipo = new ArrayList<>();         
         
         
-        try {
+        try { 
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
