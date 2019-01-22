@@ -49,6 +49,7 @@
     <bean class="Controladores.TipoImpuestoController" id="tipoImpuesto"/>
     <bean class="Controladores.TipoEmpresaController" id="tipoEmpresa"/>    
     <bean class="Controladores.TipoFiscalController" id="tipoFiscal"/>
+    <bean class="Controladores.VerClientesController" id="verClientes"/>
    
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -69,6 +70,7 @@
                 <prop key="tipoImpuestoController.htm">tipoImpuesto</prop>
                 <prop key="tipoEmpresaController.htm">tipoEmpresa</prop>
                 <prop key="tipoFiscalController.htm">tipoFiscal</prop>
+                <prop key="verClientesController.htm">verClientes</prop>
             </props>
         </property>
     </bean>

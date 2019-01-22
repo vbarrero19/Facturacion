@@ -25,12 +25,9 @@ public class Clientes {
     private String fax;
 
     public Clientes() {
-    }
         
-//    public Clientes(String id_cliente, String tipo_empresa) {
-//        this.id_cliente = id_cliente;
-//        this.tipo_empresa = tipo_empresa;
-//    }
+        
+    }     
 
     public Clientes(String id_cliente, String nombre_empresa, String dir_fisica, String pais) {
         this.id_cliente = id_cliente;
@@ -38,10 +35,7 @@ public class Clientes {
         this.dir_fisica = dir_fisica;
         this.pais = pais;
     }
-    
-    
-    
-        
+     
     public String getId_cliente() {
         return id_cliente;
     }
@@ -171,10 +165,7 @@ public class Clientes {
     public void setFax(String fax) {
         this.fax = fax;
     }
-  
-    
-
-}
+  }
 
 
     

@@ -367,6 +367,11 @@ textarea
 
 /**************** Estilos que estamos modificando  **/
 
+/*PARA EL MENU DE ARRIBA */
+.mCliente{
+    color: #fff;
+}
+
 /*CSS DE LA PESTAÑA CLIENTES*/
 .form_radio_button{
     display: flex;

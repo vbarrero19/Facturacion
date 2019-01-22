@@ -45,12 +45,12 @@
                                 <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Clientes
                                         <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="<c:url value='/clientesController/start.htm'/>">Alta cliente</a></li>
+                                    <ul class="dropdown-menu btn btn-info" role="button">
+                                        <li clas="mCliente"><a href="<c:url value='/clientesController/start.htm'/>">Alta cliente</a></li>
                                         <!--meter href la direccion del controlador que realiza las acciones -->
-                                        <li><a href="#">Ver cliente</a></li>
-                                        <li><a href="#">Modificar cliente</a></li>
-                                        <li><a href="#">Baja cliente</a></li>
+                                        <li class="mCliente"><a href="<c:url value='/verClientesController/start.htm'/>">Ver/editar cliente</a></li>
+                                        <!--<li><a href="#">Modificar cliente</a></li>
+                                        <li><a href="#">Baja cliente</a></li> -->
                                     </ul>
                                 </div>
                                 
