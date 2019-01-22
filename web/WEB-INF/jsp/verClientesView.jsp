@@ -65,7 +65,9 @@
 //        });
 
 
- /* ACABAR Y MIRAR PORQ NO COGE DATOS http://www.actualidadjquery.es/2010/10/20/cargando-contenido-dinamico-con-la-funcion-ajax-de-jquery/ */ 
+ /* ACABAR Y MIRAR PORQ NO COGE DATOS http://www.actualidadjquery.es/2010/10/20/cargando-contenido-dinamico-con-la-funcion-ajax-de-jquery/
+  * 
+  *  https://es.stackoverflow.com/questions/56676/agregar-datos-a-tabla-html-din%C3%A1mica-desde-funci%C3%B3n-success-de-jquery */ 
 $(document).ready(function(){  
   
     $('#btnCliente').click(function() {  
