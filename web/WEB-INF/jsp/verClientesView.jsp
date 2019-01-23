@@ -4,6 +4,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <!DOCTYPE html>
 <html>
     <%@ include file="infouser.jsp" %>
@@ -45,17 +47,19 @@
                         var cliente = JSON.parse(valor);                        
                         
                         $('#tableContainer tbody').append(" <tr>\n\
-                                                                <th scope=\"row\">" + (indice + 1) + "</th>              \n\
-                                                                    <td>" + cliente.id_cliente + "</td>              \n\
-                                                                    <td>" + cliente.nombre_empresa + "</td>                  \n\
-                                                                    <td>" + cliente.nombre_persona + "</td>              \n\
-                                                                    <td>" + cliente.num_ident + "</td>                  \n\
-                                                                    <td>" + cliente.dir_fisica + "</td>              \n\
+                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                                                    <td>" + cliente.id_cliente + "</td>         \n\
+                                                                    <td>" + cliente.nombre_empresa + "</td>     \n\
+                                                                    <td>" + cliente.nombre_persona + "</td>     \n\
+                                                                    <td>" + cliente.num_ident + "</td>          \n\
+                                                                    <td>" + cliente.dir_fisica + "</td>         \n\
                                                                     <td>" + cliente.pais + "</td>               \n\
-                                                                    <td>" + cliente.telefono1 + "</td>                        \n\ \n\
-                                                                </tr>");
+                                                                    <td>" + cliente.telefono1 + "</td>          \n\
+                                                                    <td>" + cliente.telefono1 + "</td>          \n\
+\n\                                                           </tr>");
+                                                                    
         
-        
+                                                                    
                     });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -74,29 +78,22 @@
     <body>
         <div class="container">
             <div class="col-xs-12">                               
-                <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+                <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-1 col-lg-6">
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA CLIENTES</h3>
                             <div>
-                                <div class="col-xs-12">
-                                    <button type="button" id="btnCliente" name="btnCliente" class="btn btn-primary pull-right">Lista clientes</button>
-                                </div>
 
                                 
-                                <div class="col-xs-6 form-group">
-                                <label for="comboClientes">Nombre de cliente</label>
-                                <div class="form-group-combo">
-                                    <!--Combo para clientes-->
-                                    <select class="form-control" id="comboClientes" name="comboClientes">
-                                    </select>                                                            
-                                </div>
-                            </div>
+                                <!--https://es.stackoverflow.com/questions/64319/boton-dinamico-jquery-en-una-tabla-->
                                 
 
                                 <div class="col-xs-12" id="tableContainer">
                                     <table class="table table-striped">
+                                    <button value="actualizar" tittle="actualizar" id="btnedit" class="btn btn-primary btn-edit"><i class="fas fa-edit"></i></i></button>                                   
+                                    <button value="eliminar" tittle="eliminar" class="btn btn-danger btn-delete"><i class="fas fa-window-close"></i></button>
+                                    
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th scope="col">#</th>
@@ -106,19 +103,29 @@
                                                 <th scope="col">num_ident</th>
                                                 <th scope="col">dir_fisica</th>                                                
                                                 <th scope="col">pais</th> 
-                                                <th scope="col">telefono1</th>                                                 
+                                                <th scope="col">telefono1</th> 
+                                                <th scope="col">Acciones</th>
+                                                
                                                 
                                                 
                                             </tr>
+                                            
                                         </thead>
                                         <tbody>
-
+                                            
                                         </tbody>
                                     </table>
                                 </div>    
                                 <div>
                                     <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                                 </div>
+                                
+<!--                                <div>
+                                    <button value="actualizar" tittle="actualizar" class="btn btn-primary"><i class="fas fa-edit"></i></i></button>
+                                   
+                                    <button value="eliminar" tittle="eliminar" class="btn btn-primary"><i class="fas fa-window-close"></i></button>
+                                    
+                                </div>    -->
                         </form>
                     </div>
                 </div>
