@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class VerClientesController { 
     
-    @RequestMapping("/verClientesView/start.htm")
+    @RequestMapping("/verClientesController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("verClientesView");
        
@@ -43,7 +43,7 @@ public class VerClientesController {
         return null;
     }
     
-    @RequestMapping("/verClientesView/verCliente.htm")  
+    @RequestMapping("/verClientesController/verCliente.htm")  
     @ResponseBody
     public String verCliente( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Clientes resourceLoad = new Clientes();

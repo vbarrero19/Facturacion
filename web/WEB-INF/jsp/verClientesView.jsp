@@ -33,7 +33,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: 'verCliente.htm', //Vamos a facturasController/getCliente.htm a recoger los datos
+                url: '/Facturacion/verClientesController/verCliente.htm', //Vamos a facturasController/getCliente.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
