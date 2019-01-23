@@ -35,6 +35,7 @@ public class Clientes {
         this.dir_fisica = dir_fisica;
         this.pais = pais;
     }
+
      
     public String getId_cliente() {
         return id_cliente;
