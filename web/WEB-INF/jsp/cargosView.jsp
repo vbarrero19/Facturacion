@@ -20,7 +20,7 @@
             var userLang = navigator.language || navigator.userLanguage;
 
             //Para que al cargar la pagina activemos la primera pestaña de id: home-tab
-            $("#home-tab").click();
+            //$("#home-tab").click();
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
             //Constructor para el calendario Fecha-Cargo.

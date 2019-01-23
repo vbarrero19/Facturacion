@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class VerClientesController { 
     
-    @RequestMapping("/verClientesController/start.htm")
+    @RequestMapping("/verClientesView/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("verClientesView");
        
@@ -43,9 +43,9 @@ public class VerClientesController {
         return null;
     }
     
-    @RequestMapping("/verClientesController/verCliente.htm")  
+    @RequestMapping("/verClientesView/verCliente.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Clientes clientes, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verCliente( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Clientes resourceLoad = new Clientes();
         
         Connection con = null;
@@ -60,17 +60,16 @@ public class VerClientesController {
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            /*REALIZAMOS LA CONSULTA PREPARADA PARA EL NUEVO CLIENTE*/
-            stAux = con.prepareStatement("SELECT id_cliente, nombre_empresa, num_ident, dir_fisica, pais FROM clientes where id_cliente = ?");
             
-            /*VAMOS ASIGNANDO LOS VALORES*/
-            stAux.setInt(1, Integer.parseInt(clientes.getId_cliente()));
-            //EJECUTAMOS LA CONSULTA Y LO GUARDAMOS EN LA VARIABLE RS          
-            rs = stAux.executeQuery();
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, nombre_persona, num_ident, dir_fisica , pais, telefono1 FROM clientes");
             
-            
+ 
+
+           
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5)))); 
+                String test = rs.getString(3);
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)))); 
             }            
             resp = new Gson().toJson(arrayTipo);
             

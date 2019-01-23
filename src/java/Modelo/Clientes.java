@@ -24,11 +24,21 @@ public class Clientes {
     private String telefono2;
     private String fax;
 
-    public Clientes() {
-        
+    public Clientes() {        
         
     }     
 
+    public Clientes(String id_cliente, String nombre_empresa, String nombre_persona, String num_ident, String dir_fisica, String pais, String telefono1) {
+        this.id_cliente = id_cliente;
+        this.nombre_empresa = nombre_empresa;
+        this.nombre_persona = nombre_persona;
+        this.num_ident = num_ident;
+        this.dir_fisica = dir_fisica;
+        this.pais = pais;
+        this.telefono1 = telefono1;
+    }
+     
+    
     public Clientes(String id_cliente, String nombre_empresa, String dir_fisica, String pais) {
         this.id_cliente = id_cliente;
         this.nombre_empresa = nombre_empresa;
