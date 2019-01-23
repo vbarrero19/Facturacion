@@ -56,12 +56,12 @@ public class VerClientesController {
         //CREAMOS UN ARRAY
         ArrayList<String> arrayTipo = new ArrayList<>(); 
         
-       /*CODIGO PARA AÑADIR UN NUEVO CLIENTE*/ 
+       /*CODIGO PARA VER UN NUEVO CLIENTE*/ 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA EL NUEVO CLIENTE*/
-            stAux = con.prepareStatement("SELECT id_cliente, nombre_empresa, num_ident, pais FROM clientes");
+            stAux = con.prepareStatement("SELECT id_cliente, nombre_empresa, num_ident, dir_fisica, pais FROM clientes where id_cliente = ?");
             
             /*VAMOS ASIGNANDO LOS VALORES*/
             stAux.setInt(1, Integer.parseInt(clientes.getId_cliente()));
@@ -70,7 +70,7 @@ public class VerClientesController {
             
             
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)))); 
+                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4), rs.getString(5)))); 
             }            
             resp = new Gson().toJson(arrayTipo);
             
