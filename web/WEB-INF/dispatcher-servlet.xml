@@ -69,7 +69,7 @@
                 <prop key="facturasController.htm">facturas</prop>
                 <prop key="tipoImpuestoController.htm">tipoImpuesto</prop>
                 <prop key="tipoEmpresaController.htm">tipoEmpresa</prop>
-                <prop key="tipoFiscalController.htm">tipoFiscal</prop>
+                <prop key="tipoFiscalView.htm">tipoFiscal</prop>
                 <prop key="verClientesView.htm">verClientes</prop>
             </props>
         </property>

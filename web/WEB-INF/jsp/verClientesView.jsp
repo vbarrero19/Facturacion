@@ -51,7 +51,7 @@
                                                                     <td>" + cliente.nombre_persona + "</td>              \n\
                                                                     <td>" + cliente.num_ident + "</td>                  \n\
                                                                     <td>" + cliente.dir_fisica + "</td>              \n\
-                                                                    <td>" + cliente.pais + "</td>              \n\ \n\
+                                                                    <td>" + cliente.pais + "</td>               \n\
                                                                     <td>" + cliente.telefono1 + "</td>                        \n\ \n\
                                                                 </tr>");
         
