@@ -296,6 +296,7 @@ public class CargosController {
 
     }
     
+    /*Cargamos los datos para el combo de items*/
     @RequestMapping("/cargosController/getItem.htm")
     @ResponseBody
     public String cargarComboItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -313,20 +314,20 @@ public class CargosController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_cliente, nombre_empresa, dir_fisica, pais FROM items where id_empresa = '2' ORDER BY nombre_empresa");
+            rs = sentencia.executeQuery("SELECT id_item, abreviatura, nombre, precio, id_impuesto, periodo FROM items ORDER BY nombre");
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
+                arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6))));
             }
 
             resp = new Gson().toJson(arrayTipo);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto"; 
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } catch (Exception ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto";
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } finally {

@@ -14,7 +14,19 @@ public class Items  {
     private String precio;
     private String id_impuesto;
     private String periodo;
- 
+
+    public Items() {
+    }
+
+    public Items(String id_item, String abreviatura, String nombre, String precio, String id_impuesto, String periodo) {
+        this.id_item = id_item;
+        this.abreviatura = abreviatura;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.id_impuesto = id_impuesto;
+        this.periodo = periodo;
+    }
+
     public String getId_item() {
         return id_item;
     }

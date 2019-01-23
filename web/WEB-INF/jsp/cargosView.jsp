@@ -8,7 +8,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>CARGOS VIEW</title> 
+        <title>ADEUDOS VIEW</title> 
     </head>
     <script>
         $(document).ready(function () {
@@ -319,13 +319,13 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getItem.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var aux = JSON.parse(data);
                     //Identificamos el combo
-                    select = document.getElementById('comboEmpresas');
+                    select = document.getElementById('comboItems');
                     //Añadimos la opcion Seleccionar al combo
                     var opt = document.createElement('option');
                     opt.value = 0;
@@ -339,9 +339,9 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_cliente;
+                        opt.value = aux2.id_item;
                         //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = aux2.nombre_empresa;
+                        opt.innerHTML = aux2.nombre;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -364,11 +364,12 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ADEUDOS</h3>                            
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ADEUDOS</h3>                           
 
 
-
+                            
                             <div class="datos" class="col-xs-12">
+                                <!--Combo para clientes-->
                                 <div class="form-group col-xs-3">
                                     <label for="comboClientes"> Nombre cliente </label>
                                     <div class="form-group-combo">                                        
@@ -376,12 +377,10 @@
                                         </select>                                                            
                                     </div>
                                 </div>
-
                                 <div class="form-group col-xs-2">
-                                    <label for="comboClientes"> Id.cliente </label>
+                                    <label for="id_cliente"> Id.cliente </label>
                                     <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
                                 </div> 
-
                                 <div class="form-group col-xs-4">
                                     <label for="idCliente>">Dirección física cliente</label>
                                     <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
@@ -393,9 +392,9 @@
                                 `
                             </div>   
                             <div class="datos" class="col-xs-12">
+                                <!--Combo para Empresas-->
                                 <div class="form-group col-xs-3">
-                                    <!--Combo para clientes-->
-                                    <label for="comboClientes">Nombre de empresa</label>
+                                    <label for="comboEmpresas">Nombre de empresa</label>
                                     <div class="form-group-combo">                                        
                                         <select class="form-control" id="comboEmpresas" name="comboEmpresas">
                                         </select>                                                            
@@ -405,8 +404,6 @@
                                     <label for="idEmpresa>">Id.Empresa</label>
                                     <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador empresa" disabled = "true">
                                 </div>
-
-
                                 <div class="form-group col-xs-4">
                                     <label for="idEmpresa>">Dirección física empresa</label>
                                     <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" disabled = "true">
@@ -435,9 +432,9 @@
 
                             </div>
 
-
+                            <!--Combo para Items-->
                             <div class="form-group col-xs-3">
-                                <label for="comboItems"> Nombre item </label>
+                                <label for="comboItems"> Nombre item</label>
                                 <div class="form-group-combo">                                        
                                     <select class="form-control" id="comboItems" name="comboItems">
                                     </select>                                                            
