@@ -43,6 +43,10 @@
                         //defaultDate: '08:32:33',
                         //                });
             });
+            
+            
+             
+        
 
             //Guarda los datos en la tabla cargos
             $("#submit").click(function () {
@@ -202,8 +206,14 @@
                     $("#pais2").val("");
                 }
             });
+            
+            
+            
+            cargadorItems();
 
         });
+        
+        
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
@@ -322,16 +332,33 @@
                 url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getItem.htm a recoger los datos
                 success: function (data) {
 
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    for( i = 0; i <= 5; i++) {
+                    
+                        //cargamos de forma dinamica la tabla
+                        $('#tableContainer tbody').append(" <tr>\n\
+                                                                    <th scope=\"row\">" + (i + 1) + "</th>              \n\
+                                                                    <td>" + "<select class='form-control comboItems' id='comboItems"+(i+1)+"' name='comboItems'></select> " + "</td>   \n\
+                                                                    <td>" + "item.adeudo" + "</td>                        \n\
+                                                                    <td>" + "GGG " + "</td>                       \n\
+                                                                    <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>     \n\ \n\
+                                                                </tr>");
+                        //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var aux = JSON.parse(data);
                     //Identificamos el combo
-                    select = document.getElementById('comboItems');
+                    
+                    
+//                    $([name=combo])
+                    
+                    select = document.getElementById("comboItems"+(i+1));
+                    //select = $('.comboItems');
                     //Añadimos la opcion Seleccionar al combo
                     var opt = document.createElement('option');
                     opt.value = 0;
                     opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-
+                    select.append(opt);
+                    //$(".comboItems").each(function(){
+                     //   $(this).append(opt);
+                    //});  
                     //Lo vamos cargando
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a TipoImpuesto
@@ -343,8 +370,16 @@
                         //Guardamos el impuesto en el nombre de cada opcion                        
                         opt.innerHTML = aux2.nombre;
                         //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
+                        select.append(opt);
+                        
+                                                              
+                     });                                               
+
+                    }
+
+                    
+
+                    
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -352,9 +387,40 @@
                     console.log(xhr.responseText);
                     console.log(thrownError);
                 }
+                
+
             });
-        }
-        ;
+        };
+        
+       
+        
+//        function cargadorItems(){
+//                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+//                    var aux = JSON.parse(data);
+//                    //Identificamos el combo
+//                    select = document.getElementById('comboItems');
+//                    //Añadimos la opcion Seleccionar al combo
+//                    var opt = document.createElement('option');
+//                    opt.value = 0;
+//                    opt.innerHTML = "Seleccionar";
+//                    select.appendChild(opt);
+//
+//                    //Lo vamos cargando
+//                    aux.forEach(function (valor, indice) {
+//                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+//                        var aux2 = JSON.parse(valor);
+//                        //Creamos las opciones del combo
+//                        var opt = document.createElement('option');
+//                        //Guardamos el id en el value de cada opcion
+//                        opt.value = aux2.id_item;
+//                        //Guardamos el impuesto en el nombre de cada opcion                        
+//                        opt.innerHTML = aux2.nombre;
+//                        //Añadimos la opcion
+//                        select.appendChild(opt);
+//                        
+//                    });
+//        };
+        
 
     </script>
     <body>
@@ -367,7 +433,7 @@
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ADEUDOS</h3>                           
 
 
-                            
+
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para clientes-->
                                 <div class="form-group col-xs-3">
@@ -415,22 +481,7 @@
                             </div>
 
 
-                            <div class="col-xs-12" id="tableContainer">
-                                <table class="table table-striped">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Id_cargo</th>
-                                            <th scope="col">Cargo</th> 
-                                            <th scope="col">Importe</th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
 
-                                    </tbody>
-                                </table>
-
-                            </div>
 
                             <!--Combo para Items-->
                             <div class="form-group col-xs-3">
@@ -440,6 +491,30 @@
                                     </select>                                                            
                                 </div>
                             </div>
+
+<!--                            <br style="clear:both">-->
+
+                            <div class="col-xs-12" id="tableContainer">
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Id_adeudo</th>
+                                            <th scope="col">Adeudo</th> 
+                                            <th scope="col">Importe</th> 
+                                            <th scope="col">Enlace</th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+<!--                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#comboItems').cargadorItems();
+                                        });
+                                    </script>-->
+                                    </tbody>
+                                </table>
+                            </div>
+
 
 
                             <div class="form-group">
