@@ -206,14 +206,8 @@
                     $("#pais2").val("");
                 }
             });
-            
-            
-            
-            cargadorItems();
-
+                  
         });
-        
-        
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
@@ -331,34 +325,28 @@
                 type: 'GET',
                 url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getItem.htm a recoger los datos
                 success: function (data) {
-
-                    for( i = 0; i <= 5; i++) {
+                    
+                    //Creamos una tabla con 5 filas para insertar datos
+                    for( i = 0; i < 5; i++) {
                     
                         //cargamos de forma dinamica la tabla
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (i + 1) + "</th>              \n\
                                                                     <td>" + "<select class='form-control comboItems' id='comboItems"+(i+1)+"' name='comboItems'></select> " + "</td>   \n\
-                                                                    <td>" + "item.adeudo" + "</td>                        \n\
-                                                                    <td>" + "GGG " + "</td>                       \n\
+                                                                    <td>" + "<input type='text' id='id_adeudo' name='id_adeudo'>" + "</td>                        \n\
+                                                                    <td>" + "<input type='text' id='id_adeudo' name='id_adeudo'>" + "</td>                       \n\
                                                                     <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>     \n\ \n\
                                                                 </tr>");
-                        //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var aux = JSON.parse(data);
                     //Identificamos el combo
                     
-                    
-//                    $([name=combo])
-                    
                     select = document.getElementById("comboItems"+(i+1));
-                    //select = $('.comboItems');
                     //Añadimos la opcion Seleccionar al combo
                     var opt = document.createElement('option');
                     opt.value = 0;
                     opt.innerHTML = "Seleccionar";
                     select.append(opt);
-                    //$(".comboItems").each(function(){
-                     //   $(this).append(opt);
-                    //});  
                     //Lo vamos cargando
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a TipoImpuesto
@@ -370,16 +358,11 @@
                         //Guardamos el impuesto en el nombre de cada opcion                        
                         opt.innerHTML = aux2.nombre;
                         //Añadimos la opcion
-                        select.append(opt);
-                        
+                        select.append(opt);                        
                                                               
                      });                                               
 
-                    }
-
-                    
-
-                    
+                    }         
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -390,36 +373,8 @@
                 
 
             });
-        };
-        
-       
-        
-//        function cargadorItems(){
-//                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-//                    var aux = JSON.parse(data);
-//                    //Identificamos el combo
-//                    select = document.getElementById('comboItems');
-//                    //Añadimos la opcion Seleccionar al combo
-//                    var opt = document.createElement('option');
-//                    opt.value = 0;
-//                    opt.innerHTML = "Seleccionar";
-//                    select.appendChild(opt);
-//
-//                    //Lo vamos cargando
-//                    aux.forEach(function (valor, indice) {
-//                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-//                        var aux2 = JSON.parse(valor);
-//                        //Creamos las opciones del combo
-//                        var opt = document.createElement('option');
-//                        //Guardamos el id en el value de cada opcion
-//                        opt.value = aux2.id_item;
-//                        //Guardamos el impuesto en el nombre de cada opcion                        
-//                        opt.innerHTML = aux2.nombre;
-//                        //Añadimos la opcion
-//                        select.appendChild(opt);
-//                        
-//                    });
-//        };
+        };       
+ 
         
 
     </script>
@@ -480,20 +435,6 @@
                                 </div>
                             </div>
 
-
-
-
-                            <!--Combo para Items-->
-                            <div class="form-group col-xs-3">
-                                <label for="comboItems"> Nombre item</label>
-                                <div class="form-group-combo">                                        
-                                    <select class="form-control" id="comboItems" name="comboItems">
-                                    </select>                                                            
-                                </div>
-                            </div>
-
-<!--                            <br style="clear:both">-->
-
                             <div class="col-xs-12" id="tableContainer">
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
@@ -506,11 +447,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-<!--                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#comboItems').cargadorItems();
-                                        });
-                                    </script>-->
+
                                     </tbody>
                                 </table>
                             </div>
@@ -518,23 +455,23 @@
 
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="id_adeudo" name="id_adeudo" placeholder="Identificador adeudo" required>
+                                <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
                             </div>                          
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="id_factura" name="id_factura" placeholder="Identificador factura" required>
+                                <input type="text" class="form-control" id="id_factura" name="id_factura">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" required>
+                                <input type="text" class="form-control" id="cantidad" name="cantidad">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="impuesto" name="impuesto" placeholder="Impuesto" required>
+                                <input type="text" class="form-control" id="impuesto" name="impuesto">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Adeudo" required>                                                    
+                                <input type="text" class="form-control" id="cargo" name="cargo">                                                    
                             </div>
 
                             <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
