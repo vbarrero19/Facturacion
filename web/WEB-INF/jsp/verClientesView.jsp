@@ -21,7 +21,7 @@
            
         });
 
-        function cargarClientes() {
+        function cargarClientes() { 
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
