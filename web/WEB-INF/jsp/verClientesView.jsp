@@ -15,11 +15,11 @@
     <script>
         $(document).ready(function () {
             
-            cargarClientes();            
+            cargarClientes();
             
             var userLang = navigator.language || navigator.userLanguage;
             
-//            
+           
         });
 
         function cargarClientes() {
