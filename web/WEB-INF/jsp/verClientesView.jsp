@@ -55,10 +55,12 @@
                                                                     <td>" + cliente.dir_fisica + "</td>         \n\
                                                                     <td>" + cliente.pais + "</td>               \n\
                                                                     <td>" + cliente.telefono1 + "</td>          \n\
-                                                                    <td>" + cliente.telefono1 + "</td>          \n\
-\n\                                                           </tr>");
+                                                                    <td>"+"<a href="#seccion1">Antecedentes1</a>"+"</td>\n\
+                                                                    <td>"+"<a href="#seccion2">Antecedentes2</a>"+"</td>\n\
+                                                                    </tr>");
                                                                     
-        
+                                         
+                                    
                                                                     
                     });
                 },
@@ -72,8 +74,9 @@
 
 
     </script>
-
-
+<!--
+<td><button value="actualizar" tittle="actualizar" id="btnedit" class="btn btn-primary btn-edit"><i class="fas fa-edit"></i></i></button> </td>\n\
+<td><button value="eliminar" tittle="eliminar" class="btn btn-danger btn-delete"><i class="fas fa-window-close"></i></button> </td>\n\\n\-->
 
     <body>
         <div class="container">
@@ -91,8 +94,7 @@
 
                                 <div class="col-xs-12" id="tableContainer">
                                     <table class="table table-striped">
-                                    <button value="actualizar" tittle="actualizar" id="btnedit" class="btn btn-primary btn-edit"><i class="fas fa-edit"></i></i></button>                                   
-                                    <button value="eliminar" tittle="eliminar" class="btn btn-danger btn-delete"><i class="fas fa-window-close"></i></button>
+                                    
                                     
                                         <thead class="thead-dark">
                                             <tr>
@@ -104,8 +106,8 @@
                                                 <th scope="col">dir_fisica</th>                                                
                                                 <th scope="col">pais</th> 
                                                 <th scope="col">telefono1</th> 
-                                                <th scope="col">Acciones</th>
-                                                
+                                                <th scope="col">Acciones1</th>
+                                                <th scope="col">Acciones2</th>                                              
                                                 
                                                 
                                             </tr>

@@ -41,6 +41,7 @@ public class FacturasController {
         return null;
     } 
     
+    
     @RequestMapping("/facturasController/getFacturas.htm")  
     @ResponseBody
     public String saveNewCustomer(@RequestBody ClienteCargos clienteCargos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
