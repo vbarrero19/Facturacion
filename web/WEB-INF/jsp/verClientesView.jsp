@@ -65,15 +65,23 @@
                     console.log(xhr.responseText);
                     console.log(thrownError);
                 }
-            });         
+            });  
+            
+            
         }
+        
+//        $("#btnedit").click(function(){
+//            Alert("Hola!");
+//        }
 
+
+/*https://uh-tis.blogspot.com/2017/02/curso-de-java-como-hago-el-boton-eliminar.html
+ * 
+ * https://www.lawebdelprogramador.com/foros/Netbeans/1200965-boton-eliminar.html*/
 
     </script>
-<!--
-<td><button value="actualizar" tittle="actualizar" id="btnedit" class="btn btn-primary btn-edit"><i class="fas fa-edit"></i></i></button> </td>\n\
-<td><button value="eliminar" tittle="eliminar" class="btn btn-danger btn-delete"><i class="fas fa-window-close"></i></button> </td>\n\\n\-->
 
+    
     <body>
         <div class="container">
             <div class="col-xs-12">                               
@@ -113,13 +121,6 @@
                                 <div>
                                     <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                                 </div>
-                                
-<!--                                <div>
-                                    <button value="actualizar" tittle="actualizar" class="btn btn-primary"><i class="fas fa-edit"></i></i></button>
-                                   
-                                    <button value="eliminar" tittle="eliminar" class="btn btn-primary"><i class="fas fa-window-close"></i></button>
-                                    
-                                </div>    -->
                         </form>
                     </div>
                 </div>
@@ -128,28 +129,5 @@
     </body>
 </html>
 
-
-
-<!--//Identificamos el combo
-                    select = document.getElementById('comboItems');
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-
-                    //Lo vamos cargando
-                    aux.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var aux2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_item;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = aux2.nombre;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });-->
 
 
