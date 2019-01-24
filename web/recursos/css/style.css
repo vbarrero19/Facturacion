@@ -455,6 +455,11 @@ textarea
     
 }
 
+/*verClientes*/
+
+.botones{
+    display:flex;
+}
 
 
 

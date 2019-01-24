@@ -5,7 +5,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <!DOCTYPE html>
 <html>
     <%@ include file="infouser.jsp" %>
@@ -55,13 +54,10 @@
                                                                     <td>" + cliente.dir_fisica + "</td>         \n\
                                                                     <td>" + cliente.pais + "</td>               \n\
                                                                     <td>" + cliente.telefono1 + "</td>          \n\
-                                                                    <td>"+"<a href="#seccion1">Antecedentes1</a>"+"</td>\n\
-                                                                    <td>"+"<a href="#seccion2">Antecedentes2</a>"+"</td>\n\
-                                                                    </tr>");
-                                                                    
-                                         
-                                    
-                                                                    
+                                                                    <td class='botones'>" + " <button value='actualizar' tittle='actualizar' id='btnedit' class='btn btn-primary btn-edit'><i class='fas fa-edit'></i></i></button> " 
+                                                                    + "<button value='eliminar' tittle='eliminar' class='btn btn-danger btn-delete'><i class='fas fa-window-close'></i></button>"    
+                                                                    + "</td>          \n\\n\
+                                                          </tr>");
                     });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -106,12 +102,8 @@
                                                 <th scope="col">dir_fisica</th>                                                
                                                 <th scope="col">pais</th> 
                                                 <th scope="col">telefono1</th> 
-                                                <th scope="col">Acciones1</th>
-                                                <th scope="col">Acciones2</th>                                              
-                                                
-                                                
-                                            </tr>
-                                            
+                                                <th scope="col">Acciones</th>  
+                                            </tr>                                            
                                         </thead>
                                         <tbody>
                                             
