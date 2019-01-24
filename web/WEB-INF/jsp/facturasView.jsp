@@ -61,7 +61,8 @@
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
                                                                     <td>" + item.id_adeudo + "</td>                       \n\
                                                                     <td>" + item.adeudo + "</td>                        \n\
-                                                                    <td>" + item.cantidad + "</td>                       \n\ \n\
+                                                                    <td>" + item.cantidad + "</td>                       \n\
+                                                                    <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>                       \n\ \n\
                                                                 </tr>");
 
 
@@ -127,6 +128,14 @@
 
 
     </script>
+    
+    
+    <!--
+<td><button value="actualizar" tittle="actualizar" id="btnedit" class="btn btn-primary btn-edit"><i class="fas fa-edit"></i></i></button> </td>\n\
+<td><button value="eliminar" tittle="eliminar" class="btn btn-danger btn-delete"><i class="fas fa-window-close"></i></button> </td>\n\\n\-->
+    
+    
+    
     <body>
         <div class="container">
             <div class="col-xs-12">
@@ -191,6 +200,7 @@
                                             <th scope="col">Id_adeudo</th>
                                             <th scope="col">Adeudo</th> 
                                             <th scope="col">Importe</th> 
+                                            <th scope="col">Enlace</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
