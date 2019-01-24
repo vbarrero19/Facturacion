@@ -59,7 +59,7 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("INSERT INTO adeudos (id_adeudo,id_empresa,id_factura,id_cliente,cantidad,impuesto,cargo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO adeudos (id_adeudo,id_empresa,id_factura,id_cliente,cantidad,impuesto,adeudo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
             
             stAux.setInt(1, Integer.parseInt(adeudo.getId_adeudo()));
             stAux.setInt(2, Integer.parseInt(adeudo.getId_empresa()));
@@ -67,7 +67,7 @@ public class CargosController {
             stAux.setInt(4, Integer.parseInt(adeudo.getId_cliente()));
             stAux.setDouble(5, adeudo.getCantidad());
             stAux.setInt(6, Integer.parseInt(adeudo.getImpuesto()));
-            stAux.setString(7, adeudo.getCargo());
+            stAux.setString(7, adeudo.getAdeudo());
 
             String test = adeudo.getFecha_cargo();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

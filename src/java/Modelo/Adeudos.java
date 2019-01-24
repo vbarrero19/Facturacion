@@ -19,14 +19,14 @@ public class Adeudos  {
     private String id_cliente;
     private Double cantidad;
     private String impuesto; 
-    private String cargo;
+    private String adeudo;
     private String fecha_cargo; 
     private String fecha_vencimiento; 
 
-    public Adeudos(String id_adeudo, String cargo) {
+    public Adeudos(String id_adeudo, String adeudo) {
         this.id_adeudo = id_adeudo;
-        this.cargo = cargo;
-    }
+        this.adeudo = adeudo;
+    } 
     
     public Adeudos() {
         
@@ -80,14 +80,14 @@ public class Adeudos  {
         this.impuesto = impuesto;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getAdeudo() {
+        return adeudo;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }    
-    
+    public void setAdeudo(String adeudo) {
+        this.adeudo = adeudo;
+    }
+
     public String getFecha_cargo() {
         return fecha_cargo;
     }
@@ -102,6 +102,8 @@ public class Adeudos  {
 
     public void setFecha_vencimiento(String fecha_vencimiento) {
         this.fecha_vencimiento = fecha_vencimiento;
-    }    
+    }
+
+    
     
 }

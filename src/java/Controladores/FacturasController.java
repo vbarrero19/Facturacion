@@ -44,8 +44,8 @@ public class FacturasController {
     
     @RequestMapping("/facturasController/getFacturas.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody ClienteCargos clienteCargos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        ClienteCargos resourceLoad = new ClienteCargos();
+    public String saveNewCustomer(@RequestBody ClienteAdeudos clienteAdeudos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ClienteAdeudos resourceLoad = new ClienteAdeudos();
         
         Connection con = null;
         ResultSet rs = null;
@@ -58,14 +58,14 @@ public class FacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();  
             
-            stAux = con.prepareStatement("SELECT c.id_cliente, c.id_cargo, cargo, cantidad, nombre_empresa, dir_fisica, pais FROM CARGOS c inner join clientes t on c.id_cliente = t.id_cliente and c.ID_CLIENTE = ?");
+            stAux = con.prepareStatement("SELECT c.id_cliente, c.id_adeudo, adeudo, cantidad, nombre_empresa, dir_fisica, pais FROM ADEUDOS c inner join clientes t on c.id_cliente = t.id_cliente and c.ID_CLIENTE = ?");
             
-            stAux.setInt(1, Integer.parseInt(clienteCargos.getId_cliente())); 
+            stAux.setInt(1, Integer.parseInt(clienteAdeudos.getId_cliente())); 
             //Ejecutamos                 
             rs = stAux.executeQuery();
             
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new ClienteCargos(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)))); 
+                arrayTipo.add(new Gson().toJson(new ClienteAdeudos(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)))); 
             }
             
             resp = new Gson().toJson(arrayTipo);

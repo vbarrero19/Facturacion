@@ -1,27 +1,27 @@
 
 package Modelo;
 
-public class ClienteCargos {
+public class ClienteAdeudos {
     private String id_cliente;
-    private String id_cargo;
-    private String cargo;    
+    private String id_adeudo;
+    private String adeudo;    
     private String cantidad;
     
     private String nombre_empresa;    
     private String dir_fisica;    
     private String pais;
 
-    public ClienteCargos() {
+    public ClienteAdeudos() {
 
     }
     
     
     
 
-    public ClienteCargos(String id_cliente, String id_cargo, String cargo, String cantidad, String nombre_empresa, String dir_fisica, String pais) {
+    public ClienteAdeudos(String id_cliente, String id_adeudo, String adeudo, String cantidad, String nombre_empresa, String dir_fisica, String pais) {
         this.id_cliente = id_cliente;
-        this.id_cargo = id_cargo;
-        this.cargo = cargo;
+        this.id_adeudo = id_adeudo;
+        this.adeudo = adeudo;
         this.cantidad = cantidad;
         this.nombre_empresa = nombre_empresa;
         this.dir_fisica = dir_fisica;
@@ -39,21 +39,21 @@ public class ClienteCargos {
         this.id_cliente = id_cliente;
     }
 
-    public String getId_cargo() {
-        return id_cargo;
+    public String getId_adeudo() {
+        return id_adeudo;
     }
 
-    public void setId_cargo(String id_cargo) {
-        this.id_cargo = id_cargo;
+    public void setId_adeudo(String id_adeudo) {
+        this.id_adeudo = id_adeudo;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getAdeudo() {
+        return adeudo;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
+    public void setAdeudo(String adeudo) {
+        this.adeudo = adeudo;
+    }    
 
     public String getCantidad() {
         return cantidad;

@@ -61,14 +61,14 @@
             <props>
                 <prop key="index.htm">indexController</prop>
                 <prop key="userform.htm">homepage</prop>
-                <prop key="customerController.htm">customerctrl</prop>
-                <prop key="clientesController.htm">clientes</prop>
-                <prop key="menuController.htm">menu</prop>
+                <prop key="customerView.htm">customerctrl</prop>
+                <prop key="clientesView.htm">clientes</prop>
+                <prop key="menuView.htm">menu</prop>
                 <prop key="cargosView.htm">cargos</prop>                
-                <prop key="itemsController.htm">items</prop>
-                <prop key="facturasController.htm">facturas</prop>
-                <prop key="tipoImpuestoController.htm">tipoImpuesto</prop>
-                <prop key="tipoEmpresaController.htm">tipoEmpresa</prop>
+                <prop key="itemsView.htm">items</prop>
+                <prop key="facturasView.htm">facturas</prop>
+                <prop key="tipoImpuestoView.htm">tipoImpuesto</prop>
+                <prop key="tipoEmpresaView.htm">tipoEmpresa</prop>
                 <prop key="tipoFiscalView.htm">tipoFiscal</prop>
                 <prop key="verClientesView.htm">verClientes</prop>
             </props>

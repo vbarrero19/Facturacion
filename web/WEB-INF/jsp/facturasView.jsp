@@ -59,8 +59,8 @@
                             //cargamos de forma dinamica la tabla
                             $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
-                                                                    <td>" + item.id_cargo + "</td>                       \n\
-                                                                    <td>" + item.cargo + "</td>                        \n\
+                                                                    <td>" + item.id_adeudo + "</td>                       \n\
+                                                                    <td>" + item.adeudo + "</td>                        \n\
                                                                     <td>" + item.cantidad + "</td>                       \n\ \n\
                                                                 </tr>");
 
@@ -188,8 +188,8 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Id_cargo</th>
-                                            <th scope="col">Cargo</th> 
+                                            <th scope="col">Id_adeudo</th>
+                                            <th scope="col">Adeudo</th> 
                                             <th scope="col">Importe</th> 
                                         </tr>
                                     </thead>
