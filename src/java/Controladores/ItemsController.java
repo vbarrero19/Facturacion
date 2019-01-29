@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ItemsController {
     
+    //Al cargar presentemos un Model and View con el JSP
     @RequestMapping("/itemsController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("itemsView"); 
@@ -32,6 +33,7 @@ public class ItemsController {
         return mv;
     }  
     
+    //AddResources
     @RequestMapping("/itemsController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -39,22 +41,35 @@ public class ItemsController {
         return null;
     }
     
-    @RequestMapping("/itemsController/newCustomer.htm")  
+    //Insertamos un nuevo item
+    @RequestMapping("/itemsController/newItems.htm")  
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Items item, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String saveNewItem(@RequestBody Items item, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Items resourceLoad = new Items();
         
         Connection con = null; 
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
-       
-        //ModelAndView mv = new ModelAndView("lessonresources");
+        String resp = "correcto";       
+        
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
-            stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, nombre, precio, id_impuesto, periodo) VALUES (?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, descripcion, tipo, cuenta, importe, periodo) VALUES (?,?,?,?,?,?,?)");
+            
+            /*
+            Solo para ver los campos, borrar
+            private String id_item;
+            private String abreviatura;
+            private String descripcion;
+            private String tipo;
+            private String cuenta;
+            private String importe;
+            private String periodo;
+            */
+            
+            
             
             stAux.setInt(1, Integer.parseInt(item.getId_item()));  
             stAux.setString(2, item.getAbreviatura()); 
@@ -120,7 +135,7 @@ public class ItemsController {
             rs = sentencia.executeQuery("SELECT ID_IMPUESTO, IMPUESTO FROM TIPO_IMPUESTO");
            
             while (rs.next()) {
-            //    arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
+//                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
             }
             
             resp = new Gson().toJson(arrayTipo);

@@ -44,7 +44,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/itemsController/newCustomer.htm', //Vamos a newCustomer de itemsController
+                    url: '/Facturacion/itemsController/newItems.htm', //Vamos a newCustomer de itemsController
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
