@@ -36,12 +36,12 @@
                         <div class="row" style="display: flex;/*! flex-direction: unset; */justify-content: space-between;align-items:  center;height: 100%;">
                             <!-- Menu desplegable de clientes donde aparecen las opciones a realizar -->
                             <div class="divName ">
-                                <!--<a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>  -->
+                                <!--<a href="<c:url value='/entidadesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>  -->
                                 <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Entidades
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">
-                                        <li clas="mCliente"><a href="<c:url value='/clientesController/start.htm'/>">Alta entidad</a></li>
+                                        <li clas="mCliente"><a href="<c:url value='/entidadesController/start.htm'/>">Alta entidad</a></li>
                                         <!--meter href la direccion del controlador que realiza las acciones -->
                                         <li class="mCliente"><a href="<c:url value='/verClientesController/start.htm'/>">Ver/editar entidad</a></li>
                                         <!--<li><a href="#">Modificar cliente</a></li>
