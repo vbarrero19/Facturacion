@@ -10,20 +10,22 @@ import java.io.Serializable;
 public class Items  { 
     private String id_item;
     private String abreviatura;
-    private String nombre;
-    private String precio;
-    private String id_impuesto;
+    private String descripcion;
+    private String tipo;
+    private String cuenta;
+    private String importe;
     private String periodo;
 
     public Items() {
     }
 
-    public Items(String id_item, String abreviatura, String nombre, String precio, String id_impuesto, String periodo) {
+    public Items(String id_item, String abreviatura, String descripcion, String tipo, String cuenta, String importe, String periodo) {
         this.id_item = id_item;
         this.abreviatura = abreviatura;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.id_impuesto = id_impuesto;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+        this.cuenta = cuenta;
+        this.importe = importe;
         this.periodo = periodo;
     }
 
@@ -31,41 +33,49 @@ public class Items  {
         return id_item;
     }
 
-    public void setId_item(String col1) {
-        this.id_item = col1;
+    public void setId_item(String id_item) {
+        this.id_item = id_item;
     }
 
     public String getAbreviatura() {
         return abreviatura;
     }
 
-    public void setAbreviatura(String col2) {
-        this.abreviatura = col2;
+    public void setAbreviatura(String abreviatura) {
+        this.abreviatura = abreviatura;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setNombre(String col3) {
-        this.nombre = col3;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getPrecio() {
-        return precio;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void sePrecio(String col4) {
-        this.precio = col4;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getId_impuesto() {
-        return id_impuesto;
+    public String getCuenta() {
+        return cuenta;
     }
 
-    public void setId_impuesto(String col5) {
-        this.id_impuesto = col5;
-    }         
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public String getImporte() {
+        return importe;
+    }
+
+    public void setImporte(String importe) {
+        this.importe = importe;
+    }
 
     public String getPeriodo() {
         return periodo;
@@ -73,6 +83,6 @@ public class Items  {
 
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
-    }    
+    }
     
 }
