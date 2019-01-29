@@ -1,8 +1,3 @@
-<%-- 
-    Document   : menu
-    Created on : 04-ene-2019, 9:23:26
-    Author     : Javier
---%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -43,28 +38,27 @@
                             <div class="divName ">
                                 <!--<a href="<c:url value='/clientesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>  -->
                                 <div class="dropdown">
-                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Clientes
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Entidades
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">
-                                        <li clas="mCliente"><a href="<c:url value='/clientesController/start.htm'/>">Alta cliente</a></li>
+                                        <li clas="mCliente"><a href="<c:url value='/clientesController/start.htm'/>">Alta entidad</a></li>
                                         <!--meter href la direccion del controlador que realiza las acciones -->
-                                        <li class="mCliente"><a href="<c:url value='/verClientesController/start.htm'/>">Ver/editar cliente</a></li>
+                                        <li class="mCliente"><a href="<c:url value='/verClientesController/start.htm'/>">Ver/editar entidad</a></li>
                                         <!--<li><a href="#">Modificar cliente</a></li>
                                         <li><a href="#">Baja cliente</a></li> -->
                                     </ul>
                                 </div>
-
                                 <!-- Fin del menu de clientes -->
                             </div> 
 
                             <div class="divName ">
                                 <a href="<c:url value='/itemsController/start.htm'/>" class="btn btn-info" role="button">Items</a>
                             </div>
-                            
+
                             <div class="divName">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
                             </div> 
-                            
+
                             <div class="divName ">
                                 <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>
