@@ -53,27 +53,18 @@
                                         <li><a href="#">Baja cliente</a></li> -->
                                     </ul>
                                 </div>
-                                
+
                                 <!-- Fin del menu de clientes -->
                             </div> 
-                            <div class="divName">
-                                <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
-                            </div> 
+
                             <div class="divName ">
                                 <a href="<c:url value='/itemsController/start.htm'/>" class="btn btn-info" role="button">Items</a>
                             </div>
-                            <div class="divName ">
-                                <a href="<c:url value='/tipoImpuestoController/start.htm'/>" class="btn btn-info" role="button">Tipo Impuesto</a>
-                            </div>
-
+                            
                             <div class="divName">
-                                <a href="<c:url value='/tipoEmpresaController/start.htm'/>" class="btn btn-info" role="button">Tipo Empresa</a>
-                            </div>
-
-                            <div class="divName">
-                                <a href="<c:url value='/tipoFiscalController/start.htm'/>" class="btn btn-info" role="button">Identificacion fiscal</a>
-                            </div>
-
+                                <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
+                            </div> 
+                            
                             <div class="divName ">
                                 <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>
