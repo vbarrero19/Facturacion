@@ -40,16 +40,9 @@
         </property> 
     </bean>
  
-    <bean class="Controladores.CustomerController" id="customerctrl"/>
-    <bean class="Controladores.ClientesController" id="clientes"/>
+    <bean class="Controladores.CustomerController" id="customerctrl"/>    
     <bean class="Controladores.MenuController" id="menu"/>
-    <bean class="Controladores.CargosController" id="cargos"/> 
-    <bean class="Controladores.ItemsController" id="items"/>   
-    <bean class="Controladores.FacturasController" id="facturas"/> 
-    <bean class="Controladores.TipoImpuestoController" id="tipoImpuesto"/>
-    <bean class="Controladores.TipoEmpresaController" id="tipoEmpresa"/>    
-    <bean class="Controladores.TipoFiscalController" id="tipoFiscal"/>
-    <bean class="Controladores.VerClientesController" id="verClientes"/>
+    
    
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -61,16 +54,7 @@
             <props>
                 <prop key="index.htm">indexController</prop>
                 <prop key="userform.htm">homepage</prop>
-                <prop key="customerView.htm">customerctrl</prop>
-                <prop key="clientesView.htm">clientes</prop>
-                <prop key="menuView.htm">menu</prop>
-                <prop key="cargosView.htm">cargos</prop>                
-                <prop key="itemsView.htm">items</prop>
-                <prop key="facturasView.htm">facturas</prop>
-                <prop key="tipoImpuestoView.htm">tipoImpuesto</prop>
-                <prop key="tipoEmpresaView.htm">tipoEmpresa</prop>
-                <prop key="tipoFiscalView.htm">tipoFiscal</prop>
-                <prop key="verClientesView.htm">verClientes</prop>
+                <prop key="customerView.htm">customerctrl</prop>                
             </props>
         </property>
     </bean>
