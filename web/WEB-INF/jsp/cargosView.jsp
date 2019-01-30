@@ -13,14 +13,11 @@
     <script>
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
-            getCliente();
-            getEmpresa();
+            getEntidadCliente(); //Llenamos el combo de clientes
+            getEntidadEmpresa();
             getItem();
 
             var userLang = navigator.language || navigator.userLanguage;
-
-            //Para que al cargar la pagina activemos la primera pestaña de id: home-tab
-            //$("#home-tab").click();
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
             //Constructor para el calendario Fecha-Cargo.
@@ -42,13 +39,9 @@
                 useCurrent: false//Important! See issue #1075
                         //defaultDate: '08:32:33',
                         //                });
-            });
-            
-            
-             
-        
+            });        
 
-            //Guarda los datos en la tabla cargos
+            //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -211,7 +204,7 @@
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
-        function getCliente() {
+        function getEntidadCliente() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -223,7 +216,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/getCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
+                url: '/Facturacion/cargosController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
@@ -262,7 +255,7 @@
 
         //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
-        function getEmpresa() {
+        function getEntidadEmpresa() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
