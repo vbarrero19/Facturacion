@@ -57,7 +57,7 @@ public class EntidadesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (DISTINCT_CODE, NOMBRE_ENTIDAD) VALUES(?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad) VALUES(?,?)");
             
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS) */            
             stAux.setString(1,entidad.getDistinct_code());

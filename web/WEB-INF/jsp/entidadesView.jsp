@@ -14,15 +14,12 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>CLIENTES</title> 
+        <title>ENTIDADES</title> 
     </head>
     <script>
         $(document).ready(function () {
-//            getFiscal();
-//            getEmpresa();
 
             $("#customer-tab").click();
-
 
             // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
             $("#submit").click(function () {
