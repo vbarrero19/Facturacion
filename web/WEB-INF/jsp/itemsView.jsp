@@ -12,12 +12,13 @@
     <script>
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
-            getImpuesto();
+            getTipoItem();
             
+            //Evento click para mostrar la primera pestaña de la pagina
             $("#home-tab").click();
 
             //Evento .click en el boton submit
-            $("#submit").click(function () {
+            $("#guardarItem").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -30,12 +31,14 @@
                 var myObj = {};
 
                 //Cargamos el contenido de los campos del formulario
-                myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
-                myObj["nombre"] = $("#nombre").val().trim();
-                myObj["precio"] = $("#precio").val().trim();
+                myObj["descripcion"] = $("#descripcion").val().trim();
+                
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
-                myObj["id_impuesto"] = $("#impuesto").val();
+                myObj["id_tipo_item"] = $("#id_tipo_item").val();                
+                myObj["cuenta"] = $("#cuenta").val().trim();
+                myObj["importe"] = $("#importe").val().trim();
+                
                 //Cogemos el valor del radio seleccionado y lo guardamos en periodo
                 myObj["periodo"] = $(".form-check input:checked").val();
 
@@ -63,7 +66,7 @@
 
         //Funcion para llenar el combo de impuestos. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
-        function getImpuesto() {
+        function getTipoItem() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -75,24 +78,24 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/itemsController/getImpuesto.htm', //Vamos a itemsController/getImpuesto.htm a recoger los datos
+                url: '/Facturacion/itemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
                 success: function (data) {
 
-                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    //Recogemos los datos del combo y los pasamos a objetos TipoItem  
                     var aux = JSON.parse(data);
                     //Identificamos el combo
-                    select = document.getElementById('impuesto');
+                    select = document.getElementById('id_tipo_item');
                     //Lo vamos cargando
                     aux.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        //Cada objeto esta en String y lo pasmoa a TipoItem
                         var aux2 = JSON.parse(valor);
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_Impuesto;
+                        opt.value = aux2.id_tipo_item;
                         //Guardamos el impuesto en el nombre de cada opcion
                         //                 opt.innerHTML = aux2.id_impuesto;
-                        opt.innerHTML = aux2.impuesto;
+                        opt.innerHTML = aux2.item;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -130,28 +133,38 @@
                                 </ul>
                             </div>
 
-                            <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
+                            <!-- Dentro de cada pestaña ponemos la informacion necesaria -->                        
                             <div class="tab-content" id="myTabContent">
-                                <!--INFORMACION DE LA PESTAÑA 1 -->
+                                
+                                <!--Informacio de la pestaña 1 -->
                                 <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="id_item" name="id_item" placeholder="Identificador" required>
+                                        <label for="abreviatura">Abreviatura:</label>
+                                        <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
                                     </div>                            
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="abreviatura" name="abreviatura" placeholder="Abreviatura" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
-                                    </div>
+                                        <label for="descripcion:">Descripcion:</label>
+                                        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                                    </div>                                    
 
                                     <div class="form-group-combo">
-                                        <!--Combo para tipo de impuestos-->
-                                        <select class="form-control" id="impuesto" name="impuesto">
-                                        </select>
-                                        <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio" required>                               
+                                        <label for="tipo_item">Tipo de Item:</label>                                        
+                                        <!--Combo para tipos de items-->
+                                        <select class="form-control" id="id_tipo_item" name="id_tipo_item">
+                                        </select>                                                                    
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="cuenta">Cuenta:</label>
+                                        <input type="text" class="form-control" id="cuenta" name="cuenta" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="importe">Importe:</label>
+                                        <input type="text" class="form-control" id="importe" name="importe" required>
                                     </div>
 
-                                    <!--Radio button para tipo de periodicidad--> 
+                                    <!--Radio button para tipo de periodicidad-->                                     
                                     <div class="form_radio_button">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="periodico" checked>
@@ -163,15 +176,16 @@
                                         </div>
                                     </div>
                                     <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
-                                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+                                    <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
                                 </div>
-                                <!--INFORMACION DE LA PESTAÑA 2 -->
+                                    
+                                <!--Informacio de la pestaña 2 -->
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">                                 
                                     <!--AQUI METEMOS LA INFORMACION DE LA PESTAÑA 2 -->
                                     <label>INFORMACION DE LA PESTAÑA 2 </label>
                                 </div>
 
-                                <!--INFORMACION DE LA PESTAÑA 3 -->
+                                <!--Informacio de la pestaña 3 -->
                                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                     <!-- AQUI METEMOS LA INFORMACION DE LA PESTAÑA 3 -->
                                     <label>INFORMACION DE LA PESTAÑA 3</label>

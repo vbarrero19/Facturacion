@@ -56,26 +56,14 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
-            stAux = con.prepareStatement("INSERT INTO items (id_item, abreviatura, descripcion, tipo, cuenta, importe, periodo) VALUES (?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo) VALUES (?,?,?,?,?,?)");
+            //stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo) VALUES (?,?,?,'fff',25,'Puntual')");
             
-            /*
-            Solo para ver los campos, borrar
-            private String id_item;
-            private String abreviatura;
-            private String descripcion;
-            private String tipo;
-            private String cuenta;
-            private String importe;
-            private String periodo;
-            */
-            
-            
-            
-            stAux.setInt(1, Integer.parseInt(item.getId_item()));  
-            stAux.setString(2, item.getAbreviatura()); 
-            stAux.setString(3, item.getNombre()); 
-            stAux.setDouble(4, Double.parseDouble(item.getPrecio()));  
-            stAux.setInt(5, Integer.parseInt(item.getId_impuesto()));   
+            stAux.setString(1, item.getAbreviatura());  
+            stAux.setString(2, item.getDescripcion()); 
+            stAux.setInt(3, Integer.parseInt(item.getId_tipo_item())); 
+            stAux.setString(4, item.getCuenta());
+            stAux.setDouble(5, Double.parseDouble(item.getImporte()));              
             stAux.setString(6, item.getPeriodo());    
             
             stAux.executeUpdate();            
@@ -83,7 +71,7 @@ public class ItemsController {
             resp = "Correcto";
             
         } catch (SQLException ex) {
-             resp = "Incorrecto"; // ex.getMessage();
+             resp = "Incorrecto SQLException"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
         }catch (Exception ex) {
@@ -113,32 +101,30 @@ public class ItemsController {
         return resp;
     }
     
-    @RequestMapping("/itemsController/getImpuesto.htm")  
+    @RequestMapping("/itemsController/getTipoItem.htm")  
     @ResponseBody
-    public String cargarCombo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Items resourceLoad = new Items();
+    public String cargarComboItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        TipoItem resourceLoad = new TipoItem();
         
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
         
-        ArrayList<String> arrayTipo = new ArrayList<>();   
+        ArrayList<String> arrayTipoItem = new ArrayList<>();   
         
-        
-        //ModelAndView mv = new ModelAndView("lessonresources");
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT ID_IMPUESTO, IMPUESTO FROM TIPO_IMPUESTO");
+            rs = sentencia.executeQuery("SELECT id_tipo_item, item FROM tipo_item");
            
             while (rs.next()) {
-//                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getInt(1),rs.getString(2)))); 
+                arrayTipoItem.add(new Gson().toJson(new TipoItem(rs.getString(1),rs.getString(2)))); 
             }
             
-            resp = new Gson().toJson(arrayTipo);
+            resp = new Gson().toJson(arrayTipoItem);
             
             
         } catch (SQLException ex) {

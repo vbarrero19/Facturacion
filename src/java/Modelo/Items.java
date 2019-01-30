@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo;
 
 import java.io.Serializable;
 
 public class Items  { 
-    private String id_item;
+    private String id_item; //Es serial y no l
     private String abreviatura;
     private String descripcion;
-    private String tipo;
+    private String id_tipo_item;
     private String cuenta;
     private String importe;
     private String periodo;
@@ -19,11 +15,10 @@ public class Items  {
     public Items() {
     }
 
-    public Items(String id_item, String abreviatura, String descripcion, String tipo, String cuenta, String importe, String periodo) {
-        this.id_item = id_item;
+    public Items(String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String periodo) {        
         this.abreviatura = abreviatura;
         this.descripcion = descripcion;
-        this.tipo = tipo;
+        this.id_tipo_item = id_tipo_item;
         this.cuenta = cuenta;
         this.importe = importe;
         this.periodo = periodo;
@@ -53,12 +48,12 @@ public class Items  {
         this.descripcion = descripcion;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getId_tipo_item() {
+        return id_tipo_item;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setId_tipo_item(String id_tipo_item) {
+        this.id_tipo_item = id_tipo_item;
     }
 
     public String getCuenta() {
@@ -84,5 +79,6 @@ public class Items  {
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
+
     
 }
