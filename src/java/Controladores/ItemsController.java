@@ -60,7 +60,7 @@ public class ItemsController {
             //stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo) VALUES (?,?,?,'fff',25,'Puntual')");
             
             stAux.setString(1, item.getAbreviatura());  
-            stAux.setString(2, item.getDescripcion()); 
+            stAux.setString(2, item.getDescripcion());  
             stAux.setInt(3, Integer.parseInt(item.getId_tipo_item())); 
             stAux.setString(4, item.getCuenta());
             stAux.setDouble(5, Double.parseDouble(item.getImporte()));              
