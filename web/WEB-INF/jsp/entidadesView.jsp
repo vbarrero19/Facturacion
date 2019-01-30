@@ -35,7 +35,7 @@
                 var myObj={};
                 
                 myObj["distinct_code"] = $("#distinct_code").val().trim();
-                myObj["nombre_entidad"] = $("nombre_entidad").val().trim();
+                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
                 
                 
                 var json = JSON.stringify(myObj);

@@ -35,6 +35,30 @@ public class Entidades {
     public Entidades(){
     
     }
+
+//    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String id_tipo_entidad, String tratamiento, String nombre_contacto, String apellido1, String apellido2, String id_dedicacion, String telefono1, String telefono2, String fax, String mail1, String mail2cc, String fecha_alta, String fecha_baja, String activado, String id_direccion) {
+//        this.id_entidad = id_entidad;
+//        this.distinct_code = distinct_code;
+//        this.nombre_entidad = nombre_entidad;
+//        this.id_tipo_entidad = id_tipo_entidad;
+//        this.tratamiento = tratamiento;
+//        this.nombre_contacto = nombre_contacto;
+//        this.apellido1 = apellido1;
+//        this.apellido2 = apellido2;
+//        this.id_dedicacion = id_dedicacion;
+//        this.telefono1 = telefono1;
+//        this.telefono2 = telefono2;
+//        this.fax = fax;
+//        this.mail1 = mail1;
+//        this.mail2cc = mail2cc;
+//        this.fecha_alta = fecha_alta;
+//        this.fecha_baja = fecha_baja;
+//        this.activado = activado;
+//        this.id_direccion = id_direccion;
+//    }
+    
+    
+    
     
     //Getters y Setters
 
