@@ -81,21 +81,21 @@
                 url: '/Facturacion/itemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
                 success: function (data) {
 
-                    //Recogemos los datos del combo y los pasamos a objetos TipoItem  
-                    var aux = JSON.parse(data);
-                    //Identificamos el combo
+                    //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
+                    //Estos objetos estan en formato String
+                    var tipoItem = JSON.parse(data);
+                    //Identificamos el combo por el ID
                     select = document.getElementById('id_tipo_item');
                     //Lo vamos cargando
-                    aux.forEach(function (valor, indice) {
+                    tipoItem.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a TipoItem
-                        var aux2 = JSON.parse(valor);
+                        var tipoItem2 = JSON.parse(valor);
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_tipo_item;
-                        //Guardamos el impuesto en el nombre de cada opcion
-                        //                 opt.innerHTML = aux2.id_impuesto;
-                        opt.innerHTML = aux2.item;
+                        opt.value = tipoItem2.id_tipo_item;
+                        //Guardamos la descripcion de item en el nombre de cada opcion                        //                 
+                        opt.innerHTML = tipoItem2.item;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });

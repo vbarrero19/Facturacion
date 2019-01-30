@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ItemsController {
     
-    //Al cargar presentemos un Model and View con el JSP
+    //Al cargar presentemos un Model and View con el JSP itemsView es lo que se ve en la pantalla
     @RequestMapping("/itemsController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception { 
         ModelAndView mv = new ModelAndView("itemsView"); 
@@ -45,6 +45,7 @@ public class ItemsController {
     @RequestMapping("/itemsController/newItems.htm")  
     @ResponseBody
     public String saveNewItem(@RequestBody Items item, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        //Creamos un objeto Items 
         Items resourceLoad = new Items();
         
         Connection con = null; 
@@ -57,7 +58,6 @@ public class ItemsController {
             con = pool_local.getConnection();          
             
             stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo) VALUES (?,?,?,?,?,?)");
-            //stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo) VALUES (?,?,?,'fff',25,'Puntual')");
             
             stAux.setString(1, item.getAbreviatura());  
             stAux.setString(2, item.getDescripcion());  
@@ -110,8 +110,9 @@ public class ItemsController {
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-        
-        ArrayList<String> arrayTipoItem = new ArrayList<>();   
+        //Creamos un array de String para guardar los resultados de la busqueda y
+        //lo enviamos con JSON, Los resultados son objetos TipoItem convertidos en String
+        ArrayList<String> arrayTipoItem = new ArrayList<>(); 
         
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
@@ -121,9 +122,11 @@ public class ItemsController {
             rs = sentencia.executeQuery("SELECT id_tipo_item, item FROM tipo_item");
            
             while (rs.next()) {
+                //Cada registro del rs lo convertimos a String con JSON y los guardamos en el Array
                 arrayTipoItem.add(new Gson().toJson(new TipoItem(rs.getString(1),rs.getString(2)))); 
             }
             
+            //Convertimos el Array a un String, lo guardamos en la variable resp y lo devolvemos al JSP
             resp = new Gson().toJson(arrayTipoItem);
             
             
@@ -155,10 +158,9 @@ public class ItemsController {
             } catch (Exception e) {
             }
         }
-        return resp;
         
-   
-        
+        //Devolvemos la variable resp al JSP
+        return resp;  
         
     }
 }
