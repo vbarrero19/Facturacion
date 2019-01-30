@@ -34,7 +34,29 @@
                 {
                     ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-
+              
+                var myObj={};
+                
+                myObj["distinct_code"] = $("#distinct_code").val().trim();
+                myObj["nombre_entidad"] = $("nombre_entidad").val().trim();
+                
+                
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/entidadesController/newCustomer.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
             })
         });
 
@@ -57,12 +79,12 @@
                             <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA ENTIDADES</h3>
 
                             <!-- ALMACENAMOS EL ID_ENTIDAD -->
-                            
+
                             <div class="form-group-combo">
-                                        <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
-                                        <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
-                                    </div>
-                      
+                                <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
+                                <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
+                            </div>
+
 
                             <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CLIENTES -->
                             <div class="form-group">						
@@ -204,7 +226,7 @@
 
                                 <!--INFORMACION DE LA PESTAÑA 2 -->                                
                                 <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
-                                   ALMACENAMOS LA INFORMACION DE LA DIRECCION DE LA ENTIDAD.
+                                    ALMACENAMOS LA INFORMACION DE LA DIRECCION DE LA ENTIDAD.
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
                                     <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
                                     <div id="direc" class="form_radio_button">
@@ -221,7 +243,7 @@
                                 </div>
                                 <!--INFORMACION DE LA PESTAÑA 3 -->
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-                                        ALMACENAMOS LA INFORMACION DE PAGO DE LA ENTIDAD                                   
+                                    ALMACENAMOS LA INFORMACION DE PAGO DE LA ENTIDAD                                   
                                 </div>
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
