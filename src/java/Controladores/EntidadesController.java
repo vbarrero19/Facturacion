@@ -42,9 +42,9 @@ public class EntidadesController {
         return null;
     }
 
-    @RequestMapping("/entidadesController/newCustomer.htm")
+    @RequestMapping("/entidadesController/nuevaEntidad.htm")
     @ResponseBody
-    public String saveNewCustomer(@RequestBody Entidades entidad, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String guardarNuevaEntidad(@RequestBody Entidades entidad, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Entidades resourceLoad = new Entidades();
 
         Connection con = null;
@@ -93,8 +93,73 @@ public class EntidadesController {
             } catch (Exception e) {
             }
         }
-
         return resp;
+    }
+    
+    
+    
+    @RequestMapping("/entidadesController/getTipoEntidad.htm")  
+    @ResponseBody
+    public String cargarComboTipoEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        TipoEntidad resourceLoad = new TipoEntidad();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
+        //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
+        ArrayList<String> arrayTipoEntidad = new ArrayList<>();
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_tipo_entidad, tipo_entidad FROM tipo_entidad");
+            
+            while(rs.next()){
+                
+            arrayTipoEntidad.add(new Gson().toJson(new TipoEntidad(rs.getString(1), rs.getString(2))));
+            }
+            
+            resp = new Gson().toJson(arrayTipoEntidad);
+            
+            
+        } catch (SQLException ex) {
+             resp = "incorrecto"; //
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+          
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        
+        //Devolvemos la variable resp al JSP
+        return resp;  
+        
     }
 
 }

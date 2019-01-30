@@ -18,11 +18,13 @@
     </head>
     <script>
         $(document).ready(function () {
+            getTipoEntidad();
+
 
             $("#customer-tab").click();
 
             // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
-            $("#submit").click(function () {
+            $("#guardarEntidad").click(function () {
 
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -31,17 +33,17 @@
                 {
                     ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-              
-                var myObj={};
-                
+
+                var myObj = {};
+
                 myObj["distinct_code"] = $("#distinct_code").val().trim();
                 myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-                
-                
+
+
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/entidadesController/newCustomer.htm',
+                    url: '/Facturacion/entidadesController/nuevaEntidad.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -57,6 +59,35 @@
             })
         });
 
+        //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
+        function getTipoEntidad() {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/entidadesController/getTipoEntidad.htm',
+                success: function (data) {
+
+                    var tipoEntidad = JSON.parse(data);
+                    select = document.getElementById('id_tipo_entidad');
+                    tipoEntidad.forEach(function (valor, indice) {
+                        var tipoEntidad2 = JSON.parse(valor);
+                        var opt = docutment.createElement('option');
+                        opt.value = tipoEntidad2.id_tipo_entidad;
+                        opt.innerHTML = tipoEntidad2.tipo_entidad;
+                        select.appendChild(opt);
+                    });
+                }
+            });
+        }
 
 
 
@@ -108,13 +139,8 @@
 
                                     <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE ENTIDAD QUE EXISTEN -->
                                     <div class="form-group">
-                                        <select id="tipo_entidad" class="form-control">
-                                            <option></option>
-                                            <option> Cliente </option>
-                                            <option>Proveedor</option>
-                                            <option>Director</option>
-                                            <option>Profesor</option>
-                                            <option>Mantenimiento</option>
+                                        <select id="id_tipo_entidad" name="id_tipo_entidad" class="form-control">
+
                                         </select>
                                     </div> 
                                     <!-- RADIO BUTTONS PARA EL TRATAMIENTO DE LA PERSONA DE CONTACTO -->
@@ -217,7 +243,7 @@
                                         </div>
                                     </div> 
 
-                                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+                                    <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta</button>
                                 </div>
 
 
