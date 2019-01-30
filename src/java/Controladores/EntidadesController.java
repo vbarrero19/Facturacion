@@ -63,7 +63,7 @@ public class EntidadesController {
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidad.getDistinct_code());
             stAux.setString(2,entidad.getNombre_entidad());
-            stAux.setString(3,entidad.getId_entidad());
+            stAux.setInt(3,Integer.parseInt(entidad.getId_entidad()));
             stAux.setString(4,entidad.getId_dedicacion());
             
             /*LO EJECUTAMOS*/
