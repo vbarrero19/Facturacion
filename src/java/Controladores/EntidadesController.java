@@ -42,6 +42,7 @@ public class EntidadesController {
         return null;
     }
 
+    /*GUARDAMOS UNA NUEVA ENTIDAD EN LA BASE DE DATOS*/
     @RequestMapping("/entidadesController/nuevaEntidad.htm")
     @ResponseBody
     public String guardarNuevaEntidad(@RequestBody Entidades entidad, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -57,12 +58,15 @@ public class EntidadesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad) VALUES(?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, id_tipo_entidad, id_dedicacion) VALUES(?,?,?,?)");
             
-            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS) */            
+            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidad.getDistinct_code());
             stAux.setString(2,entidad.getNombre_entidad());
+            stAux.setString(3,entidad.getId_entidad());
+            stAux.setString(4,entidad.getId_dedicacion());
             
+            /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
             
         } catch (SQLException ex) {
@@ -97,10 +101,12 @@ public class EntidadesController {
     }
     
     
-    
+    /*CARGAMOS EL COMBO DEL TIPO_ENTIDAD DE LA ENTIDAD(cliente, proveedor...)*/
     @RequestMapping("/entidadesController/getTipoEntidad.htm")  
     @ResponseBody
+    /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
     public String cargarComboTipoEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         TipoEntidad resourceLoad = new TipoEntidad();
         
         Connection con = null;
@@ -115,20 +121,93 @@ public class EntidadesController {
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
-            
+            /*CREAMOS LA CONSULTA PREPARADA Y LO GUARDAMOS EN rs*/
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("SELECT id_tipo_entidad, tipo_entidad FROM tipo_entidad");
-            
+            /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
+            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
+            */
             while(rs.next()){
                 
             arrayTipoEntidad.add(new Gson().toJson(new TipoEntidad(rs.getString(1), rs.getString(2))));
             }
-            
+            /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayTipoEntidad);
             
             
         } catch (SQLException ex) {
-             resp = "incorrecto"; //
+            resp = "incorrecto"; //
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+          
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        
+        //Devolvemos la variable resp al JSP
+        return resp;  
+        
+    }
+    
+    
+    
+    /*CARGAMOS EL COMBO DEL TIPO_DEDICACION DE LA ENTIDAD(facturacion, mantenimiento......)*/
+    @RequestMapping("/entidadesController/getTipoDedicacion.htm")  
+    @ResponseBody
+    /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
+    public String cargarComboTipoDedicacion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        /*CREAMOS UN OBJETO DEL TIPO DEDICACION */
+        TipoDedicacion resourceLoad = new TipoDedicacion();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
+        //y lo enviamos con JSON. EL resultado son objetos de tipoDedicacion convertidos en String por el JSON.
+        ArrayList<String> arrayTipoDedicacion = new ArrayList<>();
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            /*CREAMOS LA CONSULTA PREPARADA Y LO GUARDAMOS EN rs*/
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select id_dedicacion, dedicacion from tipo_dedicacion");
+            /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
+            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
+            */
+            while(rs.next()){
+                
+            arrayTipoDedicacion.add(new Gson().toJson(new TipoDedicacion(rs.getString(1), rs.getString(2))));
+            }
+            /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
+            resp = new Gson().toJson(arrayTipoDedicacion);
+            
+            
+        } catch (SQLException ex) {
+            resp = "incorrecto"; //
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors)); 
           

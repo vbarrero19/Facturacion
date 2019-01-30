@@ -18,9 +18,11 @@
     </head>
     <script>
         $(document).ready(function () {
-            getTipoEntidad();
-
-
+        //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
+        getTipoEntidad();
+        getTipoDedicacion();
+        
+        //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
             $("#customer-tab").click();
 
             // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
@@ -35,11 +37,16 @@
                 }
 
                 var myObj = {};
-
+                //GUARDAMOS EL DISTINCT CODE DE LA ENTIDAD
                 myObj["distinct_code"] = $("#distinct_code").val().trim();
+                //GUARDAMOS EL NOMBRE DE LA ENTIDAD
                 myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-
-
+                //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO ENTIDAD.
+                myObj["id_tipo_entidad"] = $('#id_tipo_entidad').val();
+                //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
+                myObj["id_dedicacion"] = $('#id_dedicacion').val();
+                
+                
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -73,16 +80,63 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
                 url: '/Facturacion/entidadesController/getTipoEntidad.htm',
                 success: function (data) {
-
+                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
                     var tipoEntidad = JSON.parse(data);
+                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
                     select = document.getElementById('id_tipo_entidad');
+                    //LO CARGAMOS
                     tipoEntidad.forEach(function (valor, indice) {
+                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
                         var tipoEntidad2 = JSON.parse(valor);
-                        var opt = docutment.createElement('option');
+                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
+                        var opt = document.createElement('option');
+                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
                         opt.value = tipoEntidad2.id_tipo_entidad;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
                         opt.innerHTML = tipoEntidad2.tipo_entidad;
+                        //AÑADIMOS UNA NUEVA OPCION
+                        select.appendChild(opt);
+                    });
+                }
+            });
+        }
+        
+        
+        //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DEDICACION.
+        function getTipoDedicacion() {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
+                url: '/Facturacion/entidadesController/getTipoDedicacion.htm',
+                success: function (data) {
+                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
+                    var tipoDedicacion = JSON.parse(data);
+                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
+                    select = document.getElementById('id_dedicacion');
+                    //LO CARGAMOS
+                    tipoDedicacion.forEach(function (valor, indice) {
+                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
+                        var tipoDedicacion2 = JSON.parse(valor);
+                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
+                        var opt = document.createElement('option');
+                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
+                        opt.value = tipoDedicacion2.id_dedicacion;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
+                        opt.innerHTML = tipoDedicacion2.dedicacion;
+                        //AÑADIMOS UNA NUEVA OPCION
                         select.appendChild(opt);
                     });
                 }
@@ -182,9 +236,7 @@
                                     <!-- CREAMOS COMBO DINAMICO PARA EL TIPO DE DEDICACION DE LA ENTIDAD -->
                                     <div class="form-group">
                                         <select class="form-control" id="id_dedicacion" name="id_dedicacion">
-                                            <option></option>
-                                            <option>Mantenimiento</option>                                            
-                                            <option>Facturacion</option>
+                                            
                                         </select>
                                     </div>
 
