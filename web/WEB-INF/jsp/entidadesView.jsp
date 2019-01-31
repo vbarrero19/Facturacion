@@ -44,7 +44,22 @@
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO ENTIDAD.
                 myObj["id_tipo_entidad"] = $('#id_tipo_entidad').val();
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
-                //myObj["id_dedicacion"] = $('#id_dedicacion').val();
+                myObj["id_dedicacion"] = $('#id_dedicacion').val();
+                //GUARDAMOS EL VALOR DEL TRATAMIENTO
+                myObj["tratamiento"] = $(".form-check input:checked").val();
+                //GUARDAMOS EL NOMBRE DE CONTACTO
+                myObj["nombre_contacto"] = $('#nombre_contacto').val().trim();
+                //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
+                myObj["apellido1"] = $('#apellido1').val().trim();
+                myObj["apellido2"] = $('#apellido2').val().trim();
+                //GUARDAMOS LOS TELEFONOS DE CONTACTO
+                myObj["telefono1"] = $('#telefono1').val().trim();
+                myObj["telefono2"] = $('#telefono2').val().trim();
+//                //GUARDAMOS EL FAX
+                myObj["fax"] = $('#fax').val().trim();
+//                //GUARDAMOS LOS MAIL DE CONTACTO
+                myObj["mail1"] = $('#mail1').val().trim();
+                //myObj["mail2"] = $('#mail2').val().trim();
                 
                 
                 var json = JSON.stringify(myObj);

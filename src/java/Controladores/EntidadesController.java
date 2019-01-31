@@ -1,5 +1,4 @@
 package Controladores;
-
 /**
  *
  * @author vbarr
@@ -45,7 +44,7 @@ public class EntidadesController {
     /*GUARDAMOS UNA NUEVA ENTIDAD EN LA BASE DE DATOS*/
     @RequestMapping("/entidadesController/nuevaEntidad.htm")
     @ResponseBody
-    public String guardarNuevaEntidad(@RequestBody Entidades entidad, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String guardarNuevaEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Entidades resourceLoad = new Entidades();
 
         Connection con = null;
@@ -58,15 +57,29 @@ public class EntidadesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad) VALUES (?,?)");
+//            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc)"
+//                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             //stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, id_tipo_entidad, id_dedicacion) VALUES (?,?,?,?)");
             
             
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax,mail1)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?)");
+            
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
-            stAux.setString(1,entidad.getDistinct_code());
-            stAux.setString(2,entidad.getNombre_entidad());
+            stAux.setString(1,entidades.getDistinct_code());
+            stAux.setString(2,entidades.getNombre_entidad());
             //stAux.setInt(3,Integer.parseInt(entidad.getId_entidad()));
             //stAux.setInt(4,Integer.parseInt(entidad.getId_dedicacion()));
+            stAux.setString(3,entidades.getTratamiento());
+            stAux.setString(4,entidades.getNombre_contacto());
+            stAux.setString(5,entidades.getApellido1());
+            stAux.setString(6,entidades.getApellido2());
+            stAux.setString(7,entidades.getTelefono1());
+            stAux.setString(8,entidades.getTelefono2());
+            stAux.setString(9,entidades.getFax());
+            stAux.setString(10,entidades.getMail1());
+//            stAux.setString(11,entidades.getMail2cc());
+            
             
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
