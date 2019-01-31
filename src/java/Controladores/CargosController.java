@@ -133,7 +133,7 @@ public class CargosController {
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
             
-            while (rs.next()) {
+            while (rs.next()) { 
                 arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1),rs.getString(2)))); 
             }
 
