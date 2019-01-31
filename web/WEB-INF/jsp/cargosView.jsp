@@ -14,8 +14,8 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
-            getEntidadEmpresa();
-            getItem();
+            //getEntidadEmpresa();
+            //getItem();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -219,8 +219,8 @@
                 url: '/Facturacion/cargosController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
                 success: function (data) {
 
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var aux = JSON.parse(data);
+                    //Recogemos los datos del combo y los pasamos a objetos Entidad  
+                    var clienteEntidad = JSON.parse(data);
                     //Identificamos el combo
                     select = document.getElementById('comboClientes');
                     //Añadimos la opcion Seleccionar al combo
@@ -230,7 +230,7 @@
                     select.appendChild(opt);
 
                     //Lo vamos cargando
-                    aux.forEach(function (valor, indice) {
+                    clienteEntidad.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a Cliente
                         var aux2 = JSON.parse(valor);
                         //Creamos las opciones del combo

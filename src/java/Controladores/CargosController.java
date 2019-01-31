@@ -131,15 +131,10 @@ public class CargosController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT distinct_code, nombre_entidad, nombre_contacto FROM entidad where id_empresa = '1' ORDER BY nombre_empresa");
-
-            //select * from entidad where id_tipo_entidad = (select id_tipo_entidad from tipo_entidad where upper(tipo_entidad) = upper('cliente'));
-            //select * from entidad inner join tipo_entidad  on entidad.id_entidad = tipo_entidad.id_tipo_entidad where upper(tipo_entidad.tipo_entidad) = upper('cliente');
-
-            //select * from entidad where id_tipo_entidad = (select id_tipo_entidad from tipo_entidad where upper(tipo_entidad) = upper('cliente'));
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
             
             while (rs.next()) {
-            //    arrayTipo.add(new Gson().toJson(new Clientes(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getInt(1),rs.getString(2)))); 
             }
 
             resp = new Gson().toJson(arrayTipo);
