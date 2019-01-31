@@ -12,7 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,14 +60,11 @@ public class EntidadesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-//            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc)"
-//                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-            //stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, id_tipo_entidad, id_dedicacion) VALUES (?,?,?,?)");
+
             
-            
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-            
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+           
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidades.getDistinct_code());
             stAux.setString(2,entidades.getNombre_entidad());
@@ -80,6 +80,19 @@ public class EntidadesController {
             stAux.setString(10,entidades.getMail1());
             stAux.setString(11,entidades.getMail2cc());
             
+            String fechaAlta = entidades.getFecha_alta();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(fechaAlta);
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+            stAux.setTimestamp(12, timestamp);
+            
+            String fechaBaja = entidades.getFecha_alta();
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate2 = dateFormat2.parse(fechaBaja);
+            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+
+            stAux.setTimestamp(13, timestamp2);
             
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            

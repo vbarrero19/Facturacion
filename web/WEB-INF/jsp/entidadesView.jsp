@@ -18,13 +18,34 @@
     </head>
     <script>
         $(document).ready(function () {
-        //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
-        getTipoEntidad();
-        getTipoDedicacion();
-        
-        //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
+            //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
+            getTipoEntidad();
+            getTipoDedicacion();
+
+
+            var userLang = navigator.language || navigator.userLanguage;
+
+
+            //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
             $("#customer-tab").click();
 
+            $('#fecha_alta').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false
+
+            });
+
+            $('#fecha_baja').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false
+
+            });
+            
+            
             // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
             $("#guardarEntidad").click(function () {
 
@@ -55,13 +76,15 @@
                 //GUARDAMOS LOS TELEFONOS DE CONTACTO
                 myObj["telefono1"] = $('#telefono1').val().trim();
                 myObj["telefono2"] = $('#telefono2').val().trim();
-//                //GUARDAMOS EL FAX
+                //GUARDAMOS EL FAX
                 myObj["fax"] = $('#fax').val().trim();
-//                //GUARDAMOS LOS MAIL DE CONTACTO
+                //GUARDAMOS LOS MAIL DE CONTACTO
                 myObj["mail1"] = $('#mail1').val().trim();
                 myObj["mail2cc"] = $('#mail2cc').val().trim();
-                
-                
+                //GUARDAMOS LAS FECHAS, DE ALTA Y BAJA
+                myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
+                myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
+
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -118,8 +141,8 @@
                 }
             });
         }
-        
-        
+
+
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DEDICACION.
         function getTipoDedicacion() {
 
@@ -251,7 +274,7 @@
                                     <!-- CREAMOS COMBO DINAMICO PARA EL TIPO DE DEDICACION DE LA ENTIDAD -->
                                     <div class="form-group">
                                         <select class="form-control" id="id_dedicacion" name="id_dedicacion">
-                                            
+
                                         </select>
                                     </div>
 
@@ -273,10 +296,10 @@
                                     <div class="container2">                                   
                                         <div class="row">
                                             <div class='col-xs-12 col-md-4'>
-                                                <label class="fechaCargos"> FECHA ALTA </label>
+                                                <label class="fechasEntidad"> FECHA ALTA </label>
                                                 <div class="form-group">
-                                                    <div class='input-group date' id='fecha_cargo'>
-                                                        <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                    <div class='input-group date' id='fecha_alta'>
+                                                        <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
@@ -285,17 +308,17 @@
                                             </div>
                                             <script type="text/javascript">
                                                 $(function () {
-                                                    $('#fecha_cargo').datetimepicker();
+                                                    $('#fecha_alta').datetimepicker();
                                                 });
                                             </script>
                                         </div>
 
                                         <div class="row">
                                             <div class='col-xs-12 col-md-4'>
-                                                <label class="fechaCargos"> FECHA BAJA </label>
+                                                <label class="fechasEntidad"> FECHA BAJA </label>
                                                 <div class="form-group">
-                                                    <div class='input-group date' id='fecha_vencimiento'>
-                                                        <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                    <div class='input-group date' id='fecha_baja'>
+                                                        <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
@@ -304,7 +327,7 @@
                                             </div>
                                             <script type="text/javascript">
                                                 $(function () {
-                                                    $('#fecha_vencimiento').datetimepicker();
+                                                    $('#fecha_baja').datetimepicker();
                                                 });
                                             </script>
                                         </div>
