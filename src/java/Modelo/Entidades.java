@@ -63,13 +63,13 @@ public class Entidades {
        
     }
 
-
-
-    public Entidades(String id_entidad, String distinct_code) {
+    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto) {
         this.id_entidad = id_entidad;
         this.distinct_code = distinct_code;
+        this.nombre_entidad = nombre_entidad;
+        this.nombre_contacto = nombre_contacto;
     }
-    
+
     //Getters y Setters
 
     public String getId_entidad() {

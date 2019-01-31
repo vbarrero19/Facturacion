@@ -267,7 +267,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/getEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/cargosController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
