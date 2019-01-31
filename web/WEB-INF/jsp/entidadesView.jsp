@@ -59,7 +59,7 @@
                 myObj["fax"] = $('#fax').val().trim();
 //                //GUARDAMOS LOS MAIL DE CONTACTO
                 myObj["mail1"] = $('#mail1').val().trim();
-                myObj["mail2"] = $('#mail2').val().trim();
+                myObj["mail2cc"] = $('#mail2cc').val().trim();
                 
                 
                 var json = JSON.stringify(myObj);
@@ -265,7 +265,7 @@
                                     </div>    
                                     <div class="form-group-combo">
                                         <input type="text" class="form-control" id="mail1" name="mail1" placeholder="mail 1" required>
-                                        <input type="text" class="form-control" id="mail2" name="mail2" placeholder="mail 2" required>
+                                        <input type="text" class="form-control" id="mail2cc" name="mail2cc" placeholder="mail 2" required>
                                     </div>
 
 
