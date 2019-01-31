@@ -59,7 +59,7 @@
                 myObj["fax"] = $('#fax').val().trim();
 //                //GUARDAMOS LOS MAIL DE CONTACTO
                 myObj["mail1"] = $('#mail1').val().trim();
-                //myObj["mail2"] = $('#mail2').val().trim();
+                myObj["mail2"] = $('#mail2').val().trim();
                 
                 
                 var json = JSON.stringify(myObj);

@@ -62,8 +62,8 @@ public class EntidadesController {
             //stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, id_tipo_entidad, id_dedicacion) VALUES (?,?,?,?)");
             
             
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax,mail1)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax,mail1, mail2cc)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidades.getDistinct_code());
@@ -78,7 +78,7 @@ public class EntidadesController {
             stAux.setString(8,entidades.getTelefono2());
             stAux.setString(9,entidades.getFax());
             stAux.setString(10,entidades.getMail1());
-//            stAux.setString(11,entidades.getMail2cc());
+            stAux.setString(11,entidades.getMail2cc());
             
             
             /*LO EJECUTAMOS*/
