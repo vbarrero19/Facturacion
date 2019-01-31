@@ -14,7 +14,7 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
-            //getEntidadEmpresa();
+            getEntidadEmpresa();
             //getItem();
 
             var userLang = navigator.language || navigator.userLanguage;
@@ -83,123 +83,130 @@
                 });
             })
 
-//            //Muestra datos del cliente al seleccionar algo en el combo
-//            $("#comboClientes").change(function () {
-//
-//                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-//                if ($("#comboClientes").val() != "0") {
-//
-//                    if (window.XMLHttpRequest) //mozilla
-//                    {
-//                        ajax = new XMLHttpRequest(); //No Internet explorer
-//                    } else
-//                    {
-//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                    }
-//
-//                    var myObj = {};
-//
-//                    myObj["id_cliente"] = $("#comboClientes").val().trim();
-//
-//                    var json = JSON.stringify(myObj);
-//                    $.ajax({
-//                        type: 'POST',
-//                        url: '/Facturacion/cargosController/getDatosCliente.htm',
-//                        data: json,
-//                        datatype: "json",
-//                        contentType: "application/json",
-//                        success: function (data) {
-//
-//                            //En el data viene la informacion del combo en forma de String.
-//                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-//
-//                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-//                            var aux = JSON.parse(data);
-//
-//                            aux.forEach(function (valor, indice) {
-//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-//                                var aux2 = JSON.parse(valor);
-//                                //Mostramos los datos en la cajas de texto
-//                                $("#id_cliente").val(aux2.id_cliente);
-//                                $("#dir_fisica").val(aux2.dir_fisica);
-//                                $("#pais").val(aux2.pais);
-//
-//                            });
-//                        },
-//                        error: function (xhr, ajaxOptions, thrownError) {
-//                            console.log(xhr.status);
-//                            console.log(xhr.responseText);
-//                            console.log(thrownError);
-//                        }
-//                    });
-//
-//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-//                } else {
-//                    $("#id_cliente").val("");
-//                    $("#dir_fisica").val("");
-//                    $("#pais").val("");
-//                }
-//
-//            });
-//
-//            //Muestra datos de la empresa al seleccionar en el combo
-//            $("#comboEmpresas").change(function () {
-//
-//                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-//                if ($("#comboEmpresas").val() != "0") {
-//
-//                    if (window.XMLHttpRequest) //mozilla
-//                    {
-//                        ajax = new XMLHttpRequest(); //No Internet explorer
-//                    } else
-//                    {
-//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                    }
-//
-//                    var myObj = {};
-//
-//                    myObj["id_cliente"] = $("#comboEmpresas").val().trim();
-//
-//                    var json = JSON.stringify(myObj);
-//                    $.ajax({
-//                        type: 'POST',
-//                        url: '/Facturacion/cargosController/getEmpresa.htm',
-//                        data: json,
-//                        datatype: "json",
-//                        contentType: "application/json",
-//                        success: function (data) {
-//
-//                            //En el data viene la informacion del combo en forma de String.
-//                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-//
-//                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-//                            var aux = JSON.parse(data);
-//
-//                            aux.forEach(function (valor, indice) {
-//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-//                                var aux2 = JSON.parse(valor);
-//
-//                                $("#id_empresa").val(aux2.id_cliente);
-//                                $("#dir_fisica2").val(aux2.dir_fisica);
-//                                $("#pais2").val(aux2.pais);
-//
-//                            });
-//                        },
-//                        error: function (xhr, ajaxOptions, thrownError) {
-//                            console.log(xhr.status);
-//                            console.log(xhr.responseText);
-//                            console.log(thrownError);
-//                        }
-//                    });
-//
-//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-//                } else {
-//                    $("#id_empresa").val("");
-//                    $("#dir_fisica2").val("");
-//                    $("#pais2").val("");
-//                }
-//            });
-                  
+            //Muestra datos de la entidadCliente al seleccionar algo en el combo
+            $("#comboClientes").change(function () {
+
+                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                if ($("#comboClientes").val() != "0") {
+
+                    if (window.XMLHttpRequest) //mozilla
+                    {
+                        ajax = new XMLHttpRequest(); //No Internet explorer
+                    } else
+                    {
+                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    var myObj = {};
+
+                    myObj["id_entidad"] = $("#comboClientes").val().trim();
+
+                    var json = JSON.stringify(myObj);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Facturacion/cargosController/getDatosEntidadCliente.htm',
+                        data: json,
+                        datatype: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+
+                            //En el data viene la informacion del combo en forma de String.
+                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
+                            var aux = JSON.parse(data);
+
+                            aux.forEach(function (valor, indice) {
+                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+                                var aux2 = JSON.parse(valor);
+                                //Mostramos los datos en la cajas de texto
+                                $("#id_entidad").val(aux2.id_entidad);
+                                $("#nombre_entidad").val(aux2.nombre_entidad);
+                                $("#nombre_contacto").val(aux2.nombre_contacto);
+
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                } else {
+                    $("#id_entidad").val("");
+                    $("#nombre_entidad").val("");
+                    $("#nombre_contacto").val("");
+                }
+
+            });
+
+            /**********************************
+             * 
+             * Modificar codigo para que cargue datos en las cajas
+             * 
+             * 
+             *****************************/
+             
+            //Muestra datos de la entidadCliente al seleccionar algo en el combo
+            $("#comboEmpresas").change(function () {
+
+                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                if ($("#comboClientes").val() != "0") {
+
+                    if (window.XMLHttpRequest) //mozilla
+                    {
+                        ajax = new XMLHttpRequest(); //No Internet explorer
+                    } else
+                    {
+                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    var myObj = {};
+
+                    myObj["id_entidad"] = $("#comboClientes").val().trim();
+
+                    var json = JSON.stringify(myObj);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Facturacion/cargosController/getDatosEntidadEmpresa.htm',
+                        data: json,
+                        datatype: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+
+                            //En el data viene la informacion del combo en forma de String.
+                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
+                            var aux = JSON.parse(data);
+
+                            aux.forEach(function (valor, indice) {
+                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+                                var aux2 = JSON.parse(valor);
+                                //Mostramos los datos en la cajas de texto
+                                $("#id_entidad2").val(aux2.id_entidad);
+                                $("#nombre_entidad2").val(aux2.nombre_entidad);
+                                $("#nombre_contacto2").val(aux2.nombre_contacto);
+
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                } else {
+                    $("#id_entidad2").val("");
+                    $("#nombre_entidad2").val("");
+                    $("#nombre_contacto2").val("");
+                }
+
+            });        
+        
+        
         });
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
@@ -271,7 +278,7 @@
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var aux = JSON.parse(data);
+                    var empresaEntidad = JSON.parse(data);
                     //Identificamos el combo
                     select = document.getElementById('comboEmpresas');
                     //Añadimos la opcion Seleccionar al combo
@@ -281,15 +288,15 @@
                     select.appendChild(opt);
 
                     //Lo vamos cargando
-                    aux.forEach(function (valor, indice) {
+                    empresaEntidad.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var aux2 = JSON.parse(valor);
+                        var empresaEntidad2 = JSON.parse(valor);
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_cliente;
+                        opt.value = empresaEntidad2.id_entidad;
                         //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = aux2.nombre_empresa;
+                        opt.innerHTML = empresaEntidad2.distinct_code;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -392,16 +399,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-2">
-                                    <label for="id_cliente"> Id.cliente </label>
-                                    <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" disabled = "true">
+                                    <label for="id_cliente"> Id Entidad </label>
+                                    <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador cliente" disabled = "true">
                                 </div> 
                                 <div class="form-group col-xs-4">
-                                    <label for="idCliente>">Dirección física cliente</label>
-                                    <input type="text" class="form-control" id="dir_fisica" name="dir_fisica" placeholder="direccion fisica" disabled = "true">
+                                    <label for="idCliente>">Nombre_entidad</label>
+                                    <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="direccion fisica" disabled = "true">
                                 </div>
                                 <div class="form-group col-xs-3">
                                     <label for="idCliente>">País cliente</label>
-                                    <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" disabled = "true">
+                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Pais" disabled = "true">
                                 </div>
                                 `
                             </div>   
@@ -416,15 +423,15 @@
                                 </div>
                                 <div class="form-group col-xs-2">
                                     <label for="idEmpresa>">Id.Empresa</label>
-                                    <input type="text" class="form-control" id="id_empresa" name="id_empresa" placeholder="Identificador empresa" disabled = "true">
+                                    <input type="text" class="form-control" id="id_entidad2" name="id_entidad2" placeholder="Identificador empresa" disabled = "true">
                                 </div>
                                 <div class="form-group col-xs-4">
                                     <label for="idEmpresa>">Dirección física empresa</label>
-                                    <input type="text" class="form-control" id="dir_fisica2" name="dir_fisica2" placeholder="direccion fisica" disabled = "true">
+                                    <input type="text" class="form-control" id="nombre_entidad2" name="nombre_entidad2" placeholder="direccion fisica" disabled = "true">
                                 </div>
                                 <div class="form-group col-xs-3">
                                     <label for="idEmpresa>">País empresa</label>
-                                    <input type="text" class="form-control" id="pais2" name="pais2" placeholder="Pais" disabled = "true">
+                                    <input type="text" class="form-control" id="nombre_contacto2" name="nombre_contacto2" placeholder="Pais" disabled = "true">
                                 </div>
                             </div>
 
