@@ -63,15 +63,12 @@ public class Entidades {
        
     }
 
-    public Entidades(int aInt, String string) {
-       
+
+
+    public Entidades(String id_entidad, String distinct_code) {
+        this.id_entidad = id_entidad;
+        this.distinct_code = distinct_code;
     }
-
-    
-
- 
-    
-    
     
     //Getters y Setters
 

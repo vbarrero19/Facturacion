@@ -83,122 +83,122 @@
                 });
             })
 
-            //Muestra datos del cliente al seleccionar algo en el combo
-            $("#comboClientes").change(function () {
-
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-                if ($("#comboClientes").val() != "0") {
-
-                    if (window.XMLHttpRequest) //mozilla
-                    {
-                        ajax = new XMLHttpRequest(); //No Internet explorer
-                    } else
-                    {
-                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    var myObj = {};
-
-                    myObj["id_cliente"] = $("#comboClientes").val().trim();
-
-                    var json = JSON.stringify(myObj);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Facturacion/cargosController/getDatosCliente.htm',
-                        data: json,
-                        datatype: "json",
-                        contentType: "application/json",
-                        success: function (data) {
-
-                            //En el data viene la informacion del combo en forma de String.
-                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-
-                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-                            var aux = JSON.parse(data);
-
-                            aux.forEach(function (valor, indice) {
-                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-                                var aux2 = JSON.parse(valor);
-                                //Mostramos los datos en la cajas de texto
-                                $("#id_cliente").val(aux2.id_cliente);
-                                $("#dir_fisica").val(aux2.dir_fisica);
-                                $("#pais").val(aux2.pais);
-
-                            });
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            console.log(xhr.status);
-                            console.log(xhr.responseText);
-                            console.log(thrownError);
-                        }
-                    });
-
-                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-                } else {
-                    $("#id_cliente").val("");
-                    $("#dir_fisica").val("");
-                    $("#pais").val("");
-                }
-
-            });
-
-            //Muestra datos de la empresa al seleccionar en el combo
-            $("#comboEmpresas").change(function () {
-
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-                if ($("#comboEmpresas").val() != "0") {
-
-                    if (window.XMLHttpRequest) //mozilla
-                    {
-                        ajax = new XMLHttpRequest(); //No Internet explorer
-                    } else
-                    {
-                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    var myObj = {};
-
-                    myObj["id_cliente"] = $("#comboEmpresas").val().trim();
-
-                    var json = JSON.stringify(myObj);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Facturacion/cargosController/getEmpresa.htm',
-                        data: json,
-                        datatype: "json",
-                        contentType: "application/json",
-                        success: function (data) {
-
-                            //En el data viene la informacion del combo en forma de String.
-                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-
-                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-                            var aux = JSON.parse(data);
-
-                            aux.forEach(function (valor, indice) {
-                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-                                var aux2 = JSON.parse(valor);
-
-                                $("#id_empresa").val(aux2.id_cliente);
-                                $("#dir_fisica2").val(aux2.dir_fisica);
-                                $("#pais2").val(aux2.pais);
-
-                            });
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            console.log(xhr.status);
-                            console.log(xhr.responseText);
-                            console.log(thrownError);
-                        }
-                    });
-
-                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-                } else {
-                    $("#id_empresa").val("");
-                    $("#dir_fisica2").val("");
-                    $("#pais2").val("");
-                }
-            });
+//            //Muestra datos del cliente al seleccionar algo en el combo
+//            $("#comboClientes").change(function () {
+//
+//                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+//                if ($("#comboClientes").val() != "0") {
+//
+//                    if (window.XMLHttpRequest) //mozilla
+//                    {
+//                        ajax = new XMLHttpRequest(); //No Internet explorer
+//                    } else
+//                    {
+//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                    }
+//
+//                    var myObj = {};
+//
+//                    myObj["id_cliente"] = $("#comboClientes").val().trim();
+//
+//                    var json = JSON.stringify(myObj);
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: '/Facturacion/cargosController/getDatosCliente.htm',
+//                        data: json,
+//                        datatype: "json",
+//                        contentType: "application/json",
+//                        success: function (data) {
+//
+//                            //En el data viene la informacion del combo en forma de String.
+//                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+//
+//                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
+//                            var aux = JSON.parse(data);
+//
+//                            aux.forEach(function (valor, indice) {
+//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+//                                var aux2 = JSON.parse(valor);
+//                                //Mostramos los datos en la cajas de texto
+//                                $("#id_cliente").val(aux2.id_cliente);
+//                                $("#dir_fisica").val(aux2.dir_fisica);
+//                                $("#pais").val(aux2.pais);
+//
+//                            });
+//                        },
+//                        error: function (xhr, ajaxOptions, thrownError) {
+//                            console.log(xhr.status);
+//                            console.log(xhr.responseText);
+//                            console.log(thrownError);
+//                        }
+//                    });
+//
+//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+//                } else {
+//                    $("#id_cliente").val("");
+//                    $("#dir_fisica").val("");
+//                    $("#pais").val("");
+//                }
+//
+//            });
+//
+//            //Muestra datos de la empresa al seleccionar en el combo
+//            $("#comboEmpresas").change(function () {
+//
+//                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+//                if ($("#comboEmpresas").val() != "0") {
+//
+//                    if (window.XMLHttpRequest) //mozilla
+//                    {
+//                        ajax = new XMLHttpRequest(); //No Internet explorer
+//                    } else
+//                    {
+//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                    }
+//
+//                    var myObj = {};
+//
+//                    myObj["id_cliente"] = $("#comboEmpresas").val().trim();
+//
+//                    var json = JSON.stringify(myObj);
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: '/Facturacion/cargosController/getEmpresa.htm',
+//                        data: json,
+//                        datatype: "json",
+//                        contentType: "application/json",
+//                        success: function (data) {
+//
+//                            //En el data viene la informacion del combo en forma de String.
+//                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+//
+//                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
+//                            var aux = JSON.parse(data);
+//
+//                            aux.forEach(function (valor, indice) {
+//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+//                                var aux2 = JSON.parse(valor);
+//
+//                                $("#id_empresa").val(aux2.id_cliente);
+//                                $("#dir_fisica2").val(aux2.dir_fisica);
+//                                $("#pais2").val(aux2.pais);
+//
+//                            });
+//                        },
+//                        error: function (xhr, ajaxOptions, thrownError) {
+//                            console.log(xhr.status);
+//                            console.log(xhr.responseText);
+//                            console.log(thrownError);
+//                        }
+//                    });
+//
+//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+//                } else {
+//                    $("#id_empresa").val("");
+//                    $("#dir_fisica2").val("");
+//                    $("#pais2").val("");
+//                }
+//            });
                   
         });
 
@@ -232,13 +232,13 @@
                     //Lo vamos cargando
                     clienteEntidad.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a Cliente
-                        var aux2 = JSON.parse(valor);
+                        var clienteEntidad2 = JSON.parse(valor);
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_cliente;
+                        opt.value = clienteEntidad2.id_entidad;
                         //Guardamos el impuesto en el nombre de cada opcion
-                        opt.innerHTML = aux2.nombre_empresa;
+                        opt.innerHTML = clienteEntidad2.distinct_code;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
