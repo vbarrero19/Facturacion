@@ -58,13 +58,15 @@ public class EntidadesController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, id_tipo_entidad, id_dedicacion) VALUES(?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad) VALUES (?,?)");
+            //stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, id_tipo_entidad, id_dedicacion) VALUES (?,?,?,?)");
+            
             
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidad.getDistinct_code());
             stAux.setString(2,entidad.getNombre_entidad());
-            stAux.setInt(3,Integer.parseInt(entidad.getId_entidad()));
-            stAux.setString(4,entidad.getId_dedicacion());
+            //stAux.setInt(3,Integer.parseInt(entidad.getId_entidad()));
+            //stAux.setInt(4,Integer.parseInt(entidad.getId_dedicacion()));
             
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            

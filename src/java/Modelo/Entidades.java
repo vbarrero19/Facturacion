@@ -36,6 +36,8 @@ public class Entidades {
     
     }
 
+    
+    
 //    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String id_tipo_entidad, String tratamiento, String nombre_contacto, String apellido1, String apellido2, String id_dedicacion, String telefono1, String telefono2, String fax, String mail1, String mail2cc, String fecha_alta, String fecha_baja, String activado, String id_direccion) {
 //        this.id_entidad = id_entidad;
 //        this.distinct_code = distinct_code;
@@ -56,7 +58,8 @@ public class Entidades {
 //        this.activado = activado;
 //        this.id_direccion = id_direccion;
 //    }
-    
+
+ 
     
     
     

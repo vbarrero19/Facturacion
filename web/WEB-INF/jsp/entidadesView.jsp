@@ -44,7 +44,7 @@
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO ENTIDAD.
                 myObj["id_tipo_entidad"] = $('#id_tipo_entidad').val();
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
-                myObj["id_dedicacion"] = $('#id_dedicacion').val();
+                //myObj["id_dedicacion"] = $('#id_dedicacion').val();
                 
                 
                 var json = JSON.stringify(myObj);
