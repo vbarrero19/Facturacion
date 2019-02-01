@@ -18,13 +18,13 @@
             getItem();
 
 
-            $('#tableContainer').on('click', 'select', function () {
-                alert('HOLA')
-            })
-            
-            $('#tableContainer').on('click', 'select', function () {
-                alert('HOLA')
-            })
+//            $('#tableContainer').on('click', 'select', function () {
+//                alert('HOLA')
+//            })
+//            
+//            $('#tableContainer').on('click', 'select', function () {
+//                alert('HOLA')
+//            })
 
             var userLang = navigator.language || navigator.userLanguage;
 

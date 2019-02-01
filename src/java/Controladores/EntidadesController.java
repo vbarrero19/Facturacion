@@ -97,6 +97,56 @@ public class EntidadesController {
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
             
+            /*************************************/
+            
+            Connection con3 = null;
+            ResultSet rs3 = null;
+            PreparedStatement stAux3 = null;
+            
+            
+            con3 = pool_local.getConnection();
+            
+            stAux3 = con3.prepareStatement("SELECT max(id_entidad) FROM entidad");
+
+            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+            rs3 = stAux3.executeQuery();
+            int maximo = 0;
+
+            while (rs3.next()) {
+                
+                maximo = rs3.getInt(1);
+                
+            }
+            
+            
+            Connection con2 = null;
+            ResultSet rs2 = null;
+            PreparedStatement stAux2 = null;
+            
+            
+            
+            con2 = pool_local.getConnection();
+            /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
+
+            
+            
+            stAux2 = con2.prepareStatement("INSERT INTO ENTIDAD_TIPO_ENTIDAD (id_entidad, id_tipo_entidad) VALUES (?,?)");
+           
+            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
+            
+            
+            stAux2.setInt(1,maximo);         
+            stAux2.setInt(2,Integer.parseInt(entidades.getId_tipo_entidad()));   
+            
+            
+            /*LO EJECUTAMOS*/
+            stAux2.executeUpdate();            
+            
+            
+            
+            
+            /**************************************/
+            
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
