@@ -4,7 +4,7 @@ package Modelo;
 import java.io.Serializable;
 
 public class Items  { 
-    private String id_item; //Es serial y no l
+    private String id_item; 
     private String abreviatura;
     private String descripcion;
     private String id_tipo_item;
@@ -15,7 +15,17 @@ public class Items  {
     public Items() {
     }
 
-    public Items(String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String periodo) {        
+//    public Items(String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String periodo) {        
+//        this.abreviatura = abreviatura;
+//        this.descripcion = descripcion;
+//        this.id_tipo_item = id_tipo_item;
+//        this.cuenta = cuenta;
+//        this.importe = importe;
+//        this.periodo = periodo;
+//    }
+
+    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String periodo) {
+        this.id_item = id_item;
         this.abreviatura = abreviatura;
         this.descripcion = descripcion;
         this.id_tipo_item = id_tipo_item;
@@ -23,6 +33,10 @@ public class Items  {
         this.importe = importe;
         this.periodo = periodo;
     }
+    
+    
+    
+    
 
     public String getId_item() {
         return id_item;

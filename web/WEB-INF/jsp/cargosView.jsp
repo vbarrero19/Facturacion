@@ -15,7 +15,16 @@
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
             getEntidadEmpresa();
-            //getItem();
+            getItem();
+
+
+            $('#tableContainer').on('click', 'select', function () {
+                alert('HOLA')
+            })
+            
+            $('#tableContainer').on('click', 'select', function () {
+                alert('HOLA')
+            })
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -39,7 +48,7 @@
                 useCurrent: false//Important! See issue #1075
                         //defaultDate: '08:32:33',
                         //                });
-            });        
+            });
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#submit").click(function () {
@@ -141,18 +150,11 @@
 
             });
 
-            /**********************************
-             * 
-             * Modificar codigo para que cargue datos en las cajas
-             * 
-             * 
-             *****************************/
-             
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEmpresas").change(function () {
 
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-                if ($("#comboClientes").val() != "0") {
+                if ($("#comboEmpresas").val() != "0") {
 
                     if (window.XMLHttpRequest) //mozilla
                     {
@@ -164,7 +166,7 @@
 
                     var myObj = {};
 
-                    myObj["id_entidad"] = $("#comboClientes").val().trim();
+                    myObj["id_entidad"] = $("#comboEmpresas").val().trim();
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
@@ -204,9 +206,9 @@
                     $("#nombre_contacto2").val("");
                 }
 
-            });        
-        
-        
+            });
+
+
         });
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
@@ -325,44 +327,47 @@
                 type: 'GET',
                 url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getItem.htm a recoger los datos
                 success: function (data) {
-                    
+
                     //Creamos una tabla con 5 filas para insertar datos
-                    for( i = 0; i < 5; i++) {
-                    
+                    for (i = 0; i < 5; i++) {
+
+
+                        /* Codigo para cargar una tabla con varios combos. Solo vamos a cargar un combo con los items*/
+
                         //cargamos de forma dinamica la tabla
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (i + 1) + "</th>              \n\
-                                                                    <td>" + "<select class='form-control comboItems' id='comboItems"+(i+1)+"' name='comboItems'></select> " + "</td>   \n\
+                                                                    <td>" + "<select class='form-control comboItems' id='comboItems" + (i + 1) + "' name='comboItems'></select> " + "</td>   \n\
                                                                     <td>" + "<input type='text' id='id_adeudo' name='id_adeudo'>" + "</td>                        \n\
                                                                     <td>" + "<input type='text' id='id_adeudo' name='id_adeudo'>" + "</td>                       \n\
                                                                     <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>     \n\ \n\
                                                                 </tr>");
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var aux = JSON.parse(data);
-                    //Identificamos el combo
-                    
-                    select = document.getElementById("comboItems"+(i+1));
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.append(opt);
-                    //Lo vamos cargando
-                    aux.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var aux2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = aux2.id_item;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = aux2.nombre;
-                        //Añadimos la opcion
-                        select.append(opt);                        
-                                                              
-                     });                                               
+                        //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                        var aux = JSON.parse(data);
+                        //Identificamos el combo
 
-                    }         
+                        select = document.getElementById("comboItems" + (i + 1));
+                        //Añadimos la opcion Seleccionar al combo
+                        var opt = document.createElement('option');
+                        opt.value = 0;
+                        opt.innerHTML = "Seleccionar";
+                        select.append(opt);
+                        //Lo vamos cargando
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var aux2 = JSON.parse(valor);
+                            //Creamos las opciones del combo
+                            var opt = document.createElement('option');
+                            //Guardamos el id en el value de cada opcion
+                            opt.value = aux2.id_item;
+                            //Guardamos el impuesto en el nombre de cada opcion                        
+                            opt.innerHTML = aux2.abreviatura;
+                            //Añadimos la opcion
+                            select.append(opt);
+
+                        });
+
+                    }
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -370,12 +375,13 @@
                     console.log(xhr.responseText);
                     console.log(thrownError);
                 }
-                
+
 
             });
-        };       
- 
-        
+        }
+        ;
+
+
 
     </script>
     <body>
@@ -434,6 +440,8 @@
                                     <input type="text" class="form-control" id="nombre_contacto2" name="nombre_contacto2" placeholder="Pais" disabled = "true">
                                 </div>
                             </div>
+
+                            <!--    Codigo para insertar una tabla con varios combos -->
 
                             <div class="col-xs-12" id="tableContainer">
                                 <table class="table table-striped">

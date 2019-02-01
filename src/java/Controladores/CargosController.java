@@ -293,7 +293,7 @@ public class CargosController {
     }
     
     
-    //Se usa al selleccionar algo en el combo Clientes
+    //Se usa al seleccionar algo en el combo Clientes
     @RequestMapping("/cargosController/getDatosEntidadEmpresa.htm")
     @ResponseBody
     public String cargarDatosEmpresa(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -322,7 +322,7 @@ public class CargosController {
             resp = new Gson().toJson(arrayTipo);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto SQLException"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } catch (Exception ex) {
@@ -374,10 +374,10 @@ public class CargosController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_item, abreviatura, nombre, precio, id_impuesto, periodo FROM items ORDER BY nombre");
+            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo FROM items ORDER BY abreviatura");
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6))));
+                arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
             }
 
             resp = new Gson().toJson(arrayTipo);
