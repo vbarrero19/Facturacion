@@ -81,7 +81,7 @@
                         console.log(thrownError);
                     }
                 });
-            })
+            });
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboClientes").change(function () {
@@ -438,11 +438,12 @@
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Id_adeudo</th>
-                                            <th scope="col">Adeudo</th> 
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Abreviatura</th>
+                                            <th scope="col">Descripción</th>
+                                            <th scope="col">Tipo Item</th> 
+                                            <th scope="col">Cuenta</th> 
                                             <th scope="col">Importe</th> 
-                                            <th scope="col">Enlace</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -451,7 +452,7 @@
                                 </table>
                             </div>
 
-
+                            <br style="clear:both">
 
 <!--                            <div class="form-group">
                                 <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
@@ -474,7 +475,7 @@
                             </div>-->
 
                             <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
-                            <label class="fechaGeneral">FECHAS DE LOS CARGOS</label>
+                            <label class="fechaGeneral">FECHAS DE LOS CARGOS Borrar si no se usa</label>
                             <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
                             <div class="container2">                                   
                                 <div class="row">
