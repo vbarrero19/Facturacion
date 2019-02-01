@@ -41,6 +41,8 @@
                         //                });
             });
 
+
+
             //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
@@ -327,16 +329,18 @@
 
                         //cargamos de forma dinamica la tabla
                         $('#tableContainer tbody').append(" <tr>\n\
-                                                                    <th scope=\"row\">" + (i + 1) + "</th>              \n\
+                                                                    <td scope=\"row\">" + (i + 1) + "</td>              \n\
                                                                     <td>" + "<select class='form-control comboItems' id='comboItems" + (i + 1) + "' name='comboItems'></select> " + "</td>   \n\
-                                                                    <td>" + "<input type='text' id='id_adeudo' name='id_adeudo'>" + "</td>                        \n\
-                                                                    <td>" + "<input type='text' id='id_adeudo' name='id_adeudo'>" + "</td>                       \n\
+                                                                    <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                        \n\
+                                                                    <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                       \n\
+\n\                                                                 <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                       \n\
+\n\                                                                 <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                       \n\
                                                                     <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>     \n\ \n\
                                                                 </tr>");
                         //Recogemos los datos del combo y los pasamos a objetos Cliente  
                         var aux = JSON.parse(data);
-                        //Identificamos el combo
 
+                        //Identificamos el combo
                         select = document.getElementById("comboItems" + (i + 1));
                         //Añadimos la opcion Seleccionar al combo
                         var opt = document.createElement('option');
@@ -358,7 +362,39 @@
 
                         });
 
+
+
+
                     }
+                    
+                    //Codigo para control del cambio en cualquiera de los combos. Codigo de David
+                    
+                    $(".comboItems").change(function () {
+                        if (window.XMLHttpRequest) //mozilla
+                        {
+                            ajax = new XMLHttpRequest(); //No Internet explorer
+                        } else
+                        {
+                            ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        
+                        //Recogemos en una variable 
+                        var idOpcion = this.value;
+                        alert(idOpcion);
+                        
+                        var numFila = this.parentElement.previousElementSibling.textContent;
+                        //ajax
+                        //success               
+                        //
+                        //Codigo para identificar las cajas de texto
+                        $("#id_adeudo" + idfila).val("example");
+
+
+
+
+
+
+                    });
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -383,9 +419,7 @@
                         <form role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ADEUDOS</h3>                           
-
-
-
+ 
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para clientes-->
                                 <div class="form-group col-xs-3">
@@ -432,8 +466,7 @@
                                 </div>
                             </div>
 
-                            <!--    Codigo para insertar una tabla con varios combos -->
-
+                            <!--    Codigo para insertar una tabla con varios combos --> 
                             <div class="col-xs-12" id="tableContainer">
                                 <table class="table table-striped">
                                     <thead class="thead-dark">
@@ -444,6 +477,7 @@
                                             <th scope="col">Tipo Item</th> 
                                             <th scope="col">Cuenta</th> 
                                             <th scope="col">Importe</th> 
+                                            <th scope="col">Botón</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -454,25 +488,25 @@
 
                             <br style="clear:both">
 
-<!--                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
-                            </div>                          
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="id_factura" name="id_factura">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="cantidad" name="cantidad">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="impuesto" name="impuesto">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="cargo" name="cargo">                                                    
-                            </div>-->
+                            <!--                            <div class="form-group">
+                                                            <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
+                                                        </div>                          
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="id_factura" name="id_factura">
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="cantidad" name="cantidad">
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="impuesto" name="impuesto">
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="cargo" name="cargo">                                                    
+                                                        </div>-->
 
                             <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
                             <label class="fechaGeneral">FECHAS DE LOS CARGOS Borrar si no se usa</label>
