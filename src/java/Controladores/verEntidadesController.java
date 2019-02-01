@@ -43,5 +43,66 @@ public class verEntidadesController {
 
         return null;
     }
+    
+    
+    @RequestMapping("/verEntidadesController/viewEntidades.htm")
+    @ResponseBody
+    public String guardarNuevaEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Entidades resourceLoad = new Entidades();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        try {
+            /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            /*REALIZAMOS LA CONSULTA PREPARADA PARA CONSULTAR LAS ENTIDADES*/
+            
+            ArrayList<String> arrayTipo = new ArrayList<>();
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT DISTINCT_CODE FROM ENTIDAD");
+           
+                     
+            while (rs.next()) {
+                String test = rs.getString(3);
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1))));
+            }
+           
+            resp = new Gson().toJson(arrayTipo);
+            
+        } catch (SQLException ex) {
+            resp = "Incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
 
 }
