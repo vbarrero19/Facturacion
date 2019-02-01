@@ -17,15 +17,6 @@
             getEntidadEmpresa();
             getItem();
 
-
-//            $('#tableContainer').on('click', 'select', function () {
-//                alert('HOLA')
-//            })
-//            
-//            $('#tableContainer').on('click', 'select', function () {
-//                alert('HOLA')
-//            })
-
             var userLang = navigator.language || navigator.userLanguage;
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
@@ -462,7 +453,7 @@
 
 
 
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
                             </div>                          
 
@@ -480,7 +471,7 @@
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="cargo" name="cargo">                                                    
-                            </div>
+                            </div>-->
 
                             <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
                             <label class="fechaGeneral">FECHAS DE LOS CARGOS</label>
