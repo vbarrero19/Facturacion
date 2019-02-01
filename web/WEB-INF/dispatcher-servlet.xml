@@ -62,7 +62,7 @@
                 <prop key="itemsView.htm">items</prop>  
                 <prop key="entidadesView.htm">entidades</prop>
                 <prop key="cargosView.htm">cargos</prop>
-                  <prop key="verEntidades.html">verEntidades</prop>
+                  <prop key="verEntidadesView.htm">verEntidades</prop>
                            
             </props>
         </property>

@@ -34,21 +34,20 @@
                     <div class="col-xs-10" id="childrensNav">
                         <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
                         <div class="row" style="display: flex;/*! flex-direction: unset; */justify-content: space-between;align-items:  center;height: 100%;">
-                            <!-- Menu desplegable de clientes donde aparecen las opciones a realizar -->
+                            <!-- Menu desplegable de entidades donde aparecen las opciones a realizar -->
                             <div class="divName ">
-                                <!--<a href="<c:url value='/entidadesController/start.htm'/>" class="btn btn-info" role="button">Clientes</a>  -->
                                 <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Entidades
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">
-                                        <li clas="mCliente"><a href="<c:url value='/entidadesController/start.htm'/>">Alta entidad</a></li>
+                                        <li clas="mEntidad"><a href="<c:url value='/entidadesController/start.htm'/>">Alta entidad</a></li>
                                         <!--meter href la direccion del controlador que realiza las acciones -->
-                                        <li class="mCliente"><a href="<c:url value='/verClientesController/start.htm'/>">Ver/editar entidad</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/verEntidadesController/start.htm'/>">Ver/editar entidad</a></li>
                                         <!--<li><a href="#">Modificar cliente</a></li>
                                         <li><a href="#">Baja cliente</a></li> -->
                                     </ul>
                                 </div>
-                                <!-- Fin del menu de clientes -->
+                                <!-- Fin del menu de entidades -->
                             </div> 
 
                             <div class="divName ">
