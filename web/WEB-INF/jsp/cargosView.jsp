@@ -316,7 +316,7 @@
             }
 
             $.ajax({
-                //Usamos GET ya que recibimos.
+                //Usamos GET ya que recibimos. 
                 type: 'GET',
                 url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getItem.htm a recoger los datos
                 success: function (data) {
