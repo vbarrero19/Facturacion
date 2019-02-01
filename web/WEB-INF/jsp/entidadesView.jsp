@@ -44,8 +44,8 @@
                 useCurrent: false
 
             });
-            
-            
+
+
             // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
             $("#guardarEntidad").click(function () {
 
@@ -199,8 +199,12 @@
                             <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA ENTIDADES</h3>
 
                             <!-- ALMACENAMOS EL ID_ENTIDAD -->
+                            <div class="form-group-combo">  
+                                <label> Num id </label>
+                                <label> Distinct code </label>
+                            </div>
 
-                            <div class="form-group-combo">
+                            <div class="form-group-combo">                                
                                 <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
                                 <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
                             </div>
@@ -340,6 +344,22 @@
                                 <!--INFORMACION DE LA PESTAÑA 2 -->                                
                                 <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
                                     ALMACENAMOS LA INFORMACION DE LA DIRECCION DE LA ENTIDAD.
+
+                                    <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
+                                    <div class="form-group">
+                                        <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
+                                            <option> fisica </option>
+                                            <option> fiscal </option>
+                                        </select>
+                                    </div> 
+
+                                    <!-- ALMACENAMOS EL TIPO DE VIA QUE ES -->
+                                    <div class="form-group">                                 
+                                        <label>Tipo via (calle, avenida...) </label>
+                                        <input type="text" class="form-control" id="tipo_via" name="tipo_via" placeholder="Tipo de via" required>
+                                    </div> 
+
+
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
                                     <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
                                     <div id="direc" class="form_radio_button">

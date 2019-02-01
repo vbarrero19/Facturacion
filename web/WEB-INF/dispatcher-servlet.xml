@@ -45,7 +45,9 @@
     <bean class="Controladores.ItemsController" id="items"/>
     <bean class="Controladores.EntidadesController" id="entidades"/>
     <bean class="Controladores.CargosController" id="cargos"/>
-   
+    <bean class="Controladores.verEntidadesController" id="verEntidades"/>
+    
+    
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
             <list>
@@ -60,6 +62,7 @@
                 <prop key="itemsView.htm">items</prop>  
                 <prop key="entidadesView.htm">entidades</prop>
                 <prop key="cargosView.htm">cargos</prop>
+                  <prop key="verEntidades.html">verEntidades</prop>
                            
             </props>
         </property>
