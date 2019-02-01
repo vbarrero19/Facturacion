@@ -59,7 +59,8 @@ public class Entidades {
         this.id_direccion = id_direccion;
     }
 
-    public Entidades(String string) {
+    public Entidades(String distinct_code) {
+        this.distinct_code = distinct_code; 
        
     }
 

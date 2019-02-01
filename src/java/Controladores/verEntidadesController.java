@@ -45,35 +45,33 @@ public class verEntidadesController {
     }
     
     
-    @RequestMapping("/verEntidadesController/viewEntidades.htm")
+    
+    @RequestMapping("/verEntidadesController/verEntidades.htm")
     @ResponseBody
-    public String guardarNuevaEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verEntidades(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Entidades resourceLoad = new Entidades();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-        
+
+        //CREAMOS UN ARRAY
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        /*CODIGO PARA VER UNA ENTIDAD*/
         try {
-            /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            /*REALIZAMOS LA CONSULTA PREPARADA PARA CONSULTAR LAS ENTIDADES*/
-            
-            ArrayList<String> arrayTipo = new ArrayList<>();
-            
+
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT DISTINCT_CODE FROM ENTIDAD");
-           
-                     
+            rs = sentencia.executeQuery("select distinct_code from entidad");
+
             while (rs.next()) {
-                String test = rs.getString(3);
                 arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1))));
             }
-           
             resp = new Gson().toJson(arrayTipo);
-            
+
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
