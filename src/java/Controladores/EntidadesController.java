@@ -154,20 +154,19 @@ public class EntidadesController {
             
             stAux5.executeUpdate();  
             
-
-//            
-//            Connection con6 = null;
-//            ResultSet rs6 = null;
-//            PreparedStatement stAux6 = null;
-//            
-//            con6 = pool_local.getConnection();
-//            
-//            stAux6 = con6.prepareStatement("INSERT INTO ENTIDAD_DOCUMENTO (id_entidad, id_documento) VALUES (?,?)");
-//            
-//            stAux6.setInt(1, maximo);
-//            stAux6.setInt(2, Integer.parseInt(entidades.getId_tipo_documento()));
-//            
-//            stAux5.executeUpdate();
+           
+            Connection con6 = null;
+            ResultSet rs6 = null;
+            PreparedStatement stAux6 = null;
+            
+            con6 = pool_local.getConnection();
+            
+            stAux6 = con6.prepareStatement("INSERT INTO ENTIDAD_DOCUMENTO (id_entidad, id_documento) VALUES (?,?)");
+            
+            stAux6.setInt(1, maximo);
+            stAux6.setInt(2, Integer.parseInt(entidades.getId_tipo_documento()));
+            
+            stAux6.executeUpdate();
                     
             
         } catch (SQLException ex) {
