@@ -71,7 +71,7 @@
                 //GUARDAMOS EL VALOR DEL TIPO DE DOCUMENTO
                 myObj["id_tipo_documento"] = $("#id_tipo_documento").val();                
                 //GUARDAMOS EL NUMERO DE DOCUMENTO
-                myObj["numero_documento"] = $("numero_documento").val(); 
+                myObj["numero_documento"] = $("#numero_documento").val(); 
                 //GUARDAMOS EL NOMBRE DE CONTACTO
                 myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
                 //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
