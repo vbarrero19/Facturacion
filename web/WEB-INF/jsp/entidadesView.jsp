@@ -68,6 +68,8 @@
                 myObj["id_dedicacion"] = $('#id_dedicacion').val();
                 //GUARDAMOS EL VALOR DEL TRATAMIENTO
                 myObj["tratamiento"] = $(".form-check input:checked").val();
+                //GUARDAMOS EL VALOR DEL TIPO DE DOCUMENTO
+                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();
                 //GUARDAMOS EL NOMBRE DE CONTACTO
                 myObj["nombre_contacto"] = $('#nombre_contacto').val().trim();
                 //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
