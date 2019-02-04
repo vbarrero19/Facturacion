@@ -21,7 +21,7 @@
             //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
             getTipoEntidad();
             getTipoDedicacion();
-
+            getTipoDocumento();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -181,7 +181,44 @@
             });
         }
 
+////CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
+        
+            function getTipoDocumento() {
 
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
+                url: '/Facturacion/entidadesController/getTipoDocumento.htm',
+                success: function (data) {
+                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
+                    var tipoDocumento = JSON.parse(data);
+                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
+                    select = document.getElementById('id_tipo_documento');
+                    //LO CARGAMOS
+                    tipoDocumento.forEach(function (valor, indice) {
+                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
+                        var tipoDocumento2 = JSON.parse(valor);
+                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
+                        var opt = document.createElement('option');
+                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
+                        opt.value = tipoDocumento2.id_tipo_documento;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
+                        opt.innerHTML = tipoDocumento2.documento;
+                        //AÑADIMOS UNA NUEVA OPCION
+                        select.appendChild(opt);
+                    });
+                }
+            });
+        }
 
 
     </script>
@@ -227,7 +264,8 @@
 
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
                             <div class="tab-content" id="myTabContent">
-                                <!--INFORMACION DE LA PESTAÑA 1 -->
+                                
+                                <!----------------------------- INFORMACION DE LA PESTAÑA 1 --------------------------------------->  
                                 <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
@@ -254,10 +292,8 @@
                                     <!--CARGAMOS EL COMBO CON LA INFORMACION DEL TIPO DE IDENTIFICACION DE LA ENTIDAD -->
                                     <div class="form-group-combo">
                                         <select class="form-control" id="id_tipo_documento" name="id_tipo_documento">
-                                            <option> DNI </option>
-                                            <option> CIF </option>
-                                            <option> PASAPORTE </option>
-                                            <option> NIT </option>
+
+
                                         </select>
                                         <input type="text" class="form-control" id="documento" name="documento" placeholder="Numero identificador" required>
                                     </div>
@@ -341,7 +377,8 @@
                                 </div>
 
 
-                                <!--INFORMACION DE LA PESTAÑA 2 -->                                
+                                <!----------------------------- INFORMACION DE LA PESTAÑA 2 --------------------------------------->  
+
                                 <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
                                     ALMACENAMOS LA INFORMACION DE LA DIRECCION DE LA ENTIDAD.
 

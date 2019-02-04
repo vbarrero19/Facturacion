@@ -17,6 +17,7 @@ public class Entidades {
     private String nombre_entidad;
     private String id_tipo_entidad;
     private String tratamiento;
+    private String id_tipo_documento;
     private String nombre_contacto;
     private String apellido1;
     private String apellido2;
@@ -57,11 +58,13 @@ public class Entidades {
         this.fecha_baja = fecha_baja;
         this.activado = activado;
         this.id_direccion = id_direccion;
+       
     }
 
-    public Entidades(String distinct_code) {
+    public Entidades(String distinct_code, String nombre_entidad, String nombre_contacto) {
         this.distinct_code = distinct_code; 
-       
+        this.nombre_entidad = nombre_entidad;
+        this.nombre_contacto = nombre_contacto;
     }
 
     public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto) {
@@ -113,6 +116,15 @@ public class Entidades {
         this.tratamiento = tratamiento;
     }
 
+    public String getId_tipo_documento() {
+        return id_tipo_documento;
+    }
+
+    public void setId_tipo_documento(String id_tipo_documento) {
+        this.id_tipo_documento = id_tipo_documento;
+    }
+
+    
     public String getNombre_contacto() {
         return nombre_contacto;
     }

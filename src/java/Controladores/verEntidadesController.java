@@ -65,10 +65,10 @@ public class verEntidadesController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("select distinct_code from entidad");
+            rs = sentencia.executeQuery("select distinct_code, nombre_entidad, nombre_contacto from entidad");
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1))));
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3))));
             }
             resp = new Gson().toJson(arrayTipo);
 

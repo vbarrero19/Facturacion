@@ -118,17 +118,12 @@ public class EntidadesController {
                 
             }
             
-            
             Connection con2 = null;
             ResultSet rs2 = null;
             PreparedStatement stAux2 = null;
             
-            
-            
             con2 = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-
-            
             
             stAux2 = con2.prepareStatement("INSERT INTO ENTIDAD_TIPO_ENTIDAD (id_entidad, id_tipo_entidad) VALUES (?,?)");
            
@@ -143,9 +138,20 @@ public class EntidadesController {
             stAux2.executeUpdate();            
             
             
+            /***************************/ 
+            Connection con4 = null;
+            ResultSet rs4 = null;
+            PreparedStatement stAux4 = null;
             
+            con4 = pool_local.getConnection();
             
-            /**************************************/
+            stAux4 = con4.prepareStatement("INSERT INTO ENTIDAD_DOCUMENTO (id_entidad, id_documento) VALUES (?,?)");
+            
+            stAux4.setInt(1, maximo);
+            stAux4.setInt(2, Integer.parseInt(entidades.getId_tipo_documento()));
+            
+            stAux4.executeUpdate();
+                    
             
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
@@ -318,5 +324,77 @@ public class EntidadesController {
         return resp;  
         
     }
+    
+    
+    /*CARGAMOS EL COMBO DEL TIPO_DOCUMENTO DE LA ENTIDAD(CIF, NIF, PASAPORTE......)*/
+    @RequestMapping("/entidadesController/getTipoDocumento.htm")  
+    @ResponseBody
+    /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
+    public String cargarComboTipoDocumento(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        /*CREAMOS UN OBJETO DEL TIPO DEDICACION */
+        TipoDocumento resourceLoad = new TipoDocumento();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
+        //y lo enviamos con JSON. EL resultado son objetos de tipoDedicacion convertidos en String por el JSON.
+        ArrayList<String> arrayTipoDocumento = new ArrayList<>();
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();          
+            /*CREAMOS LA CONSULTA PREPARADA Y LO GUARDAMOS EN rs*/
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select id_tipo_documento, documento from tipo_documento");
+            /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
+            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
+            */
+            while(rs.next()){
+                
+            arrayTipoDocumento.add(new Gson().toJson(new TipoDocumento(rs.getString(1), rs.getString(2))));
+            }
+            /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
+            resp = new Gson().toJson(arrayTipoDocumento);
+            
+            
+        } catch (SQLException ex) {
+            resp = "incorrecto"; //
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+          
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        
+        //Devolvemos la variable resp al JSP
+        return resp;  
+        
+    }
+    
+    
 
 }
