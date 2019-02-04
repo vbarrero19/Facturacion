@@ -41,7 +41,7 @@ public class CargosController {
         return null;
     }
 
-//    @RequestMapping("/cargosController/newCustomer.htm")
+//    @RequestMapping("/cargosController/nuevoCargo.htm")
 //    @ResponseBody
 //    public String saveNewCustomer(@RequestBody Adeudos adeudo, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
 //        //Adeudos resourceLoad = new Adeudos();
@@ -352,11 +352,9 @@ public class CargosController {
         return resp;
 
     }
-
+       
     
-    
-    
-    /*Cargamos los datos para el combo de items*/
+     //Se usa para cargar los datos del combo items
     @RequestMapping("/cargosController/getItem.htm")
     @ResponseBody
     public String cargarComboItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -374,6 +372,7 @@ public class CargosController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
+            //Podemos llevar solo los dos primeros campos
             rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo FROM items ORDER BY abreviatura");
 
             while (rs.next()) {
@@ -413,4 +412,66 @@ public class CargosController {
         return resp;
 
     }
+    
+    //Se usa al seleccionar algo en el combo Clientes
+    @RequestMapping("/cargosController/getDatosItem.htm")
+    @ResponseBody
+    public String cargarDatosItem(@RequestBody Items items, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Items resourceLoad = new Items();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            stAux = con.prepareStatement("SELECT i.id_item, i.abreviatura, i.descripcion, t.item, i.cuenta, i.importe, i.periodo FROM items i\n" +
+                                         "inner join tipo_item t on i.id_tipo_item = t.id_tipo_item WHERE id_item =  ?");
+
+            stAux.setInt(1, Integer.parseInt(items.getId_item()));
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(5), rs.getString(6), rs.getString(7))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
 }
