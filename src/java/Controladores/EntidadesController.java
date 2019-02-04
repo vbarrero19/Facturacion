@@ -68,8 +68,6 @@ public class EntidadesController {
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidades.getDistinct_code());
             stAux.setString(2,entidades.getNombre_entidad());
-            //stAux.setInt(3,Integer.parseInt(entidad.getId_entidad()));
-            //stAux.setInt(4,Integer.parseInt(entidad.getId_dedicacion()));
             stAux.setString(3,entidades.getTratamiento());
             stAux.setString(4,entidades.getNombre_contacto());
             stAux.setString(5,entidades.getApellido1());
@@ -97,7 +95,7 @@ public class EntidadesController {
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
             
-            /*************************************/
+            /**************** SELECCIONAMOS EL MAXIMO DEL NUMERO DE ENTIDAD DE LA TABLA *********************/
             
             Connection con3 = null;
             ResultSet rs3 = null;
@@ -112,12 +110,12 @@ public class EntidadesController {
             rs3 = stAux3.executeQuery();
             int maximo = 0;
 
-            while (rs3.next()) {
-                
-                maximo = rs3.getInt(1);
-                
+            while (rs3.next()) {                
+                maximo = rs3.getInt(1);                
             }
             
+            
+            // GUARDAMOS EN LA TABLA ENTIDAD_TIPO DE ENTIDAD LA RELACION ENTRE LA TABLA ENTIDAD Y LA TABLA TIPO ENTIDAD.
             Connection con2 = null;
             ResultSet rs2 = null;
             PreparedStatement stAux2 = null;
@@ -137,20 +135,60 @@ public class EntidadesController {
             /*LO EJECUTAMOS*/
             stAux2.executeUpdate();            
             
+            /*************** SELECCIONAMOS EL ID_TIPO_DOCUMENTO DEL TIPO DE COMBO *************/
             
-            /***************************/ 
-            Connection con4 = null;
-            ResultSet rs4 = null;
-            PreparedStatement stAux4 = null;
             
-            con4 = pool_local.getConnection();
+//            Connection con4 = null;
+//            ResultSet rs4 = null;
+//            PreparedStatement stAux4 = null;
+//            
+//            
+//            con4 = pool_local.getConnection();
+//            
+//            stAux4 = con4.prepareStatement("SELECT id_tipo_documento FROM tipo_documento");
+//
+//            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+//            rs4 = stAux4.executeQuery();
+//            
+//            int id_doc = 0;
+//
+//            while (rs4.next()) {                
+//                id_doc = rs4.getInt(1);
+//                
+//            }
+      
+
+            /*********** INSERTAMOS EN LA TABLA DOCUMENTO EL ID_TIPO_DOCUMENTO DE LA TABLA TIPO_DOCUMENTO(QUE LO COGEMOS DEL COMBO) Y 
+             EL NUMERO DEL DOCUMENTO QUE LO SELECCIONAMOS DEL INPUT ****************/ 
             
-            stAux4 = con4.prepareStatement("INSERT INTO ENTIDAD_DOCUMENTO (id_entidad, id_documento) VALUES (?,?)");
+            Connection con5 = null;
+            ResultSet rs5 = null;
+            PreparedStatement stAux5 = null;
             
-            stAux4.setInt(1, maximo);
-            stAux4.setInt(2, Integer.parseInt(entidades.getId_tipo_documento()));
+            con5 = pool_local.getConnection();
             
-            stAux4.executeUpdate();
+            stAux5 = con5.prepareStatement("INSERT INTO DOCUMENTO (id_tipo_documento, numero_documento) VALUES (?,?)");
+            
+            stAux5.setInt(1,Integer.parseInt(entidades.getId_tipo_documento()));
+            stAux5.setString(2, entidades.getNumero_documento());         
+            
+            
+            stAux5.executeUpdate();  
+            
+
+//            
+//            Connection con6 = null;
+//            ResultSet rs6 = null;
+//            PreparedStatement stAux6 = null;
+//            
+//            con6 = pool_local.getConnection();
+//            
+//            stAux6 = con6.prepareStatement("INSERT INTO ENTIDAD_DOCUMENTO (id_entidad, id_documento) VALUES (?,?)");
+//            
+//            stAux6.setInt(1, maximo);
+//            stAux6.setInt(2, Integer.parseInt(entidades.getId_tipo_documento()));
+//            
+//            stAux5.executeUpdate();
                     
             
         } catch (SQLException ex) {

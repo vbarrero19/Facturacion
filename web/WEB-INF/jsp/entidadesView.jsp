@@ -63,26 +63,28 @@
                 //GUARDAMOS EL NOMBRE DE LA ENTIDAD
                 myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO ENTIDAD.
-                myObj["id_tipo_entidad"] = $('#id_tipo_entidad').val();
+                myObj["id_tipo_entidad"] = $("#id_tipo_entidad").val();
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
-                myObj["id_dedicacion"] = $('#id_dedicacion').val();
+                myObj["id_dedicacion"] = $("#id_dedicacion").val();
                 //GUARDAMOS EL VALOR DEL TRATAMIENTO
-                myObj["tratamiento"] = $(".form-check input:checked").val();
+                myObj["tratamiento"] = $(".form-check input:checked").val();               
                 //GUARDAMOS EL VALOR DEL TIPO DE DOCUMENTO
-                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();
+                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();                
+                //GUARDAMOS EL NUMERO DE DOCUMENTO
+                myObj["numero_documento"] = $("numero_documento").val(); 
                 //GUARDAMOS EL NOMBRE DE CONTACTO
-                myObj["nombre_contacto"] = $('#nombre_contacto').val().trim();
+                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
                 //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
-                myObj["apellido1"] = $('#apellido1').val().trim();
-                myObj["apellido2"] = $('#apellido2').val().trim();
+                myObj["apellido1"] = $("#apellido1").val().trim();
+                myObj["apellido2"] = $("#apellido2").val().trim();
                 //GUARDAMOS LOS TELEFONOS DE CONTACTO
-                myObj["telefono1"] = $('#telefono1').val().trim();
-                myObj["telefono2"] = $('#telefono2').val().trim();
+                myObj["telefono1"] = $("#telefono1").val().trim();
+                myObj["telefono2"] = $("#telefono2").val().trim();
                 //GUARDAMOS EL FAX
-                myObj["fax"] = $('#fax').val().trim();
+                myObj["fax"] = $("#fax").val().trim();
                 //GUARDAMOS LOS MAIL DE CONTACTO
-                myObj["mail1"] = $('#mail1').val().trim();
-                myObj["mail2cc"] = $('#mail2cc').val().trim();
+                myObj["mail1"] = $("#mail1").val().trim();
+                myObj["mail2cc"] = $("#mail2cc").val().trim();
                 //GUARDAMOS LAS FECHAS, DE ALTA Y BAJA
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
@@ -212,7 +214,7 @@
                         //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
                         var opt = document.createElement('option');
                         //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoDocumento2.id_tipo_documento;
+                        opt.value = tipoDocumento2.id__tipo_documento;
                         //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
                         opt.innerHTML = tipoDocumento2.documento;
                         //AÑADIMOS UNA NUEVA OPCION
@@ -221,6 +223,8 @@
                 }
             });
         }
+        
+        
 
 
     </script>
@@ -297,7 +301,7 @@
 
 
                                         </select>
-                                        <input type="text" class="form-control" id="documento" name="documento" placeholder="Numero identificador" required>
+                                        <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Numero identificador" required>
                                     </div>
 
                                     <div class="form-group">

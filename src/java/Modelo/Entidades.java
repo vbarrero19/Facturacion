@@ -18,6 +18,7 @@ public class Entidades {
     private String id_tipo_entidad;
     private String tratamiento;
     private String id_tipo_documento;
+    private String numero_documento;
     private String nombre_contacto;
     private String apellido1;
     private String apellido2;
@@ -37,13 +38,14 @@ public class Entidades {
     
     }
 
-    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String id_tipo_entidad, String tratamiento, String id_tipo_documento, String nombre_contacto, String apellido1, String apellido2, String id_dedicacion, String telefono1, String telefono2, String fax, String mail1, String mail2cc, String fecha_alta, String fecha_baja, String activado, String id_direccion) {
+    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String id_tipo_entidad, String tratamiento, String id_tipo_documento, String numero_documento, String nombre_contacto, String apellido1, String apellido2, String id_dedicacion, String telefono1, String telefono2, String fax, String mail1, String mail2cc, String fecha_alta, String fecha_baja, String activado, String id_direccion) {
         this.id_entidad = id_entidad;
         this.distinct_code = distinct_code;
         this.nombre_entidad = nombre_entidad;
         this.id_tipo_entidad = id_tipo_entidad;
         this.tratamiento = tratamiento;
         this.id_tipo_documento = id_tipo_documento;
+        this.numero_documento = numero_documento;
         this.nombre_contacto = nombre_contacto;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -59,10 +61,9 @@ public class Entidades {
         this.id_direccion = id_direccion;
     }
 
+ 
     
-    
-    
-
+// CONSTRUCTOR PARA MOSTRAR A LAS ENTIDADES EN VERENTIDADESVIEW
     public Entidades(String distinct_code, String nombre_entidad, String nombre_contacto) {
         this.distinct_code = distinct_code; 
         this.nombre_entidad = nombre_entidad;
@@ -124,6 +125,14 @@ public class Entidades {
 
     public void setId_tipo_documento(String id_tipo_documento) {
         this.id_tipo_documento = id_tipo_documento;
+    }
+
+    public String getNumero_documento() {
+        return numero_documento;
+    }
+
+    public void setNumero_documento(String numero_documento) {
+        this.numero_documento = numero_documento;
     }
 
     
@@ -230,6 +239,8 @@ public class Entidades {
     public void setId_direccion(String id_direccion) {
         this.id_direccion = id_direccion;
     }
+
+  
     
         
 }
