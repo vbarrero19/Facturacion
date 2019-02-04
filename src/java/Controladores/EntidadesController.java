@@ -135,28 +135,7 @@ public class EntidadesController {
             /*LO EJECUTAMOS*/
             stAux2.executeUpdate();            
             
-            /*************** SELECCIONAMOS EL ID_TIPO_DOCUMENTO DEL TIPO DE COMBO *************/
-            
-            
-//            Connection con4 = null;
-//            ResultSet rs4 = null;
-//            PreparedStatement stAux4 = null;
-//            
-//            
-//            con4 = pool_local.getConnection();
-//            
-//            stAux4 = con4.prepareStatement("SELECT id_tipo_documento FROM tipo_documento");
-//
-//            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
-//            rs4 = stAux4.executeQuery();
-//            
-//            int id_doc = 0;
-//
-//            while (rs4.next()) {                
-//                id_doc = rs4.getInt(1);
-//                
-//            }
-      
+                
 
             /*********** INSERTAMOS EN LA TABLA DOCUMENTO EL ID_TIPO_DOCUMENTO DE LA TABLA TIPO_DOCUMENTO(QUE LO COGEMOS DEL COMBO) Y 
              EL NUMERO DEL DOCUMENTO QUE LO SELECCIONAMOS DEL INPUT ****************/ 
