@@ -1,6 +1,4 @@
 <%-- 
-    Document   : entidadesView.jsp
-    Created on : 01-feb-2019, 10:23:59
     Author     : vbarr
 --%>
 

@@ -61,6 +61,10 @@
                             <div class="divName ">
                                 <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>
+                            
+                            <div class="divName ">
+                                <a href="<c:url value='/verFacturasController/start.htm'/>" class="btn btn-info" role="button">Ver facturas</a>
+                            </div>
                         </div>
                     </div>
                     <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->
