@@ -16,13 +16,15 @@
         <title>VER FACTURAS</title> 
     </head>
     <script>
-        $(document).ready(function () {
-            //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
+       $(document).ready(function () {
+            //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
+            getEntidadCliente();
+            
             getVerEntidad();
 
             var userLang = navigator.language || navigator.userLanguage;
 
-            // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
+            //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#submit").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -33,13 +35,14 @@
                 }
 
                 var myObj = {};
-                myObj["distinct_code"] = $("#comboEntidad").val().trim();
+                myObj["distinct_code"] = $("#comboEntidad").val().trim();                
+                myObj["id_entidad"] = $("#id_entidad").val().trim();
 
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/verFacturasController/nuevaFactura.htm',
+                    url: '/Facturacion/verFacturasController/nuevoFactura.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -53,7 +56,65 @@
                     }
                 });
             });
+
+//            //Muestra datos de la entidadCliente al seleccionar algo en el combo
+//            $("#comboEntidad").change(function () {
+//
+//                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+//                if ($("#comboEntidad").val() != "0") {
+//
+//                    if (window.XMLHttpRequest) //mozilla
+//                    {
+//                        ajax = new XMLHttpRequest(); //No Internet explorer
+//                    } else
+//                    {
+//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                    }
+//
+//                    var myObj = {};
+//
+//                    myObj["id_entidad"] = $("#comboEntidad").val().trim();
+//
+//                    var json = JSON.stringify(myObj);
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: '/Facturacion/verFacturasController/getDatosEntidadCliente.htm',
+//                        data: json,
+//                        datatype: "json",
+//                        contentType: "application/json",
+//                        success: function (data) {
+//                            
+//                            var aux = JSON.parse(data);
+//
+//                            aux.forEach(function (valor, indice) {
+//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+//                                var aux2 = JSON.parse(valor);
+//                                //Mostramos los datos en la cajas de texto
+//                                $("#id_entidad").val(aux2.id_entidad);
+//                                $("#nombre_entidad").val(aux2.nombre_entidad);
+//                                $("#nombre_contacto").val(aux2.nombre_contacto);
+//
+//                            });
+//                        },
+//                        error: function (xhr, ajaxOptions, thrownError) {
+//                            console.log(xhr.status);
+//                            console.log(xhr.responseText);
+//                            console.log(thrownError);
+//                        }
+//                    });
+//
+//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+//                } else {
+//                    $("#id_entidad").val("");
+//                    $("#nombre_entidad").val("");
+//                    $("#nombre_contacto").val("");
+//                }
+//
+//            });
         });
+        
+        
+        
         
         
             //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
@@ -107,7 +168,7 @@
                             <h3 style="margin-bottom: 25px; text-align: center;">VER FACTURAS ENTIDAD</h3>                           
 
                             <div class="datos" class="col-xs-12">
-                                <!--Combo para clientes-->
+                                <!--Combo para entidades-->
                                 <div class="form-group col-xs-3">
                                     <label for="comboEntidad"> Entidad </label>
                                     <div class="form-group-combo">                                        
@@ -123,11 +184,7 @@
                                 <div class="form-group col-xs-4">
                                     <label for="idCliente>">Nombre_entidad</label>
                                     <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
-                                </div>
-                                <div class="form-group col-xs-3">
-                                    <label for="idCliente>">País cliente</label>
-                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto">
-                                </div>   
+                                </div>  
                                 <br style="clear:both">
 
 
