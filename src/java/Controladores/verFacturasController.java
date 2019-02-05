@@ -113,7 +113,7 @@ public class verFacturasController {
     }
    
     
-    //Cargamos los datos cuando seleccionamos una opcion del combo
+    //Cargamos los datos en los input cuando seleccionamos una opcion del combo
     @RequestMapping("/cargosController/getDatosEntidad.htm")
     @ResponseBody
     public String cargarDatosEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {

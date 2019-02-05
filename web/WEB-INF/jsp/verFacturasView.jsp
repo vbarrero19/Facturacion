@@ -1,5 +1,4 @@
 <%-- 
-
     Author     : vbarr
 --%>
 
@@ -17,20 +16,16 @@
     </head>
     <script>
         $(document).ready(function () {
-            //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
-            //getEntidadCliente();
-
+            //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
 
             var userLang = navigator.language || navigator.userLanguage;
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#submit").click(function () {
-                if (window.XMLHttpRequest) //mozilla
-                {
+                if (window.XMLHttpRequest) { //mozilla
                     ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
+                } else {
                     ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
 
@@ -60,7 +55,7 @@
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
 
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
                 if ($("#comboEntidad").val() != "0") {
 
                     if (window.XMLHttpRequest) //mozilla
@@ -73,6 +68,7 @@
 
                     var myObj = {};
 
+                    //recogemos el valor de comboEntidad y lo metemos en id_entidad.
                     myObj["id_entidad"] = $("#comboEntidad").val().trim();
 
                     var json = JSON.stringify(myObj);
@@ -135,37 +131,33 @@
                     var verEntidad = JSON.parse(data);
                     //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
                     select = document.getElementById('comboEntidad');
-                    //LO CARGAMOS
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+
                     verEntidad.forEach(function (valor, indice) {
                         //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
                         var verEntidad2 = JSON.parse(valor);
                         //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
                         var opt = document.createElement('option');
+
                         //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-//                        opt.value = verEntidad2.id_entidad;
-//                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-//                        opt.innerHTML = verEntidad2.distinct_code;
-                        opt.value = 0;
-                        opt.innerHTML = "Seleccionar";
-//AÑADIMOS UNA NUEVA OPCION
+                        opt.value = verEntidad2.id_entidad;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
+                        opt.innerHTML = verEntidad2.distinct_code;
                         select.appendChild(opt);
-
-
-                        verEntidad2.forEach(function (valor, indice) {
-                            var verEntidad2 = JSON.parse(valor);
-                            var opt = document.createElement('option');
-                            //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                            opt.value = verEntidad2.id_entidad;
-                            //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                            opt.innerHTML = verEntidad2.distinct_code;
-                            select.appendChild(opt);
-
-                        })
-
                     });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
                 }
             });
         }
+        ;
 
     </script>
 
@@ -182,7 +174,7 @@
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para entidades-->
                                 <div class="form-group col-xs-3">
-                                    <label for="comboEntidad"> Entidad </label>
+                                    <label for="comboEntidad"> Entidad Distinct code </label>
                                     <div class="form-group-combo">                                        
                                         <select class="form-control" id="comboEntidad" name="comboEntidad">
 
@@ -197,8 +189,11 @@
                                     <label for="idCliente>">Nombre_entidad</label>
                                     <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
                                 </div>  
+                                <div class="form-group col-xs-3">
+                                    <label for="idCliente>">Nombre contacto</label>
+                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" disabled = "true">
+                                </div>  
                                 <br style="clear:both">
-
 
                                 <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
