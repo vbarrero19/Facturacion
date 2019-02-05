@@ -56,10 +56,10 @@ public class CargosController {
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
-                    + "  total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente,  id_empresa)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "  id_impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente,  id_empresa)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             
-                 //id_impuesto,
+                 //
             
             
             stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
@@ -69,8 +69,8 @@ public class CargosController {
             stAux.setString(5, cargos.getCuenta());
             stAux.setDouble(6, Double.parseDouble(cargos.getImporte()));
             stAux.setDouble(7, Double.parseDouble(cargos.getCantidad()));
-            //stAux.setInt(8, 1); //Integer.parseInt(cargos.getId_impuesto()));
-            stAux.setInt(8, Integer.parseInt(cargos.getTotal()));
+            stAux.setInt(8, 1); //Integer.parseInt(cargos.getId_impuesto()));
+            stAux.setInt(9, Integer.parseInt(cargos.getTotal()));
             
 
             String test = cargos.getFecha_cargo();
@@ -78,20 +78,20 @@ public class CargosController {
             Date parsedDate = dateFormat.parse(test);
             Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
-            stAux.setTimestamp(9, timestamp);
+            stAux.setTimestamp(10, timestamp);
 
             String test2 = cargos.getFecha_vencimiento();
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate2 = dateFormat2.parse(test2);
             Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
-            stAux.setTimestamp(10, timestamp2);
+            stAux.setTimestamp(11, timestamp2);
             
-            stAux.setBoolean(11, true);            
-            stAux.setInt(12, 0);
+            stAux.setBoolean(12, true);            
+            stAux.setInt(13, 0);
             
-            stAux.setInt(13, Integer.parseInt(cargos.getId_cliente()));
-            stAux.setInt(14, Integer.parseInt(cargos.getId_empresa()));
+            stAux.setInt(14, Integer.parseInt(cargos.getId_cliente()));
+            stAux.setInt(15, Integer.parseInt(cargos.getId_empresa()));
             
 
             stAux.executeUpdate();

@@ -77,6 +77,13 @@ public class Entidades {
         this.nombre_contacto = nombre_contacto;
     }
 
+    
+    //CONSTRUCTOR PARA MOSTRAR EL COMBO EN VERFACTURAS
+    public Entidades(String id_entidad, String distinct_code) {
+        this.id_entidad = id_entidad;
+        this.distinct_code = distinct_code;
+    }    
+
     //Getters y Setters
 
     public String getId_entidad() {

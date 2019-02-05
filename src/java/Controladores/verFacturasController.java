@@ -45,12 +45,12 @@ public class verFacturasController {
     }
     
         /*CARGAMOS EL COMBO PARA VER LAS EMPRESAS*/
-    @RequestMapping("/verFacturascontroller/getVerEntidad.htm")  
+    @RequestMapping("/verFacturasController/getVerEntidad.htm")  
     @ResponseBody
 
     public String cargarComboVerEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
-        TipoEntidad resourceLoad = new TipoEntidad();
+        //Entidades resourceLoad = new Entidades();
         
         Connection con = null;
         ResultSet rs = null;
@@ -71,7 +71,7 @@ public class verFacturasController {
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
             */
             while(rs.next()){                
-            arrayTipoEntidad.add(new Gson().toJson(new TipoEntidad(rs.getString(1), rs.getString(2))));
+                arrayTipoEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayTipoEntidad);

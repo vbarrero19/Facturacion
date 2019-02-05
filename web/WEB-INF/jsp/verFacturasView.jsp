@@ -18,7 +18,7 @@
     <script>
        $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
-            getEntidadCliente();
+            //getEntidadCliente();
             
             getVerEntidad();
 
