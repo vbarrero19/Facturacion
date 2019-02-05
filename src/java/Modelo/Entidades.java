@@ -83,7 +83,14 @@ public class Entidades {
     public Entidades(String id_entidad, String distinct_code) {
         this.id_entidad = id_entidad;
         this.distinct_code = distinct_code;
-    }    
+    }   
+    
+//    public Entidades(String id_entidad, String distinct_code, String nombre_entidad){
+//        this.id_entidad = id_entidad;
+//        this.distinct_code = distinct_code;
+//        this.nombre_entidad = nombre_entidad;
+//    }
+            
 
     //Getters y Setters
 
