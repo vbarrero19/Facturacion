@@ -65,7 +65,7 @@
                 myObj["cuenta"] = $("#cuenta").val().trim(); 
                 myObj["importe"] = $("#importe").val().trim();                
                 myObj["cantidad"] = $("#cantidad").val().trim();
-                myObj["id_impuesto"] = $("#comboTipoImpuesto").val().trim();                
+                myObj["id_impuesto"] = $("#comboTipoImpuesto").val();                
                 myObj["total"] = $("#total").val().trim();          
                                              
                 //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
@@ -259,6 +259,9 @@
                                 $("#cuenta").val(aux2.cuenta);
                                 $("#importe").val(aux2.importe);
                                 $("#periodo").val(aux2.periodo);
+                                //Cargamos en el total el importe ya que de inicio tenemos
+                                //cantidad = 1, impuesto = 0
+                                $("#total").val(aux2.importe);
 
                             });
                         },
@@ -693,7 +696,7 @@
                                     </div>
                                     <div class="form-group col-xs-3">
                                         <label for="importe>">Cantidad</label>
-                                        <input type="text" class="form-control" id="cantidad" name="cantidad">
+                                        <input type="text" class="form-control" id="cantidad" name="cantidad" value="1">
                                     </div>
                                     
                                     <div class="form-group col-xs-3">
@@ -705,7 +708,7 @@
                                     </div>
                                     <div class="form-group col-xs-3">
                                         <label for="importe>">Total</label>
-                                        <input type="text" class="form-control" id="total" name="total">
+                                        <input type="text" class="form-control" id="total" name="total" disabled>
                                     </div>
                                     
                                 </div>
