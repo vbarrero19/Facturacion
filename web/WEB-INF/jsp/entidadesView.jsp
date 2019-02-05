@@ -67,11 +67,11 @@
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
                 myObj["id_dedicacion"] = $("#id_dedicacion").val();
                 //GUARDAMOS EL VALOR DEL TRATAMIENTO
-                myObj["tratamiento"] = $(".form-check input:checked").val();               
+                myObj["tratamiento"] = $(".form-check input:checked").val();
                 //GUARDAMOS EL VALOR DEL TIPO DE DOCUMENTO
-                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();                
+                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();
                 //GUARDAMOS EL NUMERO DE DOCUMENTO
-                myObj["numero_documento"] = $("#numero_documento").val(); 
+                myObj["numero_documento"] = $("#numero_documento").val();
                 //GUARDAMOS EL NOMBRE DE CONTACTO
                 myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
                 //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
@@ -186,8 +186,8 @@
         }
 
 ////CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
-        
-            function getTipoDocumento() {
+
+        function getTipoDocumento() {
 
             if (window.XMLHttpRequest) //mozilla
             {
@@ -223,8 +223,8 @@
                 }
             });
         }
-        
-        
+
+
 
 
     </script>
@@ -270,7 +270,7 @@
 
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
                             <div class="tab-content" id="myTabContent">
-                                
+
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 1 --------------------------------------->  
                                 <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                                     <div class="form-group">
