@@ -41,78 +41,93 @@ public class CargosController {
         return null;
     }
 
-//    @RequestMapping("/cargosController/nuevoCargo.htm")
-//    @ResponseBody
-//    public String saveNewCustomer(@RequestBody Adeudos adeudo, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        //Adeudos resourceLoad = new Adeudos();
-//
-//        Connection con = null;
-//        ResultSet rs = null;
-//        PreparedStatement stAux = null;
-//        String resp = "correcto";
-//
-//        try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();
-//
-//            stAux = con.prepareStatement("INSERT INTO adeudos (id_adeudo,id_empresa,id_factura,id_cliente,cantidad,impuesto,adeudo,fecha_cargo,fecha_vencimiento) VALUES (?,?,?,?,?,?,?,?,?)");
-//            
-//            stAux.setInt(1, Integer.parseInt(adeudo.getId_adeudo()));
-//            stAux.setInt(2, Integer.parseInt(adeudo.getId_empresa()));
-//            stAux.setInt(3, Integer.parseInt(adeudo.getId_factura()));
-//            stAux.setInt(4, Integer.parseInt(adeudo.getId_cliente()));
-//            stAux.setDouble(5, adeudo.getCantidad());
-//            stAux.setInt(6, Integer.parseInt(adeudo.getImpuesto()));
-//            stAux.setString(7, adeudo.getAdeudo());
-//
-//            String test = adeudo.getFecha_cargo();
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            Date parsedDate = dateFormat.parse(test);
-//            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-//
-//            stAux.setTimestamp(8, timestamp);
-//
-//            String test2 = adeudo.getFecha_vencimiento();
-//            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-//            Date parsedDate2 = dateFormat2.parse(test2);
-//            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
-//
-//            stAux.setTimestamp(9, timestamp2);
-//
-//            stAux.executeUpdate();
-//            
-//            resp = "Correcto";
-//
-//        } catch (SQLException ex) {
-//            resp = "incorrecto SQLException"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } catch (Exception ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (stAux != null) {
-//                    stAux.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        return resp;
-//    }
+    @RequestMapping("/cargosController/nuevoCargo.htm")
+    @ResponseBody
+    public String nuevoCargo(@RequestBody Cargos cargos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Cargos resourceLoad = new Cargos();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
+                    + "  total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente,  id_empresa)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            
+                 //id_impuesto,
+            
+            
+            stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
+            stAux.setString(2, cargos.getAbreviatura());
+            stAux.setString(3, cargos.getDescripcion());
+            stAux.setInt(4, 1);//Integer.parseInt(cargos.getId_tipo_item())); Hacer una select para saber el id del tipo?
+            stAux.setString(5, cargos.getCuenta());
+            stAux.setDouble(6, Double.parseDouble(cargos.getImporte()));
+            stAux.setDouble(7, Double.parseDouble(cargos.getCantidad()));
+            //stAux.setInt(8, 1); //Integer.parseInt(cargos.getId_impuesto()));
+            stAux.setInt(8, Integer.parseInt(cargos.getTotal()));
+            
+
+            String test = cargos.getFecha_cargo();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(test);
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+            stAux.setTimestamp(9, timestamp);
+
+            String test2 = cargos.getFecha_vencimiento();
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate2 = dateFormat2.parse(test2);
+            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+
+            stAux.setTimestamp(10, timestamp2);
+            
+            stAux.setBoolean(11, true);            
+            stAux.setInt(12, 0);
+            
+            stAux.setInt(13, Integer.parseInt(cargos.getId_cliente()));
+            stAux.setInt(14, Integer.parseInt(cargos.getId_empresa()));
+            
+
+            stAux.executeUpdate();
+            
+            resp = "Correcto";
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
 
     //Se usa para cargar los datos del combo Clientes
     @RequestMapping("/cargosController/getEntidadCliente.htm")
@@ -432,7 +447,7 @@ public class CargosController {
             
             stAux = con.prepareStatement("SELECT i.id_item, i.abreviatura, i.descripcion, t.item, i.cuenta, i.importe, i.periodo FROM items i\n" +
                                          "inner join tipo_item t on i.id_tipo_item = t.id_tipo_item WHERE id_item =  ?");
-
+            
             stAux.setInt(1, Integer.parseInt(items.getId_item()));
             rs = stAux.executeQuery();
 
@@ -473,5 +488,70 @@ public class CargosController {
         return resp;
 
     }
+    
+    
+    
+     //Se usa para cargar los datos del combo TipoImpuesto
+    @RequestMapping("/cargosController/getTipoImpuesto.htm")
+    @ResponseBody
+    public String cargarComboTipoImpuesto(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        TipoImpuesto resourceLoad = new TipoImpuesto();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            
+            rs = sentencia.executeQuery("SELECT id_tipo_impuesto, impuesto, valor, pais FROM tipo_impuesto ORDER BY impuesto");
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; 
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto";
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    
+    
+    
     
 }

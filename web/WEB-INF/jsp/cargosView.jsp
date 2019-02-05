@@ -8,7 +8,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>ADEUDOS VIEW</title> 
+        <title>CARGOS VIEW</title> 
     </head>
     <script>
         $(document).ready(function () {
@@ -16,6 +16,7 @@
             getEntidadCliente(); //Llenamos el combo de clientes
             getEntidadEmpresa();
             getItem();
+            getTipoImpuesto();
 
 
             //getItemTabla();
@@ -47,7 +48,7 @@
 
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
-            $("#submit").click(function () {
+            $("#grabarCargos").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -57,18 +58,29 @@
                 }
 
                 var myObj = {};
-                myObj["id_adeudo"] = $("#id_adeudo").val().trim();
-                myObj["id_empresa"] = $("#id_empresa").val().trim();
-                myObj["id_factura"] = $("#id_factura").val().trim();
-                myObj["id_cliente"] = $("#id_cliente").val().trim();
+                myObj["id_item"] = $("#id_item").val().trim();                
+                myObj["abreviatura"] = $("#abreviatura").val().trim();
+                myObj["descripcion"] = $("#descripcion").val().trim();
+                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
+                myObj["cuenta"] = $("#cuenta").val().trim(); 
+                myObj["importe"] = $("#importe").val().trim();                
                 myObj["cantidad"] = $("#cantidad").val().trim();
-                myObj["impuesto"] = $("#impuesto").val().trim();
-                myObj["cargo"] = $("#cargo").val().trim();
-
+                myObj["id_impuesto"] = $("#comboTipoImpuesto").val().trim();                
+                myObj["total"] = $("#total").val().trim();          
+                                             
                 //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
                 myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
                 //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
                 myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+                
+                //Estas dos tendran valores fijos a true y 0
+                //myObj["estado"] = $("#estado").val().trim();
+                //myObj["id_factura"] = $("#id_factura").val().trim();
+                
+                //Id de cliente y empresa
+                myObj["id_cliente"] = $("#id_entidad").val().trim();
+                myObj["id_empresa"] = $("#id_entidad2").val().trim();
+                
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -427,9 +439,58 @@
         ;
 
 
+        function getTipoImpuesto(){
+            
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
-        //Codigo para cargar los items en una tabla, para mas adelante.
-        //  <editorfold desc="Metodo Main">
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/getTipoImpuesto.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var tipoImpuesto = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboTipoImpuesto');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+                    //Lo vamos cargando
+                    tipoImpuesto.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var tipoImpuesto2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el valor del impuesto en el value de cada opcion
+                        opt.value = tipoImpuesto2.id_tipo_impuesto; //.valor;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = tipoImpuesto2.impuesto + " " +tipoImpuesto2.valor;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+            
+        }
+        ;
+
+        //Codigo para cargar los items en una tabla, para mas adelante.        
         function getItemTabla() {
 //            if (window.XMLHttpRequest) //mozilla
 //            {
@@ -528,7 +589,7 @@
 //            });
         }
         ;
-        // </editorfold>
+        
 
 
     </script>
@@ -539,7 +600,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ADEUDOS</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>                           
 
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para clientes-->
@@ -551,17 +612,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-2">
-                                    <label for="id_cliente"> Id Entidad </label>
+                                    <label for="id_cliente">Id Cliente </label>
                                     <input type="text" class="form-control" id="id_entidad" name="id_entidad" disabled = "true">
                                 </div> 
                                 <div class="form-group col-xs-4">
-                                    <label for="idCliente>">Nombre_entidad</label>
+                                    <label for="idCliente>">Nombre Cliente</label>
                                     <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
                                 </div>
                                 <div class="form-group col-xs-3">
-                                    <label for="idCliente>">País cliente</label>
-                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto">
+                                    <label for="idCliente>">Nombre contacto</label>
+                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" disabled = "true">
                                 </div>   
+                            </div>  
+                            
                                 <br style="clear:both">
                                 <div class="datos" class="col-xs-12">
                                     <!--Combo para Empresas-->
@@ -573,18 +636,19 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-2">
-                                        <label for="idEmpresa>">Id.Empresa</label>
+                                        <label for="idEmpresa>">Id Empresa</label>
                                         <input type="text" class="form-control" id="id_entidad2" name="id_entidad2" disabled = "true">
                                     </div>
                                     <div class="form-group col-xs-4">
-                                        <label for="idEmpresa>">Dirección física empresa</label>
+                                        <label for="idEmpresa>">Nombre Empresa</label>
                                         <input type="text" class="form-control" id="nombre_entidad2" name="nombre_entidad2" disabled = "true">
                                     </div>
                                     <div class="form-group col-xs-3">
-                                        <label for="idEmpresa>">País empresa</label>
+                                        <label for="idEmpresa>">Nombre Empresa</label>
                                         <input type="text" class="form-control" id="nombre_contacto2" name="nombre_contacto2" disabled = "true">
                                     </div>
-                                </div>                            
+                                </div>           
+                   
                                 <br style="clear:both">
                                 <div class="datos" class="col-xs-12">
                                     <!--Combo para Items-->
@@ -595,7 +659,6 @@
                                             </select>                                                            
                                         </div>
                                     </div>
-
                                     <div class="form-group col-xs-3">
                                         <label for="id_item>">Id.Item</label>
                                         <input type="text" class="form-control" id="id_item" name="id_item">
@@ -608,6 +671,8 @@
                                         <label for="descripcion>">Descripción</label>
                                         <input type="text" class="form-control" id="descripcion" name="descripcion">
                                     </div>
+                                </div>
+                                <div class="datos" class="col-xs-12">
                                     <div class="form-group col-xs-3">
                                         <label for="tipo_item>">Tipo Item</label>
                                         <input type="text" class="form-control" id="id_tipo_item" name="id_tipo_item" disabled = "true">
@@ -617,15 +682,34 @@
                                         <input type="text" class="form-control" id="cuenta" name="cuenta">
                                     </div>
                                     <div class="form-group col-xs-3">
-                                        <label for="importe>">Importe</label>
-                                        <input type="text" class="form-control" id="importe" name="importe">
-                                    </div>
-                                    <div class="form-group col-xs-3">
                                         <label for="importe>">Periodo</label>
                                         <input type="text" class="form-control" id="periodo" name="periodo">
                                     </div>
                                 </div>
-                                <br style="clear:both">
+                                <div class="datos" class="col-xs-12">
+                                    <div class="form-group col-xs-3">
+                                        <label for="importe>">Importe</label>
+                                        <input type="text" class="form-control" id="importe" name="importe">
+                                    </div>
+                                    <div class="form-group col-xs-3">
+                                        <label for="importe>">Cantidad</label>
+                                        <input type="text" class="form-control" id="cantidad" name="cantidad">
+                                    </div>
+                                    
+                                    <div class="form-group col-xs-3">
+                                        <label for="comboTipoImpuesto">Tipo Impuesto</label>
+                                        <div class="form-group-combo">                                        
+                                            <select class="form-control" id="comboTipoImpuesto" name="comboTipoImpuesto">
+                                            </select>                                                            
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-3">
+                                        <label for="importe>">Total</label>
+                                        <input type="text" class="form-control" id="total" name="total">
+                                    </div>
+                                    
+                                </div>
+                               
                                 <!--    Codigo para insertar una tabla con varios combos Para mas adelante --> 
                                 <!--                            <div class="col-xs-12" id="tableContainer">
                                                                 <table class="table table-striped">
@@ -645,8 +729,7 @@
                                                                     </tbody>
                                                                 </table>
                                                             </div>-->
-
-                                <!--                            <br style="clear:both">-->
+                                
 
                                 <!--                            <div class="form-group">
                                                                 <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
@@ -668,9 +751,8 @@
                                                                 <input type="text" class="form-control" id="cargo" name="cargo">                                                    
                                                             </div>-->
 
-
-                                <!--ALMACENAMOS LAS FECHAS DE LOS CARGOS -->  
-                                <label class="fechaGeneral">FECHAS DE LOS CARGOS Borrar si no se usa</label>
+                                <br style="clear:both">                                
+                                
                                 <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
                                 <div class="container2">                                   
                                     <div class="row">
@@ -712,14 +794,17 @@
                                     </div>
 
                                 </div>                            
-                                <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
+                                <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Submit</button>
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                                
+                            </div>
                         </form>
 
                     </div>                            
                 </div>
             </div>
-        </div>  
+         
+        </div>
     </body> 
 </html>
