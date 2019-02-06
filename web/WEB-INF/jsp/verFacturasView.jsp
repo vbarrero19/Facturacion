@@ -191,7 +191,15 @@
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String 
                         var factura = JSON.parse(valor);
-
+                       /*creamos una variable para la fecha que solo seleccionemos año, mes y dia para eliminar la hora */
+                       var fecha_emision = factura.fecha_emision;
+        
+                       alert(fecha_emision);
+        
+                       // factura.fecha_emision;
+                        
+                        var fecha_vencimiento = factura.fecha_vencimiento;
+                        
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
                                                                     <td>" + factura.id_factura + "</td>         \n\
