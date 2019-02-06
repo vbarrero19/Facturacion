@@ -90,7 +90,8 @@ public class Entidades {
 //        this.distinct_code = distinct_code;
 //        this.nombre_entidad = nombre_entidad;
 //    }
-            
+
+    
 
     //Getters y Setters
 

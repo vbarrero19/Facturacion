@@ -23,8 +23,27 @@ public class Facturas {
     
     
     }
+
+    public Facturas(String id_factura, String id_emisor, String id_receptor, String total_factura, String fecha_emision, String fecha_vencimiento, String id_estado) {
+        this.id_factura = id_factura;
+        this.id_emisor = id_emisor;
+        this.id_receptor = id_receptor;
+        this.total_factura = total_factura;
+        this.fecha_emision = fecha_emision;
+        this.fecha_vencimiento = fecha_vencimiento;
+        this.id_estado = id_estado;
+    }
     
     
+    public Facturas(String id_factura, String id_emisor, String id_receptor, String total_factura, String fecha_emision, String fecha_vencimiento) {
+        this.id_factura = id_factura;
+        this.id_emisor = id_emisor;
+        this.id_receptor = id_receptor;
+        this.total_factura = total_factura;
+        this.fecha_emision = fecha_emision;
+        this.fecha_vencimiento = fecha_vencimiento;
+    }
+       
     
     public String getId_factura() {
         return id_factura;
@@ -80,13 +99,7 @@ public class Facturas {
 
     public void setId_estado(String id_estado) {
         this.id_estado = id_estado;
-    }
-   
-    
-    
-    
-    
-    
+    }  
     
     
 }

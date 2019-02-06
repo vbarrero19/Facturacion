@@ -23,6 +23,8 @@
 
         });
 
+
+
         function cargarEntidades() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -72,8 +74,7 @@
 
 
     </script>
-
-
+    
     <body>
         <div class="container">
             <div class="col-xs-12">                               

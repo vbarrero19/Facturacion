@@ -18,6 +18,7 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
+            verFactura();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -33,6 +34,8 @@
                 myObj["id_entidad"] = $("#id_entidad").val().trim();
                 myObj["distinct_code"] = $("#comboEntidad").val().trim();
                 myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
+                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
+
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -69,7 +72,7 @@
                     var myObj = {};
 
                     //recogemos el valor de comboEntidad y lo metemos en id_entidad.
-                    myObj["id_entidad"] = $("#comboEntidad").val().trim();
+                    myObj["id_entidad"] = $("#comboEntidad").val();
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
@@ -88,6 +91,7 @@
                                 //Mostramos los datos en la cajas de texto
                                 $("#id_entidad").val(aux2.id_entidad);
                                 $("#nombre_entidad").val(aux2.nombre_entidad);
+                                $("#nombre_contacto").val(aux2.nombre_contacto);
 
                             });
                         },
@@ -102,10 +106,11 @@
                 } else {
                     $("#id_entidad").val("");
                     $("#nombre_entidad").val("");
+                    $("#nombre_contacto").val("");
                 }
             });
-        });
 
+        });
 
 
 
@@ -159,6 +164,56 @@
         }
         ;
 
+
+
+
+        function verFactura() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/verFacturasController/getDatosFactura.htm',
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    var aux = JSON.parse(data);
+                    alert(data);
+
+                    //Vamos cargando la tabla
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String 
+                        var factura = JSON.parse(valor);
+
+                        $('#tableContainer tbody').append(" <tr>\n\
+                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                                                    <td>" + factura.id_factura + "</td>         \n\
+                                                                    <td>" + factura.id_cliente + "</td>         \n\
+                                                                    <td>" + factura.id_empresa + "</td>         \n\
+                                                                    <td class='botones'>" + " <button value='actualizar' role='www.google.es' tittle='actualizar' id='btnedit' class='btn btn-primary btn-edit'><i class='fas fa-edit'></i></i></button> "
+                                + "<button value='eliminar' tittle='eliminar' class='btn btn-danger btn-delete' id='btndelete'><i class='fas fa-window-close'></i></button>"
+                                + "</td>          \n\\n\
+                                                          </tr>");
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        };
+
     </script>
 
 
@@ -194,6 +249,29 @@
                                     <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" disabled = "true">
                                 </div>  
                                 <br style="clear:both">
+
+                                <hr size="10" />
+
+                                <div class="col-xs-12" id="tableContainer">
+                                    <table class="table table-striped">                                    
+
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">id_factura</th>
+                                                <th scope="col">Cliente</th>
+                                                <th scope="col">Empresa</th>
+                                                <th scope="col">FechaCargo</th>
+                                                <th scope="col">FechaVencimiento</th>
+                                                <th scope="col">Estado</th>
+                                            </tr>                                            
+                                        </thead>
+
+                                        <tbody id="tbody-tabla-entidades">
+
+                                        </tbody>
+                                    </table>
+                                </div>    
 
                                 <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
