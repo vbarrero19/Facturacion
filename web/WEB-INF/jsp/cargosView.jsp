@@ -215,8 +215,8 @@
                 }
 
             });
-
-
+            
+            //Muestra los datos del item al seleccionar algo en el combo
             $("#comboItems").change(function () {
 
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
@@ -232,7 +232,7 @@
 
                     var myObj = {};
 
-                    myObj["id_item"] = $("#comboItems").val().trim();
+                    myObj["id_item"] = $("#comboItems").val().trim(); 
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
@@ -259,8 +259,7 @@
                                 $("#cuenta").val(aux2.cuenta);
                                 $("#importe").val(aux2.importe);
                                 $("#periodo").val(aux2.periodo);
-                                //Cargamos en el total el importe ya que de inicio tenemos
-                                //cantidad = 1, impuesto = 0
+                                //Cargamos en el total el importe ya que de inicio tenemos: cantidad = 1, impuesto = 0
                                 $("#total").val(aux2.importe);
 
                             });
@@ -285,6 +284,30 @@
 
             });
 
+            //Se ejecuta al cambiar el contenido del importe
+            $("#importe").keyup(function () {
+                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                if ($("#comboItems").val() != "0") {
+                    //Llamamos a la funcion calcularTotal() que calcula el total del cargo
+                    calcularTotal();  
+                }
+            });
+            //Se ejecuta al cambiar el contenido de la cantidad
+            $("#cantidad").keyup(function () {
+                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                if ($("#comboItems").val() != "0") {
+                    //Llamamos a la funcion calcularTotal() que calcula el total del cargo
+                    calcularTotal();  
+                }
+            });
+            //Se ejecuta al cambiar el contenido del comboTipoImpuesto
+            $("#comboTipoImpuesto").change(function () {
+                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                if ($("#comboItems").val() != "0") {
+                    //Llamamos a la funcion calcularTotal() que calcula el total del cargo
+                    calcularTotal();  
+                }
+            });
 
         });
 
@@ -475,9 +498,9 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el valor del impuesto en el value de cada opcion
-                        opt.value = tipoImpuesto2.id_tipo_impuesto; //.valor;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = tipoImpuesto2.impuesto + " " + tipoImpuesto2.valor;
+                        opt.value = tipoImpuesto2.valor; //.valor;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        opt.innerHTML = tipoImpuesto2.impuesto + " " + tipoImpuesto2.valor + "%";
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -594,6 +617,23 @@
         ;
 
 
+        function calcularTotal(){
+  
+                    importe = $("#importe").val().trim();
+                    cantidad = $("#cantidad").val().trim();
+                    tipoImpuesto = $("#comboTipoImpuesto").val();
+                    subtotal = importe * cantidad;
+                    total = $("#total").val();
+                    
+                    if (tipoImpuesto == 0){
+                        $("#total").val(importe * cantidad);
+                    }else{
+                        $("#total").val((subtotal * tipoImpuesto / 100) + subtotal);
+                    }
+        }
+        ;
+
+//http://puntocomnoesunlenguaje.blogspot.com/2013/02/arraylist-de-objetos-en-java.html
 
     </script>
     <body>
@@ -797,7 +837,7 @@
                                 </div>
 
                             </div>                            
-                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Submit</button>
+                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
 
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
 
