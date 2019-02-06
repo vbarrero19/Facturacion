@@ -58,29 +58,29 @@
                 }
 
                 var myObj = {};
-                myObj["id_item"] = $("#id_item").val().trim();                
+                myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
                 myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
-                myObj["cuenta"] = $("#cuenta").val().trim(); 
-                myObj["importe"] = $("#importe").val().trim();                
+                myObj["cuenta"] = $("#cuenta").val().trim();
+                myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
-                myObj["id_impuesto"] = $("#comboTipoImpuesto").val();                
-                myObj["total"] = $("#total").val().trim();          
-                                             
+                myObj["id_impuesto"] = $("#comboTipoImpuesto").val();
+                myObj["total"] = $("#total").val().trim();
+
                 //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
                 myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
                 //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
                 myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
-                
+
                 //Estas dos tendran valores fijos a true y 0
                 //myObj["estado"] = $("#estado").val().trim();
                 //myObj["id_factura"] = $("#id_factura").val().trim();
-                
+
                 //Id de cliente y empresa
                 myObj["id_cliente"] = $("#id_entidad").val().trim();
                 myObj["id_empresa"] = $("#id_entidad2").val().trim();
-                
+
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -442,8 +442,8 @@
         ;
 
 
-        function getTipoImpuesto(){
-            
+        function getTipoImpuesto() {
+
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -477,7 +477,7 @@
                         //Guardamos el valor del impuesto en el value de cada opcion
                         opt.value = tipoImpuesto2.id_tipo_impuesto; //.valor;
                         //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = tipoImpuesto2.impuesto + " " +tipoImpuesto2.valor;
+                        opt.innerHTML = tipoImpuesto2.impuesto + " " + tipoImpuesto2.valor;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -489,7 +489,7 @@
                     console.log(thrownError);
                 }
             });
-            
+
         }
         ;
 
@@ -592,7 +592,7 @@
 //            });
         }
         ;
-        
+
 
 
     </script>
@@ -627,187 +627,187 @@
                                     <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" disabled = "true">
                                 </div>   
                             </div>  
-                            
-                                <br style="clear:both">
-                                <div class="datos" class="col-xs-12">
-                                    <!--Combo para Empresas-->
-                                    <div class="form-group col-xs-3">
-                                        <label for="comboEmpresas">Nombre de empresa</label>
-                                        <div class="form-group-combo">                                        
-                                            <select class="form-control" id="comboEmpresas" name="comboEmpresas">
-                                            </select>                                                            
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-2">
-                                        <label for="idEmpresa>">Id Empresa</label>
-                                        <input type="text" class="form-control" id="id_entidad2" name="id_entidad2" disabled = "true">
-                                    </div>
-                                    <div class="form-group col-xs-4">
-                                        <label for="idEmpresa>">Nombre Empresa</label>
-                                        <input type="text" class="form-control" id="nombre_entidad2" name="nombre_entidad2" disabled = "true">
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="idEmpresa>">Nombre Empresa</label>
-                                        <input type="text" class="form-control" id="nombre_contacto2" name="nombre_contacto2" disabled = "true">
-                                    </div>
-                                </div>           
-                   
-                                <br style="clear:both">
-                                <div class="datos" class="col-xs-12">
-                                    <!--Combo para Items-->
-                                    <div class="form-group col-xs-3">
-                                        <label for="comboItems">Items</label>
-                                        <div class="form-group-combo">                                        
-                                            <select class="form-control" id="comboItems" name="comboItems">
-                                            </select>                                                            
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="id_item>">Id.Item</label>
-                                        <input type="text" class="form-control" id="id_item" name="id_item">
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="abreviatura>">Abreviatura</label>
-                                        <input type="text" class="form-control" id="abreviatura" name="abreviatura">
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="descripcion>">Descripción</label>
-                                        <input type="text" class="form-control" id="descripcion" name="descripcion">
+
+                            <br style="clear:both">
+                            <div class="datos" class="col-xs-12">
+                                <!--Combo para Empresas-->
+                                <div class="form-group col-xs-3">
+                                    <label for="comboEmpresas">Nombre de empresa</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboEmpresas" name="comboEmpresas">
+                                        </select>                                                            
                                     </div>
                                 </div>
-                                <div class="datos" class="col-xs-12">
-                                    <div class="form-group col-xs-3">
-                                        <label for="tipo_item>">Tipo Item</label>
-                                        <input type="text" class="form-control" id="id_tipo_item" name="id_tipo_item" disabled = "true">
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="cuenta>">Cuenta</label>
-                                        <input type="text" class="form-control" id="cuenta" name="cuenta">
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="importe>">Periodo</label>
-                                        <input type="text" class="form-control" id="periodo" name="periodo">
+                                <div class="form-group col-xs-2">
+                                    <label for="idEmpresa>">Id Empresa</label>
+                                    <input type="text" class="form-control" id="id_entidad2" name="id_entidad2" disabled = "true">
+                                </div>
+                                <div class="form-group col-xs-4">
+                                    <label for="idEmpresa>">Nombre Empresa</label>
+                                    <input type="text" class="form-control" id="nombre_entidad2" name="nombre_entidad2" disabled = "true">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="idEmpresa>">Nombre Empresa</label>
+                                    <input type="text" class="form-control" id="nombre_contacto2" name="nombre_contacto2" disabled = "true">
+                                </div>
+                            </div>           
+
+                            <br style="clear:both">
+                            <div class="datos" class="col-xs-12">
+                                <!--Combo para Items-->
+                                <div class="form-group col-xs-3">
+                                    <label for="comboItems">Items</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboItems" name="comboItems">
+                                        </select>                                                            
                                     </div>
                                 </div>
-                                <div class="datos" class="col-xs-12">
-                                    <div class="form-group col-xs-3">
-                                        <label for="importe>">Importe</label>
-                                        <input type="text" class="form-control" id="importe" name="importe">
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="importe>">Cantidad</label>
-                                        <input type="text" class="form-control" id="cantidad" name="cantidad" value="1">
-                                    </div>
-                                    
-                                    <div class="form-group col-xs-3">
-                                        <label for="comboTipoImpuesto">Tipo Impuesto</label>
-                                        <div class="form-group-combo">                                        
-                                            <select class="form-control" id="comboTipoImpuesto" name="comboTipoImpuesto">
-                                            </select>                                                            
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-xs-3">
-                                        <label for="importe>">Total</label>
-                                        <input type="text" class="form-control" id="total" name="total" disabled>
-                                    </div>
-                                    
+                                <div class="form-group col-xs-3">
+                                    <label for="id_item>">Id.Item</label>
+                                    <input type="text" class="form-control" id="id_item" name="id_item">
                                 </div>
-                               
-                                <!--    Codigo para insertar una tabla con varios combos Para mas adelante --> 
-                                <!--                            <div class="col-xs-12" id="tableContainer">
-                                                                <table class="table table-striped">
-                                                                    <thead class="thead-dark">
-                                                                        <tr>
-                                                                            <th scope="col">Item</th>
-                                                                            <th scope="col">Abreviatura</th>
-                                                                            <th scope="col">Descripción</th>
-                                                                            <th scope="col">Tipo Item</th> 
-                                                                            <th scope="col">Cuenta</th> 
-                                                                            <th scope="col">Importe</th> 
-                                                                            <th scope="col">Botón</th> 
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>-->
-                                
-
-                                <!--                            <div class="form-group">
-                                                                <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
-                                                            </div>                          
-                                
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" id="id_factura" name="id_factura">
-                                                            </div>
-                                
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" id="cantidad" name="cantidad">
-                                                            </div>
-                                
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" id="impuesto" name="impuesto">
-                                                            </div>
-                                
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" id="cargo" name="cargo">                                                    
-                                                            </div>-->
-
-                                <br style="clear:both">                                
-                                
-                                <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
-                                <div class="container2">                                   
-                                    <div class="row">
-                                        <div class='col-xs-12 col-md-4'>
-                                            <label class="fechaCargos"> PAGO </label>
-                                            <div class="form-group">
-                                                <div class='input-group date' id='fecha_cargo'>
-                                                    <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('#fecha_cargo').datetimepicker();
-                                            });
-                                        </script>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class='col-xs-12 col-md-4'>
-                                            <label class="fechaCargos"> VENCIMIENTO </label>
-                                            <div class="form-group">
-                                                <div class='input-group date' id='fecha_vencimiento'>
-                                                    <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('#fecha_vencimiento').datetimepicker();
-                                            });
-                                        </script>
-                                    </div>
-
-                                </div>                            
-                                <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Submit</button>
-
-                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-                                
+                                <div class="form-group col-xs-3">
+                                    <label for="abreviatura>">Abreviatura</label>
+                                    <input type="text" class="form-control" id="abreviatura" name="abreviatura">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="descripcion>">Descripción</label>
+                                    <input type="text" class="form-control" id="descripcion" name="descripcion">
+                                </div>
                             </div>
-                        </form>
+                            <div class="datos" class="col-xs-12">
+                                <div class="form-group col-xs-3">
+                                    <label for="tipo_item>">Tipo Item</label>
+                                    <input type="text" class="form-control" id="id_tipo_item" name="id_tipo_item" disabled = "true">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="cuenta>">Cuenta</label>
+                                    <input type="text" class="form-control" id="cuenta" name="cuenta">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="importe>">Periodo</label>
+                                    <input type="text" class="form-control" id="periodo" name="periodo">
+                                </div>
+                            </div>
+                            <div class="datos" class="col-xs-12">
+                                <div class="form-group col-xs-3">
+                                    <label for="importe>">Importe</label>
+                                    <input type="text" class="form-control" id="importe" name="importe">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="importe>">Cantidad</label>
+                                    <input type="text" class="form-control" id="cantidad" name="cantidad" value="1">
+                                </div>
 
-                    </div>                            
-                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="comboTipoImpuesto">Tipo Impuesto</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboTipoImpuesto" name="comboTipoImpuesto">
+                                        </select>                                                            
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="importe>">Total</label>
+                                    <input type="text" class="form-control" id="total" name="total" disabled>
+                                </div>
+
+                            </div>
+
+                            <!--    Codigo para insertar una tabla con varios combos Para mas adelante --> 
+                            <!--                            <div class="col-xs-12" id="tableContainer">
+                                                            <table class="table table-striped">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th scope="col">Item</th>
+                                                                        <th scope="col">Abreviatura</th>
+                                                                        <th scope="col">Descripción</th>
+                                                                        <th scope="col">Tipo Item</th> 
+                                                                        <th scope="col">Cuenta</th> 
+                                                                        <th scope="col">Importe</th> 
+                                                                        <th scope="col">Botón</th> 
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                            
+                                                                </tbody>
+                                                            </table>
+                                                        </div>-->
+
+
+                            <!--                            <div class="form-group">
+                                                            <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
+                                                        </div>                          
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="id_factura" name="id_factura">
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="cantidad" name="cantidad">
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="impuesto" name="impuesto">
+                                                        </div>
+                            
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="cargo" name="cargo">                                                    
+                                                        </div>-->
+
+                            <br style="clear:both">                                
+
+                            <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
+                            <div class="container2">                                   
+                                <div class="row">
+                                    <div class='col-xs-12 col-md-4'>
+                                        <label class="fechaCargos"> PAGO </label>
+                                        <div class="form-group">
+                                            <div class='input-group date' id='fecha_cargo'>
+                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#fecha_cargo').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
+
+                                <div class="row">
+                                    <div class='col-xs-12 col-md-4'>
+                                        <label class="fechaCargos"> VENCIMIENTO </label>
+                                        <div class="form-group">
+                                            <div class='input-group date' id='fecha_vencimiento'>
+                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#fecha_vencimiento').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
+
+                            </div>                            
+                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Submit</button>
+
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+
+                    </div>
+                    </form>
+
+                </div>                            
             </div>
-         
         </div>
-    </body> 
+
+    </div>
+</body> 
 </html>
