@@ -18,7 +18,7 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
-            verFactura();
+            verListaFacturas();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -167,7 +167,7 @@
 
 
 
-        function verFactura() {
+        function verListaFacturas() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -179,15 +179,13 @@
 
             $.ajax({
                 //Usamos GET ya que recibimos.
-                type: 'GET',
+                type: 'POST',
                 url: '/Facturacion/verFacturasController/getDatosFactura.htm',
-                datatype: "json",
-                contentType: "application/json",
+
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
-                    alert(data);
 
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
@@ -199,6 +197,9 @@
                                                                     <td>" + factura.id_factura + "</td>         \n\
                                                                     <td>" + factura.id_cliente + "</td>         \n\
                                                                     <td>" + factura.id_empresa + "</td>         \n\
+                                                                    <td>" + factura.fecha_emision + "</td>         \n\
+                                                                    <td>" + factura.fecha_vencimiento + "</td>         \n\
+                                                                    <td>" + factura.total_factura + '€' +"</td>         \n\
                                                                     <td class='botones'>" + " <button value='actualizar' role='www.google.es' tittle='actualizar' id='btnedit' class='btn btn-primary btn-edit'><i class='fas fa-edit'></i></i></button> "
                                 + "<button value='eliminar' tittle='eliminar' class='btn btn-danger btn-delete' id='btndelete'><i class='fas fa-window-close'></i></button>"
                                 + "</td>          \n\\n\
@@ -212,7 +213,7 @@
                 }
             });
 
-        };
+    }
 
     </script>
 
@@ -263,7 +264,7 @@
                                                 <th scope="col">Empresa</th>
                                                 <th scope="col">FechaCargo</th>
                                                 <th scope="col">FechaVencimiento</th>
-                                                <th scope="col">Estado</th>
+                                                <th scope="col">Total</th>
                                             </tr>                                            
                                         </thead>
 

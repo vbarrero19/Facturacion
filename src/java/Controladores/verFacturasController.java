@@ -180,7 +180,8 @@ public class verFacturasController {
 //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
     @RequestMapping("/verFacturasController/getDatosFactura.htm")
     @ResponseBody
-    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+//    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        public String cargarDatosFactura( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Facturas resourceLoad = new Facturas();
 
         Connection con = null;
@@ -199,8 +200,7 @@ public class verFacturasController {
 
             
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento"
-                    + "FROM facturas ");
+            rs = sentencia.executeQuery("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento FROM facturas");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6))));
