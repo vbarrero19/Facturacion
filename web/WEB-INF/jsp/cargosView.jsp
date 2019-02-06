@@ -232,7 +232,7 @@
 
                     var myObj = {};
 
-                    myObj["id_item"] = $("#comboItems").val().trim();
+                    myObj["id_item"] = $("#comboItems").val().trim(); 
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
