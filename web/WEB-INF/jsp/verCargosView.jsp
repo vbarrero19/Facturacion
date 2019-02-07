@@ -11,11 +11,11 @@
     <head> 
         <title>VER CARGOS</title> 
     </head>
-<!--    <script>
+    <script>
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
-            verListaFacturas();
+            //verListaFacturas();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -126,7 +126,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION getVerEntidad
                 url: '/Facturacion/verCargosController/getVerEntidad.htm',
                 success: function (data) {
                     //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
@@ -220,7 +220,7 @@
 
     }
 
-    </script>-->
+    </script>
 
 
     <body>
@@ -230,7 +230,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">VER FACTURAS ENTIDAD</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">VER CARGOS ENTIDAD</h3>                           
 
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para entidades-->

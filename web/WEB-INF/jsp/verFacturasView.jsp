@@ -16,7 +16,7 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
-            verListaFacturas();
+            
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -55,9 +55,9 @@
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
-
+                var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
-                if ($("#comboEntidad").val() != "0") {
+                if ($("#comboEntidad").val() !== "0") {
 
                     if (window.XMLHttpRequest) //mozilla
                     {
@@ -70,7 +70,7 @@
                     var myObj = {};
 
                     //recogemos el valor de comboEntidad y lo metemos en id_entidad.
-                    myObj["id_entidad"] = $("#comboEntidad").val();
+                    myObj["id_entidad"] = idEntidad;
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
@@ -106,6 +106,8 @@
                     $("#nombre_entidad").val("");
                     $("#nombre_contacto").val("");
                 }
+                
+                verListaFacturas(idEntidad);
             });
 
         });
@@ -165,7 +167,7 @@
 
 
 
-        function verListaFacturas() {
+        function verListaFacturas(idEntidad) {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -177,22 +179,18 @@
 
             $.ajax({
                 //Usamos GET ya que recibimos.
-                type: 'POST',
-                url: '/Facturacion/verFacturasController/getDatosFactura.htm',
+                type: 'GET',
+                url: '/Facturacion/verFacturasController/getDatosFactura.htm?idCliente='+idEntidad,
 
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
-
+                    $('#tableContainer tbody').empty();
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String 
-                        var factura = JSON.parse(valor);
-                       /*creamos una variable para la fecha que solo seleccionemos año, mes y dia para eliminar la hora */
-                       var fecha_emision = factura.fecha_emision;
-        
-                       alert(fecha_emision);
+                        var factura = JSON.parse(valor);                       
         
                        // factura.fecha_emision;
                         
@@ -203,8 +201,8 @@
                                                                     <td>" + factura.id_factura + "</td>         \n\
                                                                     <td>" + factura.id_cliente + "</td>         \n\
                                                                     <td>" + factura.id_empresa + "</td>         \n\
-                                                                    <td>" + factura.fecha_emision + "</td>         \n\
-                                                                    <td>" + factura.fecha_vencimiento + "</td>         \n\
+                                                                    <td>" + factura.fecha_emision.substring(0, 10) + "</td>         \n\
+                                                                    <td>" + factura.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.total_factura + '€' +"</td>         \n\
                                                                     <td class='botones'>" + " <button value='actualizar' role='www.google.es' tittle='actualizar' id='btnedit' class='btn btn-primary btn-edit'><i class='fas fa-edit'></i></i></button> "
                                 + "<button value='eliminar' tittle='eliminar' class='btn btn-danger btn-delete' id='btndelete'><i class='fas fa-window-close'></i></button>"

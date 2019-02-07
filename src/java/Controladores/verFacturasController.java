@@ -181,14 +181,15 @@ public class verFacturasController {
     @RequestMapping("/verFacturasController/getDatosFactura.htm")
     @ResponseBody
 //    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        public String cargarDatosFactura( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        public String cargarDatosFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Facturas resourceLoad = new Facturas();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-
+        int idCliente=Integer.parseInt(hsr.getParameter("idCliente"));
+        
         ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {
@@ -196,14 +197,16 @@ public class verFacturasController {
             con = pool_local.getConnection();
             
 //            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, f.id_empresa, f.total_factura, f.fecha_emision, f.fecha_vencimiento, f.id_estado"
-//                    + "FROM facturas f inner join entidad e on f.id_cliente = e.id_entidad");
+//                    + "FROM facturas f inner join entidad e on f.id_cliente = e.id_entidad ");
 
             
-            Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento FROM facturas");
+            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado FROM facturas WHERE id_cliente = ?");
+
+            stAux.setInt(1,idCliente);
+            rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6))));
+                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
             }
 
             resp = new Gson().toJson(arrayTipo);

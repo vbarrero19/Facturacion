@@ -44,7 +44,6 @@ public class verCargosController {
         /*CARGAMOS EL COMBO PARA VER LAS EMPRESAS*/
     @RequestMapping("/verCargosController/getVerEntidad.htm")  
     @ResponseBody
-
     public String cargarComboVerEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         //Entidades resourceLoad = new Entidades();
