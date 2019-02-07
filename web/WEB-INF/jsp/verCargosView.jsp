@@ -54,10 +54,11 @@
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
-
+                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
+                var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
-                if ($("#comboEntidad").val() != "0") {
-
+                if ($("#comboEntidad").val() !== "0") {
+                    
                     if (window.XMLHttpRequest) //mozilla
                     {
                         ajax = new XMLHttpRequest(); //No Internet explorer
@@ -69,7 +70,7 @@
                     var myObj = {};
 
                     //recogemos el valor de comboEntidad y lo metemos en id_entidad.
-                    myObj["id_entidad"] = $("#comboEntidad").val();
+                    myObj["id_entidad"] = idEntidad;
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
@@ -105,6 +106,9 @@
                     $("#nombre_entidad").val("");
                     $("#nombre_contacto").val("");
                 }
+                /*llamamos a la funcion para ver las facturas del cliente que seleccionamos en el combo
+                 le pasamos por parametro el valor de idCliente a la funcion: verListaaFacturas(idEntidad)*/
+                verListaCargos(idEntidad);
             });
 
         });
@@ -164,7 +168,7 @@
 
 
 
-        function verListaFacturas() {
+        function verListaCargos(idEntidad) {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -177,40 +181,33 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'POST',
-                url: '/Facturacion/verCargosController/getDatosFactura.htm',
+                url: '/Facturacion/verCargosController/getDatosCargos.htm?idCliente='+idEntidad,
 
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
-
+                    $('#tableContainer tbody').empty();
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
+                        var id = cargo.id_cargo;
                         //Cada objeto esta en String 
-                        var factura = JSON.parse(valor);
-                       /*creamos una variable para la fecha que solo seleccionemos año, mes y dia para eliminar la hora */
-                       var fecha_emision = factura.fecha_emision;
-        
-                       alert(fecha_emision);
-        
-                       // factura.fecha_emision;
-                        
-                        var fecha_vencimiento = factura.fecha_vencimiento;
-                        
+                        var cargo = JSON.parse(valor); 
+                        /*en las fechas, quitamos la hora con substring*/
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td>" + factura.id_factura + "</td>         \n\
-                                                                    <td>" + factura.id_cliente + "</td>         \n\
-                                                                    <td>" + factura.id_empresa + "</td>         \n\
-                                                                    <td>" + factura.fecha_emision + "</td>         \n\
-                                                                    <td>" + factura.fecha_vencimiento + "</td>         \n\
-                                                                    <td>" + factura.total_factura + '€' +"</td>         \n\
-                                                                    <td class='botones'>" + " <button value='actualizar' role='www.google.es' tittle='actualizar' id='btnedit' class='btn btn-primary btn-edit'><i class='fas fa-edit'></i></i></button> "
-                                + "<button value='eliminar' tittle='eliminar' class='btn btn-danger btn-delete' id='btndelete'><i class='fas fa-window-close'></i></button>"
-                                + "</td>          \n\\n\
-                                                          </tr>");
+                                                                    <td>" + cargo.id_cargo + "</td>         \n\
+                                                                    <td>" + cargo.id_tipo_item + "</td>         \n\
+                                                                    <td>" + cargo.cuenta + "</td>         \n\
+                                                                    <td>" + cargo.importe + "</td>         \n\
+                                                                    <td>" + cargo.cantidad + "</td>         \n\
+                                                                    <td>" + cargo.impuesto + "</td>         \n\
+                                                                    <td>" + cargo.total + '€' +"</td>         \n\
+                                                                    <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
+                                                                    <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\\n\
+                                                                </tr>");
                     });
-                },
+                },//<td> <a href='/MenuController/start.htm' >Modifivar</a> </td>
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(xhr.responseText);
@@ -264,12 +261,17 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">id_factura</th>
-                                                <th scope="col">Cliente</th>
-                                                <th scope="col">Empresa</th>
+                                                <th scope="col">Abreviatura</th>
+                                                <th scope="col">Tipo Item</th>
+                                                <th scope="col">Cuenta</th>
+                                                <th scope="col">Importe</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col">Impuesto</th>
+                                                <th scope="col">Total</th>                                                
                                                 <th scope="col">FechaCargo</th>
                                                 <th scope="col">FechaVencimiento</th>
-                                                <th scope="col">Total</th>
+                                               
+                                                
                                             </tr>                                            
                                         </thead>
 

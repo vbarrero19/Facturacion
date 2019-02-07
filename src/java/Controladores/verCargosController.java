@@ -173,17 +173,21 @@ public class verCargosController {
 
 
 
-//Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
-    @RequestMapping("/verCargosController/getDatosFactura.htm")
+//Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todos los cargos.
+    @RequestMapping("/verCargosController/getDatosCargos.htm")
     @ResponseBody
 //    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         public String cargarDatosFactura( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Facturas resourceLoad = new Facturas();
+        Cargos resourceLoad = new Cargos();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
+        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con 
+        hsr.getParameter("idCliente")
+        */
+        int idCliente=Integer.parseInt(hsr.getParameter("idCliente"));
 
         ArrayList<String> arrayTipo = new ArrayList<>();
 
@@ -191,15 +195,16 @@ public class verCargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-//            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, f.id_empresa, f.total_factura, f.fecha_emision, f.fecha_vencimiento, f.id_estado"
-//                    + "FROM facturas f inner join entidad e on f.id_cliente = e.id_entidad");
+            stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, c.cuenta, c.importe, c.cantidad, c.impuesto,\n" +
+"                                       c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa FROM cargos c inner join \n" +
+"                                        tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE id_cliente =  ?");
 
-            
-            Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento FROM facturas");
+            stAux.setInt(1,idCliente);
+            rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6))));
+                arrayTipo.add(new Gson().toJson(new Cargos(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8)
+                                                , rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16))));
             }
 
             resp = new Gson().toJson(arrayTipo);

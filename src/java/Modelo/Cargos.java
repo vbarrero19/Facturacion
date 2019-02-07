@@ -11,7 +11,7 @@ public class Cargos {
     private String cuenta;
     private String importe;
     private String cantidad;
-    private String id_impuesto; 
+    private String impuesto; 
     private String total; 
     private String fecha_cargo; 
     private String fecha_vencimiento; 
@@ -23,7 +23,7 @@ public class Cargos {
     public Cargos() {
     }
 
-    public Cargos(String id_cargo, String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String cantidad, String id_impuesto, String total, String fecha_cargo, String fecha_vencimiento, String estado, String id_factura, String id_cliente, String id_empresa) {
+    public Cargos(String id_cargo, String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String cantidad, String impuesto, String total, String fecha_cargo, String fecha_vencimiento, String estado, String id_factura, String id_cliente, String id_empresa) {
         this.id_cargo = id_cargo;
         this.id_item = id_item;
         this.abreviatura = abreviatura;
@@ -32,7 +32,7 @@ public class Cargos {
         this.cuenta = cuenta;
         this.importe = importe;
         this.cantidad = cantidad;
-        this.id_impuesto = id_impuesto;
+        this.impuesto = impuesto;
         this.total = total;
         this.fecha_cargo = fecha_cargo;
         this.fecha_vencimiento = fecha_vencimiento;
@@ -112,12 +112,12 @@ public class Cargos {
         this.cantidad = cantidad;
     }
 
-    public String getId_impuesto() {
-        return id_impuesto;
+    public String getImpuesto() {
+        return impuesto;
     }
 
-    public void setId_impuesto(String id_impuesto) {
-        this.id_impuesto = id_impuesto;
+    public void setId_impuesto(String impuesto) {
+        this.impuesto = impuesto;
     }
 
     public String getTotal() {
