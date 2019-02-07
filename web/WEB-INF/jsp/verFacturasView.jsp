@@ -55,6 +55,7 @@
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
+                //recogemos el valor del combo para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
                 if ($("#comboEntidad").val() !== "0") {
@@ -106,7 +107,8 @@
                     $("#nombre_entidad").val("");
                     $("#nombre_contacto").val("");
                 }
-                
+                /*llamamos a la funcion para ver las facturas del cliente que seleccionamos en el combo
+                 le pasamos por parametro el valor de idCliente a la funcion: verListaaFacturas(idEntidad)*/
                 verListaFacturas(idEntidad);
             });
 
@@ -166,7 +168,9 @@
 
 
 
-
+        /*funcion para ver la lista de facturas del cliente seleccionado en el combo. Recoge por parametro 
+        el id del cliente 
+         */
         function verListaFacturas(idEntidad) {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -180,6 +184,8 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
+                /*en la url le pasamos como parametro el identificador de cliente que lo recogemos del combo comboEntidad
+                 cuando modificamos el combo cargamos el valor del idCliente asi: var idEntidad = $("#comboEntidad").val();*/
                 url: '/Facturacion/verFacturasController/getDatosFactura.htm?idCliente='+idEntidad,
 
                 success: function (data) {
@@ -190,12 +196,8 @@
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String 
-                        var factura = JSON.parse(valor);                       
-        
-                       // factura.fecha_emision;
-                        
-                        var fecha_vencimiento = factura.fecha_vencimiento;
-                        
+                        var factura = JSON.parse(valor); 
+                        /*en las fechas, quitamos la hora con substring*/
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
                                                                     <td>" + factura.id_factura + "</td>         \n\

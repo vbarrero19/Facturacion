@@ -188,6 +188,9 @@ public class verFacturasController {
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
+        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con 
+        hsr.getParameter("idCliente")
+        */
         int idCliente=Integer.parseInt(hsr.getParameter("idCliente"));
         
         ArrayList<String> arrayTipo = new ArrayList<>();
@@ -195,10 +198,6 @@ public class verFacturasController {
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            
-//            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, f.id_empresa, f.total_factura, f.fecha_emision, f.fecha_vencimiento, f.id_estado"
-//                    + "FROM facturas f inner join entidad e on f.id_cliente = e.id_entidad ");
-
             
             stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado FROM facturas WHERE id_cliente = ?");
 
