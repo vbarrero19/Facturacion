@@ -30,7 +30,8 @@
             $("#customer-tab").click();
 
             $('#fecha_alta').datetimepicker({
-                format:"YYYY-MM-DD",
+                format:"YYYY-MM-DD\n\
+    ",
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
                 useCurrent: false 
