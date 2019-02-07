@@ -190,13 +190,13 @@
                     $('#tableContainer tbody').empty();
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
-                        var id = cargo.id_cargo;
+                        //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cargo = JSON.parse(valor); 
                         /*en las fechas, quitamos la hora con substring*/
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td>" + cargo.id_cargo + "</td>         \n\
+                                                                    <td>" + cargo.abreviatura + "</td>         \n\
                                                                     <td>" + cargo.id_tipo_item + "</td>         \n\
                                                                     <td>" + cargo.cuenta + "</td>         \n\
                                                                     <td>" + cargo.importe + "</td>         \n\
@@ -204,7 +204,7 @@
                                                                     <td>" + cargo.impuesto + "</td>         \n\
                                                                     <td>" + cargo.total + '€' +"</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
-                                                                    <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\\n\
+                                                                    <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                 </tr>");
                     });
                 },//<td> <a href='/MenuController/start.htm' >Modifivar</a> </td>
