@@ -423,7 +423,7 @@
             {
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
-
+ 
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',

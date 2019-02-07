@@ -48,6 +48,7 @@
     <bean class="Controladores.verEntidadesController" id="verEntidades"/>
     <bean class="Controladores.FacturasController" id="facturas"/>
     <bean class="Controladores.verFacturasController" id="verFacturas"/>
+    <bean class="Controladores.verCargosController" id="verCargos"/>
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -65,7 +66,8 @@
                 <prop key="cargosView.htm">cargos</prop>
                 <prop key="verEntidadesView.htm">verEntidades</prop>
                 <prop key="facturasView.htm">facturas</prop>   
-                <prop key="verFacturasView.htm">verFacturas</prop>              
+                <prop key="verFacturasView.htm">verFacturas</prop>    
+                <prop key="verCargosView.htm">verCargos</prop>                      
                            
             </props>
         </property>

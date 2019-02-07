@@ -1,5 +1,4 @@
 
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -10,9 +9,9 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>VER FACTURAS</title> 
+        <title>VER CARGOS</title> 
     </head>
-    <script>
+<!--    <script>
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
@@ -38,7 +37,7 @@
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/verFacturasController/nuevoFactura.htm',
+                    url: '/Facturacion/verCargosController/nuevoFactura.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -75,7 +74,7 @@
                     var json = JSON.stringify(myObj);
                     $.ajax({
                         type: 'POST',
-                        url: '/Facturacion/verFacturasController/getDatosEntidad.htm',
+                        url: '/Facturacion/verCargosController/getDatosEntidad.htm',
                         data: json,
                         datatype: "json",
                         contentType: "application/json",
@@ -128,7 +127,7 @@
                 //Usamos GET ya que recibimos.
                 type: 'GET',
                 //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/verFacturasController/getVerEntidad.htm',
+                url: '/Facturacion/verCargosController/getVerEntidad.htm',
                 success: function (data) {
                     //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
                     var verEntidad = JSON.parse(data);
@@ -178,7 +177,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'POST',
-                url: '/Facturacion/verFacturasController/getDatosFactura.htm',
+                url: '/Facturacion/verCargosController/getDatosFactura.htm',
 
                 success: function (data) {
 
@@ -221,7 +220,7 @@
 
     }
 
-    </script>
+    </script>-->
 
 
     <body>
