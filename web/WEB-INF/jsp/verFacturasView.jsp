@@ -228,18 +228,19 @@
                                                                     <td>" + factura.fecha_emision.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.total_factura + '€' + "</td>         \n\
-                                                                    <td><button class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/MenuController/start.htm' class='btn btn-primary'> Modificar </button>\n\
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });
-
-                    /*para cada boton hacer una funcion */
-                    $(".btn-eliminar").on("click", function () {
-                        //guardar id factura
-                        $("#mi-modal").modal('show');
+                    
+                    $(document).ready(function () {
+                        /*para cada boton hacer una funcion */
+                        $(".btn-eliminar").on("click", function () {
+                            //guardar id factura
+                            $("#mi-modal").modal('show');
+                        });
                     });
-                    
-                    
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -318,7 +319,7 @@
         </div>  
     </div>
 
-
+<!--- ----    ------>
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -333,7 +334,7 @@
             </div>
         </div>
     </div>
-
+<!----   ---------->
     <div class="alert" role="alert" id="result"></div>
 </body> 
 </html>
