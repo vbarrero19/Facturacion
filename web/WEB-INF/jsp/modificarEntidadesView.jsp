@@ -34,7 +34,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA ENTIDADES</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">MODIFICAR ENTIDAD</h3>
 
                             <!-- ALMACENAMOS EL ID_ENTIDAD -->
                             <div class="form-group-combo">  
@@ -189,8 +189,7 @@
                                             </script>
                                         </div>
                                     </div> -->
-
-                                    <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta</button>
+                                        <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Modificar</button>
                                 </div>
 
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 2 --------------------------------------->  
