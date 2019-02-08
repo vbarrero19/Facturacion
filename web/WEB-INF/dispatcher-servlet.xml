@@ -39,7 +39,7 @@
             </bean>
         </property> 
     </bean>
- 
+ <!-- Podemos tener varios .jsp para un controlador, creamos los prop y lo llamamos con el mismo identificador que el que queremos coger del bean. -->
     <bean class="Controladores.CustomerController" id="customerctrl"/>    
     <bean class="Controladores.MenuController" id="menu"/>
     <bean class="Controladores.ItemsController" id="items"/>
@@ -48,7 +48,8 @@
     <bean class="Controladores.verEntidadesController" id="verEntidades"/>
     <bean class="Controladores.FacturasController" id="facturas"/>
     <bean class="Controladores.verFacturasController" id="verFacturas"/>
-    <bean class="Controladores.verCargosController" id="verCargos"/>
+    <bean class="Controladores.verCargosController" id="verCargos"/>    
+    
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -67,8 +68,8 @@
                 <prop key="verEntidadesView.htm">verEntidades</prop>
                 <prop key="facturasView.htm">facturas</prop>   
                 <prop key="verFacturasView.htm">verFacturas</prop>    
-                <prop key="verCargosView.htm">verCargos</prop>                      
-                           
+                <prop key="verCargosView.htm">verCargos</prop> 
+                <prop key="modificarEntidadesView.htm">entidades</prop>             
             </props>
         </property>
     </bean>

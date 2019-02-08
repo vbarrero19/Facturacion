@@ -36,6 +36,17 @@ public class verFacturasController {
 
         return mv;
     }
+    
+    /*******************************           **************************/
+    
+        @RequestMapping("/entidadesController/modificarEntidades.htm")
+    public ModelAndView modificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("modificarEntidadesView");
+
+        return mv;
+    }
+    
+    /*******************************           *************************/
 
     @RequestMapping("/verFacturasController/addResources.htm")
     @ResponseBody
@@ -244,68 +255,6 @@ public class verFacturasController {
         
         
         
-            @RequestMapping("/verFacturasController/eliminarFactura.htm")
-    @ResponseBody
-//    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        public String eliminarFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Facturas resourceLoad = new Facturas();
 
-        Connection con = null;
-        ResultSet rs = null;
-        PreparedStatement stAux = null;
-        String resp = "correcto";
-        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con 
-        hsr.getParameter("idCliente")
-        */
-        int idCliente=Integer.parseInt(hsr.getParameter("idCliente"));
-        
-        ArrayList<String> arrayTipo = new ArrayList<>();
-
-        try {
-            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();
-            
-            stAux = con.prepareStatement("DELETE from facturas WHERE id_cliente = ?");
-
-            stAux.setInt(1,idCliente);
-            rs = stAux.executeQuery();
-
-            while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
-            }
-
-            resp = new Gson().toJson(arrayTipo);
-
-        } catch (SQLException ex) {
-            resp = "incorrecto"; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors));
-        } catch (Exception ex) {
-            resp = "incorrecto"; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors));
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (stAux != null) {
-                    stAux.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-            }
-        }
-        return resp;
-
-    }
     
 }

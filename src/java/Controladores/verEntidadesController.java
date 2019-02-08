@@ -36,14 +36,7 @@ public class verEntidadesController {
 
         return mv;
     }
-
-    @RequestMapping("/verEntidadesController/addResources.htm")
-    @ResponseBody
-    public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-
-        return null;
-    }
-    
+   
     
     
     @RequestMapping("/verEntidadesController/verEntidades.htm")

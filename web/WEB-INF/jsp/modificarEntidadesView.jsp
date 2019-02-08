@@ -1,9 +1,8 @@
 <%-- 
-    Document   : entidadesView.jsp
-    Created on : 29-ene-2019, 12:33:51
+    Document   : modificarEntidades
+    Created on : 08-feb-2019, 11:48:14
     Author     : vbarr
 --%>
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
@@ -14,225 +13,23 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>ENTIDADES</title> 
+        <title>MODIFICAR ENTIDADES</title> 
     </head>
     <script>
         $(document).ready(function () {
-            //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
-            getTipoEntidad();
-            getTipoDedicacion();
-            getTipoDocumento();
-
-            var userLang = navigator.language || navigator.userLanguage;
-
-
-            //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
+            
             $("#customer-tab").click();
-
-            $('#fecha_alta').datetimepicker({
-                format: 'YYYY-MM-DD',
-                locale: userLang.valueOf(),
-                daysOfWeekDisabled: [0, 6],
-                useCurrent: false
-            });
-
-            $('#fecha_baja').datetimepicker({
-                format: 'YYYY-MM-DD',
-                locale: userLang.valueOf(),
-                daysOfWeekDisabled: [0, 6],
-                useCurrent: false
-            });
-
-
-            // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
-            $("#guardarEntidad").click(function () {
-
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                var myObj = {};
-                //GUARDAMOS EL DISTINCT CODE DE LA ENTIDAD
-                myObj["distinct_code"] = $("#distinct_code").val().trim();
-                //GUARDAMOS EL NOMBRE DE LA ENTIDAD
-                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-                //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO ENTIDAD.
-                myObj["id_tipo_entidad"] = $("#id_tipo_entidad").val();
-                //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
-                myObj["id_dedicacion"] = $("#id_dedicacion").val();
-                //GUARDAMOS EL VALOR DEL TRATAMIENTO
-                myObj["tratamiento"] = $(".form-check input:checked").val();
-                //GUARDAMOS EL VALOR DEL TIPO DE DOCUMENTO
-                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();
-                //GUARDAMOS EL NUMERO DE DOCUMENTO
-                myObj["numero_documento"] = $("#numero_documento").val();
-                //GUARDAMOS EL NOMBRE DE CONTACTO
-                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
-                //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
-                myObj["apellido1"] = $("#apellido1").val().trim();
-                myObj["apellido2"] = $("#apellido2").val().trim();
-                //GUARDAMOS LOS TELEFONOS DE CONTACTO
-                myObj["telefono1"] = $("#telefono1").val().trim();
-                myObj["telefono2"] = $("#telefono2").val().trim();
-                //GUARDAMOS EL FAX
-                myObj["fax"] = $("#fax").val().trim();
-                //GUARDAMOS LOS MAIL DE CONTACTO
-                myObj["mail1"] = $("#mail1").val().trim();
-                myObj["mail2cc"] = $("#mail2cc").val().trim();
-                //GUARDAMOS LAS FECHAS, DE ALTA Y BAJA
-                myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
-                myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/entidadesController/nuevaEntidad.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            })
+            
         });
-
-        //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
-        function getTipoEntidad() {
-
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/entidadesController/getTipoEntidad.htm',
-                success: function (data) {
-                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var tipoEntidad = JSON.parse(data);
-                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
-                    select = document.getElementById('id_tipo_entidad');
-                    //LO CARGAMOS
-                    tipoEntidad.forEach(function (valor, indice) {
-                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var tipoEntidad2 = JSON.parse(valor);
-                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
-                        var opt = document.createElement('option');
-                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoEntidad2.id_tipo_entidad;
-                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = tipoEntidad2.tipo_entidad;
-                        //AÑADIMOS UNA NUEVA OPCION
-                        select.appendChild(opt);
-                    });
-                }
-            });
-        }
-
-
-        //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DEDICACION.
-        function getTipoDedicacion() {
-
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/entidadesController/getTipoDedicacion.htm',
-                success: function (data) {
-                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var tipoDedicacion = JSON.parse(data);
-                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
-                    select = document.getElementById('id_dedicacion');
-                    //LO CARGAMOS
-                    tipoDedicacion.forEach(function (valor, indice) {
-                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var tipoDedicacion2 = JSON.parse(valor);
-                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
-                        var opt = document.createElement('option');
-                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoDedicacion2.id_dedicacion;
-                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = tipoDedicacion2.dedicacion;
-                        //AÑADIMOS UNA NUEVA OPCION
-                        select.appendChild(opt);
-                    });
-                }
-            });
-        }
-
-////CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
-
-        function getTipoDocumento() {
-
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/entidadesController/getTipoDocumento.htm',
-                success: function (data) {
-                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var tipoDocumento = JSON.parse(data);
-                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
-                    select = document.getElementById('id_tipo_documento');
-                    //LO CARGAMOS
-                    tipoDocumento.forEach(function (valor, indice) {
-                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var tipoDocumento2 = JSON.parse(valor);
-                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
-                        var opt = document.createElement('option');
-                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoDocumento2.id__tipo_documento;
-                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = tipoDocumento2.documento;
-                        //AÑADIMOS UNA NUEVA OPCION
-                        select.appendChild(opt);
-                    });
-                }
-            });
-        }
 
 
 
 
     </script>
     <body>
-        <div class="container col-xs-12">
+        <div class="container">
             <div class="col-xs-12">
-                <!-- con col elegimos el tamaño xs:moviles md:tablets lg:pantallas de ordenador.
-                para empujar las columnas usamos offset y el numero de columnas que queremos desplazar. tiene que estar 
-                colocado por orden: tamaño de columnas y luego el offset con las que empujamos-->
-
+                
                 <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                     <div class="form-area">  
                         <form role="form">
@@ -246,10 +43,10 @@
                             </div>
 
                             <div class="form-group-combo">    
-                                <div class="form-group col-xs-6">
-                                    <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
+                                <div class="form-group col-xs-4">
+                                    <input type="text" class="form-control" disabled=”disabled id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
                                 </div>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8">
                                     <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
                                 </div>
                             </div>
@@ -280,7 +77,7 @@
                                         </div>
                                         <div class="form-group col-xs-6">
                                             <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE ENTIDAD QUE EXISTEN -->
-                                            <select id="id_tipo_entidad" name="id_tipo_entidad" class="form-control">
+                                            <select id="id_tipo_entidad" name="id_tipo_entidad" class="form-control" disabled=”disabled>
 
                                             </select>
                                         </div>
@@ -289,7 +86,7 @@
                                     <!--CARGAMOS EL COMBO CON LA INFORMACION DEL TIPO DE IDENTIFICACION DE LA ENTIDAD -->
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
-                                            <select class="form-control" id="id_tipo_documento" name="id_tipo_documento">
+                                            <select class="form-control" id="id_tipo_documento" name="id_tipo_documento" disabled=”disabled>
 
                                             </select>
                                         </div>
@@ -303,23 +100,7 @@
                                         <div class="form-group col-xs-10">
                                             <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre contacto" required>
                                         </div>
-                                    </div>
-
-                                    <!-- RADIO BUTTONS PARA EL TRATAMIENTO DE LA PERSONA DE CONTACTO -->
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-2">
-                                            <div id="tratamiento" class="form_radio_button">
-                                                <div class="form-check">
-                                                    <input class="form-check-input inline-block" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
-                                                    <label class="fm-check-label" for="1">Mr</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
-                                                    <label class="form-check-label" for="2">Mrs</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                    
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
@@ -336,12 +117,11 @@
                                     <!-- CREAMOS COMBO DINAMICO PARA EL TIPO DE DEDICACION DE LA ENTIDAD -->
                                     <div class="form-group">
                                         <div class="form-group col-xs-12">
-                                            <select class="form-control" id="id_dedicacion" name="id_dedicacion">
+                                            <select class="form-control" id="id_dedicacion" name="id_dedicacion" disabled=”disabled>
 
                                             </select>
                                         </div>
                                     </div>
-
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
@@ -374,7 +154,7 @@
                                     </div>
 
                                     <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
-                                    <div class="container2 form-group col-xs-12">  
+<!--                                    <div class="container2 form-group col-xs-12">  
                                         <div class="row col-xs-6">
                                             <label class="fechasEntidad"> FECHA ALTA </label>
                                             <div class="form-group">
@@ -408,11 +188,10 @@
                                                 });
                                             </script>
                                         </div>
-                                    </div> 
+                                    </div> -->
 
                                     <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta</button>
                                 </div>
-
 
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 2 --------------------------------------->  
 

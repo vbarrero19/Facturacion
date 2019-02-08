@@ -54,10 +54,9 @@
                                                                     <td>" + entidad.distinct_code + "</td>         \n\
                                                                     <td>" + entidad.nombre_entidad + "</td>         \n\
                                                                     <td>" + entidad.nombre_contacto + "</td>         \n\
-                                                                    <td class='botones'>" + " <button value='actualizar' role='www.google.es' tittle='actualizar' id='btnedit' class='btn btn-primary btn-edit'><i class='fas fa-edit'></i></i></button> "
-                                + "<button value='eliminar' tittle='eliminar' class='btn btn-danger btn-delete' id='btndelete'><i class='fas fa-window-close'></i></button>"
-                                + "</td>          \n\\n\
-                                                          </tr>");
+                                                                    <td><a href='/Facturacion/entidadesController/startEntidad.htm' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
+                        < /tr>");
                     });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -84,7 +83,6 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">LISTA DE ENTIDADES</h3>
                             <div>
-
                                 <div class="col-xs-12" id="tableContainer">
                                     <table class="table table-striped">                                    
 
