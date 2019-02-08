@@ -27,7 +27,7 @@
 
     </script>
     <body>
-        <div class="container">
+        <div class="container col-xs-12">
             <div class="col-xs-12">
                 
                 <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
@@ -97,7 +97,7 @@
 
 
                                     <div class="form-group">
-                                        <div class="form-group col-xs-10">
+                                        <div class="form-group col-xs-12">
                                             <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre contacto" required>
                                         </div>
                                     </div>                                    
@@ -193,25 +193,65 @@
                                 </div>
 
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 2 --------------------------------------->  
-
+                                
                                 <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
-                                    ALMACENAMOS LA INFORMACION DE LA DIRECCION DE LA ENTIDAD.
+                                    <div class="form-group col-xs-12" align="center">
+                                        <h4>DIRECCION DE LA ENTIDAD</h4>
+                                    </div>
 
-                                    <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                     <div class="form-group">
-                                        <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
-                                            <option> fisica </option>
-                                            <option> fiscal </option>
-                                        </select>
-                                    </div> 
+                                        <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
+                                        <div class="form-group col-xs-2">
+                                            <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
+                                                <option> fisica </option>
+                                                <option> fiscal </option>
+                                                <option> facturacion </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-xs-2">
+                                            <input type="text" class="form-control" id="tipo_via" name="tipo_via" placeholder="Tipo via(c, avda..)" required>
+                                        </div>
 
-                                    <!-- ALMACENAMOS EL TIPO DE VIA QUE ES -->
-                                    <div class="form-group">                                 
-                                        <label>Tipo via (calle, avenida...) </label>
-                                        <input type="text" class="form-control" id="tipo_via" name="tipo_via" placeholder="Tipo de via" required>
-                                    </div> 
+                                        <div class="form-group">
+                                            <div class="form-group col-xs-8">
+                                                <input type="text" class="form-control" id="nombre_via" name="nombre_via" placeholder="Nombre via" required>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <div class="form-group col-xs-2">
+                                            <input type="text" class="form-control" id="numero_via" name="numero_via" placeholder="Numero vía" required>
+                                        </div>
+                                        <div class="form-group col-xs-2">
+                                            <input type="text" class="form-control" id="numero_portal" name="numero_portal" placeholder="Numero portal" required>
+                                        </div>
 
+                                        <div class="form-group">
+                                            <div class="form-group col-xs-8">
+                                                <input type="text" class="form-control" id="resto_direccion" name="resto_direccion" placeholder="Resto direccion" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-group col-xs-2">
+                                            <input type="text" class="form-control" id="cod_postal" name="cod_postal" placeholder="Codigo postal" required>
+                                        </div>
+                                        <div class="form-group col-xs-4">
+                                            <input type="text" class="form-control" id="localizacion" name="localizacion" placeholder="localizacion localizacion" required>
+                                        </div>
+                                        <div class="form-group col-xs-4">
+                                            <input type="text" class="form-control" id="provincia" name="provincia" placeholder="provincia" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group col-xs-2">
+                                                <input type="text" class="form-control" id="pais" name="pais" placeholder="pais" required>
+                                            </div>
+                                        </div>
+                                    </div>
+<!--MIRAR COMO COMPLETAR LA TABLA SI ES LA MISMA DIRECCION PARA TODOS LOS TIPOS(fisica, fiscal....) -->
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
                                     <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
                                     <div id="direc" class="form_radio_button">
@@ -224,7 +264,6 @@
                                             <label class="form-check-label" for="2">Si</label>
                                         </div>
                                     </div>   
-
                                 </div>
                                 <!--INFORMACION DE LA PESTAÑA 3 -->
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
