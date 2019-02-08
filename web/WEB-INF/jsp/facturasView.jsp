@@ -14,71 +14,90 @@
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getCliente() para llenar el combo 
             getCliente();
-            
+
             var userLang = navigator.language || navigator.userLanguage;
 
-            //Al pulsar el boton de consultar facturas recogemos los datos del cliente y (sus cargos sin numero de factura) -> Esto ultimo falta por hacer
-            $("#consultarFac").click(function () {
+            //Al pulsar el boton de consultar facturas recogemos los datos del cliente y (sus cargos sin numero de factura) -> Esto ultimo falta por hacer    
+            $("#comboClientes").change(function () {
 
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
+                if ($("#comboClientes").val() != "0") {
 
-                var myObj = {};
+                    if (window.XMLHttpRequest) //mozilla
+                    {
+                        ajax = new XMLHttpRequest(); //No Internet explorer
+                    } else
+                    {
+                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
 
-                myObj["col1"] = $("#comboClientes").val().trim();
- 
-                var json = JSON.stringify(myObj);
+                    var myObj = {};
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/facturasController/getFacturas.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
+                    myObj["col1"] = $("#comboClientes").val().trim();
 
-                        var aux = JSON.parse(data);
+                    var json = JSON.stringify(myObj);
 
-                        var cantidad = 0;
-                        var subtotal = 0;
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Facturacion/facturasController/getFacturas.htm',
+                        data: json,
+                        datatype: "json",
+                        contentType: "application/json",
+                        success: function (data) {
 
-                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
-                        $('#tableContainer tbody').empty();
-                        aux.forEach(function (valor, indice) {
-                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                            var item = JSON.parse(valor);
+                            var aux = JSON.parse(data);
 
-                            $("#id_cliente").val(item.id_cliente);
-                            $("#dir_fisica").val(item.dir_fisica);
-                            $("#pais").val(item.pais);
-                            subtotal = parseInt(item.cantidad);
-                            cantidad = cantidad + subtotal;
-                            //cargamos de forma dinamica la tabla
-                            $('#tableContainer tbody').append(" <tr>\n\
+                            var subtotal = 0;
+                            var impuestos = 0;
+
+                            //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                            $('#tableContainer tbody').empty();
+                            aux.forEach(function (valor, indice) {
+                                //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                                var resource = JSON.parse(valor);
+
+                                $("#idCliente").val(resource.col9);
+                                $("#nombreEntidad").val(resource.col10);
+                                $("#nombreContacto").val(resource.col11);
+                                subtotal = subtotal + parseInt(resource.col4);
+                                impuestos = impuestos + parseInt(resource.col6);
+                                //cargamos de forma dinamica la tabla
+                                $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
-                                                                    <td>" + item.id_adeudo + "</td>                       \n\
-                                                                    <td>" + item.adeudo + "</td>                        \n\
-                                                                    <td>" + item.cantidad + "</td>                       \n\
+                                                                    <td>" + resource.col1 + "</td>                       \n\
+                                                                    <td>" + resource.col2 + "</td>                        \n\
+                                                                    <td>" + resource.col3 + "</td>                       \n\
+                                                                    <td>" + resource.col4 + "</td>                       \n\
+                                                                    <td>" + resource.col5 + "</td>                       \n\
+                                                                    <td>" + resource.col6 + "</td>                       \n\
+                                                                    <td>" + resource.col7 + "</td>                       \n\
+                                                                    <td>" + resource.col8 + "</td>                       \n\
                                                                     <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>                       \n\ \n\
                                                                 </tr>");
 
 
-                        });
-                        $("#subtotal").val(cantidad);
-                        $("#impuesto21").val(cantidad * 0.21);
-                        $("#total").val(cantidad * 1.21);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
+                            });
+                            $("#subtotal").val(subtotal);
+                            $("#impuestos").val(impuestos);
+                            $("#total").val(subtotal + impuestos);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                } else {
+                    $("#idCliente").val("");
+                    $("#nombreEntidad").val("");
+                    $("#nombreContacto").val("");
+                    
+                    $('#tableContainer tbody').empty();
+
+                    $("#subtotal").val("");
+                    $("#impuestos").val("");
+                    $("#total").val("");
+                }
             })
         });
 
@@ -103,6 +122,11 @@
                     var aux = JSON.parse(data);
                     //Identificamos el combo
                     select = document.getElementById('comboClientes');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
                     //Lo vamos cargando
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a TipoImpuesto
@@ -127,44 +151,44 @@
         }
 
     </script>
-    
-    
+
+
     <!--
 <td><button value="actualizar" tittle="actualizar" id="btnedit" class="btn btn-primary btn-edit"><i class="fas fa-edit"></i></i></button> </td>\n\
 <td><button value="eliminar" tittle="eliminar" class="btn btn-danger btn-delete"><i class="fas fa-window-close"></i></button> </td>\n\\n\-->
-    
-    
-    
+
+
+
     <body>
         <div class="container">
             <div class="col-xs-12">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Facturas</h3>
 
-<!--                            <div class="form-group-combo">
-                                Combo para tipo de impuestos
-                                <select class="form-control" id="comboClientes" name="comboClientes">
-                                </select>                                                            
-                            </div>-->
+                            <!--                            <div class="form-group-combo">
+                                                            Combo para tipo de impuestos
+                                                            <select class="form-control" id="comboClientes" name="comboClientes">
+                                                            </select>                                                            
+                                                        </div>-->
 
                             <div class="col-xs-12">
 
-<!--                        <div class="col-xs-6 form-group">
-                                <label for="id_cliente">Identificador de cliente</label>
-                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
-                            </div> -->
-                            <div class="col-xs-6 form-group">
-                                <label for="comboClientes">Distincy Code</label>
-                                <div class="form-group-combo">
-                                    <!--Combo para clientes-->
-                                    <select class="form-control" id="comboClientes" name="comboClientes">
-                                    </select>                                                            
+                                <!--                        <div class="col-xs-6 form-group">
+                                                                <label for="id_cliente">Identificador de cliente</label>
+                                                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
+                                                            </div> -->
+                                <div class="col-xs-6 form-group">
+                                    <label for="comboClientes">Distincy Code</label>
+                                    <div class="form-group-combo">
+                                        <!--Combo para clientes-->
+                                        <select class="form-control" id="comboClientes" name="comboClientes">
+                                        </select>                                                            
+                                    </div>
                                 </div>
-                            </div>
-                                <button type="button" id="consultarFac" name="consultarFac" class="btn btn-primary pull-right">Consultar datos</button>
+
                             </div>
 
                             <br style="clear:both">
@@ -175,15 +199,15 @@
 
                                 <div class="form-group col-xs-4">
                                     <label for="nombre_empresa">Id Cliente</label>
-                                    <input type="text" class="form-control" id="id_cliente" name="id_cliente">
+                                    <input type="text" class="form-control" id="idCliente" name="idCliente">
                                 </div>                            
                                 <div class="form-group col-xs-4">
                                     <label for="dir_fisica">Nombre Entidad</label>
-                                    <input type="text" class="form-control" id="dir_fisica" name="dir_fisica">
+                                    <input type="text" class="form-control" id="nombreEntidad" name="nombreEntidad">
                                 </div>
                                 <div class="form-group col-xs-4">
                                     <label for="pais">Nombre Contacto</label>
-                                    <input type="text" class="form-control" id="pais" name="pais">
+                                    <input type="text" class="form-control" id="nombreContacto" name="nombreContacto">
                                 </div>
 
                             </div>
@@ -196,10 +220,14 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Id_adeudo</th>
-                                            <th scope="col">Adeudo</th> 
+                                            <th scope="col">Id Cargo</th>
+                                            <th scope="col">Abreviatura</th> 
+                                            <th scope="col">Cuenta</th> 
                                             <th scope="col">Importe</th> 
-                                            <th scope="col">Enlace</th> 
+                                            <th scope="col">Cantidad</th> 
+                                            <th scope="col">Impuesto</th>                                            
+                                            <th scope="col">total</th> 
+                                            <th scope="col">Entidad</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -226,10 +254,10 @@
                                 <br style="clear:both">
                                 <div class="form-group">
                                     <div class="col-xs-3">
-                                        <label>Impuesto:</label>
+                                        <label>Impuestos:</label>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input type="text" class="form-control" id="impuesto21" name="impuesto21" disabled="true">
+                                        <input type="text" class="form-control" id="impuestos" name="impuestos" disabled="true">
                                     </div>
                                 </div>       
                                 <br style="clear:both">
@@ -246,8 +274,8 @@
                             <br style="clear:both">
                             <hr>
                             <div id="datos" class="col-xs-12">
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
-                            <button type="button" id="generarFact" class="btn btn-primary">Generar factura</button> 
+                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
+                                <button type="button" id="generarFact" class="btn btn-primary">Generar factura</button> 
                             </div>
                         </form>
                     </div>
