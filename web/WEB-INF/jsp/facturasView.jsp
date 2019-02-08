@@ -30,7 +30,7 @@
 
                 var myObj = {};
 
-                myObj["id_entidad"] = $("#comboClientes").val().trim();
+                myObj["col1"] = $("#comboClientes").val().trim();
  
                 var json = JSON.stringify(myObj);
 
@@ -157,7 +157,7 @@
                                 <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
                             </div> -->
                             <div class="col-xs-6 form-group">
-                                <label for="comboClientes">Nombre de cliente</label>
+                                <label for="comboClientes">Distincy Code</label>
                                 <div class="form-group-combo">
                                     <!--Combo para clientes-->
                                     <select class="form-control" id="comboClientes" name="comboClientes">
@@ -174,15 +174,15 @@
                             <div class="col-xs-12" id="datos">
 
                                 <div class="form-group col-xs-4">
-                                    <label for="nombre_empresa">Identificador Cliente</label>
+                                    <label for="nombre_empresa">Id Cliente</label>
                                     <input type="text" class="form-control" id="id_cliente" name="id_cliente">
                                 </div>                            
                                 <div class="form-group col-xs-4">
-                                    <label for="dir_fisica">Dirección de empresa</label>
+                                    <label for="dir_fisica">Nombre Entidad</label>
                                     <input type="text" class="form-control" id="dir_fisica" name="dir_fisica">
                                 </div>
                                 <div class="form-group col-xs-4">
-                                    <label for="pais">Pais de empresa</label>
+                                    <label for="pais">Nombre Contacto</label>
                                     <input type="text" class="form-control" id="pais" name="pais">
                                 </div>
 

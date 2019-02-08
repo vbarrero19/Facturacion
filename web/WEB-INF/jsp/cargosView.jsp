@@ -65,7 +65,7 @@
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
-                myObj["id_impuesto"] = $("#comboTipoImpuesto").val();
+                myObj["id_impuesto"] = $("#valorImpuesto").val();
                 myObj["total"] = $("#total").val().trim();
 
                 //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
@@ -628,8 +628,11 @@
                     if (tipoImpuesto == 0){
                         $("#total").val(importe * cantidad);
                     }else{
+                        $("#valorImpuesto").val(subtotal * tipoImpuesto / 100);
                         $("#total").val((subtotal * tipoImpuesto / 100) + subtotal);
                     }
+                    
+                    
         }
         ;
 
@@ -744,6 +747,9 @@
                                     <div class="form-group-combo">                                        
                                         <select class="form-control" id="comboTipoImpuesto" name="comboTipoImpuesto">
                                         </select>                                                            
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" id="valorImpuesto" name="valorImpuesto">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-3">

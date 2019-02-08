@@ -54,11 +54,11 @@
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
-                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
+                //recogemos el valor del combo para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
                 if ($("#comboEntidad").val() !== "0") {
-                    
+
                     if (window.XMLHttpRequest) //mozilla
                     {
                         ajax = new XMLHttpRequest(); //No Internet explorer
@@ -181,8 +181,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'POST',
-                url: '/Facturacion/verCargosController/getDatosCargos.htm?idCliente='+idEntidad,
-
+                url: '/Facturacion/verCargosController/getDatosCargos.htm?idCliente=' + idEntidad,
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
@@ -192,7 +191,7 @@
                     aux.forEach(function (valor, indice) {
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
-                        var cargo = JSON.parse(valor); 
+                        var cargo = JSON.parse(valor);
                         /*en las fechas, quitamos la hora con substring*/
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
@@ -202,12 +201,21 @@
                                                                     <td>" + cargo.importe + "</td>         \n\
                                                                     <td>" + cargo.cantidad + "</td>         \n\
                                                                     <td>" + cargo.impuesto + "</td>         \n\
-                                                                    <td>" + cargo.total + '€' +"</td>         \n\
+                                                                    <td>" + cargo.total + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
+                                                                    <td><button type='button' class='btn btn-info miBoton' id='myBtn'>Open Modal</button></td>\n\
+                                                                    <td><a href='/Facturacion/MenuController/start.htm' class='btn btn-info' role='button'>Menu principal</a></td>         \n\
                                                                 </tr>");
                     });
-                },//<td> <a href='/MenuController/start.htm' >Modifivar</a> </td>
+
+                    $(document).ready(function () {
+                        $(".miBoton").click(function () {
+                            $("#myModal").modal();
+                        });
+                    });
+
+                }, //<td> <a href='/MenuController/start.htm' >Modifivar</a> </td>
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(xhr.responseText);
@@ -215,7 +223,7 @@
                 }
             });
 
-    }
+        }
 
     </script>
 
@@ -270,8 +278,8 @@
                                                 <th scope="col">Total</th>                                                
                                                 <th scope="col">FechaCargo</th>
                                                 <th scope="col">FechaVencimiento</th>
-                                               
-                                                
+                                                <th scope="col">Modificar</th>
+                                                <th scope="col">Borrar</th>
                                             </tr>                                            
                                         </thead>
 
@@ -289,6 +297,25 @@
                 </div>
             </div>
         </div>  
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </body> 
 </html>

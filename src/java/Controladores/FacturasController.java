@@ -42,64 +42,66 @@ public class FacturasController {
     } 
     
     
-//    @RequestMapping("/facturasController/getFacturas.htm")  
-//    @ResponseBody
-//    public String saveNewCustomer(@RequestBody ClienteAdeudos clienteAdeudos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        ClienteAdeudos resourceLoad = new ClienteAdeudos();
-//        
-//        Connection con = null;
-//        ResultSet rs = null;
-//        PreparedStatement stAux = null;
-//        String resp = "correcto";
-//       
-//        ArrayList<String> arrayTipo = new ArrayList<>();   
-//        
-//        try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();  
-//            
-//            stAux = con.prepareStatement("SELECT c.id_cliente, c.id_adeudo, adeudo, cantidad, nombre_empresa, dir_fisica, pais FROM ADEUDOS c inner join clientes t on c.id_cliente = t.id_cliente and c.ID_CLIENTE = ?");
-//            
-//            stAux.setInt(1, Integer.parseInt(clienteAdeudos.getId_cliente())); 
-//            //Ejecutamos                 
-//            rs = stAux.executeQuery();
-//            
-//            while (rs.next()) {
-//                arrayTipo.add(new Gson().toJson(new ClienteAdeudos(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7)))); 
-//            }
-//            
-//            resp = new Gson().toJson(arrayTipo);
-//            
-//        } catch (SQLException ex) {
-//            resp = "incorrecto SQLException"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors)); 
-//        }catch (Exception ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors)); 
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (stAux != null) {
-//                    stAux.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        return resp;
-//    }
+    @RequestMapping("/facturasController/getFacturas.htm")  
+    @ResponseBody
+    public String saveNewCustomer(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+        
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+       
+        ArrayList<String> arrayTipo = new ArrayList<>();   
+        
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();  
+            
+            stAux = con.prepareStatement("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad, "
+                                       + "e.nombre_contacto FROM cargos c inner join entidad e on c.id_entidad = e.id_entidad and e.id_entidad = ?");
+            
+            stAux.setInt(1, Integer.parseInt(resource.getCol1())); 
+            //Ejecutamos                 
+            rs = stAux.executeQuery();
+            
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7), 
+                                                             rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11)))); 
+            }
+            
+            resp = new Gson().toJson(arrayTipo);
+            
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        }catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors)); 
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
     
     
     
