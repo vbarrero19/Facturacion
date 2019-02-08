@@ -26,12 +26,11 @@
 
             var modalConfirm = function (callback) {
 
-               
                 $("#modal-btn-si").on("click", function () {
-                    
                     callback(true);
                     $("#mi-modal").modal('hide');
                 });
+
                 $("#modal-btn-no").on("click", function () {
                     callback(false);
                     $("#mi-modal").modal('hide');
@@ -40,14 +39,13 @@
 
             modalConfirm(function (confirm) {
                 if (confirm) {
-                    //Acciones si el usuario confirma, tendriamos que recoger el valor del id factura y enviarlo al controlador para deshabilitar la factura
+                    //Acciones si el usuario confirma
                     $("#result").html("CONFIRMADO");
                 } else {
-                    //Acciones si el usuario no confirma. Recargamos nuevamente la pagina o mostramos un mensaje que indique que no se elimino.
+                    //Acciones si el usuario no confirma
                     $("#result").html("NO CONFIRMADO");
                 }
             });
-
             /*************************************    ************************************/
 
             var userLang = navigator.language || navigator.userLanguage;
@@ -234,12 +232,14 @@
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });
-                    
+
                     /*para cada boton hacer una funcion */
-                     $(".btn-eliminar").on("click", function () {
-                    //guardar id factura
-                    $("#mi-modal").modal('show');
-                });
+                    $(".btn-eliminar").on("click", function () {
+                        //guardar id factura
+                        $("#mi-modal").modal('show');
+                    });
+                    
+                    
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -333,6 +333,8 @@
             </div>
         </div>
     </div>
+
+    <div class="alert" role="alert" id="result"></div>
 </body> 
 </html>
 
