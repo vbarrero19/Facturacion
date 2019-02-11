@@ -13,9 +13,32 @@
     <script>
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getCliente() para llenar el combo 
-            getCliente();
+            getEntidadCliente();
+            getEntidadEmpresa();
 
             var userLang = navigator.language || navigator.userLanguage;
+
+            //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
+            //Constructor para el calendario Fecha-Cargo.
+            $('#fecha_cargo').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false//Important! See issue #1075
+                        //defaultDate: '08:32:33',
+                        //                });
+            });
+
+            //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
+            //Constructor para el calendario Fecha-Cargo.
+            $('#fecha_vencimiento').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false//Important! See issue #1075
+                        //defaultDate: '08:32:33',
+                        //                });
+            });
 
             //Al pulsar el boton de consultar facturas recogemos los datos del cliente y (sus cargos sin numero de factura) -> Esto ultimo falta por hacer    
             $("#comboClientes").change(function () {
@@ -55,9 +78,12 @@
                                 //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                                 var resource = JSON.parse(valor);
 
-                                $("#idCliente").val(resource.col9);
+                                idCargo = resource.col1;
+                                idCliente = resource.col8;
+
+                                $("#idCliente").val(resource.col8);
                                 $("#nombreEntidad").val(resource.col10);
-                                $("#nombreContacto").val(resource.col11);
+                                $("#nombreContactoCli").val(resource.col11);
                                 subtotal = subtotal + parseInt(resource.col4);
                                 impuestos = impuestos + parseInt(resource.col6);
                                 //cargamos de forma dinamica la tabla
@@ -71,7 +97,7 @@
                                                                     <td>" + resource.col6 + "</td>                       \n\
                                                                     <td>" + resource.col7 + "</td>                       \n\
                                                                     <td>" + resource.col8 + "</td>                       \n\
-                                                                    <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>                       \n\ \n\
+                                                                    <td><a class='btn btn-success' href=/Facturacion/FacturasController/getFacturas2.htm?idCargo=" + idCargo + "&idCliente=" + idCliente + ">Quitar</a></td>                       \n\ \n\
                                                                 </tr>");
 
 
@@ -90,8 +116,8 @@
                 } else {
                     $("#idCliente").val("");
                     $("#nombreEntidad").val("");
-                    $("#nombreContacto").val("");
-                    
+                    $("#nombreContactoCli").val("");
+
                     $('#tableContainer tbody').empty();
 
                     $("#subtotal").val("");
@@ -99,11 +125,55 @@
                     $("#total").val("");
                 }
             })
+
+            //Guarda los datos introducidos en el formulario en la tabla facturas
+            $("#generarFactura").click(function () {
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+                myObj["id_factura"] = ""; //Es automatico
+                myObj["id_cliente"] = $("#idCliente").val().trim();
+                myObj["id_empresa"] = $("#descripcion").val().trim();
+                myObj["total_factura"] = $("#total_factura").val().trim();
+
+                //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
+                myObj["fecha_emision"] = $("#fecha_emision input").val().trim();
+                //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
+                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+
+                myObj["id_estado"] = ""; //Falta por definir               
+
+
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/cargosController/nuevoCargo.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+            });
+
+
         });
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
-        function getCliente() {
+        function getEntidadCliente() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -150,6 +220,58 @@
             });
         }
 
+        //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
+        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
+        function getEntidadEmpresa() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var empresaEntidad = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboEmpresas');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+                    //Lo vamos cargando
+                    empresaEntidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var empresaEntidad2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = empresaEntidad2.id_entidad;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = empresaEntidad2.distinct_code;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+
     </script>
 
 
@@ -168,20 +290,36 @@
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Facturas</h3>
 
-                            <!--                            <div class="form-group-combo">
-                                                            Combo para tipo de impuestos
-                                                            <select class="form-control" id="comboClientes" name="comboClientes">
-                                                            </select>                                                            
-                                                        </div>-->
+                            <div class="col-xs-12" id="datos">
 
-                            <div class="col-xs-12">
+                                <div class="col-xs-3 form-group">
+                                    <label for="comboClientes">Distincy Code Empresa</label>
+                                    <div class="form-group-combo">
+                                        <!--Combo para clientes-->
+                                        <select class="form-control" id="comboEmpresas" name="comboClientes">
+                                        </select>                                                            
+                                    </div>
+                                </div>
 
-                                <!--                        <div class="col-xs-6 form-group">
-                                                                <label for="id_cliente">Identificador de cliente</label>
-                                                                <input type="text" class="form-control" id="id_cliente" name="id_cliente" placeholder="Identificador cliente" required>
-                                                            </div> -->
-                                <div class="col-xs-6 form-group">
-                                    <label for="comboClientes">Distincy Code</label>
+                                <div class="form-group col-xs-3">
+                                    <label for="nombre_empresa">Id Cliente</label>
+                                    <input type="text" class="form-control" id="idEmpresa" name="idCliente">
+                                </div>                            
+                                <div class="form-group col-xs-3">
+                                    <label for="dir_fisica">Nombre Entidad</label>
+                                    <input type="text" class="form-control" id="nombreEmpresa" name="nombreEntidad">
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <label for="pais">Nombre Contacto</label>
+                                    <input type="text" class="form-control" id="nombreContactoEmp" name="nombreContacto">
+                                </div>
+
+                            </div>
+                            
+                            <div class="col-xs-12" id="datos2">
+
+                                <div class="col-xs-3 form-group">
+                                    <label for="comboClientes">Distincy Code Cliente</label>
                                     <div class="form-group-combo">
                                         <!--Combo para clientes-->
                                         <select class="form-control" id="comboClientes" name="comboClientes">
@@ -189,25 +327,17 @@
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <br style="clear:both">
-                            <hr>
-
-
-                            <div class="col-xs-12" id="datos">
-
-                                <div class="form-group col-xs-4">
+                                <div class="form-group col-xs-3">
                                     <label for="nombre_empresa">Id Cliente</label>
                                     <input type="text" class="form-control" id="idCliente" name="idCliente">
                                 </div>                            
-                                <div class="form-group col-xs-4">
+                                <div class="form-group col-xs-3">
                                     <label for="dir_fisica">Nombre Entidad</label>
                                     <input type="text" class="form-control" id="nombreEntidad" name="nombreEntidad">
                                 </div>
-                                <div class="form-group col-xs-4">
+                                <div class="form-group col-xs-3">
                                     <label for="pais">Nombre Contacto</label>
-                                    <input type="text" class="form-control" id="nombreContacto" name="nombreContacto">
+                                    <input type="text" class="form-control" id="nombreContactoCli" name="nombreContacto">
                                 </div>
 
                             </div>
@@ -236,10 +366,50 @@
                                 </table>
                             </div>
 
-                            <br style="clear:both">
-                            <hr>
+                            <div class="col-xs-6">
 
-                            <div class="col-xs-6"></div>
+                                <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
+                                <div class="container2">                                   
+                                    <div class="row">
+                                        <div class='col-xs-12 col-md-4'>
+                                            <label class="fechaCargos"> Emision </label>
+                                            <div class="form-group">
+                                                <div class='input-group date' id='fecha_cargo'>
+                                                    <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $('#fecha_emision').datetimepicker();
+                                            });
+                                        </script>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class='col-xs-12 col-md-4'>
+                                            <label class="fechaCargos"> Vencimiento </label>
+                                            <div class="form-group">
+                                                <div class='input-group date' id='fecha_vencimiento'>
+                                                    <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $('#fecha_vencimiento').datetimepicker();
+                                            });
+                                        </script>
+                                    </div>
+
+                                </div>              
+                            </div>
 
                             <div class="col-xs-6">
 
@@ -266,16 +436,16 @@
                                         <label>Total:</label>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input type="text" class="form-control" id="total" name="total" disabled="true">
+                                        <input type="text" class="form-control" id="total_factura" name="total_factura" disabled="true">
                                     </div>
                                 </div>  
                             </div>
 
                             <br style="clear:both">
                             <hr>
-                            <div id="datos" class="col-xs-12">
+                            <div id="datos3" class="col-xs-12">
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>   
-                                <button type="button" id="generarFact" class="btn btn-primary">Generar factura</button> 
+                                <button type="button" id="generarFactura" name="generarFactura" class="btn btn-primary">Generar factura</button> 
                             </div>
                         </form>
                     </div>

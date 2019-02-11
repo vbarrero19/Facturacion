@@ -57,9 +57,8 @@ public class CargosController {
 
             stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
                     + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente,  id_empresa)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            
-                 //
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");            
+  
             
             
             stAux.setInt(1, Integer.parseInt(cargos.getId_item()));

@@ -18,9 +18,6 @@
             getItem();
             getTipoImpuesto();
 
-
-            //getItemTabla();
-
             var userLang = navigator.language || navigator.userLanguage;
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
@@ -215,7 +212,7 @@
                 }
 
             });
-            
+
             //Muestra los datos del item al seleccionar algo en el combo
             $("#comboItems").change(function () {
 
@@ -232,7 +229,7 @@
 
                     var myObj = {};
 
-                    myObj["id_item"] = $("#comboItems").val().trim(); 
+                    myObj["id_item"] = $("#comboItems").val().trim();
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
@@ -289,7 +286,7 @@
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
                 if ($("#comboItems").val() != "0") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
-                    calcularTotal();  
+                    calcularTotal();
                 }
             });
             //Se ejecuta al cambiar el contenido de la cantidad
@@ -297,7 +294,7 @@
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
                 if ($("#comboItems").val() != "0") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
-                    calcularTotal();  
+                    calcularTotal();
                 }
             });
             //Se ejecuta al cambiar el contenido del comboTipoImpuesto
@@ -305,7 +302,7 @@
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
                 if ($("#comboItems").val() != "0") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
-                    calcularTotal();  
+                    calcularTotal();
                 }
             });
 
@@ -423,7 +420,7 @@
             {
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
- 
+
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
@@ -617,22 +614,22 @@
         ;
 
 
-        function calcularTotal(){
-  
-                    importe = $("#importe").val().trim();
-                    cantidad = $("#cantidad").val().trim();
-                    tipoImpuesto = $("#comboTipoImpuesto").val();
-                    subtotal = importe * cantidad;
-                    total = $("#total").val();
-                    
-                    if (tipoImpuesto == 0){
-                        $("#total").val(importe * cantidad);
-                    }else{
-                        $("#valorImpuesto").val(subtotal * tipoImpuesto / 100);
-                        $("#total").val((subtotal * tipoImpuesto / 100) + subtotal);
-                    }
-                    
-                    
+        function calcularTotal() {
+
+            importe = $("#importe").val().trim();
+            cantidad = $("#cantidad").val().trim();
+            tipoImpuesto = $("#comboTipoImpuesto").val();
+            subtotal = importe * cantidad;
+            total = $("#total").val();
+
+            if (tipoImpuesto == 0) {
+                $("#total").val(importe * cantidad);
+            } else {
+                $("#valorImpuesto").val(subtotal * tipoImpuesto / 100);
+                $("#total").val((subtotal * tipoImpuesto / 100) + subtotal);
+            }
+
+
         }
         ;
 
@@ -847,9 +844,9 @@
 
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
 
-                    </div>
-                    </form>
 
+                        </form>
+                    </div>
                 </div>                            
             </div>
         </div>
