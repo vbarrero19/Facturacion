@@ -23,6 +23,8 @@
             getTipoDedicacion();
             getTipoDocumento();
             getVerEntidad();
+            getTipoDireccion();
+
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -90,6 +92,11 @@
                 //GUARDAMOS LAS FECHAS, DE ALTA Y BAJA
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
+
+                /****************DATOS ALMACENADOS EN LA PESTAÑA 2*******************/
+                myObj["col11"] = $('#id_tipo_direccion').val().trim();
+                myObj["col12"] = $('#tipo_direccion').val().trim();
+
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -277,6 +284,45 @@
             });
         }
         ;
+
+        //CREAMOS UNA FUNCION PARA CARGAR EL COMBO TIPO_DIRECCION
+        function getTipoDireccion() {
+
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
+                url: '/Facturacion/entidadesController/getTipoDireccion.htm',
+                success: function (data) {
+                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
+                    var tipoEntidad = JSON.parse(data);
+                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
+                    select = document.getElementById('id_tipo_direccion');
+                    //LO CARGAMOS
+                    tipoEntidad.forEach(function (valor, indice) {
+                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
+                        var tipoEntidad2 = JSON.parse(valor);
+                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
+                        var opt = document.createElement('option');
+                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
+                        opt.value = tipoEntidad2.id_tipo_direccion;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
+                        opt.innerHTML = tipoEntidad2.tipo_direccion;
+                        //AÑADIMOS UNA NUEVA OPCION
+                        select.appendChild(opt);
+                    });
+                }
+            });
+        }
 
 
 
@@ -559,7 +605,7 @@
                                         </div>
                                     </div>   
                                 </div>
-                                
+
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 3 METODO DE PAGO ---------------------------------------> 
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                                     <div class="form-group col-xs-12" align="center">
@@ -570,7 +616,7 @@
                                             <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
                                         </div>                                        
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <div class="form-group col-xs-8">
                                             <input type="text" class="form-control" id="numero_cuenta" name="numero_cuenta" placeholder="Num cuenta" required>
@@ -582,12 +628,12 @@
                                             <input type="text" class="form-control" id="cod2" name="cod2" placeholder="Codigo2" required>
                                         </div>
                                     </div>    
-                                    
-                                    
+
+
                                     <div class="form-group col-xs-12">
                                         <input type="text" class="form-control" id="titular_cuenta" name="titular_cuenta" placeholder="Titular cuenta" required>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <div class="form col-xs-4">
                                             <input type="text" class="form-control" id="nombre_banco" name="nombre_banco" placeholder="Nombre banco" required>
@@ -596,7 +642,7 @@
                                             <input type="text" class="form-control" id="direccion_banco" name="direccion_banco" placeholder="direccion banco" required>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <div class="form col-xs-6">
                                             <input type="text" class="form-control" id="localidad_banco" name="localidad_banco" placeholder="Localidad" required>
@@ -605,7 +651,7 @@
                                             <input type="text" class="form-control" id="pais_banco" name="pais_banco" placeholder="pais" required>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
