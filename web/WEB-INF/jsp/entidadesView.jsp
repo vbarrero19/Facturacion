@@ -225,6 +225,55 @@
                 }
             });
         }
+        
+        
+        
+          /*  * *******************************************************************************************************
+     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
+        
+        function getVerEntidad() {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
+                url: '/Facturacion/entidadesController/getVerEntidad.htm',
+                success: function (data) {
+                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
+                    var verEntidad = JSON.parse(data);
+                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
+                    select = document.getElementById('comboEntidad');
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+                    verEntidad.forEach(function (valor, indice) {
+                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
+                        var verEntidad2 = JSON.parse(valor);
+                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
+                        var opt = document.createElement('option');
+                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
+                        opt.value = verEntidad2.id_entidad;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
+                        opt.innerHTML = verEntidad2.distinct_code;
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        };
 
 
 
@@ -447,9 +496,7 @@
                                         <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                         <div class="form-group col-xs-2">
                                             <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
-                                                <!--                                                <option> fisica </option>
-                                                                                                <option> fiscal </option>
-                                                                                                <option> facturacion </option>-->
+                                                
                                             </select>
                                         </div>
                                         <div class="form-group col-xs-2">

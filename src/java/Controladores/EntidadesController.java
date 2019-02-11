@@ -476,56 +476,52 @@ public class EntidadesController {
 
     }
 
-    /**
-     * *******************************************************************************************************
-     */
-    /**
-     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ******************************
-     */
-    //CARGAMOS COMBO PARA MOSTRAR TODAS LAS ENTIDADES QUE HAY DENTRO DE LA PESTAÑA DE DIRECCION EN ENTIDADES
-    @RequestMapping("/entidadesController/getVerEntidad.htm")
+  /*  * *******************************************************************************************************
+     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
+     
+           /*CARGAMOS EL COMBO PARA VER LAS EMPRESAS*/
+    @RequestMapping("/entidadesController/getVerEntidad.htm")  
     @ResponseBody
 
     public String cargarComboVerEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         //Entidades resourceLoad = new Entidades();
-
+        
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-
+        
         //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
         //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
         ArrayList<String> arrayTipoEntidad = new ArrayList<>();
-
+        
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();
+            con = pool_local.getConnection();          
             /*CREAMOS LA CONSULTA PREPARADA Y LO GUARDAMOS EN rs*/
             Statement sentencia = con.createStatement();
-//            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
-//                                        + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
-
-            rs = sentencia.executeQuery("select id_entidad, distinct_code, nombre_entidad from entidad");
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
+                                        + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
-             */
-            while (rs.next()) {
-                arrayTipoEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3))));
+            */
+            while(rs.next()){                
+                arrayTipoEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2),rs.getString(3),rs.getString(4))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayTipoEntidad);
-
+            
+            
         } catch (SQLException ex) {
             resp = "incorrecto"; //
             StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors));
-
-        } catch (Exception ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            ex.printStackTrace(new PrintWriter(errors)); 
+          
+        }catch (Exception ex) {
+             resp = "incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors));
+            ex.printStackTrace(new PrintWriter(errors)); 
         } finally {
             try {
                 if (rs != null) {
@@ -546,10 +542,10 @@ public class EntidadesController {
             } catch (Exception e) {
             }
         }
-
+        
         //Devolvemos la variable resp al JSP
-        return resp;
-
+        return resp;  
+        
     }
 
 }
