@@ -50,7 +50,6 @@
     <bean class="Controladores.verFacturasController" id="verFacturas"/>
     <bean class="Controladores.verCargosController" id="verCargos"/>    
     
-    
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
             <list>

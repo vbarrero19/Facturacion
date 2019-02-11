@@ -25,6 +25,28 @@ public class Direccion {
         
     }
 
+    public Direccion(String id_direccion, String id_tipo_direccion, String tipo_via, String nombre_via, String numero_via, String numero_portal, String resto_direccion, String codigo_postal, String localidad, String provincia, String pais) {
+        this.id_direccion = id_direccion;
+        this.id_tipo_direccion = id_tipo_direccion;
+        this.tipo_via = tipo_via;
+        this.nombre_via = nombre_via;
+        this.numero_via = numero_via;
+        this.numero_portal = numero_portal;
+        this.resto_direccion = resto_direccion;
+        this.codigo_postal = codigo_postal;
+        this.localidad = localidad;
+        this.provincia = provincia;
+        this.pais = pais;
+    }
+
+    public Direccion(String string, String id_tipo_via) {
+        this.tipo_via = tipo_via;
+    }
+
+    public Direccion(String string) {
+        
+    }
+
     public String getId_direccion() {
         return id_direccion;
     }

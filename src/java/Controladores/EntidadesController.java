@@ -497,7 +497,6 @@ public class EntidadesController {
    
     /*AL CARGAR LOS DATOS DE LA PANTALLA MODIFICAR ENTIDADES, REALIZAMOS UN UPDATE QUE MODIFICARA LA BASE DE DATOS AL DARLE AL BOTON..*/
     
-    
-    
+       
     
 }

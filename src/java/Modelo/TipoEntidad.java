@@ -21,8 +21,7 @@ public class TipoEntidad {
         this.id_tipo_entidad = id_tipo_entidad;
         this.tipo_entidad = tipo_entidad;
     }
-    
-    
+        
     public String getId_tipo_entidad() {
         return id_tipo_entidad;
     }
