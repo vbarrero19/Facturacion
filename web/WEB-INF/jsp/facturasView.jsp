@@ -79,7 +79,7 @@
                                 var resource = JSON.parse(valor);
 
                                 idCargo = resource.col1;
-                                idCliente = resource.col8;
+                                idCliente = resource.col8; 
 
                                 $("#idCliente").val(resource.col8);
                                 $("#nombreEntidad").val(resource.col10);

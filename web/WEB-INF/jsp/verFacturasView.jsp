@@ -49,7 +49,8 @@
             /*************************************    ************************************/
 
             var userLang = navigator.language || navigator.userLanguage;
-            //Guarda los datos introducidos en el formulario en la tabla cargos
+            
+            //Guarda los datos introducidos en el formulario 
             $("#submit").click(function () {
 
                 if (window.XMLHttpRequest) { //mozilla
@@ -85,7 +86,7 @@
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
-                if ($("#comboEntidad").val() !== "0") {
+                if ($("#comboEntidad").val() != "0") {
 
                     if (window.XMLHttpRequest) //mozilla
                     {
@@ -130,7 +131,8 @@
                     $("#nombre_contacto").val("");
                 }
                 /*llamamos a la funcion para ver las facturas del cliente que seleccionamos en el combo
-                 le pasamos por parametro el valor de idCliente a la funcion: verListaaFacturas(idEntidad)*/
+                 le pasamos por parametro el valor de idCliente a la funcion: verListaaFacturas(idEntidad)
+                 Lo hacemos asi ya que son dos tablas diferentes*/
                 verListaFacturas(idEntidad);
             });
         });
