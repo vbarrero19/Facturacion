@@ -22,6 +22,7 @@
             getTipoEntidad();
             getTipoDedicacion();
             getTipoDocumento();
+            getVerEntidad();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -30,12 +31,11 @@
             $("#customer-tab").click();
 
             $('#fecha_alta').datetimepicker({
-                format:"YYYY-MM-DD\n\
-    ",
+                format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
-                useCurrent: false 
-                
+                useCurrent: false
+
 
             });
 
@@ -107,7 +107,7 @@
                         console.log(thrownError);
                     }
                 });
-            })
+            });
         });
 
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
@@ -187,7 +187,7 @@
             });
         }
 
-////CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
+        //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
 
         function getTipoDocumento() {
 
@@ -225,12 +225,14 @@
                 }
             });
         }
-        
-        
-        
-          /*  * *******************************************************************************************************
-     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
-        
+
+
+
+        /*  * *******************************************************************************************************
+         * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
+
+
+        //CREAMOS FUNCION PARA CARGAR LA LISTA DE ENTIDADES EN EL COMBO
         function getVerEntidad() {
 
             if (window.XMLHttpRequest) //mozilla
@@ -273,7 +275,8 @@
                     console.log(thrownError);
                 }
             });
-        };
+        }
+        ;
 
 
 
@@ -319,10 +322,10 @@
                                 </ul>
                             </div>  
 
-                           <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
+                            <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
                             <div class="tab-content" id="myTabContent">
 
-                                <!----------------------------- INFORMACION DE LA PESTAÑA 1 --------------------------------------->  
+                                <!----------------------------- INFORMACION DE LA PESTAÑA 1 DATOS DE LA ENTIDAD --------------------------------------->  
                                 <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DATOS DE LA ENTIDAD</h4>
@@ -467,36 +470,36 @@
                                 </div>
 
 
-                                <!----------------------------- INFORMACION DE LA PESTAÑA 2 --------------------------------------->  
+                                <!----------------------------- INFORMACION DE LA PESTAÑA 2 DIRECCION DE LA ENTIDAD --------------------------------------->  
 
                                 <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DIRECCION DE LA ENTIDAD</h4>
                                     </div>
 
-                                    
+
                                     <div class="form-group col-xs-12">
                                         <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                         <div class="form-group col-xs-6">
-                                    <label for="comboEntidad"> Distinct code </label>
-                                    <div class="form-group-combo">                                        
-                                        <select class="form-control" id="comboEntidad" name="comboEntidad">
+                                            <label for="comboEntidad"> Distinct code </label>
+                                            <div class="form-group-combo">                                        
+                                                <select class="form-control" id="comboEntidad" name="comboEntidad">
 
-                                        </select>                                                            
+                                                </select>                                                            
+                                            </div>
+                                        </div> 
+                                        <div class="form-group col-xs-6">
+                                            <label for="idCliente>">Nombre_entidad</label>
+                                            <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
+                                        </div>  
                                     </div>
-                                </div> 
-                                <div class="form-group col-xs-6">
-                                    <label for="idCliente>">Nombre_entidad</label>
-                                    <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
-                                </div>  
-                                    </div>
-                                    
-                                    
+
+
                                     <div class="form-group">
                                         <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                         <div class="form-group col-xs-2">
                                             <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
-                                                
+
                                             </select>
                                         </div>
                                         <div class="form-group col-xs-2">
@@ -556,11 +559,53 @@
                                         </div>
                                     </div>   
                                 </div>
-                                <!--INFORMACION DE LA PESTAÑA 3 -->
+                                
+                                <!----------------------------- INFORMACION DE LA PESTAÑA 3 METODO DE PAGO ---------------------------------------> 
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DATOS DE PAGO DE LA ENTIDAD</h4>
-                                    </div>                                 
+                                    </div> 
+                                    <div class="form-group">
+                                        <div class="form group col-xs-12">
+                                            <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
+                                        </div>                                        
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="form-group col-xs-8">
+                                            <input type="text" class="form-control" id="numero_cuenta" name="numero_cuenta" placeholder="Num cuenta" required>
+                                        </div>                                        
+                                        <div class="form-group col-xs-2">
+                                            <input type="text" class="form-control" id="cod1" name="cod1" placeholder="Codigo1" required>
+                                        </div>                                        
+                                        <div class="form-group col-xs-2">
+                                            <input type="text" class="form-control" id="cod2" name="cod2" placeholder="Codigo2" required>
+                                        </div>
+                                    </div>    
+                                    
+                                    
+                                    <div class="form-group col-xs-12">
+                                        <input type="text" class="form-control" id="titular_cuenta" name="titular_cuenta" placeholder="Titular cuenta" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="form col-xs-4">
+                                            <input type="text" class="form-control" id="nombre_banco" name="nombre_banco" placeholder="Nombre banco" required>
+                                        </div>
+                                        <div class="form-group col-xs-8">
+                                            <input type="text" class="form-control" id="direccion_banco" name="direccion_banco" placeholder="direccion banco" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="form col-xs-6">
+                                            <input type="text" class="form-control" id="localidad_banco" name="localidad_banco" placeholder="Localidad" required>
+                                        </div>
+                                        <div class="form-group col-xs-6">
+                                            <input type="text" class="form-control" id="pais_banco" name="pais_banco" placeholder="pais" required>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
