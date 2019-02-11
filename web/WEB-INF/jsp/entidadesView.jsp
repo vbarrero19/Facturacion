@@ -22,9 +22,7 @@
             getTipoEntidad();
             getTipoDedicacion();
             getTipoDocumento();
-            getTipoDireccion();
-            
-            
+
             var userLang = navigator.language || navigator.userLanguage;
 
 
@@ -32,10 +30,13 @@
             $("#customer-tab").click();
 
             $('#fecha_alta').datetimepicker({
-                format: 'YYYY-MM-DD',
+                format:"YYYY-MM-DD\n\
+    ",
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
-                useCurrent: false
+                useCurrent: false 
+                
+
             });
 
             $('#fecha_baja').datetimepicker({
@@ -43,6 +44,7 @@
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
                 useCurrent: false
+
             });
 
 
@@ -89,10 +91,6 @@
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
 
-                /********** GUARDAMOS LOS DATOS DE LA PESTAÑA DE DIRECCION************/
-                myObj["id_tipo_direccion"] = $('#id_tipo_direccion').val();
-
-
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -109,10 +107,6 @@
                         console.log(thrownError);
                     }
                 });
-
-                /************ JSON PARA LA DIRECCION DE LA ENTIDAD ??  **************/
-
-
             })
         });
 
@@ -193,7 +187,7 @@
             });
         }
 
-//CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
+////CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
 
         function getTipoDocumento() {
 
@@ -233,48 +227,11 @@
         }
 
 
-//CREAMOS LA FUNCION PARA CARGAR EL COMBO DEL TIPO DE DIRECCION DE LA ENTIDAD(fisica, fiscal...)
 
-        function getTipoDireccion() {
-
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/direccionController/getTipoDireccion.htm',
-                success: function (data) {
-                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var tipoDireccion = JSON.parse(data);
-                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
-                    select = document.getElementById('id_tipo_direccion');
-                    //LO CARGAMOS
-                    tipoDireccion.forEach(function (valor, indice) {
-                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var tipoDireccion2 = JSON.parse(valor);
-                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
-                        var opt = document.createElement('option');
-                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoDireccion2.id_tipo_direccion;
-                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = tipoDireccion2.tipo_direccion;
-                        //AÑADIMOS UNA NUEVA OPCION
-                        select.appendChild(opt);
-                    });
-                }
-            });
-        }
 
     </script>
     <body>
-        <div class="container col-xs-12">
+        <div class="container">
             <div class="col-xs-12">
                 <!-- con col elegimos el tamaño xs:moviles md:tablets lg:pantallas de ordenador.
                 para empujar las columnas usamos offset y el numero de columnas que queremos desplazar. tiene que estar 
@@ -292,17 +249,14 @@
                                 <label> Distinct code </label>
                             </div>
 
-                            <div class="form-group-combo">    
-                                <div class="form-group col-xs-6">
-                                    <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
-                                </div>
-                                <div class="form-group col-xs-6">
-                                    <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
-                                </div>
+                            <div class="form-group-combo">                                
+                                <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
+                                <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
                             </div>
 
+
                             <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CLIENTES -->
-                            <div class="form-group" col-xs-12>						
+                            <div class="form-group">						
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="true">Customer info</a>
@@ -316,7 +270,7 @@
                                 </ul>
                             </div>  
 
-                            <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
+                           <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
                             <div class="tab-content" id="myTabContent">
 
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 1 --------------------------------------->  
@@ -471,6 +425,24 @@
                                         <h4>DIRECCION DE LA ENTIDAD</h4>
                                     </div>
 
+                                    
+                                    <div class="form-group col-xs-12">
+                                        <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
+                                        <div class="form-group col-xs-6">
+                                    <label for="comboEntidad"> Distinct code </label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control" id="comboEntidad" name="comboEntidad">
+
+                                        </select>                                                            
+                                    </div>
+                                </div> 
+                                <div class="form-group col-xs-6">
+                                    <label for="idCliente>">Nombre_entidad</label>
+                                    <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
+                                </div>  
+                                    </div>
+                                    
+                                    
                                     <div class="form-group">
                                         <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                         <div class="form-group col-xs-2">

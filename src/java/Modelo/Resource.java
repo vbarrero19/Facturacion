@@ -20,6 +20,7 @@ public class Resource  {
        
     }
 
+    //constructor de tipo resource para usarlo en el tipo de direccion de la entidad.
     public Resource(String col1, String col2) {
         this.col1 = col1;
         this.col2 = col2;

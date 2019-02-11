@@ -46,6 +46,7 @@
                     $("#result").html("NO CONFIRMADO");
                 }
             });
+            
             /*************************************    ************************************/
 
             var userLang = navigator.language || navigator.userLanguage;
@@ -81,6 +82,8 @@
                     }
                 });
             });
+            
+            
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
@@ -179,8 +182,8 @@
                     console.log(thrownError);
                 }
             });
-        }
-        ;
+        };
+        
         /*funcion para ver la lista de facturas del cliente seleccionado en el combo. Recoge por parametro 
          el id del cliente 
          */
