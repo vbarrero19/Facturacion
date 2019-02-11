@@ -22,7 +22,9 @@
             getTipoEntidad();
             getTipoDedicacion();
             getTipoDocumento();
-
+            getTipoDireccion();
+            
+            
             var userLang = navigator.language || navigator.userLanguage;
 
 
@@ -87,6 +89,10 @@
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
 
+                /********** GUARDAMOS LOS DATOS DE LA PESTAÑA DE DIRECCION************/
+                myObj["id_tipo_direccion"] = $('#id_tipo_direccion').val();
+
+
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -103,6 +109,10 @@
                         console.log(thrownError);
                     }
                 });
+
+                /************ JSON PARA LA DIRECCION DE LA ENTIDAD ??  **************/
+
+
             })
         });
 
@@ -183,7 +193,7 @@
             });
         }
 
-////CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
+//CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
 
         function getTipoDocumento() {
 
@@ -223,7 +233,44 @@
         }
 
 
+//CREAMOS LA FUNCION PARA CARGAR EL COMBO DEL TIPO DE DIRECCION DE LA ENTIDAD(fisica, fiscal...)
 
+        function getTipoDireccion() {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
+                url: '/Facturacion/direccionController/getTipoDireccion.htm',
+                success: function (data) {
+                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
+                    var tipoDireccion = JSON.parse(data);
+                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
+                    select = document.getElementById('id_tipo_direccion');
+                    //LO CARGAMOS
+                    tipoDireccion.forEach(function (valor, indice) {
+                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
+                        var tipoDireccion2 = JSON.parse(valor);
+                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
+                        var opt = document.createElement('option');
+                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
+                        opt.value = tipoDireccion2.id_tipo_direccion;
+                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
+                        opt.innerHTML = tipoDireccion2.tipo_direccion;
+                        //AÑADIMOS UNA NUEVA OPCION
+                        select.appendChild(opt);
+                    });
+                }
+            });
+        }
 
     </script>
     <body>
@@ -428,9 +475,9 @@
                                         <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                         <div class="form-group col-xs-2">
                                             <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
-                                                <option> fisica </option>
-                                                <option> fiscal </option>
-                                                <option> facturacion </option>
+                                                <!--                                                <option> fisica </option>
+                                                                                                <option> fiscal </option>
+                                                                                                <option> facturacion </option>-->
                                             </select>
                                         </div>
                                         <div class="form-group col-xs-2">
@@ -476,7 +523,7 @@
                                             </div>
                                         </div>
                                     </div>
-<!--MIRAR COMO COMPLETAR LA TABLA SI ES LA MISMA DIRECCION PARA TODOS LOS TIPOS(fisica, fiscal....) -->
+                                    <!--MIRAR COMO COMPLETAR LA TABLA SI ES LA MISMA DIRECCION PARA TODOS LOS TIPOS(fisica, fiscal....) -->
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
                                     <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
                                     <div id="direc" class="form_radio_button">
