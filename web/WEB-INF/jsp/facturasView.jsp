@@ -20,7 +20,7 @@
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
             //Constructor para el calendario Fecha-Cargo.
-            $('#fecha_cargo').datetimepicker({
+            $('#fecha_emision').datetimepicker({
                 format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
@@ -104,7 +104,7 @@
                             });
                             $("#subtotal").val(subtotal);
                             $("#impuestos").val(impuestos);
-                            $("#total").val(subtotal + impuestos);
+                            $("#total_factura").val(subtotal + impuestos);
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             console.log(xhr.status);
@@ -122,9 +122,67 @@
 
                     $("#subtotal").val("");
                     $("#impuestos").val("");
-                    $("#total").val("");
+                    $("#total_factura").val("");
                 }
             })
+            
+            //Muestra datos de la entidadEmpresa al seleccionar algo en el combo
+            $("#comboEmpresas").change(function () {
+
+                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                if ($("#comboEmpresas").val() != "0") {
+
+                    if (window.XMLHttpRequest) //mozilla
+                    {
+                        ajax = new XMLHttpRequest(); //No Internet explorer
+                    } else
+                    {
+                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    var myObj = {};
+
+                    myObj["id_entidad"] = $("#comboEmpresas").val().trim();
+
+                    var json = JSON.stringify(myObj);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Facturacion/facturasController/getDatosEntidadEmpresa.htm',
+                        data: json,
+                        datatype: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+
+                            //En el data viene la informacion del combo en forma de String.
+                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
+                            var aux = JSON.parse(data);
+
+                            aux.forEach(function (valor, indice) {
+                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+                                var aux2 = JSON.parse(valor);
+                                //Mostramos los datos en la cajas de texto
+                                $("#idEmpresa").val(aux2.id_entidad);
+                                $("#nombreEmpresa").val(aux2.nombre_entidad);
+                                $("#nombreContactoEmp").val(aux2.nombre_contacto);
+
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                } else {
+                    $("#idEmpresa").val("");
+                    $("#nombreEmpresa").val("");
+                    $("#nombreContactoEmp").val("");
+                }
+
+            });
 
             //Guarda los datos introducidos en el formulario en la tabla facturas
             $("#generarFactura").click(function () {
@@ -139,7 +197,7 @@
                 var myObj = {};
                 myObj["id_factura"] = ""; //Es automatico
                 myObj["id_cliente"] = $("#idCliente").val().trim();
-                myObj["id_empresa"] = $("#descripcion").val().trim();
+                myObj["id_empresa"] = $("#idEmpresa").val().trim();
                 myObj["total_factura"] = $("#total_factura").val().trim();
 
                 //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
@@ -153,7 +211,7 @@
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/cargosController/nuevoCargo.htm',
+                    url: '/Facturacion/facturasController/nuevaFactura.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -234,7 +292,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/facturasController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
@@ -302,16 +360,16 @@
                                 </div>
 
                                 <div class="form-group col-xs-3">
-                                    <label for="nombre_empresa">Id Cliente</label>
-                                    <input type="text" class="form-control" id="idEmpresa" name="idCliente">
+                                    <label for="nombre_empresa">Id Empresa</label>
+                                    <input type="text" class="form-control" id="idEmpresa" name="idEmpresa">
                                 </div>                            
                                 <div class="form-group col-xs-3">
-                                    <label for="dir_fisica">Nombre Entidad</label>
-                                    <input type="text" class="form-control" id="nombreEmpresa" name="nombreEntidad">
+                                    <label for="dir_fisica">Nombre Empresa</label>
+                                    <input type="text" class="form-control" id="nombreEmpresa" name="nombreEmpresa">
                                 </div>
                                 <div class="form-group col-xs-3">
-                                    <label for="pais">Nombre Contacto</label>
-                                    <input type="text" class="form-control" id="nombreContactoEmp" name="nombreContacto">
+                                    <label for="pais">Nombre Contacto Empresa</label>
+                                    <input type="text" class="form-control" id="nombreContactoEmp" name="nombreContactoEmp">
                                 </div>
 
                             </div>
@@ -332,11 +390,11 @@
                                     <input type="text" class="form-control" id="idCliente" name="idCliente">
                                 </div>                            
                                 <div class="form-group col-xs-3">
-                                    <label for="dir_fisica">Nombre Entidad</label>
+                                    <label for="dir_fisica">Nombre Cliente</label>
                                     <input type="text" class="form-control" id="nombreEntidad" name="nombreEntidad">
                                 </div>
                                 <div class="form-group col-xs-3">
-                                    <label for="pais">Nombre Contacto</label>
+                                    <label for="pais">Nombre Contacto Cliente</label>
                                     <input type="text" class="form-control" id="nombreContactoCli" name="nombreContacto">
                                 </div>
 
@@ -374,7 +432,7 @@
                                         <div class='col-xs-12 col-md-4'>
                                             <label class="fechaCargos"> Emision </label>
                                             <div class="form-group">
-                                                <div class='input-group date' id='fecha_cargo'>
+                                                <div class='input-group date' id='fecha_emision'>
                                                     <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control" />
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
