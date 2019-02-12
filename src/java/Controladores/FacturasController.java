@@ -128,22 +128,22 @@ public class FacturasController {
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad, "
-                    + "e.nombre_contacto FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and e.id_entidad = ?");
+                    + "e.nombre_contacto FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and e.id_entidad = ? order by id_cargo");
 
             stAux.setInt(1, Integer.parseInt(resource.getCol1()));
             //Ejecutamos                 
             rs = stAux.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
+            }
 
-                while (rs.next()) {
-                    arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
-                }
-
+            //Controlamos si el cliente tiene cargos o no. Si no tiene el arrayTipo tiene una longitud = 0
+            if (arrayTipo.size() > 0) {
                 resp = new Gson().toJson(arrayTipo);
-            }else{
-                resp ="vacio";
+            } else {
+                resp = "vacio";
             }
 
         } catch (SQLException ex) {

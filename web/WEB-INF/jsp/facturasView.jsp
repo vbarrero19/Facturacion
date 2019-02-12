@@ -68,7 +68,7 @@
                         success: function (data) {
 
 
-                            //alert(data);
+                            alert(data);
                             
                             //Controlamos que un cliente no tenga cargos. En el controller vemos si devuelve datos o no
                             //Si no devuelve datos ponemos resp = "vacio"
@@ -119,7 +119,7 @@
                                 $("#nombreEntidad").val("");
                                 $("#nombreContactoCli").val("");
                                 $("#subtotal").val(0);
-                                $("#impuestos").val(0);
+                                $("#impuestos").val(110);
                                 $("#total_factura").val(0);
                             }
                         },
@@ -224,6 +224,7 @@
 
                 myObj["id_estado"] = ""; //Falta por definir               
 
+                
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
