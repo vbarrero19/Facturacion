@@ -19,17 +19,27 @@
     <script>
         $(document).ready(function () {
             //LLAMAMOS A LAS FUNCIONCIONES QUE CARGAN LOS COMBOS DINAMICOS    
+
+            // PESTAÑA 1 
             getTipoEntidad();
             getTipoDedicacion();
             getTipoDocumento();
+            // PESTAÑA 2
             getVerEntidad();
             getTipoDireccion();
+            
+            
 
             var userLang = navigator.language || navigator.userLanguage;
 
+    
+     /*  * *******************************************************************************************************
+     * ******************** FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** 
+     * ******************************************************************************************************* */
+    
             //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
             $("#customer-tab").click();
-
+            //PARA LAS FECHAS DE LA PRIMERA PESTAÑA CARGAMOS LOS DESPLEGABLES
             $('#fecha_alta').datetimepicker({
                 format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
@@ -45,7 +55,7 @@
             });
 
 
-            // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO.
+            // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PRIMERA PESTAÑA Y NOS GUARDA LOS DATOS EN LA TABLA ENTIDAD.
             $("#guardarEntidad").click(function () {
 
                 if (window.XMLHttpRequest) //mozilla
@@ -88,19 +98,6 @@
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
 
-                /**************** DATOS ALMACENADOS EN LA PESTAÑA 2 *******************/
-                /*guardamos los datos que insertamos en el formulario de la pestaña 2 en la base de datos */
-                myObj["id_tipo_direecion"] = $('#tipo_direccion').val();
-                myObj["tipo_via"] = $('#tipo_via').val().trim();
-                myObj["nombre_via"] = $('#nombre_via').val().trim();
-                myObj["numero_via"] = $('#numero_via').val().trim();
-                myObj["numero_portal"] = $('#numero_portal').val().trim();
-                myObj["resto_direccion"] = $('#resto_direccion').val().trim();
-                myObj["codigo_postal"] = $('#cod_postal').val().trim();
-                myObj["localidad"] = $('#localidad').val().trim();
-                myObj["provincia"] = $('#provincia').val().trim();
-                myObj["pais"] = $('#pais').val().trim();
-
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -119,16 +116,54 @@
                 });
             });
 
-            /*
-             * PARA LA PESTAÑA 2
-             * funcion para ver los datos de la entidad seleccionada en el combo. Recoge por parametro 
-             * 
-             * 
-             * 
-             * 
-             * el id del cliente 
-             */
-            //Muestra datos de la entidadCliente al seleccionar algo en el combo
+ /*  * *******************************************************************************************************
+     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** 
+     * ******************************************************************************************************* */
+     
+// LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PESTAÑA DOS Y NOS METE LOS DATOS DEL FORMULARIO EN LA TABLA DIRECCIONES.
+        $("#guardarDireccion").click(function () {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+            
+            myObj["id_tipo_direecion"] = $('#tipo_direccion').val();
+            myObj["tipo_via"] = $('#tipo_via').val().trim();
+            myObj["nombre_via"] = $('#nombre_via').val().trim();
+            myObj["numero_via"] = $('#numero_via').val().trim();
+            myObj["numero_portal"] = $('#numero_portal').val().trim();
+            myObj["resto_direccion"] = $('#resto_direccion').val().trim();
+            myObj["codigo_postal"] = $('#cod_postal').val().trim();
+            myObj["localidad"] = $('#localidad').val().trim();
+            myObj["provincia"] = $('#provincia').val().trim();
+            myObj["pais"] = $('#pais').val().trim();
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                type: 'POST',
+                url: '/Facturacion/entidadesController/nuevaDireccion.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        });
+        
+          
+        /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */
             $("#comboEntidad").change(function () {
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
@@ -156,8 +191,8 @@
                         datatype: "json",
                         contentType: "application/json",
                         success: function (data) {
-                            
-                            
+
+
                             var aux = JSON.parse(data);
 
                             aux.forEach(function (valor, indice) {
@@ -182,9 +217,11 @@
             });
         });
 
-       /*  * *******************************************************************************************************
-         * ************************ FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** */
-        
+           
+     /*  * *******************************************************************************************************
+     * ******************** FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** 
+     * ******************************************************************************************************* */
+
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
         function getTipoEntidad() {
 
@@ -303,10 +340,12 @@
 
 
 
-        /*  * *******************************************************************************************************
-         * ************************ FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
-
-
+    
+     /*  * *******************************************************************************************************
+     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** 
+     * ******************************************************************************************************* */
+    
+    
         //CREAMOS FUNCION PARA CARGAR LA LISTA DE ENTIDADES EN EL COMBO
         function getVerEntidad() {
 
@@ -350,13 +389,14 @@
                     console.log(thrownError);
                 }
             });
-        };
+        }
+        ;
 
 
         //CREAMOS UNA FUNCION PARA CARGAR EL COMBO TIPO_DIRECCION
         function getTipoDireccion() {
 
-             if (window.XMLHttpRequest) //mozilla
+            if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
             } else
@@ -438,7 +478,11 @@
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
                             <div class="tab-content" id="myTabContent">
 
-                                <!----------------------------- INFORMACION DE LA PESTAÑA 1 DATOS DE LA ENTIDAD --------------------------------------->  
+                                <!-- *******************************************************************************************************
+                                * ******************** INFORMACION PARA LA PRIMERA PESTAÑA DATOS DE LA ENTIDAD ******************************   
+                                ******************************************************************************************************* -->
+                                
+
                                 <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DATOS DE LA ENTIDAD</h4>
@@ -583,7 +627,9 @@
                                 </div>
 
 
-                                <!----------------------------- INFORMACION DE LA PESTAÑA 2 DIRECCION DE LA ENTIDAD --------------------------------------->  
+                                   <!-- *******************************************************************************************************
+                                * ******************** INFORMACION PARA LA SEGUNDA PESTAÑA DIRECCION DE LA ENTIDAD ******************************   
+                                ******************************************************************************************************* -->
 
                                 <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
                                     <div class="form-group col-xs-12" align="center">
@@ -615,16 +661,16 @@
 
                                             </select>
                                         </div>
-                                         <div class="form-group col-xs-6">
+                                        <div class="form-group col-xs-6">
                                             <input type="text" class="form-control" id="tipo_via" name="tipo_via" placeholder="Tipo via(c, avda..)" required>
                                         </div>
                                     </div>
 
-                                        <div class="form-group">
-                                            <div class="form-group col-xs-12">
-                                                <input type="text" class="form-control" id="nombre_via" name="nombre_via" placeholder="Nombre via" required>
-                                            </div>
+                                    <div class="form-group">
+                                        <div class="form-group col-xs-12">
+                                            <input type="text" class="form-control" id="nombre_via" name="nombre_via" placeholder="Nombre via" required>
                                         </div>
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-3">
@@ -657,7 +703,7 @@
                                                 <input type="text" class="form-control" id="pais" name="pais" placeholder="pais" required>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <!--MIRAR COMO COMPLETAR LA TABLA SI ES LA MISMA DIRECCION PARA TODOS LOS TIPOS(fisica, fiscal....) -->
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
@@ -675,7 +721,9 @@
                                     <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Alta direccion</button>
                                 </div>
 
-                                <!----------------------------- INFORMACION DE LA PESTAÑA 3 METODO DE PAGO ---------------------------------------> 
+                                    <!-- *******************************************************************************************************
+                                * ******************** INFORMACION PARA LA TERCERA PESTAÑA METODOS DE PAGO ******************************   
+                                ******************************************************************************************************* -->
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DATOS DE PAGO DE LA ENTIDAD</h4>

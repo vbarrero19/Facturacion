@@ -28,8 +28,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class verEntidadesController {
 
-    /*llamamos al controlador de entidades e iniciamos el start.htm y creamos un nuevo modelo vista que llama a entidadesView.jsp y nos lo muestra
-    en caso de que no exista y salte la excepcion*/
+    /*LLAMAMOS AL CONTROLADOR DE ENTIDADES E INICIAMOS EL START.HTM Y CREAMOS UN NUEVO MODELO VISTA QUE LLAMA A ENTIDADESVIEW.JSP Y NOS LO MUESTRA
+    EN CASO DE QUE NO EXISTA Y SALTE LA EXCEPCION*/
+    
     @RequestMapping("/verEntidadesController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verEntidadesView");

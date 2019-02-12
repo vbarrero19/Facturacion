@@ -13,10 +13,12 @@ public class TipoEntidad {
     private String id_tipo_entidad;
     private String tipo_entidad;
     
+    //CONSTRUCTOR VACIO
     public TipoEntidad(){        
         
     }
-    /* CREAMOS UN CONSTRUCTOR DE TIPOENTIDAD PARA RECOGER LOS DATOS DE LA TABLA Y GUARDARLOS EN EL COMBO*/
+        /*CREAMOS UN CONSTRUCTOR PARA CARGAR EL COMBO DEL TIPO DE ENTIDAD DE LA ENTIDAD (CLIENTE, PROVEEDOR...) QUE RECOGEMOS DE LA TABLA TIPO ENTIDAD Y
+    LO GUARDAMOS DENTRO DE LA PRIMERA PESTAÑA DE ENTIDADESVIEW*/
     public TipoEntidad(String id_tipo_entidad, String tipo_entidad) {
         this.id_tipo_entidad = id_tipo_entidad;
         this.tipo_entidad = tipo_entidad;
