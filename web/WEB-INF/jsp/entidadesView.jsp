@@ -114,11 +114,12 @@
             /*funcion para ver los datos de la entidad seleccionada en el combo. Recoge por parametro 
              el id del cliente 
              */
+            //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
-                if ($("#comboEntidad").val() != "0") {
+                if ($("#comboEntidad").val() !== "0") {
 
                     if (window.XMLHttpRequest) //mozilla
                     {
@@ -129,23 +130,27 @@
                     }
 
                     var myObj = {};
+
                     //recogemos el valor de comboEntidad y lo metemos en id_entidad.
                     myObj["id_entidad"] = idEntidad;
+
                     var json = JSON.stringify(myObj);
                     $.ajax({
                         type: 'POST',
-                        url: '/Facturacion/entidadesController/getDatosEntidad.htm',
+                        url: '/Facturacion/entidadesController/verDatosEntidad.htm',
                         data: json,
                         datatype: "json",
                         contentType: "application/json",
                         success: function (data) {
 
                             var aux = JSON.parse(data);
+
                             aux.forEach(function (valor, indice) {
                                 //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
                                 var aux2 = JSON.parse(valor);
                                 //Mostramos los datos en la cajas de texto
-                                $("#nombre_entidad2").val(aux2.nombre_entidad);
+                                $("#nombre_entidad").val(aux2.nombre_entidad);
+
                             });
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
@@ -154,9 +159,10 @@
                             console.log(thrownError);
                         }
                     });
+
                     //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
                 } else {
-                    $("#nombre_entidad2").val("");
+                    $("#nombre_entidad").val("");
                 }
             });
         });

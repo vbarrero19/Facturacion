@@ -62,13 +62,6 @@ public class Entidades {
     }
 
  
-    
-//// CONSTRUCTOR PARA MOSTRAR A LAS ENTIDADES EN VERENTIDADESVIEW
-//    public Entidades(String distinct_code, String nombre_entidad, String nombre_contacto) {
-//        this.distinct_code = distinct_code; 
-//        this.nombre_entidad = nombre_entidad;
-//        this.nombre_contacto = nombre_contacto;
-//    }
 
   // CONSTRUCTOR PARA MOSTRAR A LAS ENTIDADES EN CARGOSVIEW
     public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto) {
@@ -94,11 +87,11 @@ public class Entidades {
      
 
 //CONSTRUCTOR PARA RECOGER EL DATO DEL COMBO EN LA PESTAÑA DIRECCION EN ALTA ENTIDADES
+    public Entidades(String nombre_entidad) {
+        this.nombre_entidad = nombre_entidad;
+    }
 
-//    public Entidades(String id_entidad, String nombre_entidad) {
-//        this.id_entidad = id_entidad;
-//        this.nombre_entidad = nombre_entidad;
-//    }
+     
      
      
     
