@@ -479,6 +479,7 @@ public class EntidadesController {
     
     /*  * *******************************************************************************************************
      * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
+    /*** METERLO EN DIRECCION CONTROLLER ***/
  /*CARGAMOS EL COMBO PARA VER LAS EMPRESAS*/
     @RequestMapping("/entidadesController/getVerEntidad.htm")
     @ResponseBody

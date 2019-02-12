@@ -88,10 +88,18 @@
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
 
-                /****************DATOS ALMACENADOS EN LA PESTAÑA 2*******************/
-                myObj["id_tipo_direccion"] = $('#id_tipo_direccion').val();
-                myObj["tipo_direccion"] = $('#tipo_direccion').val();
-
+                /**************** DATOS ALMACENADOS EN LA PESTAÑA 2 *******************/
+                /*guardamos los datos que insertamos en el formulario de la pestaña 2 en la base de datos */
+                myObj["id_tipo_direecion"] = $('#tipo_direccion').val();
+                myObj["tipo_via"] = $('#tipo_via').val().trim();
+                myObj["nombre_via"] = $('#nombre_via').val().trim();
+                myObj["numero_via"] = $('#numero_via').val().trim();
+                myObj["numero_portal"] = $('#numero_portal').val().trim();
+                myObj["resto_direccion"] = $('#resto_direccion').val().trim();
+                myObj["codigo_postal"] = $('#cod_postal').val().trim();
+                myObj["localidad"] = $('#localidad').val().trim();
+                myObj["provincia"] = $('#provincia').val().trim();
+                myObj["pais"] = $('#pais').val().trim();
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -111,8 +119,14 @@
                 });
             });
 
-            /*funcion para ver los datos de la entidad seleccionada en el combo. Recoge por parametro 
-             el id del cliente 
+            /*
+             * PARA LA PESTAÑA 2
+             * funcion para ver los datos de la entidad seleccionada en el combo. Recoge por parametro 
+             * 
+             * 
+             * 
+             * 
+             * el id del cliente 
              */
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
@@ -143,8 +157,7 @@
                         contentType: "application/json",
                         success: function (data) {
                             
-                            alert(data);
-
+                            
                             var aux = JSON.parse(data);
 
                             aux.forEach(function (valor, indice) {
@@ -169,6 +182,9 @@
             });
         });
 
+       /*  * *******************************************************************************************************
+         * ************************ FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** */
+        
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
         function getTipoEntidad() {
 
@@ -611,15 +627,15 @@
                                         </div>
 
                                     <div class="form-group">
-                                        <div class="form-group col-xs-2">
+                                        <div class="form-group col-xs-3">
                                             <input type="text" class="form-control" id="numero_via" name="numero_via" placeholder="Numero vía" required>
                                         </div>
-                                        <div class="form-group col-xs-2">
+                                        <div class="form-group col-xs-3">
                                             <input type="text" class="form-control" id="numero_portal" name="numero_portal" placeholder="Numero portal" required>
                                         </div>
 
                                         <div class="form-group">
-                                            <div class="form-group col-xs-8">
+                                            <div class="form-group col-xs-6">
                                                 <input type="text" class="form-control" id="resto_direccion" name="resto_direccion" placeholder="Resto direccion" required>
                                             </div>
                                         </div>
@@ -641,6 +657,7 @@
                                                 <input type="text" class="form-control" id="pais" name="pais" placeholder="pais" required>
                                             </div>
                                         </div>
+                                        
                                     </div>
                                     <!--MIRAR COMO COMPLETAR LA TABLA SI ES LA MISMA DIRECCION PARA TODOS LOS TIPOS(fisica, fiscal....) -->
                                     <label> ¿La direccion fisica es igual a la fiscal? </label>
@@ -655,6 +672,7 @@
                                             <label class="form-check-label" for="2">Si</label>
                                         </div>
                                     </div>   
+                                    <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Alta direccion</button>
                                 </div>
 
                                 <!----------------------------- INFORMACION DE LA PESTAÑA 3 METODO DE PAGO ---------------------------------------> 
