@@ -42,6 +42,10 @@ public class Resource  {
         this.col11 = col11;
     }
 
+    public Resource(String string, String string0, String string1, String string2) {
+        
+    }
+
     public String getCol1() {
         return col1;
     }

@@ -67,29 +67,36 @@
                         contentType: "application/json",
                         success: function (data) {
 
-                            var aux = JSON.parse(data);
 
-                            var subtotal = 0;
-                            var impuestos = 0;
+                            //alert(data);
+                            
+                            //Controlamos que un cliente no tenga cargos. En el controller vemos si devuelve datos o no
+                            //Si no devuelve datos ponemos resp = "vacio"
+                            if (data != "vacio") {
 
-                            //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
-                            $('#tableContainer tbody').empty();
-                            aux.forEach(function (valor, indice) {
-                                //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                                var resource = JSON.parse(valor);
+                                var aux = JSON.parse(data);
 
-                                idCargo = resource.col1;
-                                idCliente = resource.col8; 
+                                var subtotal = 0;
+                                var impuestos = 0;
 
-                                $("#idCliente").val(resource.col8);
-                                $("#nombreEntidad").val(resource.col10);
-                                $("#nombreContactoCli").val(resource.col11);
-                                subtotal = subtotal + parseInt(resource.col4);
-                                impuestos = impuestos + parseInt(resource.col6);
-                                //cargamos de forma dinamica la tabla
-                                $('#tableContainer tbody').append(" <tr>\n\
+                                //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                                $('#tableContainer tbody').empty();
+                                aux.forEach(function (valor, indice) {
+                                    //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                                    var resource = JSON.parse(valor);
+
+                                    idCargo = resource.col1;
+                                    idCliente = resource.col8;
+
+                                    $("#idCliente").val(resource.col8);
+                                    $("#nombreEntidad").val(resource.col10);
+                                    $("#nombreContactoCli").val(resource.col11);
+                                    subtotal = subtotal + parseInt(resource.col4);
+                                    impuestos = impuestos + parseInt(resource.col6);
+                                    //cargamos de forma dinamica la tabla
+                                    $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
-                                                                    <td>" + resource.col1 + "</td>                       \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + resource.col1 + "</td>                       \n\
                                                                     <td>" + resource.col2 + "</td>                        \n\
                                                                     <td>" + resource.col3 + "</td>                       \n\
                                                                     <td>" + resource.col4 + "</td>                       \n\
@@ -97,14 +104,24 @@
                                                                     <td>" + resource.col6 + "</td>                       \n\
                                                                     <td>" + resource.col7 + "</td>                       \n\
                                                                     <td>" + resource.col8 + "</td>                       \n\
-                                                                    <td><a class='btn btn-success' href=/Facturacion/FacturasController/getFacturas2.htm?idCargo=" + idCargo + "&idCliente=" + idCliente + ">Quitar</a></td>                       \n\ \n\
+                                                                    <td><a class='btn btn-primary btn-lg' href='javascript:;' onclick='refrescar($(\"#id" + (indice + 1) + "\").text(),idCliente);' role='button'>Quitar</a></td>        \n\\n\
                                                                 </tr>");
+// <td><a class='btn btn-success' href=/Facturacion/FacturasController/getFacturas2.htm?idCargo=" + idCargo + "&idCliente=" + idCliente + ">Quitar</a></td>                       \n\ \n\
 
-
-                            });
-                            $("#subtotal").val(subtotal);
-                            $("#impuestos").val(impuestos);
-                            $("#total_factura").val(subtotal + impuestos);
+                                });
+                                $("#subtotal").val(subtotal);
+                                $("#impuestos").val(impuestos);
+                                $("#total_factura").val(subtotal + impuestos);
+                            } else {
+                                //Si data viene vacio borramos el contenido de los campos
+                                $('#tableContainer tbody').empty();
+                                $("#idCliente").val("");
+                                $("#nombreEntidad").val("");
+                                $("#nombreContactoCli").val("");
+                                $("#subtotal").val(0);
+                                $("#impuestos").val(0);
+                                $("#total_factura").val(0);
+                            }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
                             console.log(xhr.status);
@@ -125,7 +142,7 @@
                     $("#total_factura").val("");
                 }
             })
-            
+
             //Muestra datos de la entidadEmpresa al seleccionar algo en el combo
             $("#comboEmpresas").change(function () {
 
@@ -228,6 +245,14 @@
 
 
         });
+
+        function refrescar(cargo, cliente) {
+            alert("Cargo: " + cargo);
+            alert("Cliente: " + cliente);
+        }
+
+
+
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
@@ -373,7 +398,7 @@
                                 </div>
 
                             </div>
-                            
+
                             <div class="col-xs-12" id="datos2">
 
                                 <div class="col-xs-3 form-group">
