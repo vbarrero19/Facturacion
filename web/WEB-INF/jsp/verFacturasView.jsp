@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -21,7 +19,7 @@
             getVerEntidad();
 
 
-            /*********************  ******************/
+            /*********************************  *******************************/
             /*LO PONEMOS DENTRO DEL READY PORQUE TIENE QUE INICARSE AL CARGAR LA PAGINA*/
 
             var modalConfirm = function (callback) {
@@ -46,11 +44,11 @@
                     $("#result").html("NO CONFIRMADO");
                 }
             });
-            
+
             /*************************************    ************************************/
 
             var userLang = navigator.language || navigator.userLanguage;
-            
+
             //Guarda los datos introducidos en el formulario 
             $("#submit").click(function () {
 
@@ -65,6 +63,7 @@
                 myObj["distinct_code"] = $("#comboEntidad").val().trim();
                 myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
                 myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
+
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -82,8 +81,8 @@
                     }
                 });
             });
-            
-            
+
+
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
@@ -182,8 +181,9 @@
                     console.log(thrownError);
                 }
             });
-        };
-        
+        }
+        ;
+
         /*funcion para ver la lista de facturas del cliente seleccionado en el combo. Recoge por parametro 
          el id del cliente 
          */
@@ -237,7 +237,7 @@
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });
-                    
+
                     $(document).ready(function () {
                         /*para cada boton hacer una funcion */
                         $(".btn-eliminar").on("click", function () {
@@ -324,7 +324,7 @@
         </div>  
     </div>
 
-<!--- ----    ------>
+    <!--- ----    ------>
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -339,7 +339,7 @@
             </div>
         </div>
     </div>
-<!----   ---------->
+    <!----   ---------->
     <div class="alert" role="alert" id="result"></div>
 </body> 
 </html>

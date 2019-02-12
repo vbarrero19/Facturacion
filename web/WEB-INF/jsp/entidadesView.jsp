@@ -18,16 +18,14 @@
     </head>
     <script>
         $(document).ready(function () {
-            //LLAMAMOS A LAS FUNCIONCIONES QUE CARGA EL COMBO DINAMICO     
+            //LLAMAMOS A LAS FUNCIONCIONES QUE CARGAN LOS COMBOS DINAMICOS    
             getTipoEntidad();
             getTipoDedicacion();
             getTipoDocumento();
             getVerEntidad();
             getTipoDireccion();
 
-
             var userLang = navigator.language || navigator.userLanguage;
-
 
             //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
             $("#customer-tab").click();
@@ -37,8 +35,6 @@
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
                 useCurrent: false
-
-
             });
 
             $('#fecha_baja').datetimepicker({
@@ -46,7 +42,6 @@
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
                 useCurrent: false
-
             });
 
 
@@ -94,8 +89,8 @@
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
 
                 /****************DATOS ALMACENADOS EN LA PESTAÑA 2*******************/
-                myObj["col11"] = $('#id_tipo_direccion').val().trim();
-                myObj["col12"] = $('#tipo_direccion').val().trim();
+                myObj["id_tipo_direccion"] = $('#id_tipo_direccion').val();
+                myObj["tipo_direccion"] = $('#tipo_direccion').val();
 
 
                 var json = JSON.stringify(myObj);
@@ -114,6 +109,55 @@
                         console.log(thrownError);
                     }
                 });
+            });
+
+            /*funcion para ver los datos de la entidad seleccionada en el combo. Recoge por parametro 
+             el id del cliente 
+             */
+            $("#comboEntidad").change(function () {
+                //recogemos el valor del combo para utilizarlo luego al ver las facturas.
+                var idEntidad = $("#comboEntidad").val();
+                //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
+                if ($("#comboEntidad").val() != "0") {
+
+                    if (window.XMLHttpRequest) //mozilla
+                    {
+                        ajax = new XMLHttpRequest(); //No Internet explorer
+                    } else
+                    {
+                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    var myObj = {};
+                    //recogemos el valor de comboEntidad y lo metemos en id_entidad.
+                    myObj["id_entidad"] = idEntidad;
+                    var json = JSON.stringify(myObj);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Facturacion/entidadesController/getDatosEntidad.htm',
+                        data: json,
+                        datatype: "json",
+                        contentType: "application/json",
+                        success: function (data) {
+
+                            var aux = JSON.parse(data);
+                            aux.forEach(function (valor, indice) {
+                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+                                var aux2 = JSON.parse(valor);
+                                //Mostramos los datos en la cajas de texto
+                                $("#nombre_entidad2").val(aux2.nombre_entidad);
+                            });
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            console.log(xhr.status);
+                            console.log(xhr.responseText);
+                            console.log(thrownError);
+                        }
+                    });
+                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+                } else {
+                    $("#nombre_entidad2").val("");
+                }
             });
         });
 
@@ -223,7 +267,7 @@
                         //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
                         var opt = document.createElement('option');
                         //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoDocumento2.id__tipo_documento;
+                        opt.value = tipoDocumento2.id_tipo_documento;
                         //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
                         opt.innerHTML = tipoDocumento2.documento;
                         //AÑADIMOS UNA NUEVA OPCION
@@ -236,7 +280,7 @@
 
 
         /*  * *******************************************************************************************************
-         * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
+         * ************************ FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** */
 
 
         //CREAMOS FUNCION PARA CARGAR LA LISTA DE ENTIDADES EN EL COMBO
@@ -282,14 +326,13 @@
                     console.log(thrownError);
                 }
             });
-        }
-        ;
+        };
+
 
         //CREAMOS UNA FUNCION PARA CARGAR EL COMBO TIPO_DIRECCION
         function getTipoDireccion() {
 
-
-            if (window.XMLHttpRequest) //mozilla
+             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
             } else
@@ -304,19 +347,19 @@
                 url: '/Facturacion/entidadesController/getTipoDireccion.htm',
                 success: function (data) {
                     //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var tipoEntidad = JSON.parse(data);
+                    var tipoDireccion = JSON.parse(data);
                     //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
                     select = document.getElementById('id_tipo_direccion');
                     //LO CARGAMOS
-                    tipoEntidad.forEach(function (valor, indice) {
+                    tipoDireccion.forEach(function (valor, indice) {
                         //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var tipoEntidad2 = JSON.parse(valor);
+                        var tipoDireccion2 = JSON.parse(valor);
                         //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
                         var opt = document.createElement('option');
                         //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoEntidad2.id_tipo_direccion;
+                        opt.value = tipoDireccion2.id_tipo_direccion;
                         //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = tipoEntidad2.tipo_direccion;
+                        opt.innerHTML = tipoDireccion2.tipo_direccion;
                         //AÑADIMOS UNA NUEVA OPCION
                         select.appendChild(opt);
                     });
@@ -536,28 +579,28 @@
                                         </div> 
                                         <div class="form-group col-xs-6">
                                             <label for="idCliente>">Nombre_entidad</label>
-                                            <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
+                                            <input type="text" class="form-control" id="nombre_entidad2" name="nombre_entidad2" disabled = "true">
                                         </div>  
                                     </div>
 
 
                                     <div class="form-group">
                                         <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
-                                        <div class="form-group col-xs-2">
+                                        <div class="form-group col-xs-6 ">
                                             <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
 
                                             </select>
                                         </div>
-                                        <div class="form-group col-xs-2">
+                                         <div class="form-group col-xs-6">
                                             <input type="text" class="form-control" id="tipo_via" name="tipo_via" placeholder="Tipo via(c, avda..)" required>
                                         </div>
+                                    </div>
 
                                         <div class="form-group">
-                                            <div class="form-group col-xs-8">
+                                            <div class="form-group col-xs-12">
                                                 <input type="text" class="form-control" id="nombre_via" name="nombre_via" placeholder="Nombre via" required>
                                             </div>
                                         </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-2">
@@ -651,9 +694,7 @@
                                             <input type="text" class="form-control" id="pais_banco" name="pais_banco" placeholder="pais" required>
                                         </div>
                                     </div>
-
                                 </div>
-
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                             </div>
                         </form>

@@ -367,7 +367,6 @@ public class EntidadesController {
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */
             while (rs.next()) {
-
                 arrayTipoDocumento.add(new Gson().toJson(new TipoDocumento(rs.getString(1), rs.getString(2))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
@@ -548,9 +547,66 @@ public class EntidadesController {
 
     }
 
-    /*REALIZAMOS LA CONSULTA PARA CUANDO CARGAMOS LOS DATOS EN EL COMBO, NOS MUESTRE SU NOMBRE_ENTIDAD
+    /*REALIZAMOS LA CONSULTA PARA CUANDO CARGAMOS LOS DATOS EN EL COMBO, NOS MUESTRE SU NOMBRE_ENTIDAD*/
     
-    
+     //Cargamos los datos en los input cuando seleccionamos una opcion del combo    
+    @RequestMapping("/entidadesController/getDatosEntidad.htm")
+    @ResponseBody
+    public String cargarDatosEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Entidades resourceLoad = new Entidades();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad FROM entidad WHERE id_entidad = ?");
+
+            stAux.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
    
     
     
@@ -562,7 +618,7 @@ public class EntidadesController {
     
     public String cargarComboTipoDireccion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
-         Resource resourceLoad = new Resource();
+         TipoDireccion resourceLoad = new TipoDireccion();
 
         Connection con = null;
         ResultSet rs = null;
@@ -584,7 +640,7 @@ public class EntidadesController {
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */
             while (rs.next()) {
-                arrayTipoDireccion.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
+                arrayTipoDireccion.add(new Gson().toJson(new TipoDireccion(rs.getString(1), rs.getString(2))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayTipoDireccion);

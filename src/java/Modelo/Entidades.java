@@ -93,7 +93,14 @@ public class Entidades {
     }
      
 
+//CONSTRUCTOR PARA RECOGER EL DATO DEL COMBO EN LA PESTAÑA DIRECCION EN ALTA ENTIDADES
 
+//    public Entidades(String id_entidad, String nombre_entidad) {
+//        this.id_entidad = id_entidad;
+//        this.nombre_entidad = nombre_entidad;
+//    }
+     
+     
     
 
     //Getters y Setters

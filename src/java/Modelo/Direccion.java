@@ -38,10 +38,7 @@ public class Direccion {
         this.provincia = provincia;
         this.pais = pais;
     }
-
-    public Direccion(String string, String id_tipo_via) {
-        this.tipo_via = tipo_via;
-    }
+    
 
     public Direccion(String string) {
         
