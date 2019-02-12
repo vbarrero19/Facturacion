@@ -552,8 +552,8 @@ public class EntidadesController {
      //Cargamos los datos en los input cuando seleccionamos una opcion del combo    
     @RequestMapping("/entidadesController/getDatosEntidad.htm")
     @ResponseBody
-    public String cargarDatosEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Entidades resourceLoad = new Entidades();
+    public String cargarDatosEntidad(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
@@ -568,11 +568,11 @@ public class EntidadesController {
             
             stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad FROM entidad WHERE id_entidad = ?");
 
-            stAux.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+            stAux.setInt(1, Integer.parseInt(resource.getCol1()));
             rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
             }
 
             resp = new Gson().toJson(arrayTipo);

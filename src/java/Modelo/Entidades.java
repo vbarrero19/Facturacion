@@ -78,6 +78,8 @@ public class Entidades {
         this.distinct_code = distinct_code;
     }   
     
+    
+    
     //CONSTRUCTOR PARA MOSTRAR EL COMBO DE ENTIDADES DENTRO DE LA PESTAÑA DIRECCION EN ALTA ENTIDADES.
      public Entidades(String id_entidad, String distinct_code, String nombre_entidad) {
         this.id_entidad = id_entidad;

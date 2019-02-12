@@ -132,16 +132,18 @@
                     var myObj = {};
 
                     //recogemos el valor de comboEntidad y lo metemos en id_entidad.
-                    myObj["id_entidad"] = idEntidad;
+                    myObj["col1"] = $("#comboEntidad").val();
 
                     var json = JSON.stringify(myObj);
                     $.ajax({
                         type: 'POST',
-                        url: '/Facturacion/entidadesController/verDatosEntidad.htm',
+                        url: '/Facturacion/entidadesController/getDatosEntidad.htm',
                         data: json,
                         datatype: "json",
                         contentType: "application/json",
                         success: function (data) {
+                            
+                            alert(data);
 
                             var aux = JSON.parse(data);
 
@@ -149,7 +151,7 @@
                                 //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
                                 var aux2 = JSON.parse(valor);
                                 //Mostramos los datos en la cajas de texto
-                                $("#nombre_entidad").val(aux2.nombre_entidad);
+                                $("#nombre_entidad2").val(aux2.col2);
 
                             });
                         },
@@ -162,7 +164,7 @@
 
                     //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
                 } else {
-                    $("#nombre_entidad").val("");
+                    $("#nombre_entidad2").val("");
                 }
             });
         });
