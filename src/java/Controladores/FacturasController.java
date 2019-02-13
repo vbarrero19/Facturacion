@@ -30,6 +30,7 @@ public class FacturasController {
 
     ArrayList<String> arrayCargos = new ArrayList<String>();
     String cadena = "";
+    String cadenaNew ="";
 
     @RequestMapping("/facturasController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -59,6 +60,7 @@ public class FacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
+            //Insertamos una nueva factura
             stAux = con.prepareStatement("INSERT INTO facturas (id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento)"
                     + " VALUES (?,?,?,?,?)");
 
@@ -81,6 +83,17 @@ public class FacturasController {
             stAux.setTimestamp(5, timestamp2);
 
             stAux.executeUpdate();
+            
+            //Insertamos el numero de factura en los cargos seleccionados
+            //Recuperamos el maximo valor del campo factura
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select max(id_factura) from facturas");
+            rs.next();
+            int numFac = rs.getInt(1);
+            
+            Statement sentencia2 = con.createStatement();
+            int afectados = sentencia2.executeUpdate("update cargos set id_factura =" + numFac + " where id_cargo in (" + cadenaNew + ")");
+            
 
             resp = "Correcto";
 
@@ -222,8 +235,6 @@ public class FacturasController {
         /*recogemos los valores de los parametros pasados por url desde el jsp */
         String cargo=hsr.getParameter("cargo");
         
-        JOptionPane.showMessageDialog(null, cargo);
-        
         //Borramos la primera ocurrencia del id_cargo en el ArrayList
         arrayCargos.remove(cargo);
         cadena="";
@@ -233,9 +244,7 @@ public class FacturasController {
         }
 
         //Le quitamos la ultima coma a la cadena de los id_Cargo
-        String cadenaNew = cadena.substring(0, cadena.length() - 1);
-        
-        JOptionPane.showMessageDialog(null, cadenaNew);
+        cadenaNew = cadena.substring(0, cadena.length() - 1);
         
         ArrayList<String> arrayTipo = new ArrayList<>();
 
