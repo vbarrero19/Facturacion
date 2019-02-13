@@ -69,7 +69,7 @@
 
 
                             alert(data);
-                            
+
                             //Controlamos que un cliente no tenga cargos. En el controller vemos si devuelve datos o no
                             //Si no devuelve datos ponemos resp = "vacio"
                             if (data != "vacio") {
@@ -104,9 +104,9 @@
                                                                     <td>" + resource.col6 + "</td>                       \n\
                                                                     <td>" + resource.col7 + "</td>                       \n\
                                                                     <td>" + resource.col8 + "</td>                       \n\
-                                                                    <td><a class='btn btn-primary btn-lg' href='javascript:;' onclick='refrescar($(\"#id" + (indice + 1) + "\").text(),idCliente);' role='button'>Quitar</a></td>        \n\\n\
+                                                                    <td><a class='btn btn-primary btn-lg' href='javascript:;' onclick='refrescarCargos($(\"#id" + (indice + 1) + "\").text());' role='button'>Quitar</a></td>        \n\\n\
                                                                 </tr>");
-// <td><a class='btn btn-success' href=/Facturacion/FacturasController/getFacturas2.htm?idCargo=" + idCargo + "&idCliente=" + idCliente + ">Quitar</a></td>                       \n\ \n\
+
 
                                 });
                                 $("#subtotal").val(subtotal);
@@ -118,9 +118,9 @@
                                 $("#idCliente").val("");
                                 $("#nombreEntidad").val("");
                                 $("#nombreContactoCli").val("");
-                                $("#subtotal").val(0);
-                                $("#impuestos").val(110);
-                                $("#total_factura").val(0);
+                                $("#subtotal").val("");
+                                $("#impuestos").val("");
+                                $("#total_factura").val("");
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
@@ -224,7 +224,7 @@
 
                 myObj["id_estado"] = ""; //Falta por definir               
 
-                
+
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
@@ -244,14 +244,89 @@
                 });
             });
 
-
         });
 
-        function refrescar(cargo, cliente) {
-            alert("Cargo: " + cargo);
-            alert("Cliente: " + cliente);
-        }
+        //Se usa para refrescar el listado de cargos si se elimina alguno
+        function refrescarCargos(cargo) {
+            alert("Cargo: " + cargo);            
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                /*en la url le pasamos como parametro el identificador de cargo y cliente que lo recogemos cuando se quiere quitar un cargo de la lista de cargos*/
+                url: '/Facturacion/facturasController/refrescarCargos.htm?cargo=' + cargo, // + '&cliente=' + cliente,
+                success: function (data) {
+
+                    alert(data);
+
+                    //Controlamos que un cliente no tenga cargos. En el controller vemos si devuelve datos o no
+                    //Si no devuelve datos ponemos resp = "vacio"
+                    if (data != "vacio") {
+
+                        var aux = JSON.parse(data);
+
+                        var subtotal = 0;
+                        var impuestos = 0;
+
+                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                        $('#tableContainer tbody').empty();
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var resource = JSON.parse(valor);
+
+                            idCargo = resource.col1;
+                            idCliente = resource.col8;
+
+                            $("#idCliente").val(resource.col8);
+                            $("#nombreEntidad").val(resource.col10);
+                            $("#nombreContactoCli").val(resource.col11);
+                            subtotal = subtotal + parseInt(resource.col4);
+                            impuestos = impuestos + parseInt(resource.col6);
+                            //cargamos de forma dinamica la tabla
+                            $('#tableContainer tbody').append(" <tr>\n\
+                                                                    <th scope=\"row\">" + (indice + 1) + "</th>              \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + resource.col1 + "</td>                       \n\
+                                                                    <td>" + resource.col2 + "</td>                        \n\
+                                                                    <td>" + resource.col3 + "</td>                       \n\
+                                                                    <td>" + resource.col4 + "</td>                       \n\
+                                                                    <td>" + resource.col5 + "</td>                       \n\
+                                                                    <td>" + resource.col6 + "</td>                       \n\
+                                                                    <td>" + resource.col7 + "</td>                       \n\
+                                                                    <td>" + resource.col8 + "</td>                       \n\
+                                                                    <td><a class='btn btn-primary btn-lg' href='javascript:;' onclick='refrescarCargos($(\"#id" + (indice + 1) + "\").text(),idCliente);' role='button'>Quitar</a></td>        \n\\n\
+                                                                </tr>");
+
+
+                        });
+                        $("#subtotal").val(subtotal);
+                        $("#impuestos").val(impuestos);
+                        $("#total_factura").val(subtotal + impuestos);
+                    } else {
+                        //Si data viene vacio borramos el contenido de los campos
+                        $('#tableContainer tbody').empty();
+                        $("#idCliente").val("");
+                        $("#nombreEntidad").val("");
+                        $("#nombreContactoCli").val("");
+                        $("#subtotal").val("");
+                        $("#impuestos").val("");
+                        $("#total_factura").val("");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
 
 
 
@@ -303,6 +378,7 @@
                 }
             });
         }
+        ;
 
         //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
         //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
