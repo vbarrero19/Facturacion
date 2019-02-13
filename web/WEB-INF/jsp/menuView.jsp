@@ -40,11 +40,17 @@
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Entidades
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">
-                                        <li clas="mEntidad"><a href="<c:url value='/entidadesController/start.htm'/>">Alta entidad</a></li>
                                         <!--meter href la direccion del controlador que realiza las acciones -->
-                                        <li class="mEntidad"><a href="<c:url value='/verEntidadesController/start.htm'/>">Ver/editar entidad</a></li>
-                                        <!--<li><a href="#">Modificar cliente</a></li>
-                                        <li><a href="#">Baja cliente</a></li> -->
+                                        <li class="mEntidad">ALTAS</li>
+                                        <li class="mEntidad"><a href="<c:url value='/entidadesController/start.htm'/>">Entidad</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/direccionController/start.htm'/>">Direccion</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/'/>">Pago</a></li>
+                                        
+                                        <li class="mEntidad">VER/EDITAR</li>
+                                        <li class="mEntidad"><a href="<c:url value='/verEntidadesController/start.htm'/>">Entidad</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/'/>">Direccion</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/'/>">Pago</a></li>
+                                        
                                     </ul>
                                 </div>
                                 <!-- Fin del menu de entidades -->
