@@ -58,7 +58,7 @@ public class DireccionController {
             /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            
+
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA DIRECCION*/
 //            stAux = con.prepareStatement("INSERT INTO DIRECCION (tipo_via, nombre_via, numero_via, numero_portal, resto_direccion, codigo_postal, localidad, provincia, pais)"
 //                    + " VALUES (?,?,?,?,?,?,?,?,?)");
@@ -73,8 +73,6 @@ public class DireccionController {
 //            stAux.setString(7, direccion.getLocalidad());
 //            stAux.setString(8, direccion.getProvincia());
 //            stAux.setString(9, direccion.getPais());
-
-          
             stAux = con.prepareStatement("INSERT INTO DIRECCION (id_tipo_direccion, tipo_via, nombre_via, numero_via, numero_portal, resto_direccion, codigo_postal, localidad, provincia, pais)"
                     + " VALUES (?,?,?,?,?,?,?,?,?,?)");
 
@@ -89,28 +87,43 @@ public class DireccionController {
             stAux.setString(8, direccion.getLocalidad());
             stAux.setString(9, direccion.getProvincia());
             stAux.setString(10, direccion.getPais());
-            
+
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();
 
- 
+            //RECOGEMOS EL MAXIMO DEL NUMERO DE LA DIRECCION 
+            Connection con2 = null;
+            ResultSet rs2 = null;
+            PreparedStatement stAux2 = null;
 
-            // GUARDAMOS EN LA TABLA DIRECCION EL ID_TIPO_DIRECCION DE LA TABLA TIPO_DIRECCION.
-//            Connection con2 = null;
-//            ResultSet rs2 = null;
-//            PreparedStatement stAux2 = null;
-//
-//            con2 = pool_local.getConnection();
-//            
-//            /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
-//            stAux2 = con2.prepareStatement("INSERT INTO DIRECCION (id_tipo_direccion) values (?)");
-//
-//            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
-//            stAux2.setInt(1, Integer.parseInt(direccion.getId_tipo_direccion()));
-//
-//            /*LO EJECUTAMOS*/
-//            stAux2.executeUpdate();
+            con2 = pool_local.getConnection();
+            stAux2 = con2.prepareStatement("SELECT max(id_direccion) FROM direccion");
+
+            rs2 = stAux2.executeQuery();
+            int maximo = 0;
+
+            while (rs2.next()) {
+                maximo = rs2.getInt(1);
+            }
+
+            /*GUARDAMOS EN LA TABLA ENTIDAD_DIRECCION LA RELACION ENTRE LA TABLA ENTIDAD(con id_entidad seleccionadod el combo)
+           Y LA TABLA DIRECCION, EL ID_DIRECCION(el maximo id_direccion) QUE ESTA INSERTADO) */
+            Connection con3 = null;
+            ResultSet rs3 = null;
+            PreparedStatement stAux3 = null;
             
+            //PARA RECOGER EL PARAMETRO QUE RECOGEMOS DEL COMBO EN EL JSP
+            //int idEntidad=Integer.parseInt(hsr.getParameter("idEntidad"));
+            
+            con3 = pool_local.getConnection();
+
+            stAux3 = con3.prepareStatement("INSERT INTO ENTIDAD_DIRECCION (id_entidad, id_direccion) VALUES (?, ?)");
+            // stAux2.setInt(1, idEntidad);
+            stAux3.setInt(1, '1');
+            stAux3.setInt(2, maximo);
+
+            /*LO EJECUTAMOS*/
+            stAux3.executeUpdate();
 
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
