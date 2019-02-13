@@ -72,7 +72,7 @@
 
             /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */
             $("#comboEntidad").change(function () {
-                //recogemos el valor del combo para utilizarlo luego al ver las facturas.
+                //recogemos el valor del combo(id_entidad) para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
                 if ($("#comboEntidad").val() !== "0") {

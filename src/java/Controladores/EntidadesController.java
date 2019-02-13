@@ -142,10 +142,7 @@ public class EntidadesController {
             stAux2.setInt(1, maximo);
             stAux2.setInt(2, Integer.parseInt(entidades.getId_tipo_entidad()));
 
-            /*LO EJECUTAM
-            
-            
-            OS*/
+            /*LO EJECUTAMOS*/
             stAux2.executeUpdate();
 
             /**
