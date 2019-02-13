@@ -1,4 +1,5 @@
 package Controladores;
+
 /**
  *
  * @author vbarr
@@ -30,16 +31,13 @@ public class verEntidadesController {
 
     /*LLAMAMOS AL CONTROLADOR DE ENTIDADES E INICIAMOS EL START.HTM Y CREAMOS UN NUEVO MODELO VISTA QUE LLAMA A ENTIDADESVIEW.JSP Y NOS LO MUESTRA
     EN CASO DE QUE NO EXISTA Y SALTE LA EXCEPCION*/
-    
     @RequestMapping("/verEntidadesController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verEntidadesView");
 
         return mv;
     }
-   
-    
-    
+
     @RequestMapping("/verEntidadesController/verEntidades.htm")
     @ResponseBody
     public String verEntidades(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {

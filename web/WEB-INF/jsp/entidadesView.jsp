@@ -20,25 +20,18 @@
         $(document).ready(function () {
             //LLAMAMOS A LAS FUNCIONCIONES QUE CARGAN LOS COMBOS DINAMICOS    
 
-            // PESTAÑA 1 
             getTipoEntidad();
             getTipoDedicacion();
             getTipoDocumento();
-            // PESTAÑA 2
-            getVerEntidad();
-            getTipoDireccion();
-            
-            
 
             var userLang = navigator.language || navigator.userLanguage;
 
-    
-     /*  * *******************************************************************************************************
-     * ******************** FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** 
-     * ******************************************************************************************************* */
-    
+            /*  * *******************************************************************************************************
+             * ******************** FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** 
+             * ******************************************************************************************************* */
+
             //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
-            $("#customer-tab").click();
+            //$("#customer-tab").click();
             //PARA LAS FECHAS DE LA PRIMERA PESTAÑA CARGAMOS LOS DESPLEGABLES
             $('#fecha_alta').datetimepicker({
                 format: 'YYYY-MM-DD',
@@ -116,54 +109,54 @@
                 });
             });
 
- /*  * *******************************************************************************************************
-     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** 
-     * ******************************************************************************************************* */
-     
+            /*  * *******************************************************************************************************
+             * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** 
+             * ******************************************************************************************************* */
+
 // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PESTAÑA DOS Y NOS METE LOS DATOS DEL FORMULARIO EN LA TABLA DIRECCIONES.
-        $("#guardarDireccion").click(function () {
+            $("#guardarDireccion").click(function () {
 
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            var myObj = {};
-            
-            myObj["id_tipo_direecion"] = $('#tipo_direccion').val();
-            myObj["tipo_via"] = $('#tipo_via').val().trim();
-            myObj["nombre_via"] = $('#nombre_via').val().trim();
-            myObj["numero_via"] = $('#numero_via').val().trim();
-            myObj["numero_portal"] = $('#numero_portal').val().trim();
-            myObj["resto_direccion"] = $('#resto_direccion').val().trim();
-            myObj["codigo_postal"] = $('#cod_postal').val().trim();
-            myObj["localidad"] = $('#localidad').val().trim();
-            myObj["provincia"] = $('#provincia').val().trim();
-            myObj["pais"] = $('#pais').val().trim();
-
-            var json = JSON.stringify(myObj);
-            $.ajax({
-                type: 'POST',
-                url: '/Facturacion/entidadesController/nuevaDireccion.htm',
-                data: json,
-                datatype: "json",
-                contentType: "application/json",
-                success: function (data) {
-                    alert(data);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
                 }
+
+                var myObj = {};
+
+                myObj["id_tipo_direecion"] = $('#tipo_direccion').val();
+                myObj["tipo_via"] = $('#tipo_via').val().trim();
+                myObj["nombre_via"] = $('#nombre_via').val().trim();
+                myObj["numero_via"] = $('#numero_via').val().trim();
+                myObj["numero_portal"] = $('#numero_portal').val().trim();
+                myObj["resto_direccion"] = $('#resto_direccion').val().trim();
+                myObj["codigo_postal"] = $('#cod_postal').val().trim();
+                myObj["localidad"] = $('#localidad').val().trim();
+                myObj["provincia"] = $('#provincia').val().trim();
+                myObj["pais"] = $('#pais').val().trim();
+
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/entidadesController/nuevaDireccion.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
             });
-        });
-        
-          
-        /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */
+
+
+            /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */
             $("#comboEntidad").change(function () {
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
                 var idEntidad = $("#comboEntidad").val();
@@ -217,10 +210,10 @@
             });
         });
 
-           
-     /*  * *******************************************************************************************************
-     * ******************** FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** 
-     * ******************************************************************************************************* */
+
+        /*  * *******************************************************************************************************
+         * ************************************** FUNCIONES DE ALTA ENTIDAD  ************************************** 
+         * ******************************************************************************************************* */
 
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
         function getTipoEntidad() {
@@ -300,7 +293,6 @@
         }
 
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO DOCUMENTO
-
         function getTipoDocumento() {
 
             if (window.XMLHttpRequest) //mozilla
@@ -338,102 +330,7 @@
             });
         }
 
-
-
-    
-     /*  * *******************************************************************************************************
-     * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** 
-     * ******************************************************************************************************* */
-    
-    
-        //CREAMOS FUNCION PARA CARGAR LA LISTA DE ENTIDADES EN EL COMBO
-        function getVerEntidad() {
-
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/entidadesController/getVerEntidad.htm',
-                success: function (data) {
-                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var verEntidad = JSON.parse(data);
-                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
-                    select = document.getElementById('comboEntidad');
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-                    verEntidad.forEach(function (valor, indice) {
-                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var verEntidad2 = JSON.parse(valor);
-                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
-                        var opt = document.createElement('option');
-                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = verEntidad2.id_entidad;
-                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = verEntidad2.distinct_code;
-                        select.appendChild(opt);
-                    });
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
-
-
-        //CREAMOS UNA FUNCION PARA CARGAR EL COMBO TIPO_DIRECCION
-        function getTipoDireccion() {
-
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/entidadesController/getTipoDireccion.htm',
-                success: function (data) {
-                    //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
-                    var tipoDireccion = JSON.parse(data);
-                    //IDENTIFICAMOS EL COMBO POR EL ID DE LA TABLA TIPO_ENTIDAD
-                    select = document.getElementById('id_tipo_direccion');
-                    //LO CARGAMOS
-                    tipoDireccion.forEach(function (valor, indice) {
-                        //CADA OBJETO TIPO STRING LO PASAMOS A TIPOENTIDAD CON JSON
-                        var tipoDireccion2 = JSON.parse(valor);
-                        //CREAMOS LAS OPTION DEL COMBO(CODIGO HTML)
-                        var opt = document.createElement('option');
-                        //GUARDAMOS EL ID EN EL VALUE DE CADA OPCION DE CADA VUELTA
-                        opt.value = tipoDireccion2.id_tipo_direccion;
-                        //GUARDAMOS LA DESCRIPCION DEL TIPO DE ENTIDAD
-                        opt.innerHTML = tipoDireccion2.tipo_direccion;
-                        //AÑADIMOS UNA NUEVA OPCION
-                        select.appendChild(opt);
-                    });
-                }
-            });
-        }
-
-
-
-
+      
     </script>
     <body>
         <div class="container">
@@ -446,22 +343,11 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA ENTIDADES</h3>
-
-                            <!-- ALMACENAMOS EL ID_ENTIDAD -->
-                            <div class="form-group-combo">  
-                                <label> Num id </label>
-                                <label> Distinct code </label>
-                            </div>
-
-                            <div class="form-group-combo">                                
-                                <input type="text" class="form-control" id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
-                                <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
-                            </div>
+                            <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA DAR DE ALTA ENTIDAD</h3>
 
 
                             <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CLIENTES -->
-                            <div class="form-group">						
+<!--                            <div class="form-group">						
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="true">Customer info</a>
@@ -473,26 +359,28 @@
                                         <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment Info</a>
                                     </li>
                                 </ul>
-                            </div>  
+                            </div>  -->
 
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
-                            <div class="tab-content" id="myTabContent">
+<!--                            <div class="tab-content" id="myTabContent">-->
 
                                 <!-- *******************************************************************************************************
                                 * ******************** INFORMACION PARA LA PRIMERA PESTAÑA DATOS DE LA ENTIDAD ******************************   
                                 ******************************************************************************************************* -->
-                                
 
-                                <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+
+<!--                                <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">-->
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DATOS DE LA ENTIDAD</h4>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
+                                            <label>Nombre entidad </label>
                                             <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
                                         </div>
                                         <div class="form-group col-xs-6">
                                             <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE ENTIDAD QUE EXISTEN -->
+                                            <label>Tipo entidad </label>
                                             <select id="id_tipo_entidad" name="id_tipo_entidad" class="form-control">
 
                                             </select>
@@ -502,11 +390,13 @@
                                     <!--CARGAMOS EL COMBO CON LA INFORMACION DEL TIPO DE IDENTIFICACION DE LA ENTIDAD -->
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
+                                            <label>Identificador fiscal </label>
                                             <select class="form-control" id="id_tipo_documento" name="id_tipo_documento">
 
                                             </select>
                                         </div>
                                         <div class="form-group col-xs-6">
+                                            <label>Numero identificador </label>
                                             <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Numero identificador" required>
                                         </div>
                                     </div>
@@ -514,6 +404,7 @@
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-10">
+                                            <label>Nombre contacto </label>
                                             <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre contacto" required>
                                         </div>
                                     </div>
@@ -536,33 +427,36 @@
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
+                                            <label>Primer apellido </label>
                                             <input type="text" class="form-control" id="apellido1" name="apellido1" placeholder="Apellido 1" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
+                                            <label>Segundo apellido </label>
                                             <input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Apellido 2 " >
                                         </div>
                                     </div>
 
-
                                     <!-- CREAMOS COMBO DINAMICO PARA EL TIPO DE DEDICACION DE LA ENTIDAD -->
                                     <div class="form-group">
                                         <div class="form-group col-xs-12">
+                                            <label>Dedicación </label>
                                             <select class="form-control" id="id_dedicacion" name="id_dedicacion">
 
                                             </select>
                                         </div>
                                     </div>
 
-
                                     <div class="form-group">
                                         <div class="form-group col-xs-6">
+                                            <label>Telefono 1</label>
                                             <input type="text" class="form-control" id="telefono1" name="telefono1" placeholder="Telefono 1" required>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="form-group col-xs-6">
+                                                <label>Telefono 2 </label>
                                                 <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Telefono 2" required>
                                             </div>
                                         </div>
@@ -570,17 +464,20 @@
 
                                     <div class="form-group">
                                         <div class="form-group col-xs-12">
+                                            <label>Fax </label>
                                             <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="form-group col-xs-6">
+                                                <label>Correo 1 </label>
                                                 <input type="text" class="form-control" id="mail1" name="mail1" placeholder="mail 1" required>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <div class="form-group col-xs-6">
+                                                <label>Correo 2 </label>
                                                 <input type="text" class="form-control" id="mail2cc" name="mail2cc" placeholder="mail 2" required>
                                             </div>
                                         </div>
@@ -623,107 +520,19 @@
                                         </div>
                                     </div> 
 
-                                    <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta</button>
-                                </div>
+                                    <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta entidad</button>
+<!--                                </div>-->
 
+                                <!-- *******************************************************************************************************
+                             * ******************** INFORMACION PARA LA SEGUNDA PESTAÑA DIRECCION DE LA ENTIDAD ******************************   
+                             ******************************************************************************************************* -->
 
-                                   <!-- *******************************************************************************************************
-                                * ******************** INFORMACION PARA LA SEGUNDA PESTAÑA DIRECCION DE LA ENTIDAD ******************************   
-                                ******************************************************************************************************* -->
+                                <!--<div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
+                                                                    </div>-->
 
-                                <div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
-                                    <div class="form-group col-xs-12" align="center">
-                                        <h4>DIRECCION DE LA ENTIDAD</h4>
-                                    </div>
-
-
-                                    <div class="form-group col-xs-12">
-                                        <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
-                                        <div class="form-group col-xs-6">
-                                            <label for="comboEntidad"> Distinct code </label>
-                                            <div class="form-group-combo">                                        
-                                                <select class="form-control" id="comboEntidad" name="comboEntidad">
-
-                                                </select>                                                            
-                                            </div>
-                                        </div> 
-                                        <div class="form-group col-xs-6">
-                                            <label for="idCliente>">Nombre_entidad</label>
-                                            <input type="text" class="form-control" id="nombre_entidad2" name="nombre_entidad2" disabled = "true">
-                                        </div>  
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
-                                        <div class="form-group col-xs-6 ">
-                                            <select id="id_tipo_direccion" name="id_tipo_direccion" class="form-control">
-
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-xs-6">
-                                            <input type="text" class="form-control" id="tipo_via" name="tipo_via" placeholder="Tipo via(c, avda..)" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-12">
-                                            <input type="text" class="form-control" id="nombre_via" name="nombre_via" placeholder="Nombre via" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-3">
-                                            <input type="text" class="form-control" id="numero_via" name="numero_via" placeholder="Numero vía" required>
-                                        </div>
-                                        <div class="form-group col-xs-3">
-                                            <input type="text" class="form-control" id="numero_portal" name="numero_portal" placeholder="Numero portal" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group col-xs-6">
-                                                <input type="text" class="form-control" id="resto_direccion" name="resto_direccion" placeholder="Resto direccion" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-2">
-                                            <input type="text" class="form-control" id="cod_postal" name="cod_postal" placeholder="Codigo postal" required>
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <input type="text" class="form-control" id="localizacion" name="localizacion" placeholder="localizacion localizacion" required>
-                                        </div>
-                                        <div class="form-group col-xs-4">
-                                            <input type="text" class="form-control" id="provincia" name="provincia" placeholder="provincia" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group col-xs-2">
-                                                <input type="text" class="form-control" id="pais" name="pais" placeholder="pais" required>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!--MIRAR COMO COMPLETAR LA TABLA SI ES LA MISMA DIRECCION PARA TODOS LOS TIPOS(fisica, fiscal....) -->
-                                    <label> ¿La direccion fisica es igual a la fiscal? </label>
-                                    <!-- Creamos un radio button para preguntar si la direccion fisica es igual a la fiscal y autcompletamos en caso afirmativo -->
-                                    <div id="direc" class="form_radio_button">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="direc" id="direc1" value="no" checked>
-                                            <label class="form-check-label" for="1">No</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="direc" id="direc2" value="si">
-                                            <label class="form-check-label" for="2">Si</label>
-                                        </div>
-                                    </div>   
-                                    <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Alta direccion</button>
-                                </div>
-
-                                    <!-- *******************************************************************************************************
-                                * ******************** INFORMACION PARA LA TERCERA PESTAÑA METODOS DE PAGO ******************************   
-                                ******************************************************************************************************* -->
+                                <!-- *******************************************************************************************************
+                            * ******************** INFORMACION PARA LA TERCERA PESTAÑA METODOS DE PAGO ******************************   
+                            ******************************************************************************************************* -->
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                                     <div class="form-group col-xs-12" align="center">
                                         <h4>DATOS DE PAGO DE LA ENTIDAD</h4>
@@ -770,7 +579,7 @@
                                     </div>
                                 </div>
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-                            </div>
+<!--                            </div>-->
                         </form>
                     </div>
                 </div>
