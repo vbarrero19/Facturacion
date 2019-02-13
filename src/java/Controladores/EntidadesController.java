@@ -142,7 +142,10 @@ public class EntidadesController {
             stAux2.setInt(1, maximo);
             stAux2.setInt(2, Integer.parseInt(entidades.getId_tipo_entidad()));
 
-            /*LO EJECUTAMOS*/
+            /*LO EJECUTAM
+            
+            
+            OS*/
             stAux2.executeUpdate();
 
             /**
@@ -408,6 +411,11 @@ public class EntidadesController {
 
     }
 
+    
+    
+    /**********************************************************************************/
+    /*************** PARA VER LAS ENTIDADES EN VER/MODIFICAR ENTIDAD ******************/
+    /**********************************************************************************/
     /*CARGAMOS TODOS LOS DATOS DE LA ENTIDAD PARA MOSTRARLOS EN LA PANTALLA DE MODIFICAR ENTIDAD.*/
     @RequestMapping("/entidadesController/getEntidad.htm")
     @ResponseBody
@@ -475,67 +483,5 @@ public class EntidadesController {
         return resp;
 
     }
-    
-    
-    
-//    /*RECOGEMOS EL VALOR DEL COMBO PARA QUE NOS MUESTRE EL NOMBRE DE ENTIDAD DE LA EMPRESA*/
-//    @RequestMapping("/entidadesController/verDatosEntidad.htm")
-//    @ResponseBody
-//    public String verDatosEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        Entidades resourceLoad = new Entidades();
-//
-//        Connection con = null;
-//        ResultSet rs = null;
-//        PreparedStatement stAux = null;
-//        String resp = "correcto";
-//
-//        ArrayList<String> arrayTipo = new ArrayList<>();
-//
-//        try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();
-//            
-//            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad FROM entidad WHERE id_entidad = ?");
-//
-//            stAux.setInt(1, Integer.parseInt(entidades.getId_entidad()));
-//            rs = stAux.executeQuery();
-//
-//            while (rs.next()) {
-//                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
-//            }
-//
-//            resp = new Gson().toJson(arrayTipo);
-//
-//        } catch (SQLException ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } catch (Exception ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (stAux != null) {
-//                    stAux.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        return resp;
-//
-//    }
     
 }

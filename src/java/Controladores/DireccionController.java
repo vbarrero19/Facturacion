@@ -81,40 +81,40 @@ public class DireccionController {
             /**
              * ************** SELECCIONAMOS EL MAXIMO DEL NUMERO DE ENTIDAD DE LA TABLA ********************
              */
-            Connection con2 = null;
-            ResultSet rs2 = null;
-            PreparedStatement stAux2 = null;
-
-            con2 = pool_local.getConnection();
-
-            stAux2 = con2.prepareStatement("SELECT max (id_direccion) FROM direccion");
-
-            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
-            rs2 = stAux2.executeQuery();
-            int maximo = 0;
-
-            while (rs2.next()) {
-                maximo = rs2.getInt(1);
-            }
-
-            
-           // GUARDAMOS EN LA TABLA ENTIDAD_TIPO DE ENTIDAD LA RELACION ENTRE LA TABLA DIRECCION Y LA TABLA TIPO DIRECCION.
-            Connection con3 = null;
-            ResultSet rs3 = null;
-            PreparedStatement stAux3 = null;
-
-            con3 = pool_local.getConnection();
-            
-            /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA DIRECCION*/
-
-            stAux3 = con3.prepareStatement("INSERT INTO ENTIDAD_DIRECCION (id_entidad, id_direccion) VALUES (?,?)");
-
-            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
-            stAux2.setInt(1, maximo);
-            stAux2.setInt(2, Integer.parseInt(entidades.getId_tipo_entidad()));
-
-            /*LO EJECUTAMOS*/
-            stAux2.executeUpdate();
+//            Connection con2 = null;
+//            ResultSet rs2 = null;
+//            PreparedStatement stAux2 = null;
+//
+//            con2 = pool_local.getConnection();
+//
+//            stAux2 = con2.prepareStatement("SELECT max (id_direccion) FROM direccion");
+//
+//            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+//            rs2 = stAux2.executeQuery();
+//            int maximo = 0;
+//
+//            while (rs2.next()) {
+//                maximo = rs2.getInt(1);
+//            }
+//
+//            
+//           // GUARDAMOS EN LA TABLA ENTIDAD_TIPO DE ENTIDAD LA RELACION ENTRE LA TABLA DIRECCION Y LA TABLA TIPO DIRECCION.
+//            Connection con3 = null;
+//            ResultSet rs3 = null;
+//            PreparedStatement stAux3 = null;
+//
+//            con3 = pool_local.getConnection();
+//            
+//            /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA DIRECCION*/
+//
+//            stAux3 = con3.prepareStatement("INSERT INTO ENTIDAD_DIRECCION (id_entidad, id_direccion) VALUES (?,?)");
+//
+//            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
+//            stAux2.setInt(1, maximo);
+//            stAux2.setInt(2, Integer.parseInt(entidades.getId_tipo_entidad()));
+//
+//            /*LO EJECUTAMOS*/
+//            stAux2.executeUpdate();
 
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
