@@ -299,7 +299,7 @@
                                         <thead class="thead-dark">                                            
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">id_factura</th>
+                                                <th scope="col">Nº factura</th>
                                                 <th scope="col">Cliente</th>
                                                 <th scope="col">Empresa</th>
                                                 <th scope="col">FechaCargo</th>
