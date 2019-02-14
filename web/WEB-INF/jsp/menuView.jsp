@@ -44,7 +44,7 @@
                                         <li class="mEntidad">ALTAS</li>
                                         <li class="mEntidad"><a href="<c:url value='/entidadesController/start.htm'/>">Entidad</a></li>
                                         <li class="mEntidad"><a href="<c:url value='/direccionController/start.htm'/>">Direccion</a></li>
-                                        <li class="mEntidad"><a href="<c:url value='/'/>">Pago</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/pagoController/start.htm'/>">Pago</a></li>
                                         
                                         <li class="mEntidad">VER/EDITAR</li>
                                         <li class="mEntidad"><a href="<c:url value='/verEntidadesController/start.htm'/>">Entidad</a></li>
