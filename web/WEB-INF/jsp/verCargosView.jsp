@@ -13,48 +13,48 @@
     </head>
     <script>
         $(document).ready(function () {
+            
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
-            //verListaFacturas();
-
+            
             var userLang = navigator.language || navigator.userLanguage;
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
-            $("#submit").click(function () {
-                if (window.XMLHttpRequest) { //mozilla
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                var myObj = {};
-                myObj["id_entidad"] = $("#id_entidad").val().trim();
-                myObj["distinct_code"] = $("#comboEntidad").val().trim();
-                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
-
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/verCargosController/nuevoFactura.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            });
+//            $("#submit").click(function () {
+//                if (window.XMLHttpRequest) { //mozilla
+//                    ajax = new XMLHttpRequest(); //No Internet explorer
+//                } else {
+//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                }
+//
+//                var myObj = {};
+//                myObj["id_entidad"] = $("#id_entidad").val().trim();
+//                myObj["distinct_code"] = $("#comboEntidad").val().trim();
+//                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
+//                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
+//
+//
+//                var json = JSON.stringify(myObj);
+//                $.ajax({
+//                    type: 'POST',
+//                    url: '/Facturacion/verCargosController/nuevoFactura.htm',
+//                    data: json,
+//                    datatype: "json",
+//                    contentType: "application/json",
+//                    success: function (data) {
+//                        alert(data);
+//                    },
+//                    error: function (xhr, ajaxOptions, thrownError) {
+//                        console.log(xhr.status);
+//                        console.log(xhr.responseText);
+//                        console.log(thrownError);
+//                    }
+//                });
+//            });
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
-                //recogemos el valor del combo para utilizarlo luego al ver las facturas.
+                //recogemos el valor del combo para utilizarlo luego al ver los cargos.
                 var idEntidad = $("#comboEntidad").val();
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
                 if ($("#comboEntidad").val() !== "0") {
@@ -194,7 +194,7 @@
                         var cargo = JSON.parse(valor);
                         /*en las fechas, quitamos la hora con substring*/
                         $('#tableContainer tbody').append(" <tr>\n\
-                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                                                <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
                                                                     <td>" + cargo.abreviatura + "</td>         \n\
                                                                     <td>" + cargo.id_tipo_item + "</td>         \n\
                                                                     <td>" + cargo.cuenta + "</td>         \n\
@@ -204,7 +204,7 @@
                                                                     <td>" + cargo.total + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
-                                                                    <td><button type='button' class='btn btn-info miBoton' id='myBtn'>Open Modal</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBoton' id='myBtn';>Descripción</button></td>\n\
                                                                     <td><a href='/Facturacion/MenuController/start.htm' class='btn btn-info' role='button'>Menu principal</a></td>         \n\
                                                                 </tr>");
                     });
@@ -212,8 +212,11 @@
                     $(document).ready(function () {
                         $(".miBoton").click(function () {
                             $("#myModal").modal();
+                            
                         });
                     });
+                    
+                    
 
                 }, //<td> <a href='/MenuController/start.htm' >Modifivar</a> </td>
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -224,6 +227,13 @@
             });
 
         }
+        ;
+        
+        
+        function descrip(idDes) {
+           
+            $("#descripcion").text("ddd");
+        };
 
     </script>
 
@@ -297,6 +307,8 @@
                 </div>
             </div>
         </div>  
+                        
+                        
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
 
@@ -304,10 +316,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Descripción</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        <p id="descripcion"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

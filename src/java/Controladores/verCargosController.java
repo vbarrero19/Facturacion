@@ -177,7 +177,7 @@ public class verCargosController {
     @RequestMapping("/verCargosController/getDatosCargos.htm")
     @ResponseBody
 //    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        public String cargarDatosFactura( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        public String cargarDatosCargos( HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Cargos resourceLoad = new Cargos();
 
         Connection con = null;
@@ -196,8 +196,8 @@ public class verCargosController {
             con = pool_local.getConnection();
             
             stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, c.cuenta, c.importe, c.cantidad, c.impuesto,\n" +
-"                                       c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa FROM cargos c inner join \n" +
-"                                        tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE id_cliente =  ?");
+                                         "c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa FROM cargos c inner join \n" +
+                                         "tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE id_cliente =  ?");
 
             stAux.setInt(1,idCliente);
             rs = stAux.executeQuery();

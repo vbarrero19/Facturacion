@@ -64,13 +64,14 @@
                 <prop key="userform.htm">homepage</prop>
                 <prop key="customerView.htm">customerctrl</prop>       
                 <prop key="itemsView.htm">items</prop>  
-                <prop key="entidadesView.htm">entidades</prop>                
+                <prop key="entidadesView.htm">entidades</prop>   
+                <prop key="modificarEntidadesView.htm">entidades</prop>              
                 <prop key="cargosView.htm">cargos</prop>
                 <prop key="verEntidadesView.htm">verEntidades</prop>
                 <prop key="facturasView.htm">facturas</prop>   
+                <prop key="verDetalleFacturaView.htm">facturas</prop> 
                 <prop key="verFacturasView.htm">verFacturas</prop>    
-                <prop key="verCargosView.htm">verCargos</prop> 
-                <prop key="modificarEntidadesView.htm">entidades</prop> 
+                <prop key="verCargosView.htm">verCargos</prop>                 
                 <prop key="direccionView.htm">direccion</prop> 
                 <prop key="pagoView">pago</prop> 
                 

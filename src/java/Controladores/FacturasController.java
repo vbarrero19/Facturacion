@@ -30,7 +30,7 @@ public class FacturasController {
 
     ArrayList<String> arrayCargos = new ArrayList<String>();
     String cadena = "";
-    String cadenaNew ="";
+    String cadenaNew = "";
 
     @RequestMapping("/facturasController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -83,19 +83,18 @@ public class FacturasController {
             stAux.setTimestamp(5, timestamp2);
 
             stAux.executeUpdate();
-            
+
             //Insertamos el numero de factura en los cargos seleccionados
             //Recuperamos el maximo valor del campo factura
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("select max(id_factura) from facturas");
             rs.next();
             int numFac = rs.getInt(1);
-            
+
             Statement sentencia2 = con.createStatement();
             int afectados = sentencia2.executeUpdate("update cargos set id_factura =" + numFac + " where id_cargo in (" + cadenaNew + ")");
-            
 
-            resp = "Correcto";
+            resp = "Factura generada";
 
         } catch (SQLException ex) {
             resp = "incorrecto SQLException"; // ex.getMessage();
@@ -141,7 +140,7 @@ public class FacturasController {
 
         ArrayList<String> arrayTipo = new ArrayList<>();
         arrayCargos.clear();
-        cadena="";
+        cadena = "";
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
@@ -158,31 +157,20 @@ public class FacturasController {
                         rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
 
                 arrayCargos.add(rs.getString(1));
-
             }
 
-//            for(int i = 0; i <= arrayCargos.size(); i++){
-//                System.out.println(arrayCargos.get(i));
-//                    
-//            }
+            //Si el cliente tiene cargos los pasamos a la cadenaNew
+            if (arrayCargos.size() != 0) {
+                cadena = "";
 
-//            Iterator<String> nombreIterator = arrayCargos.iterator();
-//            while (nombreIterator.hasNext()) {
-//                String elemento = nombreIterator.next();
-//                System.out.print(elemento + " / ");
-//            }
-            
-            
-//            for (int i = 0; i < valores.length; i++) {  //Al ser usado en un select mas adelante debemos concatenar tambien comillas simples     
-//                    cadena = cadena + "" + valores[i] + ","; //Añadimos una coma para separar los valores
-//                }
-//
-//                //Le quitamos la ultima coma a la cadena de los oficios
-//                String cadenaNew = cadena.substring(0, cadena.length() - 1);
-//                
-//                
-//                
+                //Pasamos el array a una cadena de texto para usarla en la query
+                for (int i = 0; i < arrayCargos.size(); i++) {  //Al ser usado en un select mas adelante debemos concatenar tambien comillas simples     
+                    cadena = cadena + arrayCargos.get(i) + ","; //Añadimos una coma para separar los valores
+                }
 
+                //Le quitamos la ultima coma a la cadena de los id_Cargo
+                cadenaNew = cadena.substring(0, cadena.length() - 1);
+            }
             //Controlamos si el cliente tiene cargos o no. Si no tiene el arrayTipo tiene una longitud = 0
             if (arrayTipo.size() > 0) {
                 resp = new Gson().toJson(arrayTipo);
@@ -221,23 +209,24 @@ public class FacturasController {
         return resp;
     }
 
-    //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
+    //Cargamos los cargos en la tabla quitanfdo el cargo seleccionado por el cliente
     @RequestMapping("/facturasController/refrescarCargos.htm")
     @ResponseBody
-        public String refrescarCargos(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String refrescarCargos(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-        
+
         /*recogemos los valores de los parametros pasados por url desde el jsp */
-        String cargo=hsr.getParameter("cargo");
-        
+        String cargo = hsr.getParameter("cargo");
+
         //Borramos la primera ocurrencia del id_cargo en el ArrayList
         arrayCargos.remove(cargo);
-        cadena="";
+
+        cadena = "";
         //Pasamos el array a una cadena de texto para usarla en la query
         for (int i = 0; i < arrayCargos.size(); i++) {  //Al ser usado en un select mas adelante debemos concatenar tambien comillas simples     
             cadena = cadena + arrayCargos.get(i) + ","; //Añadimos una coma para separar los valores
@@ -245,19 +234,16 @@ public class FacturasController {
 
         //Le quitamos la ultima coma a la cadena de los id_Cargo
         cadenaNew = cadena.substring(0, cadena.length() - 1);
-        
+
         ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            
-            
+
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto \n" +
-                                         "FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and c.id_cargo in(" + cadenaNew + ") order by id_cargo");
-
-
+            rs = sentencia.executeQuery("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto \n"
+                    + "FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and c.id_cargo in(" + cadenaNew + ") order by id_cargo");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
@@ -294,12 +280,11 @@ public class FacturasController {
             } catch (Exception e) {
             }
         }
-        
+
         return resp;
 
     }
-    
-    
+
     //Se usa para cargar los datos del combo Clientes. 
     @RequestMapping("/facturasController/getEntidadCliente.htm")
     @ResponseBody
@@ -355,14 +340,18 @@ public class FacturasController {
             } catch (Exception e) {
             }
         }
-        
-        /**SOLO PARA VER QUE ES GLOBAL, BORRAR LUEGO**********************/
+
+        /**
+         * SOLO PARA VER QUE ES GLOBAL, BORRAR LUEGO*********************
+         */
         Iterator<String> nombreIterator = arrayCargos.iterator();
-            while (nombreIterator.hasNext()) {
-                String elemento = nombreIterator.next();
-                System.out.print(elemento + " / ");
-            }
-        /******************************/
+        while (nombreIterator.hasNext()) {
+            String elemento = nombreIterator.next();
+            System.out.print(elemento + " / ");
+        }
+        /**
+         * ***************************
+         */
         return resp;
 
     }

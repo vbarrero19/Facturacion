@@ -12,7 +12,7 @@
     </head>
     <script>
         $(document).ready(function () {
-            //al cargar la pagina llamamos a la funcion getCliente() para llenar el combo 
+            //al cargar la pagina llamamos a las funciones getEntidadCliente() y getEntidadEmpresa() para llenar el combo 
             getEntidadCliente();
             getEntidadEmpresa();
 
@@ -68,7 +68,7 @@
                         success: function (data) {
 
 
-                            alert(data);
+                            //alert(data);
 
                             //Controlamos que un cliente no tenga cargos. En el controller vemos si devuelve datos o no
                             //Si no devuelve datos ponemos resp = "vacio"
@@ -91,8 +91,11 @@
                                     $("#idCliente").val(resource.col8);
                                     $("#nombreEntidad").val(resource.col10);
                                     $("#nombreContactoCli").val(resource.col11);
-                                    subtotal = subtotal + parseInt(resource.col4);
+
+                                    //Calculamos los importe e impuestos que vamos a mostrar
+                                    subtotal = subtotal + (parseInt(resource.col4) * parseInt(resource.col5));
                                     impuestos = impuestos + parseInt(resource.col6);
+
                                     //cargamos de forma dinamica la tabla
                                     $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
@@ -235,6 +238,9 @@
                     contentType: "application/json",
                     success: function (data) {
                         alert(data);
+                        
+                        location.reload();
+                        
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -248,7 +254,7 @@
 
         //Se usa para refrescar el listado de cargos si se elimina alguno
         function refrescarCargos(cargo) {
-            alert("Cargo: " + cargo);            
+            alert("Cargo: " + cargo);
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -288,8 +294,11 @@
                             $("#idCliente").val(resource.col8);
                             $("#nombreEntidad").val(resource.col10);
                             $("#nombreContactoCli").val(resource.col11);
-                            subtotal = subtotal + parseInt(resource.col4);
+
+                            //Calculamos los importe e impuestos que vamos a mostrar
+                            subtotal = subtotal + (parseInt(resource.col4) * parseInt(resource.col5));
                             impuestos = impuestos + parseInt(resource.col6);
+                            
                             //cargamos de forma dinamica la tabla
                             $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
@@ -327,6 +336,7 @@
                 }
             });
         }
+        ;
 
 
 
