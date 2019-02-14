@@ -330,7 +330,7 @@
             });
         }
 
-      
+
     </script>
     <body>
         <div class="container">
@@ -343,243 +343,188 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA DAR DE ALTA ENTIDAD</h3>
+                        <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA DAR DE ALTA ENTIDAD</h3>
 
+                        <div class="form-group col-xs-12" align="center">
+                            <h4>DATOS DE LA ENTIDAD</h4>
+                        </div>
 
                             <!-- CREAMOS EL DISEÑO DE LAS PESTAÑAS DE CLIENTES -->
-<!--                            <div class="form-group">						
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="true">Customer info</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="adress-tab" data-toggle="tab" href="#adress" role="tab" aria-controls="adress" aria-selected="false">Adress info</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment Info</a>
-                                    </li>
-                                </ul>
-                            </div>  -->
+                            <!--                            <div class="form-group">						
+                                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="true">Customer info</a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" id="adress-tab" data-toggle="tab" href="#adress" role="tab" aria-controls="adress" aria-selected="false">Adress info</a>
+                                                                </li>
+                                                                <li class="nav-item">
+                                                                    <a class="nav-link" id="payment-tab" data-toggle="tab" href="#payment" role="tab" aria-controls="payment" aria-selected="false">Payment Info</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>  -->
 
                             <!-- DENTRO DE CADA PESTAÑA, METEMOS LA INFORMACIÓN DEL CLIENTE PARA CADA UNA DE ELLAS -->                        
-<!--                            <div class="tab-content" id="myTabContent">-->
+                            <!--                            <div class="tab-content" id="myTabContent">-->
 
-                                <!-- *******************************************************************************************************
-                                * ******************** INFORMACION PARA LA PRIMERA PESTAÑA DATOS DE LA ENTIDAD ******************************   
-                                ******************************************************************************************************* -->
-
-
-<!--                                <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">-->
-                                    <div class="form-group col-xs-12" align="center">
-                                        <h4>DATOS DE LA ENTIDAD</h4>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-6">
-                                            <label>Nombre entidad </label>
-                                            <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
-                                        </div>
-                                        <div class="form-group col-xs-6">
-                                            <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE ENTIDAD QUE EXISTEN -->
-                                            <label>Tipo entidad </label>
-                                            <select id="id_tipo_entidad" name="id_tipo_entidad" class="form-control">
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!--CARGAMOS EL COMBO CON LA INFORMACION DEL TIPO DE IDENTIFICACION DE LA ENTIDAD -->
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-6">
-                                            <label>Identificador fiscal </label>
-                                            <select class="form-control" id="id_tipo_documento" name="id_tipo_documento">
-
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-xs-6">
-                                            <label>Numero identificador </label>
-                                            <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Numero identificador" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-10">
-                                            <label>Nombre contacto </label>
-                                            <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre contacto" required>
-                                        </div>
-                                    </div>
-
-                                    <!-- RADIO BUTTONS PARA EL TRATAMIENTO DE LA PERSONA DE CONTACTO -->
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-2">
-                                            <div id="tratamiento" class="form_radio_button">
-                                                <div class="form-check">
-                                                    <input class="form-check-input inline-block" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
-                                                    <label class="fm-check-label" for="1">Mr</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
-                                                    <label class="form-check-label" for="2">Mrs</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-6">
-                                            <label>Primer apellido </label>
-                                            <input type="text" class="form-control" id="apellido1" name="apellido1" placeholder="Apellido 1" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-6">
-                                            <label>Segundo apellido </label>
-                                            <input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Apellido 2 " >
-                                        </div>
-                                    </div>
-
-                                    <!-- CREAMOS COMBO DINAMICO PARA EL TIPO DE DEDICACION DE LA ENTIDAD -->
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-12">
-                                            <label>Dedicación </label>
-                                            <select class="form-control" id="id_dedicacion" name="id_dedicacion">
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-6">
-                                            <label>Telefono 1</label>
-                                            <input type="text" class="form-control" id="telefono1" name="telefono1" placeholder="Telefono 1" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group col-xs-6">
-                                                <label>Telefono 2 </label>
-                                                <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Telefono 2" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-12">
-                                            <label>Fax </label>
-                                            <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group col-xs-6">
-                                                <label>Correo 1 </label>
-                                                <input type="text" class="form-control" id="mail1" name="mail1" placeholder="mail 1" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-group col-xs-6">
-                                                <label>Correo 2 </label>
-                                                <input type="text" class="form-control" id="mail2cc" name="mail2cc" placeholder="mail 2" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
-                                    <div class="container2 form-group col-xs-12">  
-                                        <div class="row col-xs-6">
-                                            <label class="fechasEntidad"> FECHA ALTA </label>
-                                            <div class="form-group">
-                                                <div class='input-group date' id='fecha_alta'>
-                                                    <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#fecha_alta').datetimepicker();
-                                                });
-                                            </script>
-                                        </div>
-
-                                        <div class="row col-xs-6">
-                                            <label class="fechasEntidad col-xs-offset-2"> FECHA BAJA </label>
-                                            <div class="form-group col-xs-offset-2">
-                                                <div class='input-group date' id='fecha_baja'>
-                                                    <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#fecha_baja').datetimepicker();
-                                                });
-                                            </script>
-                                        </div>
-                                    </div> 
-
-                                    <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta entidad</button>
-<!--                                </div>-->
-
-                                <!-- *******************************************************************************************************
-                             * ******************** INFORMACION PARA LA SEGUNDA PESTAÑA DIRECCION DE LA ENTIDAD ******************************   
-                             ******************************************************************************************************* -->
-
-                                <!--<div class="tab-pane fade" id="adress" role="tabpanel" aria-labelledby="adress-tab">
-                                                                    </div>-->
-
-                                <!-- *******************************************************************************************************
-                            * ******************** INFORMACION PARA LA TERCERA PESTAÑA METODOS DE PAGO ******************************   
+                            <!-- *******************************************************************************************************
+                            * ******************** INFORMACION PARA LA PRIMERA PESTAÑA DATOS DE LA ENTIDAD ******************************   
                             ******************************************************************************************************* -->
-                                <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
-                                    <div class="form-group col-xs-12" align="center">
-                                        <h4>DATOS DE PAGO DE LA ENTIDAD</h4>
-                                    </div> 
-                                    <div class="form-group">
-                                        <div class="form group col-xs-12">
-                                            <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
-                                        </div>                                        
-                                    </div>
 
-                                    <div class="form-group">
-                                        <div class="form-group col-xs-8">
-                                            <input type="text" class="form-control" id="numero_cuenta" name="numero_cuenta" placeholder="Num cuenta" required>
-                                        </div>                                        
-                                        <div class="form-group col-xs-2">
-                                            <input type="text" class="form-control" id="cod1" name="cod1" placeholder="Codigo1" required>
-                                        </div>                                        
-                                        <div class="form-group col-xs-2">
-                                            <input type="text" class="form-control" id="cod2" name="cod2" placeholder="Codigo2" required>
+
+                            <!--                                <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">-->
+
+                            <div class="form-group">
+                                <div class="form-group col-xs-6">
+                                    <label>Nombre entidad </label>
+                                    <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" placeholder="Nombre entidad" required>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE ENTIDAD QUE EXISTEN -->
+                                    <label>Tipo entidad </label>
+                                    <select id="id_tipo_entidad" name="id_tipo_entidad" class="form-control">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--CARGAMOS EL COMBO CON LA INFORMACION DEL TIPO DE IDENTIFICACION DE LA ENTIDAD -->
+                            <div class="form-group">
+                                <div class="form-group col-xs-6">
+                                    <label>Identificador fiscal </label>
+                                    <select class="form-control" id="id_tipo_documento" name="id_tipo_documento">
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <label>Numero identificador </label>
+                                    <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Numero identificador" required>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="form-group col-xs-10">
+                                    <label>Nombre contacto </label>
+                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre contacto" required>
+                                </div>
+                            </div>
+
+                            <!-- RADIO BUTTONS PARA EL TRATAMIENTO DE LA PERSONA DE CONTACTO -->
+                            <div class="form-group">
+                                <div class="form-group col-xs-2">
+                                    <div id="tratamiento" class="form_radio_button">
+                                        <div class="form-check">
+                                            <label class="fm-check-label" for="1">Mr</label>
+                                            <input class="form-check-input inline-block" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
                                         </div>
-                                    </div>    
-
-
-                                    <div class="form-group col-xs-12">
-                                        <input type="text" class="form-control" id="titular_cuenta" name="titular_cuenta" placeholder="Titular cuenta" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form col-xs-4">
-                                            <input type="text" class="form-control" id="nombre_banco" name="nombre_banco" placeholder="Nombre banco" required>
-                                        </div>
-                                        <div class="form-group col-xs-8">
-                                            <input type="text" class="form-control" id="direccion_banco" name="direccion_banco" placeholder="direccion banco" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="form col-xs-6">
-                                            <input type="text" class="form-control" id="localidad_banco" name="localidad_banco" placeholder="Localidad" required>
-                                        </div>
-                                        <div class="form-group col-xs-6">
-                                            <input type="text" class="form-control" id="pais_banco" name="pais_banco" placeholder="pais" required>
+                                        <div class="form-check">
+                                            <label class="form-check-label" for="2">Mrs</label>
+                                            <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento2" value="mrs">
                                         </div>
                                     </div>
                                 </div>
-                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-<!--                            </div>-->
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group col-xs-6">
+                                    <label>Primer apellido </label>
+                                    <input type="text" class="form-control" id="apellido1" name="apellido1" placeholder="Apellido 1" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group col-xs-6">
+                                    <label>Segundo apellido </label>
+                                    <input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Apellido 2 " >
+                                </div>
+                            </div>
+
+                            <!-- CREAMOS COMBO DINAMICO PARA EL TIPO DE DEDICACION DE LA ENTIDAD -->
+                            <div class="form-group">
+                                <div class="form-group col-xs-12">
+                                    <label>Dedicación </label>
+                                    <select class="form-control" id="id_dedicacion" name="id_dedicacion">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group col-xs-6">
+                                    <label>Telefono 1</label>
+                                    <input type="text" class="form-control" id="telefono1" name="telefono1" placeholder="Telefono 1" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-group col-xs-6">
+                                        <label>Telefono 2 </label>
+                                        <input type="text" class="form-control" id="telefono2" name="telefono2" placeholder="Telefono 2" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group col-xs-12">
+                                    <label>Fax </label>
+                                    <input type="text" class="form-control" id="fax" name="fax" placeholder="FAX" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-group col-xs-6">
+                                        <label>Correo 1 </label>
+                                        <input type="text" class="form-control" id="mail1" name="mail1" placeholder="mail 1" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-group col-xs-6">
+                                        <label>Correo 2 </label>
+                                        <input type="text" class="form-control" id="mail2cc" name="mail2cc" placeholder="mail 2" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
+                            <div class="container2 form-group col-xs-12">  
+                                <div class="row col-xs-6">
+                                    <label class="fechasEntidad"> FECHA ALTA </label>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='fecha_alta'>
+                                            <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#fecha_alta').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
+
+                                <div class="row col-xs-6">
+                                    <label class="fechasEntidad col-xs-offset-2"> FECHA BAJA </label>
+                                    <div class="form-group col-xs-offset-2">
+                                        <div class='input-group date' id='fecha_baja'>
+                                            <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#fecha_baja').datetimepicker();
+                                        });
+                                    </script>
+                                </div>
+                            </div> 
+
+                            <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Alta entidad</button>
+                          
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                            <!--                            </div>-->
                         </form>
                     </div>
                 </div>
