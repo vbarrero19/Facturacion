@@ -49,11 +49,13 @@
                 myObj["localidad"] = $("#localidad").val().trim();
                 myObj["provincia"] = $("#provincia").val().trim();
                 myObj["pais"] = $("#pais").val().trim();
+                
+                var idEnt = $("#comboEntidad").val();
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/direccionController/nuevaDireccion.htm',
+                    url: '/Facturacion/direccionController/nuevaDireccion.htm?idEnt='+idEnt,
                     data: json,
                     datatype: "json",
                     contentType: "application/json",

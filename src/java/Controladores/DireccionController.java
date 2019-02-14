@@ -53,6 +53,9 @@ public class DireccionController {
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
+        
+        String idEntidad = hsr.getParameter("idEnt");
+        
         /*CODIGO PARA AÑADIR UNA NUEVA DIRECCION*/
         try {
             /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
@@ -116,10 +119,11 @@ public class DireccionController {
             //int idEntidad=Integer.parseInt(hsr.getParameter("idEntidad"));
             
             con3 = pool_local.getConnection();
-
+                    
+                    
             stAux3 = con3.prepareStatement("INSERT INTO ENTIDAD_DIRECCION (id_entidad, id_direccion) VALUES (?, ?)");
             // stAux2.setInt(1, idEntidad);
-            stAux3.setInt(1, '1');
+            stAux3.setInt(1, Integer.parseInt(idEntidad));
             stAux3.setInt(2, maximo);
 
             /*LO EJECUTAMOS*/
