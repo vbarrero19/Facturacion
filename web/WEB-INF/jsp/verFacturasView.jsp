@@ -227,13 +227,13 @@
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td>" + factura.id_factura + "</td>         \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + factura.id_factura + "</td>         \n\
                                                                     <td>" + factura.id_cliente + "</td>         \n\
                                                                     <td>" + factura.id_empresa + "</td>         \n\
                                                                     <td>" + factura.fecha_emision.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.total_factura + '€' + "</td>         \n\
-                                                                    <td><a href='/Facturacion/MenuController/start.htm' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><a class='btn btn-primary' href='/Facturacion/verFacturasController/startEntidad.htm?ifFact=$(\"#id" + (indice + 1) + "\").text()'>Detalle</a>\n\
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });
@@ -254,6 +254,38 @@
                 }
             });
         }
+        ;
+
+ //onclick='verDetalle($(\"#id" + (indice + 1) + "\").text());
+
+
+//        function verDetalle(idFact) {
+//            alert("Factura " + idFact);
+//
+//            if (window.XMLHttpRequest) //mozilla
+//            {
+//                ajax = new XMLHttpRequest(); //No Internet explorer
+//            } else
+//            {
+//                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//            }
+//
+//
+//            $.ajax({
+//                //Usamos GET ya que recibimos.
+//                type: 'GET',
+//                /*en la url le pasamos como parametro el identificador de cargo y cliente que lo recogemos cuando se quiere quitar un cargo de la lista de cargos*/
+//                url: '/Facturacion/verFacturasController/verDetalle.htm?factura=' + idFact, // + '&cliente=' + cliente,
+//                success: function (data) {
+//
+//                    alert(data);
+//
+//                }
+//
+//            });
+//        }
+//        ;
+
 
     </script>
 
@@ -314,7 +346,7 @@
                                     </table>
                                 </div>    
 
-                                <!--                                <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>-->
+                                <!-- <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>-->
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                         </form>
 

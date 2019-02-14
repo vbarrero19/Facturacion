@@ -37,6 +37,14 @@ public class verFacturasController {
         return mv;
     }
     
+    @RequestMapping("/verFacturasController/startEntidad.htm")
+    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("verDetalleFacturaView");
+
+        return mv;
+    }
+    
+    
     /*******************************           **************************/
     
         @RequestMapping("/entidadesController/modificarEntidades.htm")
