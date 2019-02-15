@@ -223,7 +223,7 @@
     <body>
         <div class="form-group col-xs-3">
                                     <label for="nombre_empresa">Id Empresa</label>
-                                    <input type="text" class="form-control" id="idEmpresa" name="idEmpresa">
+                                    <input type="text" class="form-control" id="idEmpresa" name="idEmpresa"> 
                                 </div>  
     </body>
 </html>
