@@ -72,7 +72,8 @@
                 <prop key="verDetalleFacturaView.htm">facturas</prop> 
                 <prop key="verFacturasView.htm">verFacturas</prop>    
                 <prop key="verCargosView.htm">verCargos</prop>                 
-                <prop key="direccionView.htm">direccion</prop> 
+                <prop key="direccionView.htm">direccion</prop>
+                <prop key="modificarDireccionView">direccion</prop>  
                 <prop key="pagoView">pago</prop> 
                 
             </props>
