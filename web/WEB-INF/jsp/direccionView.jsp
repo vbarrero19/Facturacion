@@ -227,7 +227,7 @@
     </script>
 
     <body>
-        <div class="container">
+        <div class="container col-xs-12">
             <div class="col-xs-12">
                 <!-- con col elegimos el tamaño xs:moviles md:tablets lg:pantallas de ordenador.
                 para empujar las columnas usamos offset y el numero de columnas que queremos desplazar. tiene que estar 
