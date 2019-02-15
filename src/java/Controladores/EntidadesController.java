@@ -413,6 +413,7 @@ public class EntidadesController {
     /**********************************************************************************/
     /*************** PARA VER LAS ENTIDADES EN VER/MODIFICAR ENTIDAD ******************/
     /**********************************************************************************/
+    
     /*CARGAMOS TODOS LOS DATOS DE LA ENTIDAD PARA MOSTRARLOS EN LA PANTALLA DE MODIFICAR ENTIDAD.*/
     @RequestMapping("/entidadesController/getEntidad.htm")
     @ResponseBody

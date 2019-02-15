@@ -372,7 +372,7 @@ textarea
     color: #fff;
 }
 
-/*CSS DE LA PESTAÑA CLIENTES*/
+/*CSS DE LA PESTAÑA ENTIDADES ALTA ENTIDAD*/
 .form_radio_button{
     display: flex;
     padding-right:10px;
@@ -394,6 +394,12 @@ textarea
     margin-left: 5%;
 }
 
+/*CSS PESTAÑA ENTIDADES ALTA NUEVO PAGO*/
+
+.form_radio_button_tipo_tarjeta{   
+    display: flex;
+    padding-bottom:10px;    
+}
 
 /*CSS DE LA PESTAÑA CARGOS */
 .container2{
@@ -466,6 +472,7 @@ textarea
     color:red;
     
 }
+
 
 
 /* ********************************************  */    

@@ -64,11 +64,17 @@ public class PagoController {
             con = pool_local.getConnection();
 
             /*REALIZAMOS LA CONSULTA PREPARADA PARA EL NUEVO METODO DE PAGO*/
-            stAux = con.prepareStatement("INSERT INTO METODO_PAGO (id_entidad, numero_cuenta, codigo1, codigo2, titular_cuenta, tarjeta_credito, mes_caducidad, anio_caducidad,"
-                    + " tipo_tarjeta, codigo_csc, titular_tarjeta, cuenta_paypal, correo_paypal, cheque)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO METODO_PAGO (id_entidad, numero_cuenta, codigo1, codigo2, titular_cuenta, tarjeta_credito, mes_caducidad, anio_caducidad, tipo_tarjeta,"
+                    + "codigo_csc, titular_tarjeta, cuenta_paypal, correo_paypal, cheque, nombre_banco, direccion_banco, localidad, pais)"+
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+           
+
+//                    cuenta_paypal, correo_paypal, cheque"
 
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
+            
+            
             stAux.setInt(1, Integer.parseInt(idEntidad));
             stAux.setString(2, pago.getNumero_cuenta());
             stAux.setString(3, pago.getCodigo1());
@@ -83,6 +89,12 @@ public class PagoController {
             stAux.setString(12, pago.getCuenta_paypal());
             stAux.setString(13, pago.getCorreo_paypal());
             stAux.setString(14, pago.getCheque());
+            stAux.setString(15, pago.getNombre_banco());
+            stAux.setString(16, pago.getDireccion_banco());
+            stAux.setString(17, pago.getLocalidad());
+            stAux.setString(18, pago.getPais());
+
+            
 
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();

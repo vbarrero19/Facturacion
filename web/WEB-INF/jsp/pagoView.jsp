@@ -47,12 +47,16 @@
                 myObj["tarjeta_credito"] = $("#tarjeta_credito").val().trim();
                 myObj["mes_caducidad"] = $("#mes_caducidad").val().trim();
                 myObj["anio_caducidad"] = $("#anio_caducidad").val().trim();
-                myObj["tipo_tarjeta"] = $("#tipo_tarjeta").val().trim();
+                myObj["tipo_tarjeta"] = $(".form-check input:checked").val();
                 myObj["codigo_csc"] = $("#codigo_csc").val().trim();
                 myObj["titular_tarjeta"] = $("#titular_tarjeta").val().trim();
                 myObj["cuenta_paypal"] = $("#cuenta_paypal").val().trim();
                 myObj["correo_paypal"] = $("#correo_paypal").val().trim();
                 myObj["cheque"] = $("#cheque").val().trim();
+                myObj["nombre_banco"] = $("#nombre_banco").val().trim();                
+                myObj["direccion_banco"] = $("#direccion_banco").val().trim();
+                myObj["localidad"] = $("#localidad").val().trim();
+                myObj["pais"] = $("#pais").val().trim();                
                 myObj["por_defecto"] = $("#por_defecto").val().trim();
                 
                 //COGEMOS EL VALOR DEL COMBO (ID_ENTIDAD)
@@ -184,7 +188,7 @@
     </script>
 
     <body>
-        <div class="container">
+        <div class="container col-xs-12">
             <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                 <div class="form-area">  
                     <form role="form">
@@ -248,21 +252,23 @@
 
                         <div class="form-group">
                             <div class="form-group col-xs-8">
-                                <div id="tipo_tarjeta" class="form_radio_button">
+                                <label for="idCliente>">Tipo tarjeta</label>
+                                <div id="tipo_tarjeta" class="form_radio_button_tipo_tarjeta">
                                     <div class="form-check">                                            
                                         <label class="fm-check-label" for="1">Visa</label>
-                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta" id="tipoTarjeta1" value="visa" checked>
+                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta" id="tipo_tarjeta1" value="visa" checked>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="1" align="center">MasterCard</label>
-                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta" id="tipoTarjeta2" value="masterCard">                                            
+                                        <label class="form-check-label" for="2">MasterCard</label>
+                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta2" id="tipo_tarjeta2" value="masterCard">                                            
                                     </div>
                                     <div class="form-check">
-                                        <label class="fm-check-label" for="1">American Express</label>
-                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta" id="tipoTarjeta3" value="American Exrpress">
+                                        <label class="fm-check-label" for="3">American Express</label>
+                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta3" id="tipo_tarjeta3" value="American Exrpress">
                                     </div>
                                 </div>
-                            </div>
+                            </div>                        
+                            
                             <div class="form-group col-xs-4">
                                 <label for="idCliente>">Codigo csc</label>
                                 <input type="text" class="form-control" id="codigo_csc" name="codigo_csc" placeholder="cod_csc" required>
@@ -288,25 +294,49 @@
                                 <label for="idCliente>">cheque</label>
                                 <input type="text" class="form-control" id="cheque" name="cheque" placeholder="cheque" required>
                             </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-group col-xs-6">
+                                <label for="idCliente>">Nombre banco</label>
+                                <input type="text" class="form-control" id="nombre_banco" name="nombre_banco" placeholder="nombre banco" required>
+                            </div>                                        
+                            <div class="form-group col-xs-6">
+                                <label for="idCliente>">Direccion banco</label>
+                                <input type="text" class="form-control" id="direccion_banco" name="direccion_banco" placeholder="direccion banco" required>
+                            </div>
                         </div> 
+                        
+                        <div class="form-group">
+                            <div class="form-group col-xs-6">
+                                <label for="idCliente>">Localidad</label>
+                                <input type="text" class="form-control" id="localidad" name="localidad" placeholder="Localidad" required>
+                            </div>                                        
+                            <div class="form-group col-xs-6">
+                                <label for="idCliente>">Pais</label>
+                                <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" required>
+                            </div>
+                        </div>
+                        
 
                         <div class="form-group">
                             <div class="form-group col-xs-12">
+                                <label for="idCliente>">Pago por defecto</label>
                                 <div id="por_defecto" class="form_radio_button">
                                     <div class="form-check">                                            
                                         <label class="fm-check-label" for="1">Transferencia</label>
                                         <input class="form-check-input inline-block" type="radio" name="por_defecto" id="por_defecto1" value="transferencia" checked>
                                     </div>
                                     <div class="form-check">
-                                        <label class="form-check-label" for="1" align="center">Tarjeta</label>
+                                        <label class="form-check-label" for="2" align="center">Tarjeta</label>
                                         <input class="form-check-input inline-block" type="radio" name="por_defecto" id="por_defecto2" value="tarjeta">                                            
                                     </div>
                                     <div class="form-check">
-                                        <label class="fm-check-label" for="1">Cheque</label>
+                                        <label class="fm-check-label" for="3">Pay Pal</label>
                                         <input class="form-check-input inline-block" type="radio" name="por_defecto" id="por_defecto3" value="paypal">
                                     </div>
                                     <div class="form-check">
-                                        <label class="fm-check-label" for="1">Cheque</label>
+                                        <label class="fm-check-label" for="4">Cheque</label>
                                         <input class="form-check-input inline-block" type="radio" name="por_defecto" id="por_defecto4" value="cheque">
                                     </div>
                                 </div>
@@ -318,8 +348,6 @@
                     </form>
                 </div>
             </div>
-        </div>     
-
+        </div> 
     </body>
-
 </html>

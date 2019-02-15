@@ -333,7 +333,7 @@
 
     </script>
     <body>
-        <div class="container">
+        <div class="container col-xs-12">
             <div class="col-xs-12">
                 <!-- con col elegimos el tamaño xs:moviles md:tablets lg:pantallas de ordenador.
                 para empujar las columnas usamos offset y el numero de columnas que queremos desplazar. tiene que estar 
@@ -413,10 +413,11 @@
                             <!-- RADIO BUTTONS PARA EL TRATAMIENTO DE LA PERSONA DE CONTACTO -->
                             <div class="form-group">
                                 <div class="form-group col-xs-2">
+                                    <label> Tratamiento </label>
                                     <div id="tratamiento" class="form_radio_button">
                                         <div class="form-check">
                                             <label class="fm-check-label" for="1">Mr</label>
-                                            <input class="form-check-input inline-block" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
+                                            <input class="form-check-input" type="radio" name="tratamiento" id="tratamiento1" value="mr" checked>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label" for="2">Mrs</label>
@@ -435,7 +436,7 @@
                             <div class="form-group">
                                 <div class="form-group col-xs-6">
                                     <label>Segundo apellido </label>
-                                    <input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Apellido 2 " >
+                                    <input type="text" class="form-control" id="apellido2" name="apellido2" placeholder="Apellido 2" >
                                 </div>
                             </div>
 
