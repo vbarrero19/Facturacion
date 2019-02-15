@@ -46,6 +46,10 @@ public class Resource  {
         
     }
 
+    public Resource(String string, String string0, String string1, String string2, String string3) {
+        
+    }
+
     public String getCol1() {
         return col1;
     }

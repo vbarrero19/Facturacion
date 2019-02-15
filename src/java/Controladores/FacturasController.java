@@ -341,17 +341,17 @@ public class FacturasController {
             }
         }
 
-        /**
-         * SOLO PARA VER QUE ES GLOBAL, BORRAR LUEGO*********************
-         */
-        Iterator<String> nombreIterator = arrayCargos.iterator();
-        while (nombreIterator.hasNext()) {
-            String elemento = nombreIterator.next();
-            System.out.print(elemento + " / ");
-        }
-        /**
-         * ***************************
-         */
+//        /**
+//         * SOLO PARA VER QUE ES GLOBAL, BORRAR LUEGO*********************
+//         */
+//        Iterator<String> nombreIterator = arrayCargos.iterator();
+//        while (nombreIterator.hasNext()) {
+//            String elemento = nombreIterator.next();
+//            System.out.print(elemento + " / ");
+//        }
+//        /**
+//         * ***************************
+//         */
         return resp;
 
     }

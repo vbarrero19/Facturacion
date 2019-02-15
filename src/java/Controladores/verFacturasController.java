@@ -37,25 +37,13 @@ public class verFacturasController {
         return mv;
     }
     
-    @RequestMapping("/verFacturasController/startEntidad.htm")
+    @RequestMapping("/verFacturasController/verDetalleFactura.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verDetalleFacturaView");
 
         return mv;
     }
     
-    
-    /*******************************           **************************/
-    
-        @RequestMapping("/entidadesController/modificarEntidades.htm")
-    public ModelAndView modificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        ModelAndView mv = new ModelAndView("modificarEntidadesView");
-
-        return mv;
-    }
-    
-    /*******************************           *************************/
-
     @RequestMapping("/verFacturasController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -211,6 +199,137 @@ public class verFacturasController {
         hsr.getParameter("idCliente")
         */
         int idCliente=Integer.parseInt(hsr.getParameter("idCliente"));
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado FROM facturas WHERE id_cliente = ?");
+
+            stAux.setInt(1,idCliente);
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+        
+        
+        
+    @RequestMapping("/verFacturasController/cargarEmpresa.htm")
+    @ResponseBody
+        public String cargarEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("idCliente")   */
+        int idEmpresa=Integer.parseInt(hsr.getParameter("empresa"));
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad, tratamiento, nombre_contacto, apellido1 FROM entidad WHERE id_entidad = ?");
+
+            stAux.setInt(1,idEmpresa);
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+        
+        
+        
+
+    @RequestMapping("/verFacturasController/cargarFactura.htm")
+    @ResponseBody
+//    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        public String cargarFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("idCliente")   */
+        int idFact=Integer.parseInt(hsr.getParameter("factura"));
+        int idCliente=Integer.parseInt(hsr.getParameter("cliente"));
+        int idEmpresa=Integer.parseInt(hsr.getParameter("empresa"));
         
         ArrayList<String> arrayTipo = new ArrayList<>();
 
