@@ -65,7 +65,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                /*en la url le pasamos como parametro el identificador de cargo y cliente que lo recogemos cuando se quiere quitar un cargo de la lista de cargos*/
+                /*en la url le pasamos como parametro el identificador de empresa*/
                 url: '/Facturacion/verFacturasController/cargarEmpresa.htm?empresa=' + idEmpresa,
                 success: function (data) {
 
@@ -83,11 +83,11 @@
                             //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                             var resource = JSON.parse(valor);                            
 
-                            $("#idEmpresa").val(resource.col8);
-                            $("#nombreEmpresa").val(resource.col10);
-                            $("#tratamientoEmpresa").val(resource.col11);
-                            $("#nombreContacto").val(resource.col10);
-                            $("#Apellido").val(resource.col11);
+                            $("#idEmpresa").val(resource.col1);
+                            $("#nombreEmpresa").val(resource.col2);
+                            $("#tratamientoEmpresa").val(resource.col3);
+                            $("#nombreContacto").val(resource.col4);
+                            $("#Apellido").val(resource.col5);
 
                             
 
@@ -129,7 +129,7 @@
         ;
     };
 
-
+//
 //        function cargarDatosFactura(idFact, idCliente, idFactura) {
 //            alert("Factura: " + idFact);
 //            alert("Cliente: " + idCliente);
@@ -220,10 +220,68 @@
     </script>        
 
 
-    <body>
-        <div class="form-group col-xs-3">
-                                    <label for="nombre_empresa">Id Empresa</label>
-                                    <input type="text" class="form-control" id="idEmpresa" name="idEmpresa"> 
+<body>
+        <div class="container">
+            <div class="col-xs-12">
+                <div class="col-md-12 col-xs-5">
+                    <div class="form-area">  
+                        <form role="form">
+                            <br style="clear:both">
+                            <h3 style="margin-bottom: 25px; text-align: center;">VER DETALLE FACTURA</h3>                           
+
+                            <div class="datos" class="col-xs-12">
+                                <!--Combo para entidades-->
+                               <div class="form-group col-xs-2">
+                                    <label for="id_cliente">Empresa emisora</label>
+                                    <label class="form-control" id="idEmpresa" name="idEmpresa" ></label>
+                                </div> 
+                                <div class="form-group col-xs-2">
+                                    <label for="id_cliente"> Id Entidad </label>
+                                    <input type="text" class="form-control" id="id_entidad" name="id_entidad" disabled = "true">
+                                </div> 
+                                <div class="form-group col-xs-4">
+                                    <label for="idCliente>">Nombre_entidad</label>
+                                    <input type="text" class="form-control" id="nombre_entidad" name="nombre_entidad" disabled = "true">
                                 </div>  
-    </body>
+                                <div class="form-group col-xs-3">
+                                    <label for="idCliente>">Nombre contacto</label>
+                                    <input type="text" class="form-control" id="nombre_contacto" name="nombre_contacto" disabled = "true">
+                                </div>  
+                                <br style="clear:both">
+
+                                <hr size="10" />
+
+                                <div class="col-xs-12" id="tableContainer">
+                                    <table class="table table-striped">                                    
+
+                                        <thead class="thead-dark">                                            
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Nº factura</th>
+                                                <th scope="col">Cliente</th>
+                                                <th scope="col">Empresa</th>
+                                                <th scope="col">FechaCargo</th>
+                                                <th scope="col">FechaVencimiento</th>
+                                                <th scope="col">Total</th>
+                                            </tr>                                            
+                                        </thead>
+
+                                        <tbody id="tbody-tabla-entidades">
+
+                                        </tbody>
+                                    </table>
+                                </div>    
+
+                                <!-- <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>-->
+                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                        </form>
+
+                    </div>                            
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    
+</body> 
 </html>
