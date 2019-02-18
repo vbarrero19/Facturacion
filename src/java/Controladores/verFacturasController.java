@@ -28,8 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class verFacturasController {
 
-    /*llamamos al controlador de entidades e iniciamos el start.htm y creamos un nuevo modelo vista que llama a entidadesView.jsp y nos lo muestra
-    en caso de que no exista y salte la excepcion*/
     @RequestMapping("/verFacturasController/start.htm")
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verFacturasView");
@@ -37,6 +35,7 @@ public class verFacturasController {
         return mv;
     }
     
+    //Mostramos una factura en detalle en la pagina verDetalleFacturaView
     @RequestMapping("/verFacturasController/verDetalleFactura.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verDetalleFacturaView");
@@ -250,18 +249,18 @@ public class verFacturasController {
     }
         
         
-        
+    //Se utiliza para cargar los datos de la empresa en la pagina verDetalleFacturaView
     @RequestMapping("/verFacturasController/cargarEmpresa.htm")
     @ResponseBody
         public String cargarEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Resource resourceLoad = new Resource();
+        Entidades resourceLoad = new Entidades();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
         
-        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("idCliente")   */
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("empresa")   */
         int idEmpresa=Integer.parseInt(hsr.getParameter("empresa"));
         
         ArrayList<String> arrayTipo = new ArrayList<>();
@@ -270,13 +269,21 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad, tratamiento, nombre_contacto, apellido1 FROM entidad WHERE id_entidad = ?");
+            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad, tratamiento, nombre_contacto, apellido1 FROM entidad WHERE id_entidad = 3");
 
-            stAux.setInt(1,idEmpresa);
+            //stAux.setInt(1,3);
             rs = stAux.executeQuery();
+            
+            
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
+                String var1 = rs.getString(1);
+                String var2 = rs.getString(2);
+                String var3 = rs.getString(3);
+                String var4 = rs.getString(4);
+                String var5 = rs.getString(5);
+                
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
             }
 
             resp = new Gson().toJson(arrayTipo);
@@ -318,7 +325,7 @@ public class verFacturasController {
 
     @RequestMapping("/verFacturasController/cargarFactura.htm")
     @ResponseBody
-//    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+
         public String cargarFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
 
