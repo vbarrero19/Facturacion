@@ -25,7 +25,7 @@
                 <div class="form-area">  
                     <form role="form">
                         <br style="clear:both">
-                        <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA MODIFICAR PAGO</h3>
+                        <h3 style="margin-bottom: 25px; text-align: center;">MODIFICAR PAGO</h3>
 
                         <!-- INFORMACIÓN DE LA ENTIDAD DONDE QUEREMOS ALMACENAR EL METODO DE PAGO -->
                         <div class="form-group">
