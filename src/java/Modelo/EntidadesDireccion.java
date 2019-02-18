@@ -10,8 +10,7 @@ public class EntidadesDireccion {
     private String nombre_entidad;
     
     private String id_direccion;
-    private String nombre_direccion;
-    private String nombre_vida;
+    private String nombre_via;
     private String localidad;
     
     
@@ -19,12 +18,12 @@ public class EntidadesDireccion {
     
     }
 
-    public EntidadesDireccion(String id_entidad, String nombre_entidad, String id_direccion, String nombre_direccion, String nombre_vida, String localidad) {
+    public EntidadesDireccion(String id_entidad, String nombre_entidad, String id_direccion, String nombre_via, String localidad) {
         this.id_entidad = id_entidad;
         this.nombre_entidad = nombre_entidad;
+        
         this.id_direccion = id_direccion;
-        this.nombre_direccion = nombre_direccion;
-        this.nombre_vida = nombre_vida;
+        this.nombre_via = nombre_via;
         this.localidad = localidad;
     }
 
@@ -54,20 +53,12 @@ public class EntidadesDireccion {
         this.id_direccion = id_direccion;
     }
 
-    public String getNombre_direccion() {
-        return nombre_direccion;
-    }
-
-    public void setNombre_direccion(String nombre_direccion) {
-        this.nombre_direccion = nombre_direccion;
-    }
-
-    public String getNombre_vida() {
-        return nombre_vida;
+    public String getNombre_via() {
+        return nombre_via;
     }
 
     public void setNombre_vida(String nombre_vida) {
-        this.nombre_vida = nombre_vida;
+        this.nombre_via = nombre_via;
     }
 
     public String getLocalidad() {
