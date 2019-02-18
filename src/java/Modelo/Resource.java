@@ -42,12 +42,25 @@ public class Resource  {
         this.col11 = col11;
     }
 
+    public Resource(String col1, String col2, String col3, String col4, String col5) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+        this.col5 = col5;
+    }
+
+    
+    
+    
     public Resource(String string, String string0, String string1, String string2) {
         
     }
 
-    public Resource(String string, String string0, String string1, String string2, String string3) {
-        
+    
+
+    public Resource(String string, String string0, String string1, String string2, String string3, String string4, String string5) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getCol1() {

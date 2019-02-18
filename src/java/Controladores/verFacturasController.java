@@ -194,8 +194,7 @@ public class verFacturasController {
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con 
-        hsr.getParameter("idCliente")
+        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con hsr.getParameter("idCliente")
         */
         int idCliente=Integer.parseInt(hsr.getParameter("idCliente"));
         
@@ -253,7 +252,7 @@ public class verFacturasController {
     @RequestMapping("/verFacturasController/cargarEmpresa.htm")
     @ResponseBody
         public String cargarEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Entidades resourceLoad = new Entidades();
+        Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
@@ -269,21 +268,15 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad, tratamiento, nombre_contacto, apellido1 FROM entidad WHERE id_entidad = 3");
+            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad, tratamiento, nombre_contacto, apellido1 FROM entidad WHERE id_entidad = ?");
 
-            //stAux.setInt(1,3);
+            stAux.setInt(1,idEmpresa);
             rs = stAux.executeQuery();
             
             
 
-            while (rs.next()) {
-                String var1 = rs.getString(1);
-                String var2 = rs.getString(2);
-                String var3 = rs.getString(3);
-                String var4 = rs.getString(4);
-                String var5 = rs.getString(5);
-                
-                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
+            while (rs.next()) {                
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
             }
 
             resp = new Gson().toJson(arrayTipo);
@@ -320,23 +313,18 @@ public class verFacturasController {
 
     }
         
-        
-        
-
-    @RequestMapping("/verFacturasController/cargarFactura.htm")
+    @RequestMapping("/verFacturasController/cargarCliente.htm")
     @ResponseBody
-
-        public String cargarFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        public String cargarCliente(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("idCliente")   */
-        int idFact=Integer.parseInt(hsr.getParameter("factura"));
+        
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("cliente")   */
         int idCliente=Integer.parseInt(hsr.getParameter("cliente"));
-        int idEmpresa=Integer.parseInt(hsr.getParameter("empresa"));
         
         ArrayList<String> arrayTipo = new ArrayList<>();
 
@@ -344,9 +332,75 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             
-            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado FROM facturas WHERE id_cliente = ?");
+            stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad, tratamiento, nombre_contacto, apellido1 FROM entidad WHERE id_entidad = ?");
 
             stAux.setInt(1,idCliente);
+            rs = stAux.executeQuery();
+            
+            
+
+            while (rs.next()) {                
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }        
+        
+        
+    @RequestMapping("/verFacturasController/cargarFactura.htm")
+    @ResponseBody
+        public String cargarFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Facturas resourceLoad = new Facturas();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con hsr.getParameter("factura") */
+        int idFact=Integer.parseInt(hsr.getParameter("factura"));
+        
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado FROM facturas WHERE id_factura = ?");
+
+            stAux.setInt(1,idFact);
             rs = stAux.executeQuery();
 
             while (rs.next()) {
@@ -388,7 +442,69 @@ public class verFacturasController {
     }
         
         
+        @RequestMapping("/verFacturasController/cargarCargos.htm")
+    @ResponseBody
+        public String cargarCargos(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Facturas resourceLoad = new Facturas();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
         
+        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con hsr.getParameter("factura") */
+        int idFact=Integer.parseInt(hsr.getParameter("factura"));
+        
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            stAux = con.prepareStatement("SELECT id_cargo, abreviatura, cuenta, importe, cantidad, impuesto, total FROM cargos WHERE id_factura = ?");
+
+            stAux.setInt(1,idFact);
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+            
 
     
 }
