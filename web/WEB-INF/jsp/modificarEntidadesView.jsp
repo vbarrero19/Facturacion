@@ -18,7 +18,7 @@
     <script>
         $(document).ready(function () {
             
-            $("#customer-tab").click();
+            
             
         });
 
@@ -37,11 +37,7 @@
                             <h3 style="margin-bottom: 25px; text-align: center;">MODIFICAR ENTIDAD</h3>
 
                             <!-- ALMACENAMOS EL ID_ENTIDAD -->
-                            <div class="form-group-combo">  
-                                <label> Num id </label>
-                                <label> Distinct code </label>
-                            </div>
-
+                            
                             <div class="form-group-combo">    
                                 <div class="form-group col-xs-4">
                                     <input type="text" class="form-control" disabled=”disabled id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>

@@ -59,7 +59,7 @@ function cargarDirecciones() {
                                                                     <td>" + EntidadesDireccion.id_direccion + "</td>         \n\
                                                                     <td>" + EntidadesDireccion.nombre_via + "</td>         \n\
                                                                     <td>" + EntidadesDireccion.localidad + "</td>         \n\
-                                                                    <td><a href='/Facturacion/direccionController/startEntidad.htm' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/direccionController/startDireccion.htm' class='btn btn-primary'> Modificar </button>\n\
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });

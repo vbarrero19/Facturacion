@@ -114,46 +114,8 @@
              * ******************************************************************************************************* */
 
 // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PESTAÑA DOS Y NOS METE LOS DATOS DEL FORMULARIO EN LA TABLA DIRECCIONES.
-            $("#guardarDireccion").click(function () {
-
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                var myObj = {};
-
-                myObj["id_tipo_direecion"] = $('#tipo_direccion').val();
-                myObj["tipo_via"] = $('#tipo_via').val().trim();
-                myObj["nombre_via"] = $('#nombre_via').val().trim();
-                myObj["numero_via"] = $('#numero_via').val().trim();
-                myObj["numero_portal"] = $('#numero_portal').val().trim();
-                myObj["resto_direccion"] = $('#resto_direccion').val().trim();
-                myObj["codigo_postal"] = $('#cod_postal').val().trim();
-                myObj["localidad"] = $('#localidad').val().trim();
-                myObj["provincia"] = $('#provincia').val().trim();
-                myObj["pais"] = $('#pais').val().trim();
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/entidadesController/nuevaDireccion.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            });
+//          
+//            
 
 
             /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */

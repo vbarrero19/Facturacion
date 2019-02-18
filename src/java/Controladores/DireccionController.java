@@ -42,6 +42,16 @@ public class DireccionController {
 
         return null;
     }
+    
+       /**
+     * ******** MENU PRINCIPAL PARA VER MODIFICAR DIRECCION HTM **********
+     */
+    @RequestMapping("/direccionController/startDireccion.htm")
+    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("modificarDireccionView");
+
+        return mv;
+    }
 
     //GUARDAMOS UNA NUEVA DIRECCION EN LA BASE DE DATOS.
     @RequestMapping("direccionController/nuevaDireccion.htm")
