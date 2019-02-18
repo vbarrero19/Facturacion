@@ -16,10 +16,40 @@
         <title>MODIFICAR ENTIDADES</title> 
     </head>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function () {            
+                        
+            var userLang = navigator.language || navigator.userLanguage;
             
-            
-            
+            $("#modificarEntidad").click(function () {
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                
+                 var myObj = {};
+                //GUARDAMOS EL DISTINCT CODE DE LA ENTIDAD
+                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
+                /*TENEMOS QUE PONER TAMBIEN MYoBJ....ETC COMO EN ENTIDADESVIEW?*/
+                  var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/verEntidadesController/modificarEntidad.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+            });
         });
 
 
@@ -130,48 +160,9 @@
                                         </div>
                                     </div>
 
-                                    <!--DENTRO DEL CONTAINER METEMOS LOS DOS DESPLEGABLES DE LAS FECHAS -->
-<!--                                    <div class="container2 form-group col-xs-12">  
-                                        <div class="row col-xs-6">
-                                            <label class="fechasEntidad"> FECHA ALTA </label>
-                                            <div class="form-group">
-                                                <div class='input-group date' id='fecha_alta'>
-                                                    <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#fecha_alta').datetimepicker();
-                                                });
-                                            </script>
-                                        </div>
-
-                                        <div class="row col-xs-6">
-                                                <label class="fechasEntidad col-xs-offset-2"> FECHA BAJA </label>
-                                                <div class="form-group col-xs-offset-2">
-                                                    <div class='input-group date' id='fecha_baja'>
-                                                        <input  data-format="yyyy-MM-dd" type='text' class="form-control" />
-                                                        <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    $('#fecha_baja').datetimepicker();
-                                                });
-                                            </script>
-                                        </div>
-                                    </div> -->
-                                        <button type="button" id="guardarEntidad" name="guardarEntidad" class="btn btn-primary pull-right">Modificar</button>
-                                
-
+                                        <button type="button" id="modificarEntidad" name="modificarEntidad" class="btn btn-primary pull-right">Modificar entidad</button>                               
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-                         
                         </form>
                     </div>
                 </div>

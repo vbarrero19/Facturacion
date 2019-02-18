@@ -43,7 +43,7 @@
 
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
-
+                    
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a 
@@ -51,10 +51,11 @@
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                                                    <td>" + entidad.id_entidad + "</td>         \n\
                                                                     <td>" + entidad.distinct_code + "</td>         \n\
                                                                     <td>" + entidad.nombre_entidad + "</td>         \n\
                                                                     <td>" + entidad.nombre_contacto + "</td>         \n\
-                                                                    <td><a href='/Facturacion/entidadesController/startEntidad.htm' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/verEntidadesController/startEntidad.htm?idEnt=" + entidad.id_entidad +"' class='btn btn-primary'> Modificar </button>\n\
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });
@@ -89,6 +90,7 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th scope="col">#</th>
+                                                <th scope="col">Id entidad</th>
                                                 <th scope="col">Distinct Code</th>
                                                 <th scope="col">Nombre Entidad</th>
                                                 <th scope="col">Nombre Contacto</th>

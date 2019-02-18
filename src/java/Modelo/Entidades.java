@@ -61,7 +61,13 @@ public class Entidades {
         this.id_direccion = id_direccion;
     }
 
- 
+ /*CONSTRUCTOR PRUEBA MODIFICAR DATOS ENTIDAD*/
+
+//    public Entidades(String nombre_contacto) {
+//        this.nombre_contacto = nombre_contacto;
+//    }
+    
+    
 
   // CONSTRUCTOR PARA MOSTRAR LOS DATOS DE LAS ENTIDADES EN CARGOSVIEW
     public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto) {

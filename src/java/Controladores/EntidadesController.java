@@ -38,16 +38,7 @@ public class EntidadesController {
         return mv;
     }
 
-    /**
-     * ******** MENU PRINCIPAL PARA VER MODIFICAR ENTIDADES HTM **********
-     */
-    @RequestMapping("/entidadesController/startEntidad.htm")
-    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        ModelAndView mv = new ModelAndView("modificarEntidadesView");
-
-        return mv;
-    }
-
+   
     
      /*  * *******************************************************************************************************
      * ******************** FUNCIONES PARA LA INFORMACION DE LA ENTIDAD DE  ENTIDADESVIEW ****************************** 
