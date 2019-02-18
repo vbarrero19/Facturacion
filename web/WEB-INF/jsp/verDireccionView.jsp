@@ -56,7 +56,7 @@ function cargarDirecciones() {
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td>" + EntidadesDireccion.id_direccion + "</td>         \n\
+                                                                    <td>" + EntidadesDireccion.nombre_entidad + "</td>         \n\
                                                                     <td>" + EntidadesDireccion.nombre_via + "</td>         \n\
                                                                     <td>" + EntidadesDireccion.localidad + "</td>         \n\
                                                                     <td><a href='/Facturacion/direccionController/startDireccion.htm' class='btn btn-primary'> Modificar </button>\n\
