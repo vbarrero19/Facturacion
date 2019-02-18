@@ -20,7 +20,59 @@
 
     <script>
         
+        $(document).ready(function () {
+
+            cargarDirecciones();
+
+            var userLang = navigator.language || navigator.userLanguage;
+
+        });
         
+
+
+function cargarDirecciones() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/verDireccionController/verDireccion.htm',
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    var aux = JSON.parse(data);
+
+                    //Vamos cargando la tabla
+                    aux.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a 
+                        var EntidadesDireccion = JSON.parse(valor);
+
+                        $('#tableContainer tbody').append(" <tr>\n\
+                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                                                    <td>" + EntidadesDireccion.id_direccion + "</td>         \n\
+                                                                    <td>" + EntidadesDireccion.nombre_via + "</td>         \n\
+                                                                    <td>" + EntidadesDireccion.localidad + "</td>         \n\
+                                                                    <td><a href='/Facturacion/direccionController/startEntidad.htm' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
+                        < /tr>");
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+
     </script>
     <body>
         <div class="container col-xs-12">
@@ -37,9 +89,9 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Distinct Code</th>
-                                                <th scope="col">Nombre Entidad</th>
-                                                <th scope="col">Nombre Contacto</th>
+                                                <th scope="col">Nombre entidad</th>
+                                                <th scope="col">Nombre via</th>
+                                                <th scope="col">Localidad</th>
                                             </tr>                                            
                                         </thead>
 
