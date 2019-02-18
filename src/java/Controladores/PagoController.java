@@ -43,6 +43,13 @@ public class PagoController {
         return null;
     }
 
+     @RequestMapping("/pagoController/startPago.htm")
+    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("modificarPagoView");
+
+        return mv;
+    }
+    
     //GUARDAMOS UNA NUEVA DIRECCION EN LA BASE DE DATOS.
     @RequestMapping("pagoController/nuevoPago.htm")
     @ResponseBody

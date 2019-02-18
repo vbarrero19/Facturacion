@@ -5,7 +5,7 @@ package Modelo;
  *
  * @author vbarr
  */
-public class EntidadesDireccion {
+public class EntidadDireccion {
     private String id_entidad;
     private String nombre_entidad;
     
@@ -14,11 +14,11 @@ public class EntidadesDireccion {
     private String localidad;
     
     
-    public EntidadesDireccion(){
+    public EntidadDireccion(){
     
     }
 
-    public EntidadesDireccion(String id_entidad, String nombre_entidad, String id_direccion, String nombre_via, String localidad) {
+    public EntidadDireccion(String id_entidad, String nombre_entidad, String id_direccion, String nombre_via, String localidad) {
         this.id_entidad = id_entidad;
         this.nombre_entidad = nombre_entidad;
         

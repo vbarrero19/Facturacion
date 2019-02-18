@@ -111,7 +111,7 @@
                                 </div>
 
                             </div> 
-                            <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Alta direccion</button>
+                            <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Modificar direccion</button>
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                         </form>
                     </div>
