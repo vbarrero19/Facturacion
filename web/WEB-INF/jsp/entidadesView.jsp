@@ -26,10 +26,6 @@
 
             var userLang = navigator.language || navigator.userLanguage;
 
-            /*  * *******************************************************************************************************
-             * ******************** FUNCIONES PARA LA PRIMERA PESTAÑA DE ENTIDADESVIEW ****************************** 
-             * ******************************************************************************************************* */
-
             //EVENTO CLICK PARA CARGAR LA PRIMERA PESTAÑA AL INICIAR LA PAGINA
             //$("#customer-tab").click();
             //PARA LAS FECHAS DE LA PRIMERA PESTAÑA CARGAMOS LOS DESPLEGABLES
@@ -114,8 +110,6 @@
              * ******************************************************************************************************* */
 
 // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PESTAÑA DOS Y NOS METE LOS DATOS DEL FORMULARIO EN LA TABLA DIRECCIONES.
-//          
-//            
 
 
             /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */
@@ -335,7 +329,12 @@
 
 
                             <!--                                <div class="tab-pane fade active" id="customer" role="tabpanel" aria-labelledby="customer-tab">-->
-
+                            <div class="form-group">
+                                <div class="form-group col-xs-12">
+                                    <label>Distinct code </label>
+                                    <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
+                                </div>
+                                
                             <div class="form-group">
                                 <div class="form-group col-xs-6">
                                     <label>Nombre entidad </label>

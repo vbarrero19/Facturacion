@@ -39,11 +39,8 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA DAR DE ALTA ENTIDAD</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">MODIFICAR DIRECCION</h3>
 
-                        <div class="form-group col-xs-12" align="center">
-                            <h4>DATOS DE LA DIRECCION</h4>
-                        </div>
 
                             <div class="form-group">
                                 <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
