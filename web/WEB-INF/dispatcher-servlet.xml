@@ -44,12 +44,13 @@
     <bean class="Controladores.MenuController" id="menu"/>
     <bean class="Controladores.ItemsController" id="items"/>
     <bean class="Controladores.EntidadesController" id="entidades"/>
-    <bean class="Controladores.CargosController" id="cargos"/>
     <bean class="Controladores.verEntidadesController" id="verEntidades"/>
+    <bean class="Controladores.CargosController" id="cargos"/>    
     <bean class="Controladores.FacturasController" id="facturas"/>
     <bean class="Controladores.verFacturasController" id="verFacturas"/>
     <bean class="Controladores.verCargosController" id="verCargos"/>    
-    <bean class="Controladores.DireccionController" id="direccion"/>  
+    <bean class="Controladores.DireccionController" id="direccion"/>
+    <bean class="Controladores.verDireccionController" id="verDireccion"/>
     <bean class="Controladores.PagoController" id="pago"/>  
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
@@ -66,14 +67,15 @@
                 <prop key="itemsView.htm">items</prop>  
                 <prop key="entidadesView.htm">entidades</prop>   
                 <prop key="modificarEntidadesView.htm">entidades</prop>              
-                <prop key="cargosView.htm">cargos</prop>
                 <prop key="verEntidadesView.htm">verEntidades</prop>
+                <prop key="cargosView.htm">cargos</prop>                
                 <prop key="facturasView.htm">facturas</prop>   
                 <prop key="verDetalleFacturaView.htm">verFacturas</prop> 
                 <prop key="verFacturasView.htm">verFacturas</prop>    
                 <prop key="verCargosView.htm">verCargos</prop>                 
                 <prop key="direccionView.htm">direccion</prop>
-                <prop key="modificarDireccionView">direccion</prop>  
+                <prop key="modificarDireccion.htm">direccion</prop>
+                <prop key="modificarDireccion.htm">verDireccion</prop>  
                 <prop key="pagoView">pago</prop> 
                 
             </props>
