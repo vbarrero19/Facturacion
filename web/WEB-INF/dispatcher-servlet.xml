@@ -70,7 +70,7 @@
                 <prop key="verEntidadesView.htm">verEntidades</prop>
                 <prop key="cargosView.htm">cargos</prop>                
                 <prop key="facturasView.htm">facturas</prop>   
-                <prop key="verDetalleFacturaView.htm">facturas</prop> 
+                <prop key="verDetalleFacturaView.htm">verFacturas</prop> 
                 <prop key="verFacturasView.htm">verFacturas</prop>    
                 <prop key="verCargosView.htm">verCargos</prop>                 
                 <prop key="direccionView.htm">direccion</prop>

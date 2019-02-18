@@ -86,6 +86,15 @@ public class Entidades {
         this.distinct_code = distinct_code;
         this.nombre_entidad = nombre_entidad;
     }
+
+     //Para ver una factura en detalle
+    public Entidades(String id_entidad, String nombre_entidad, String tratamiento, String nombre_contacto, String apellido1) {
+        this.id_entidad = id_entidad;
+        this.nombre_entidad = nombre_entidad;
+        this.tratamiento = tratamiento;
+        this.nombre_contacto = nombre_contacto;
+        this.apellido1 = apellido1;
+    }
      
 
     
