@@ -49,7 +49,7 @@
                                         <li class="mEntidad">VER/EDITAR</li>
                                         <li class="mEntidad"><a href="<c:url value='/verEntidadesController/start.htm'/>">Entidad</a></li>
                                         <li class="mEntidad"><a href="<c:url value='/verDireccionController/start.htm'/>">Direccion</a></li>
-                                        <li class="mEntidad"><a href="<c:url value='/'/>">Pago</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/verPagoController/start.htm'/>">Pago</a></li>
                                         
                                     </ul>
                                 </div>

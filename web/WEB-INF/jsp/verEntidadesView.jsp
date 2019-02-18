@@ -77,7 +77,7 @@
     <body>
         <div class="container col-xs-12">
             <div class="col-xs-12">                               
-                <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-1 col-lg-6">
+                <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">

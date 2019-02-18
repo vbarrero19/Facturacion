@@ -49,9 +49,9 @@
                 myObj["localidad"] = $("#localidad").val().trim();
                 myObj["provincia"] = $("#provincia").val().trim();
                 myObj["pais"] = $("#pais").val().trim();
-                
+                /*guaradmos el valor del comboEntidad, de la entidad seleccionada */
                 var idEnt = $("#comboEntidad").val();
-
+/*recogemos el valor por parametro de la entidad seleccionada en el combo y lo pasamos al controlador para que lo almacene en la entidad seleccionada*/
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',

@@ -71,8 +71,33 @@ public class EntidadesController {
         String resp = "correcto";
         /*CODIGO PARA AÑADIR UNA NUEVA ENTIDAD*/
         try {
-            /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
+            
+            
+            
+            /*------para guardar el id_dedicacion en la talba entidades-------------*/
+            
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            
+            Connection con0 = null;
+            ResultSet rs0 = null;
+            PreparedStatement stAux0 = null;
+
+            con0 = pool_local.getConnection();
+
+            stAux0 = con0.prepareStatement("SELECT id_dedicacion FROM tipo_dedicacion");
+
+            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+            rs0 = stAux0.executeQuery();
+            int idDed = 0;
+
+            while (rs0.next()) {
+                idDed = rs0.getInt(1);
+            }
+            
+            /* ******************* */
+            
+            /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
+           // PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
 
@@ -86,6 +111,7 @@ public class EntidadesController {
             stAux.setString(4, entidades.getNombre_contacto());
             stAux.setString(5, entidades.getApellido1());
             stAux.setString(6, entidades.getApellido2());
+           // stAux.setInt(7,idDed);
             stAux.setString(7, entidades.getTelefono1());
             stAux.setString(8, entidades.getTelefono2());
             stAux.setString(9, entidades.getFax());

@@ -52,6 +52,7 @@
     <bean class="Controladores.DireccionController" id="direccion"/>
     <bean class="Controladores.verDireccionController" id="verDireccion"/>
     <bean class="Controladores.PagoController" id="pago"/>  
+    <bean class="Controladores.verPagoController" id="verPago"/>  
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -76,7 +77,8 @@
                 <prop key="direccionView.htm">direccion</prop>
                 <prop key="modificarDireccion.htm">direccion</prop>
                 <prop key="modificarDireccion.htm">verDireccion</prop>  
-                <prop key="pagoView">pago</prop> 
+                <prop key="pagoView.htm">pago</prop> 
+                <prop key="verPagoView.htm">verPago</prop> 
                 
             </props>
         </property>
