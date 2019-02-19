@@ -119,7 +119,7 @@ public class verDireccionController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("select e.distinct_code, d.nombre_via, d.tipo_via, d.nombre_via, d.numero_via, d.numero_portal, d.resto_direccion," 
+            stAux = con.prepareStatement("select e.distinct_code, e.nombre_entidad, d.nombre_via, d.tipo_via, d.nombre_via, d.numero_via, d.numero_portal, d.resto_direccion," 
                     +" d.codigo_postal, d.localidad, d.provincia, d.pais from entidad e inner join entidad_direccion ed on e.id_entidad = ed.id_entidad"
                     + " inner join direccion d on d.id_direccion = ed.id_direccion where e.id_entidad = ?");
 
@@ -131,7 +131,7 @@ public class verDireccionController {
              */
             while (rs.next()) {
 
-                arrayEntidad.add(new Gson().toJson(new EntidadDireccion(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
+                arrayEntidad.add(new Gson().toJson(new EntidadDireccion(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),rs.getString(12))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayEntidad);

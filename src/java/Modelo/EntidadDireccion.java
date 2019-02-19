@@ -7,6 +7,7 @@ package Modelo;
  */
 public class EntidadDireccion {
     private String id_entidad;
+    private String distinct_code;
     private String nombre_entidad;
     
     private String id_direccion;
@@ -36,8 +37,8 @@ public class EntidadDireccion {
 
     //CONSTRUCTOR PARA MODIFICAR LA DIRECCION DE ENTIDADES.
 
-    public EntidadDireccion(String nombre_entidad, String id_direccion, String tipo_via, String nombre_via, String numero_via, String numero_portal, String resto_direccion, String codigo_postal, String localidad, String provincia, String pais) {
-//        this.id_entidad = id_entidad;
+    public EntidadDireccion(String distinct_code, String nombre_entidad, String id_direccion, String tipo_via, String nombre_via, String numero_via, String numero_portal, String resto_direccion, String codigo_postal, String localidad, String provincia, String pais) {
+        this.distinct_code = distinct_code;
         this.nombre_entidad = nombre_entidad;
         this.id_direccion = id_direccion;
         this.tipo_via = tipo_via;
@@ -61,6 +62,15 @@ public class EntidadDireccion {
     public void setId_entidad(String id_entidad) {
         this.id_entidad = id_entidad;
     }
+
+    public String getDistinct_code() {
+        return distinct_code;
+    }
+
+    public void setDistinct_code(String distinct_code) {
+        this.distinct_code = distinct_code;
+    }
+
     
     public String getNombre_entidad() {
         return nombre_entidad;

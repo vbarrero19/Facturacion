@@ -24,8 +24,8 @@
             var nombreEntidad = obtenerValorParametro("nombreEnt");
             
         
-        //RECOGE BIEN EL PARAMETRO DE IDENTIDAD
-            alert(idEntidad);
+
+//            alert(idEntidad);
             cargarDatosDireccion(idEntidad);
 
         });
@@ -61,7 +61,7 @@
                 /*en la url le pasamos como parametro el identificador de empresa*/
                 url: '/Facturacion/verDireccionController/modificarDireccion.htm?entidad=' + idEntidad,
                 success: function (data) {
-                alert(data);
+//                alert(data);
                     if (data != "vacio") {
 
                         var aux = JSON.parse(data);
@@ -74,12 +74,30 @@
                             $("#nombre_entidad").val(entidadDireccion.nombre_entidad);
                             $("#tipo_via").val(entidadDireccion.tipo_via);
                             $("#nombre_via").val(entidadDireccion.nombre_via);
+                            $("#numero_via").val(entidadDireccion.numero_via);
+                            $("#numero_portal").val(entidadDireccion.numero_portal);
+                            $("#resto_direccion").val(entidadDireccion.resto_direccion);
+                            $("#codigo_postal").val(entidadDireccion.codigo_postal);
+                            $("#localidad").val(entidadDireccion.localidad);
+                            $("#provincia").val(entidadDireccion.provincia);
+                            $("#pais").val(entidadDireccion.pais);
+                            
+                            
                         });
 
                     } else {
                         //Si data viene vacio borramos el contenido de los campos                        
                         $("#distinct_code").val("");
-                        $("#nombre_entidad").val("");                        
+                        $("#nombre_entidad").val("");    
+                        $("#tipo_via").val("");
+                        $("#nombre_via").val("");
+                        $("#numero_via").val("");
+                        $("#numero_portal").val("");
+                        $("#resto_direccion").val("");
+                        $("#codigo_postal").val("");
+                        $("#localidad").val("");
+                        $("#provincia").val("");
+                        $("#pais").val("");
                         
                     }
                 },
