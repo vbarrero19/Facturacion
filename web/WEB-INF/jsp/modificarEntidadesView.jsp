@@ -23,7 +23,7 @@
             var idEntidad = obtenerValorParametro("idEnt");
             var distinctCode = obtenerValorParametro("distinctCode");
 
-            alert(idEntidad);
+            //alert(idEntidad);
             //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
             cargarDatosEntidad(idEntidad);
             
@@ -96,7 +96,7 @@
                 /*en la url le pasamos como parametro el identificador de empresa*/
                 url: '/Facturacion/verEntidadesController/modificarEntidad.htm?entidad=' + idEntidad,
                 success: function (data) {
-                alert(data);
+                //alert(data);
                     if (data != "vacio") {
 
                         var aux = JSON.parse(data);
@@ -251,9 +251,10 @@
                                 </div>
                             </div>
 
-                            <button type="button" id="modificarEntidad" name="modificarEntidad" class="btn btn-primary pull-right">Modificar entidad</button>                               
-
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                            <button type="button" id="modificarEntidad" name="modificarEntidad" class="btn btn-primary pull-right">Modificar entidad</button>                             
+                            
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                            <a href="<c:url value='/verEntidadesController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
                         </form>
                     </div>
                 </div>
