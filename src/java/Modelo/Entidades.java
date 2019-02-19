@@ -92,6 +92,23 @@ public class Entidades {
         this.distinct_code = distinct_code;
         this.nombre_entidad = nombre_entidad;
     }
+     
+     //CONSTRUCTOR PARA MOSTRAR LOS DATOS DE LA ENTIDAD EN MODIFICAR ENTIDAD.
+    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto, String apellido1, String apellido2, String telefono1, String telefono2, String fax, String mail1, String mail2cc) {
+        this.id_entidad = id_entidad;
+        this.distinct_code = distinct_code;
+        this.nombre_entidad = nombre_entidad;
+        this.nombre_contacto = nombre_contacto;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.telefono1 = telefono1;
+        this.telefono2 = telefono2;
+        this.fax = fax;
+        this.mail1 = mail1;
+        this.mail2cc = mail2cc;
+    }
+     
+     
 
       //Getters y Setters
 
