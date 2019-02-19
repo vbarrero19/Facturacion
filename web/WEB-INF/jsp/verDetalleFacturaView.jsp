@@ -27,13 +27,14 @@
             var idCliente = obtenerValorParametro('idCliente');
             var idFactura = obtenerValorParametro('idFact');
 
-            //Funcionae para cargar los datos de la factura
+            //Funcionae para cargar todos los datos de la factura
             cargarDatosEmpresa(idEmpresa);
             cargarDatosCliente(idCliente);
             cargarDatosFactura(idFactura);
+            cargarDatosCargos(idFactura);
 
         });
-        
+
         //Funcion para recuperar el valor de la url. Hay que utilizar dos o mas valores ya que recupera a partir de los &
         function obtenerValorParametro(sParametroNombre) {
             var sPaginaURL = window.location.search.substring(1);
@@ -66,7 +67,7 @@
                 /*en la url le pasamos como parametro el identificador de empresa*/
                 url: '/Facturacion/verFacturasController/cargarEmpresa.htm?empresa=' + idEmpresa,
                 success: function (data) {
-                    
+
                     if (data != "vacio") {
 
                         var aux = JSON.parse(data);
@@ -75,10 +76,10 @@
                         aux.forEach(function (valor, indice) {
                             //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                             var resource = JSON.parse(valor);
-                            $("#nombreEmpresa").text(resource.col1);
-                            $("#tratamientoEmp").text(resource.col2);
-                            $("#nombreEmp").text(resource.col3);
-                            $("#apellidoEmp").text(resource.col4);
+                            $("#nombreEmpresa").text(resource.col2);
+                            $("#tratamientoEmp").text(resource.col3);
+                            $("#nombreEmp").text(resource.col4);
+                            $("#apellidoEmp").text(resource.col5);
 
                         });
 
@@ -102,7 +103,7 @@
 
         //Funcion paracargar los datos del cliente
         function cargarDatosCliente(idCliente) {
-            
+
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -126,10 +127,10 @@
                         aux.forEach(function (valor, indice) {
                             //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                             var resource = JSON.parse(valor);
-                            $("#nombreCliente").text(resource.col1);
-                            $("#tratamientoCli").text(resource.col2);
-                            $("#nombreCli").text(resource.col3);
-                            $("#apellidoCli").text(resource.col4);
+                            $("#nombreCliente").text(resource.col2);
+                            $("#tratamientoCli").text(resource.col3);
+                            $("#nombreCli").text(resource.col4);
+                            $("#apellidoCli").text(resource.col5);
                         });
 
                     } else {
@@ -152,7 +153,7 @@
 
         //Funcion paracargar los datos del cliente
         function cargarDatosFactura(idFactura) {
-            
+
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -202,9 +203,7 @@
 
 
         function cargarDatosCargos(idFactura) {
-            alert("Factura: " + idFact);
-            alert("Cliente: " + idCliente);
-            alert("Empresa: " + idEmpresa);
+            
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -213,7 +212,6 @@
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
-
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
@@ -221,24 +219,24 @@
                 url: '/Facturacion/verFacturasController/cargarCargos.htm?factura=' + idFactura,
                 success: function (data) {
 
-                    alert(data);
-                    
                     if (data != "vacio") {
 
                         var aux = JSON.parse(data);
 
-                        var subtotal = 0;
+                        var importe = 0;
                         var impuestos = 0;
+                        var total = 0;
 
                         //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
                         $('#tableContainer tbody').empty();
                         aux.forEach(function (valor, indice) {
                             //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                            var cargos = JSON.parse(valor);
+                            var resource = JSON.parse(valor);
 
-                            //Calculamos los importe e impuestos que vamos a mostrar
-                            //subtotal = subtotal + (parseInt(resource.col4) * parseInt(resource.col5));
-                            //impuestos = impuestos + parseInt(resource.col6);
+                            //Calculamos los importes e impuestos que vamos a mostrar
+                            importe = importe + parseInt(resource.col4)*+ parseInt(resource.col5);
+                            impuestos = impuestos + parseInt(resource.col6);
+                            
 
                             //cargamos de forma dinamica la tabla
                             $('#tableContainer tbody').append(" <tr>\n\
@@ -249,24 +247,21 @@
                                                                     <td>" + resource.col4 + "</td>                       \n\
                                                                     <td>" + resource.col5 + "</td>                       \n\
                                                                     <td>" + resource.col6 + "</td>                       \n\
-                                                                    <td>" + resource.col7 + "</td>                       \n\
-                                                                    <td>" + resource.col8 + "</td>                       \n\
-\n\                                                                 </tr>");
+                                                                    <td>" + resource.col7 + "</td>                       \n\    \n\
+                                                                </tr>");
 
 
                         });
-                        $("#subtotal").val(subtotal);
-                        $("#impuestos").val(impuestos);
-                        $("#total_factura").val(subtotal + impuestos);
+                        $("#importe").text(importe);
+                        $("#impuestos").text(impuestos);
+                        $("#totales").text(importe + impuestos);
                     } else {
                         //Si data viene vacio borramos el contenido de los campos
                         $('#tableContainer tbody').empty();
-                        $("#idCliente").val("");
-                        $("#nombreEntidad").val("");
-                        $("#nombreContactoCli").val("");
-                        $("#subtotal").val("");
-                        $("#impuestos").val("");
-                        $("#total_factura").val("");
+                        $("#importe").text("");
+                        $("#impuestos").text("");
+                        $("#totales").text("");
+
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -378,8 +373,25 @@
                                     </table>
                                 </div>   
 
-                                <!-- <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>-->
+                                <div class="datos" class="col-xs-12">
+                                    <!--Combo para entidades-->
+                                    <div class="form-group col-xs-2 col-xs-offset-5">
+                                        <label for="importe">Importe: </label>
+                                        <label id="importe" name="importe" class="azul" ></label>
+                                    </div> 
+                                    <div class="form-group col-xs-2 col-xs-offset-1">
+                                        <label for="impuestos">Impuestos: </label>
+                                        <label id="impuestos" name="impuestos" class="azul" ></label>
+                                    </div> 
+                                    <div class="form-group col-xs-2">
+                                        <label for="totales">Total: </label>
+                                        <label id="totales" name="totales" class="azul" ></label>
+                                    </div> 
+                                    <br style="clear:both">
+                                </div>          
+
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                                <a href="<c:url value='/verFacturasController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
                         </form>
 
 

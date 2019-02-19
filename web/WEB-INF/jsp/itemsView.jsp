@@ -13,7 +13,10 @@
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
             getTipoItem();
-            
+
+            var f = new Date();
+            alert((f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear()));
+
             //Evento click para mostrar la primera pestaña de la pagina
             $("#home-tab").click();
 
@@ -33,12 +36,12 @@
                 //Cargamos el contenido de los campos del formulario
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
-                
+
                 //Cogemos el valor del Combo y lo guardamos en id_impuesto.
-                myObj["id_tipo_item"] = $("#id_tipo_item").val();                
+                myObj["id_tipo_item"] = $("#id_tipo_item").val();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
-                
+
                 //Cogemos el valor del radio seleccionado y lo guardamos en periodo
                 myObj["periodo"] = $(".form-check input:checked").val();
 
@@ -113,84 +116,72 @@
     <body>
         <div class="container">
             <div class="col-xs-12">
-                <div class="col-md-5">
+                <div class="col-md-8">
                     <div class="form-area">  
                         <form role="form">
+
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ITEMS</h3>
-                            <!--CARGAMOS LAS PESTAÑAS DE LA PARTE DE ARRIBA -->
-                            <div class="form-group">						
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Items</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pestaña2</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Pestaña3 </a>
-                                    </li>
-                                </ul>
+                            <div class="col-md-6"> 
+
+
+
+                                <div class="form-group">
+                                    <label for="abreviatura">Abreviatura:</label>
+                                    <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
+                                </div>                            
+                                <div class="form-group">
+                                    <label for="descripcion:">Descripcion:</label>
+                                    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+                                </div>                                    
+
+                                <div class="form-group-combo">
+                                    <label for="tipo_item">Tipo de Item:</label>                                        
+                                    <!--Combo para tipos de items-->
+                                    <select class="form-control" id="id_tipo_item" name="id_tipo_item">
+                                    </select>                                                                    
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cuenta">Cuenta:</label>
+                                    <input type="text" class="form-control" id="cuenta" name="cuenta" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="importe">Importe:</label>
+                                    <input type="text" class="form-control" id="importe" name="importe" required>
+                                </div>
+
+                                <!--Radio button para tipo de periodicidad-->                                     
+                                <div class="form_radio_button">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="puntual" checked>
+                                        <label class="form-check-label" for="2">Puntual</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="periodico">
+                                        <label class="form-check-label" for="1">Periódico</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"> 
+
+                                <div class="form-group">
+                                    <label for="importe">Incluir periodicidad</label>
+
+                                </div>
+
                             </div>
 
-                            <!-- Dentro de cada pestaña ponemos la informacion necesaria -->                        
-                            <div class="tab-content" id="myTabContent">
-                                
-                                <!--Informacio de la pestaña 1 -->
-                                <div class="tab-pane fade active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="form-group">
-                                        <label for="abreviatura">Abreviatura:</label>
-                                        <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
-                                    </div>                            
-                                    <div class="form-group">
-                                        <label for="descripcion:">Descripcion:</label>
-                                        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                                    </div>                                    
+                            <br style="clear:both">
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                            <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
 
-                                    <div class="form-group-combo">
-                                        <label for="tipo_item">Tipo de Item:</label>                                        
-                                        <!--Combo para tipos de items-->
-                                        <select class="form-control" id="id_tipo_item" name="id_tipo_item">
-                                        </select>                                                                    
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="cuenta">Cuenta:</label>
-                                        <input type="text" class="form-control" id="cuenta" name="cuenta" required>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="importe">Importe:</label>
-                                        <input type="text" class="form-control" id="importe" name="importe" required>
-                                    </div>
 
-                                    <!--Radio button para tipo de periodicidad-->                                     
-                                    <div class="form_radio_button">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="periodico" checked>
-                                            <label class="form-check-label" for="1">Periodico</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="puntual">
-                                            <label class="form-check-label" for="2">Puntual</label>
-                                        </div>
-                                    </div>
-                                    <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
-                                    <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
-                                </div>
-                                    
-                                <!--Informacio de la pestaña 2 -->
-                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">                                 
-                                    <!--AQUI METEMOS LA INFORMACION DE LA PESTAÑA 2 -->
-                                    <label>INFORMACION DE LA PESTAÑA 2 </label>
-                                </div>
 
-                                <!--Informacio de la pestaña 3 -->
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                    <!-- AQUI METEMOS LA INFORMACION DE LA PESTAÑA 3 -->
-                                    <label>INFORMACION DE LA PESTAÑA 3</label>
-                                </div>                               
-                            </div> 
+
+
                         </form>
                     </div>
                 </div>

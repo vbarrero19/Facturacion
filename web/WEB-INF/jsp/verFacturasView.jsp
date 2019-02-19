@@ -234,8 +234,7 @@
                                                                     <td>" + factura.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.total_factura + '€' + "</td>         \n\
                                                                     <td><a class='btn btn-primary' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ factura.id_factura +
-                                                                    "&idCliente="+factura.id_cliente+"&idEmpresa="+factura.id_empresa+"'>Detalle</a>\n\
-                                                                    <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
+                                                                    "&idCliente="+factura.id_cliente+"&idEmpresa="+factura.id_empresa+"'>Detalle</a>\n\</td> \n\\n\
                         < /tr>");
                     });
 

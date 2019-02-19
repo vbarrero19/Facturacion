@@ -245,8 +245,7 @@ public class verFacturasController {
         }
         return resp;
 
-    }
-        
+    }        
         
     //Se utiliza para cargar los datos de la empresa en la pagina verDetalleFacturaView
     @RequestMapping("/verFacturasController/cargarEmpresa.htm")
@@ -445,7 +444,7 @@ public class verFacturasController {
         @RequestMapping("/verFacturasController/cargarCargos.htm")
     @ResponseBody
         public String cargarCargos(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Facturas resourceLoad = new Facturas();
+        Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
@@ -468,7 +467,7 @@ public class verFacturasController {
             rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
             }
 
             resp = new Gson().toJson(arrayTipo);
@@ -503,8 +502,7 @@ public class verFacturasController {
         }
         return resp;
 
-    }
-            
+    }                    
 
     
 }
