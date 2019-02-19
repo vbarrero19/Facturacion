@@ -14,11 +14,41 @@
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
             getTipoItem();
 
+            //Mostramos la fecha actual
             var f = new Date();
-            alert((f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear()));
+            $("#fecha").text((f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear()));
+            //Fin fecha
 
-            //Evento click para mostrar la primera pestaña de la pagina
-            $("#home-tab").click();
+            //Ocultamos los meses de la periodicidad
+            $('#meses').hide();
+
+            $("#exampleRadios2").on("click", function () {
+                $('#meses').show(); //muestro mediante id
+                //$('.target').show(); //muestro mediante clase
+            });
+            $("#exampleRadios1").on("click", function () {
+                $('#meses').hide(); //oculto mediante id
+                //$('.target').hide(); //muestro mediante clase
+            });
+
+
+            //tratando de omstrar fechas dinamicamente
+            var meses = 12 - f.getMonth();
+            alert(meses);
+            //cargamos de forma dinamica la tabla
+            for (var i = 0; i <= meses; i++) {
+                $('#tbody-tabla-meses').append(" <tr>\n\
+                                                                    <td id='id" + (i + 1) + "'>" + meses + "</td>              \n\
+                                                                    <td>meses</td>          \n\ \n\
+                                                                </tr>");
+            }
+
+//            for (var i=0; i <= meses; i++) {
+//                $('#tbody-tabla-meses').append(" <tr>\n\
+//                                                                    <td>HOLA</td>              \n\
+//                                                                    <td>Adios</td>          \n\ \n\
+//                                                                </tr>");
+//            }
 
             //Evento .click en el boton submit
             $("#guardarItem").click(function () {
@@ -122,9 +152,8 @@
 
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ITEMS</h3>
-                            <div class="col-md-6"> 
 
-
+                            <div class="col-md-7"> 
 
                                 <div class="form-group">
                                     <label for="abreviatura">Abreviatura:</label>
@@ -156,31 +185,54 @@
                                 <div class="form_radio_button">
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="puntual" checked>
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="puntual" checked>
                                         <label class="form-check-label" for="2">Puntual</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="periodico">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="periodico">
                                         <label class="form-check-label" for="1">Periódico</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6"> 
+                            <div class="col-md-5"> 
+                                <div id="meses">
+                                    <div class="form-group">
+                                        <label for="fecha">Incluir periodicidad: </label>
+                                        <label id="fecha" name="fecha"></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <table class="table table-striped">                                     
+                                            <tr><td><input type="checkbox" name="chkHos" value ="01" ></td>
+                                                <td>Enero</td></tr>                                        
+                                            <tr><td><input type="checkbox" name="chkHos" value ="02" ></td>                                            
+                                                <td>Febrero</td></tr>
+                                        </table>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="importe">Incluir periodicidad</label>
 
+
+                                    <table class="table table-striped">                                    
+
+                                        <thead class="thead-dark">                                            
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Mes</th>
+
+                                            </tr>                                            
+                                        </thead>
+
+                                        <tbody id="tbody-tabla-meses">
+
+                                        </tbody>
+                                    </table>
                                 </div>
+
 
                             </div>
 
                             <br style="clear:both">
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
-
-
-
-
 
                         </form>
                     </div>
