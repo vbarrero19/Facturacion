@@ -112,7 +112,7 @@ public class verEntidadesController {
     @RequestMapping("/verEntidadesController/modificarEntidad.htm")
     @ResponseBody
     /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
-    public String verModificarEntidad( @RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         Entidades resourceLoad = new Entidades();
 
@@ -121,7 +121,7 @@ public class verEntidadesController {
         PreparedStatement stAux = null;
         String resp = "correcto";
 
-        
+        int idEnt=Integer.parseInt(hsr.getParameter("entidad"));
         //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
         //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
         ArrayList<String> arrayEntidad = new ArrayList<>();
@@ -131,9 +131,9 @@ public class verEntidadesController {
             con = pool_local.getConnection();
         
             stAux = con.prepareStatement("SELECT id_entidad, distinct_code, nombre_entidad, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc"
-                    + "FROM entidad where id_entidad = ?");
+                    + " FROM entidad where id_entidad = ?");
             
-            stAux.setInt(1, Integer.parseInt(entidades.getId_entidad()));
+            stAux.setInt(1, idEnt);
             rs = stAux.executeQuery();
             
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
@@ -147,7 +147,7 @@ public class verEntidadesController {
             resp = new Gson().toJson(arrayEntidad);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; //
+            resp = "incorrecto SQL"; //
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
 

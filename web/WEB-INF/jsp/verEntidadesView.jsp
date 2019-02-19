@@ -55,7 +55,7 @@
                                                                     <td>" + entidad.distinct_code + "</td>         \n\
                                                                     <td>" + entidad.nombre_entidad + "</td>         \n\
                                                                     <td>" + entidad.nombre_contacto + "</td>         \n\
-                                                                    <td><a href='/Facturacion/verEntidadesController/startEntidad.htm?idEnt=" + entidad.id_entidad +"&distinctCode= " + entidad.distinct_code + "' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/verEntidadesController/startEntidad.htm?idEnt=" + entidad.id_entidad + "&distinctCode=" + entidad.distinct_code + "' class='btn btn-primary'> Modificar </button>\n\
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });

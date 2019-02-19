@@ -20,12 +20,14 @@
 
             var userLang = navigator.language || navigator.userLanguage;
 
-            var idEntidad = obtenerValorParametro('idEntidad');
-            var distinctCode = obtenerValorParametro('distinctCode');
+            var idEntidad = obtenerValorParametro("idEnt");
+            var distinctCode = obtenerValorParametro("distinctCode");
 
-
+            alert(idEntidad);
             //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
             cargarDatosEntidad(idEntidad);
+            
+            
 
 
 //            $("#modificarEntidad").click(function () {
@@ -103,15 +105,15 @@
                         aux.forEach(function (valor, indice) {
                             //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                             var entidad = JSON.parse(valor);
-                            $("#id_entidad").text(entidad.id_entidad);
-                            $("#distinct_code").text(entidad.distinct_code );
+                            $("#id_entidad").val(entidad.id_entidad);
+                            $("#distinct_code").val(entidad.distinct_code );
 
                         });
 
                     } else {
                         //Si data viene vacio borramos el contenido de los campos                        
-                        $("#id_entidad").text("");
-                        $("#distinct_code").text("");
+                        $("#id_entidad").val("");
+                        $("#distinct_code").val("");
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -140,7 +142,7 @@
 
                             <div class="form-group-combo">    
                                 <div class="form-group col-xs-4">
-                                    <input type="text" class="form-control" disabled=”disabled id="id_entidad" name="id_entidad" placeholder="Identificador entidad" required>
+                                    <input type="text" class="form-control" disabled="disabled" id="id_entidad" name="id_entidad" placeholder="Identificador entidad">
                                 </div>
                                 <div class="form-group col-xs-8">
                                     <input type="text" class="form-control" id="distinct_code" name="distinct_code" placeholder="Distinct code" required>
