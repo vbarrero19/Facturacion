@@ -75,6 +75,8 @@
                 //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
                 myObj["apellido1"] = $("#apellido1").val().trim();
                 myObj["apellido2"] = $("#apellido2").val().trim();
+                //GUARADMOS EL TIPO DE DEDICACION 
+                myObj["id_dedicacion"] = $("#id_dedicacion").val();
                 //GUARDAMOS LOS TELEFONOS DE CONTACTO
                 myObj["telefono1"] = $("#telefono1").val().trim();
                 myObj["telefono2"] = $("#telefono2").val().trim();
