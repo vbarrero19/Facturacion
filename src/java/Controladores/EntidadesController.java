@@ -98,7 +98,8 @@ public class EntidadesController {
 
             stAux.setTimestamp(13, timestamp2);
             
-            stAux.setString(14,"TRUE");
+            String activado = "TRUE";
+            stAux.setString(14,activado);
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
 
