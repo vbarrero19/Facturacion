@@ -59,7 +59,7 @@ public class verDireccionController {
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("select ed.id_entidad, e.nombre_entidad, ed.id_direccion, d.nombre_via, d.localidad\n"
                     + "                    from entidad_direccion ed inner join entidad e on e.id_entidad = ed.id_entidad\n"
-                    + "                    inner join direccion d on d.id_direccion = ed.id_direccion where activado = 'TRUE' order by e.distinct_code ASC");
+                    + "                    inner join direccion d on d.id_direccion = ed.id_direccion where d.activado = 'TRUE' order by e.distinct_code ASC");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new EntidadDireccion(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));

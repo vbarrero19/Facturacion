@@ -12,25 +12,31 @@
 
 <!DOCTYPE html>
 <html>
-     <%@ include file="infouser.jsp" %>
+    <%@ include file="infouser.jsp" %>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>MODIFICAR PAGO</title>
     </head>
 
     <script>
-        
+
         $(document).ready(function () {
 
             cargarPago();
 
             var userLang = navigator.language || navigator.userLanguage;
 
+            //al hacer clic en el boton para mostrar la ventana emergente
+            $(".miBoton").click(function () {
+                $("#myModal").modal();
+
+            });
+
         });
-        
 
 
-function cargarPago() {
+
+        function cargarPago() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -59,10 +65,13 @@ function cargarPago() {
                                                                     <td>" + EntidadPago.nombre_entidad + "</td>         \n\
                                                                     <td>" + EntidadPago.titular_cuenta + "</td>         \n\
                                                                     <td>" + EntidadPago.nombre_banco + "</td>         \n\
-                                                                    <td><a href='/Facturacion/pagoController/startPago.htm' class='btn btn-primary'> Modificar </button>\n\
-                                                                    <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
-                        < /tr>");
+                                                                    <td><a href='/Facturacion/pagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton'> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/pagoController/eliminarPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-danger'> Eliminar </button>\n\
+                        </tr>");
                     });
+
+
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -72,6 +81,12 @@ function cargarPago() {
             });
 
         }
+        
+        //funcion ventana emergente
+         function eliminar(idElim) {
+           
+            $("#eliminar").text("Eliminar metodo de pago");
+        };
 
     </script>
     <body>
@@ -81,7 +96,7 @@ function cargarPago() {
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">LISTA DE DIRECCIONES</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">LISTA FORMAS DE PAGO</h3>
                             <div>
                                 <div class="col-xs-12" id="tableContainer">
                                     <table class="table table-striped">                                    
@@ -107,6 +122,29 @@ function cargarPago() {
                     </div>
                 </div>
             </div>
-        </div>                  
-    </body>
+        </div>    
+
+        <!-- ventana emergente -->
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Eliminar forma de pago</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="eliminar"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
 </html>

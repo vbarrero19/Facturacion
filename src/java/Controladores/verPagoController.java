@@ -58,7 +58,7 @@ public class verPagoController {
 
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("select e.id_entidad, e.nombre_entidad, m.id_metodo_pago, m.titular_cuenta, m.nombre_banco from entidad e inner join metodo_pago m \n"
-                    + "on e.id_entidad = m.id_entidad where e.activado = 'TRUE' order by e.nombre_entidad");
+                    + "on e.id_entidad = m.id_entidad WHERE m.activado = 'TRUE' order by e.nombre_entidad");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new EntidadPago(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));

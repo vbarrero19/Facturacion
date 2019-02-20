@@ -74,8 +74,8 @@ public class DireccionController {
 
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA DIRECCION*/
 
-            stAux = con.prepareStatement("INSERT INTO DIRECCION (id_tipo_direccion, tipo_via, nombre_via, numero_via, numero_portal, resto_direccion, codigo_postal, localidad, provincia, pais)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO DIRECCION (id_tipo_direccion, tipo_via, nombre_via, numero_via, numero_portal, resto_direccion, codigo_postal, localidad, provincia, pais, activado)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
             stAux.setInt(1, Integer.parseInt(direccion.getId_tipo_direccion()));
@@ -88,7 +88,7 @@ public class DireccionController {
             stAux.setString(8, direccion.getLocalidad());
             stAux.setString(9, direccion.getProvincia());
             stAux.setString(10, direccion.getPais());
-
+            stAux.setBoolean(11,true);
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();
 

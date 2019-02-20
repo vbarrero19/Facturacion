@@ -72,8 +72,8 @@ public class PagoController {
 
             /*REALIZAMOS LA CONSULTA PREPARADA PARA EL NUEVO METODO DE PAGO*/
             stAux = con.prepareStatement("INSERT INTO METODO_PAGO (id_entidad, numero_cuenta, codigo1, codigo2, titular_cuenta, tarjeta_credito, mes_caducidad, anio_caducidad, tipo_tarjeta,"
-                    + "codigo_csc, titular_tarjeta, cuenta_paypal, correo_paypal, cheque, nombre_banco, direccion_banco, localidad, pais)"+
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "codigo_csc, titular_tarjeta, cuenta_paypal, correo_paypal, cheque, nombre_banco, direccion_banco, localidad, pais, activado)"+
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
            
 
@@ -100,7 +100,7 @@ public class PagoController {
             stAux.setString(16, pago.getDireccion_banco());
             stAux.setString(17, pago.getLocalidad());
             stAux.setString(18, pago.getPais());
-
+            stAux.setBoolean(19,true);
             
 
             /*LO EJECUTAMOS*/
@@ -223,6 +223,68 @@ public class PagoController {
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("SELECT id_entidad, nombre_entidad FROM entidad WHERE id_entidad = ?");
+
+            stAux.setInt(1, Integer.parseInt(resource.getCol1()));
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
+
+    
+    /**CUANDO ELIMINAMOS UN METODO DE PAGO DE LA LISTA , ACTUALIZAMOS ACTIVADO Y LO PONEMOS A FALSE. 
+     buscar preparestatement update y cambiar los datos de la funcion*/
+    
+       @RequestMapping("/pagoController/eliminarPago.htm")
+    @ResponseBody
+    public String eliminarPago(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("update metodo_pago SET activado = false where id_metodo_pago = ?");
 
             stAux.setInt(1, Integer.parseInt(resource.getCol1()));
             rs = stAux.executeQuery();
