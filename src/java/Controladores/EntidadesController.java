@@ -68,8 +68,8 @@ public class EntidadesController {
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
 
             
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, id_dedicacion, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, id_dedicacion, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja, activado)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
            
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidades.getDistinct_code());
@@ -85,6 +85,8 @@ public class EntidadesController {
             stAux.setString(11,entidades.getMail1());
             stAux.setString(12,entidades.getMail2cc());
             
+
+            
             String fechaAlta = entidades.getFecha_alta();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(fechaAlta);
@@ -98,9 +100,9 @@ public class EntidadesController {
             Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
             stAux.setTimestamp(14, timestamp2);
-            
-//            String activado = "TRUE";
-//            stAux.setString(14,activado);
+                        
+            stAux.setBoolean(15,true);
+         
 
 
             /*LO EJECUTAMOS*/
