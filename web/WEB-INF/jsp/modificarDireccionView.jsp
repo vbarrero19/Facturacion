@@ -18,17 +18,103 @@
     </head>
     <script>
         $(document).ready(function () {
+            var userLang = navigator.language || navigator.userLanguage;
 
+            var idEntidad = obtenerValorParametro("idEnt");
+            var nombreEntidad = obtenerValorParametro("nombreEnt");
+            
+        
+
+//            alert(idEntidad);
+            cargarDatosDireccion(idEntidad);
 
         });
+        
+        function obtenerValorParametro(sParametroNombre) {
+            var sPaginaURL = window.location.search.substring(1);
+            var sURLVariables = sPaginaURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParametro = sURLVariables[i].split('=');
+                if (sParametro[0] == sParametroNombre) {
+                    return sParametro[1];
+                }
+            }
+            return null;
+        };
+        
+        
+        //FUNCION PARA CARGAR LOS DATOS DE LA DIRECCION AL DARLE AL BOTON DE MODIFICAR.
+        function cargarDatosDireccion(idEntidad) {
+            
 
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                /*en la url le pasamos como parametro el identificador de empresa*/
+                url: '/Facturacion/verDireccionController/modificarDireccion.htm?entidad=' + idEntidad,
+                success: function (data) {
+//                alert(data);
+                    if (data != "vacio") {
 
+                        var aux = JSON.parse(data);
+                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                        //$('#tableContainer tbody').empty();
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var entidadDireccion = JSON.parse(valor);
+                            $("#distinct_code").val(entidadDireccion.distinct_code);
+                            $("#nombre_entidad").val(entidadDireccion.nombre_entidad);
+                            $("#tipo_via").val(entidadDireccion.tipo_via);
+                            $("#nombre_via").val(entidadDireccion.nombre_via);
+                            $("#numero_via").val(entidadDireccion.numero_via);
+                            $("#numero_portal").val(entidadDireccion.numero_portal);
+                            $("#resto_direccion").val(entidadDireccion.resto_direccion);
+                            $("#codigo_postal").val(entidadDireccion.codigo_postal);
+                            $("#localidad").val(entidadDireccion.localidad);
+                            $("#provincia").val(entidadDireccion.provincia);
+                            $("#pais").val(entidadDireccion.pais);
+                            
+                            
+                        });
 
+                    } else {
+                        //Si data viene vacio borramos el contenido de los campos                        
+                        $("#distinct_code").val("");
+                        $("#nombre_entidad").val("");    
+                        $("#tipo_via").val("");
+                        $("#nombre_via").val("");
+                        $("#numero_via").val("");
+                        $("#numero_portal").val("");
+                        $("#resto_direccion").val("");
+                        $("#codigo_postal").val("");
+                        $("#localidad").val("");
+                        $("#provincia").val("");
+                        $("#pais").val("");
+                        
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        };
+
+        
+        
     </script>
 
     <body>
-        
+
         <div class="container col-xs-12">
             <div class="col-xs-12">
                 <!-- con col elegimos el tamaño xs:moviles md:tablets lg:pantallas de ordenador.
@@ -46,7 +132,7 @@
                                 <!-- COMBO PARA CARGAR DE FORMA DINAMICA LOS TIPOS DE DIRECCION QUE EXISTEN -->
                                 <div class="form-group col-xs-6">
                                     <label for="distinct_code"> Distinct code </label>
-                                        <input type="text" class="form-control" id="distinct_code" name="distinct_code" disabled = "true">                                             
+                                    <input type="text" class="form-control" id="distinct_code" name="distinct_code" disabled = "true">                                             
                                 </div> 
                                 <div class="form-group col-xs-6">
                                     <label for="idCliente>">Nombre_entidad</label>
@@ -112,7 +198,9 @@
 
                             </div> 
                             <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Modificar direccion</button>
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                            <a href="<c:url value='/verDireccionController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
                         </form>
                     </div>
                 </div>

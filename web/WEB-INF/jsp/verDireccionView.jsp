@@ -52,14 +52,14 @@ function cargarDirecciones() {
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a 
-                        var EntidadesDireccion = JSON.parse(valor);
+                        var EntidadDireccion = JSON.parse(valor);
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td>" + EntidadesDireccion.nombre_entidad + "</td>         \n\
-                                                                    <td>" + EntidadesDireccion.nombre_via + "</td>         \n\
-                                                                    <td>" + EntidadesDireccion.localidad + "</td>         \n\
-                                                                    <td><a href='/Facturacion/direccionController/startDireccion.htm' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td>" + EntidadDireccion.nombre_entidad + "</td>         \n\
+                                                                    <td>" + EntidadDireccion.nombre_via + "</td>         \n\
+                                                                    <td>" + EntidadDireccion.localidad + "</td>         \n\
+                                                                    <td><a href='/Facturacion/direccionController/startDireccion.htm?idEnt=" + EntidadDireccion.id_entidad + "&nombreEnt=" + EntidadDireccion.nombre_entidad + "' class='btn btn-primary'> Modificar </button>\n\
                                                                     <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
                         < /tr>");
                     });

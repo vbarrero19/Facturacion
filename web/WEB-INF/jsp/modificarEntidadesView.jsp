@@ -23,7 +23,7 @@
             var idEntidad = obtenerValorParametro("idEnt");
             var distinctCode = obtenerValorParametro("distinctCode");
 
-            alert(idEntidad);
+            //alert(idEntidad);
             //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
             cargarDatosEntidad(idEntidad);
             
@@ -96,7 +96,7 @@
                 /*en la url le pasamos como parametro el identificador de empresa*/
                 url: '/Facturacion/verEntidadesController/modificarEntidad.htm?entidad=' + idEntidad,
                 success: function (data) {
-                alert(data);
+                //alert(data);
                     if (data != "vacio") {
 
                         var aux = JSON.parse(data);
@@ -107,13 +107,32 @@
                             var entidad = JSON.parse(valor);
                             $("#id_entidad").val(entidad.id_entidad);
                             $("#distinct_code").val(entidad.distinct_code );
-
+                            $("#nombre_entidad").val(entidad.nombre_entidad);
+                            $("#nombre_contacto").val(entidad.nombre_contacto);
+                            $("#apellido1").val(entidad.apellido1);
+                            $("#apellido2").val(entidad.apellido2);
+                            $("#telefono1").val(entidad.telefono1);
+                            $("#telefono2").val(entidad.telefono2);
+                            $("#fax").val(entidad.fax);
+                            $("#mail1").val(entidad.mail1);
+                            $("#mail2cc").val(entidad.mail2cc);
+                            
                         });
 
                     } else {
                         //Si data viene vacio borramos el contenido de los campos                        
                         $("#id_entidad").val("");
                         $("#distinct_code").val("");
+                        $("#nombre_entidad").val("");
+                        $("#nombre_contacto").val("");
+                        $("#apellido1").val("");
+                        $("#apellido2").val("");
+                        $("#telefono1").val("");
+                        $("#telefono2").val("");
+                        $("#fax").val(entidad.fax);
+                        $("#mail1").val("");
+                        $("#mail2cc").val("");
+                        
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -232,9 +251,10 @@
                                 </div>
                             </div>
 
-                            <button type="button" id="modificarEntidad" name="modificarEntidad" class="btn btn-primary pull-right">Modificar entidad</button>                               
-
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                            <button type="button" id="modificarEntidad" name="modificarEntidad" class="btn btn-primary pull-right">Modificar entidad</button>                             
+                            
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
+                            <a href="<c:url value='/verEntidadesController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
                         </form>
                     </div>
                 </div>

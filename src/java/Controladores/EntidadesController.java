@@ -59,73 +59,55 @@ public class EntidadesController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
+        String resp = "Alta de entidad correcta";
         /*CODIGO PARA AÑADIR UNA NUEVA ENTIDAD*/
         try {
-            
-            
-            
-            /*------para guardar el id_dedicacion en la talba entidades-------------*/
-            
-            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            
-            Connection con0 = null;
-            ResultSet rs0 = null;
-            PreparedStatement stAux0 = null;
-
-            con0 = pool_local.getConnection();
-
-            stAux0 = con0.prepareStatement("SELECT id_dedicacion FROM tipo_dedicacion");
-
-            //stAux3.setInt(1, Integer.parseInt(entidades.getId_entidad()));
-            rs0 = stAux0.executeQuery();
-            int idDed = 0;
-
-            while (rs0.next()) {
-                idDed = rs0.getInt(1);
-            }
-            
-            /* ******************* */
-            
             /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
-           // PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
 
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-
-            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
-            stAux.setString(1, entidades.getDistinct_code());
-            stAux.setString(2, entidades.getNombre_entidad());
-            stAux.setString(3, entidades.getTratamiento());
-            stAux.setString(4, entidades.getNombre_contacto());
-            stAux.setString(5, entidades.getApellido1());
-            stAux.setString(6, entidades.getApellido2());
-           // stAux.setInt(7,idDed);
-            stAux.setString(7, entidades.getTelefono1());
-            stAux.setString(8, entidades.getTelefono2());
-            stAux.setString(9, entidades.getFax());
-            stAux.setString(10, entidades.getMail1());
-            stAux.setString(11, entidades.getMail2cc());
-
+            
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, id_dedicacion, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+           
+            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
+            stAux.setString(1,entidades.getDistinct_code());
+            stAux.setString(2,entidades.getNombre_entidad());
+            stAux.setString(3,entidades.getTratamiento());
+            stAux.setString(4,entidades.getNombre_contacto());
+            stAux.setString(5,entidades.getApellido1());
+            stAux.setString(6,entidades.getApellido2());
+            stAux.setInt(7,Integer.parseInt(entidades.getId_dedicacion()));
+            stAux.setString(8,entidades.getTelefono1());
+            stAux.setString(9,entidades.getTelefono2());
+            stAux.setString(10,entidades.getFax());
+            stAux.setString(11,entidades.getMail1());
+            stAux.setString(12,entidades.getMail2cc());
+            
             String fechaAlta = entidades.getFecha_alta();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(fechaAlta);
             Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
-            stAux.setTimestamp(12, timestamp);
-
+            stAux.setTimestamp(13, timestamp);
+            
             String fechaBaja = entidades.getFecha_alta();
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate2 = dateFormat2.parse(fechaBaja);
             Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
-            stAux.setTimestamp(13, timestamp2);
+            stAux.setTimestamp(14, timestamp2);
+            
+//            String activado = "TRUE";
+//            stAux.setString(14,activado);
+
 
             /*LO EJECUTAMOS*/
-            stAux.executeUpdate();
+            stAux.executeUpdate();            
 
+
+            
             /**
              * ************** SELECCIONAMOS EL MAXIMO DEL NUMERO DE ENTIDAD DE LA TABLA ********************
              */
@@ -162,6 +144,7 @@ public class EntidadesController {
             /*LO EJECUTAMOS*/
             stAux2.executeUpdate();
 
+
             /**
              * ********* INSERTAMOS EN LA TABLA DOCUMENTO EL ID_TIPO_DOCUMENTO DE LA TABLA TIPO_DOCUMENTO(QUE LO COGEMOS DEL COMBO) Y EL NUMERO DEL DOCUMENTO QUE LO SELECCIONAMOS DEL INPUT ***************
              */
@@ -192,7 +175,7 @@ public class EntidadesController {
             stAux6.executeUpdate();
 
         } catch (SQLException ex) {
-            resp = "Incorrecto"; // ex.getMessage();
+            resp = "Incorrecto SQL"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } catch (Exception ex) {
