@@ -103,6 +103,8 @@ public class EntidadesController {
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
 
+
+            
             /**
              * ************** SELECCIONAMOS EL MAXIMO DEL NUMERO DE ENTIDAD DE LA TABLA ********************
              */
@@ -138,6 +140,7 @@ public class EntidadesController {
 
             /*LO EJECUTAMOS*/
             stAux2.executeUpdate();
+
 
             /**
              * ********* INSERTAMOS EN LA TABLA DOCUMENTO EL ID_TIPO_DOCUMENTO DE LA TABLA TIPO_DOCUMENTO(QUE LO COGEMOS DEL COMBO) Y EL NUMERO DEL DOCUMENTO QUE LO SELECCIONAMOS DEL INPUT ***************
