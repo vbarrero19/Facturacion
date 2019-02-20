@@ -64,7 +64,7 @@ public class CargosController {
             stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
             stAux.setString(2, cargos.getAbreviatura());
             stAux.setString(3, cargos.getDescripcion());
-            stAux.setInt(4, 1);//Integer.parseInt(cargos.getId_tipo_item())); Hacer una select para saber el id del tipo?
+            stAux.setInt(4, 1); //Integer.parseInt(cargos.getId_tipo_item())); //Hacer una select para saber el id del tipo???
             stAux.setString(5, cargos.getCuenta());
             stAux.setDouble(6, Double.parseDouble(cargos.getImporte()));
             stAux.setDouble(7, Double.parseDouble(cargos.getCantidad()));
@@ -306,7 +306,6 @@ public class CargosController {
 
     }
     
-    
     //Se usa al seleccionar algo en el combo Clientes
     @RequestMapping("/cargosController/getDatosEntidadEmpresa.htm")
     @ResponseBody
@@ -366,8 +365,7 @@ public class CargosController {
         return resp;
 
     }
-       
-    
+        
      //Se usa para cargar los datos del combo items
     @RequestMapping("/cargosController/getItem.htm")
     @ResponseBody
@@ -487,9 +485,7 @@ public class CargosController {
         return resp;
 
     }
-    
-    
-    
+      
      //Se usa para cargar los datos del combo TipoImpuesto
     @RequestMapping("/cargosController/getTipoImpuesto.htm")
     @ResponseBody
@@ -548,9 +544,6 @@ public class CargosController {
         return resp;
 
     }
-    
-    
-    
     
     
 }

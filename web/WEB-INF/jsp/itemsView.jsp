@@ -17,10 +17,11 @@
             //Mostramos la fecha actual
             var f = new Date();
             $("#fecha").text((f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear()));
-            //Fin fecha
+            
+            var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
 
             //Ocultamos los meses de la periodicidad
-            $('#meses').hide();
+            $('#meses').hide(); 
 
             $("#exampleRadios2").on("click", function () {
                 $('#meses').show(); //muestro mediante id
@@ -32,23 +33,17 @@
             });
 
 
-            //tratando de omstrar fechas dinamicamente
-            var meses = 12 - f.getMonth();
-            alert(meses);
+            //tratando de omstrar fechas dinamicamente            
+            var mes = f.getMonth();
+            var nombreMes = meses[f.getMonth()];
+            alert(nombreMes);
             //cargamos de forma dinamica la tabla
-            for (var i = 0; i <= meses; i++) {
+            for (var i = mes; i < 12; i++) {
                 $('#tbody-tabla-meses').append(" <tr>\n\
-                                                                    <td id='id" + (i + 1) + "'>" + meses + "</td>              \n\
-                                                                    <td>meses</td>          \n\ \n\
+                                                                    <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+                                                                    <td>" + meses[i] + "</td>          \n\ \n\
                                                                 </tr>");
             }
-
-//            for (var i=0; i <= meses; i++) {
-//                $('#tbody-tabla-meses').append(" <tr>\n\
-//                                                                    <td>HOLA</td>              \n\
-//                                                                    <td>Adios</td>          \n\ \n\
-//                                                                </tr>");
-//            }
 
             //Evento .click en el boton submit
             $("#guardarItem").click(function () {
@@ -201,30 +196,21 @@
                                         <label id="fecha" name="fecha"></label>
                                     </div>
                                     <div class="form-group">
-                                        <table class="table table-striped">                                     
-                                            <tr><td><input type="checkbox" name="chkHos" value ="01" ></td>
-                                                <td>Enero</td></tr>                                        
-                                            <tr><td><input type="checkbox" name="chkHos" value ="02" ></td>                                            
-                                                <td>Febrero</td></tr>
+                                        <table class="table table-striped">                                    
+
+                                            <thead class="thead-dark">                                            
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Mes</th>
+
+                                                </tr>                                            
+                                            </thead>
+
+                                            <tbody id="tbody-tabla-meses">
+
+                                            </tbody>
                                         </table>
                                     </div>
-
-
-
-                                    <table class="table table-striped">                                    
-
-                                        <thead class="thead-dark">                                            
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Mes</th>
-
-                                            </tr>                                            
-                                        </thead>
-
-                                        <tbody id="tbody-tabla-meses">
-
-                                        </tbody>
-                                    </table>
                                 </div>
 
 
