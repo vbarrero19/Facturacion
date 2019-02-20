@@ -68,8 +68,8 @@ public class EntidadesController {
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
 
             
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja, activado)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
            
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             stAux.setString(1,entidades.getDistinct_code());
@@ -98,8 +98,8 @@ public class EntidadesController {
 
             stAux.setTimestamp(13, timestamp2);
             
-            String activado = "TRUE";
-            stAux.setString(14,activado);
+//            String activado = "TRUE";
+//            stAux.setString(14,activado);
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();            
 
