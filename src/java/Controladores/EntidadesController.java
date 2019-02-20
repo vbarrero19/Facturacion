@@ -59,6 +59,7 @@ public class EntidadesController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
+
         String resp = "Alta de entidad correcta";
         /*CODIGO PARA AÑADIR UNA NUEVA ENTIDAD*/
         try {
