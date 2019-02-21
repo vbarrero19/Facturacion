@@ -55,6 +55,7 @@
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a  href='/Facturacion/pagoController/eliminarPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' 
+                        //En el boton de eliminar recogemos los parametros id_entidad y id_metodo_pago que recogemos de la tabla y tambien guaradmos el indice para seleccionar la fila que eiliminamos
                         var EntidadPago = JSON.parse(valor);
 
                         $('#tableContainer tbody').append(" <tr>\n\
@@ -67,12 +68,15 @@
                                                                     <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadPago.id_entidad + "' data-idPago='" + EntidadPago.id_metodo_pago + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
 </tr>");
                     });
-
+                    /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                     $(document).ready(function () {
                         $(".miBoton").click(function () {
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
                             $("#idEntidadHide").val($(this).attr("data-idEntidad"));
                             $("#idPagoHide").val($(this).attr("data-idPago"));
                             $("#idFilaHide").val($(this).attr("data-idIndice"));
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModal").modal();
                         });
                     });
@@ -109,7 +113,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
-                    alert("correcto");
+                    alert("Ocultada la fila correctamente");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -167,6 +171,7 @@
         <!-- ventana emergente -->
 
         <div class="modal fade" id="myModal" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
             <input class="hidden" id="idEntidadHide"/>
             <input class="hidden" id="idPagoHide"/>
             <input class="hidden" id="idFilaHide"/>
@@ -182,6 +187,7 @@
                         <p id="eliminar"></p>
                     </div>
                     <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
                         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>

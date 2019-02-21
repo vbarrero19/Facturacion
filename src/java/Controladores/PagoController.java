@@ -272,7 +272,8 @@ public class PagoController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto"; 
+        String resp = "correcto";
+      
         ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {

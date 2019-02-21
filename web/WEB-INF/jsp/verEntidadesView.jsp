@@ -24,7 +24,6 @@
         });
 
 
-
         function cargarEntidades() {
             if (window.XMLHttpRequest) //mozilla
             {
