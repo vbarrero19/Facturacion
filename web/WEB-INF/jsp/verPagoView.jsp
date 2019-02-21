@@ -63,7 +63,7 @@
                                                                     <td>" + EntidadPago.nombre_entidad + "</td>         \n\
                                                                     <td>" + EntidadPago.titular_cuenta + "</td>         \n\
                                                                     <td>" + EntidadPago.nombre_banco + "</td>         \n\
-\n\
+\n\                                                                 <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadPago.nombre_entidad + "</td>         \n\
                                                                     <td><a href='/Facturacion/pagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
                                                                     <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadPago.id_entidad + "' data-idPago='" + EntidadPago.id_metodo_pago + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
 </tr>");
@@ -71,11 +71,17 @@
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                     $(document).ready(function () {
                         $(".miBoton").click(function () {
+                            
+                            
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
                              * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
                             $("#idEntidadHide").val($(this).attr("data-idEntidad"));
                             $("#idPagoHide").val($(this).attr("data-idPago"));
                             $("#idFilaHide").val($(this).attr("data-idIndice"));
+                            
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente*/
+                            $("#eliminar").text($("#nombreEnt"+ $(this).val()).text());
+
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModal").modal();
                         });
