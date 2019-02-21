@@ -1,6 +1,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -18,6 +18,8 @@
                 color:blue;
             }
 
+
+
         </style>
     </head>
     <script>
@@ -33,7 +35,7 @@
             var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
 
             var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-            alert(fecha)
+            //alert(fecha)
 
             $('#puntual').show();
             $('#periodico').hide();
@@ -52,22 +54,22 @@
             //tratando de omstrar fechas dinamicamente            
             var mes = f.getMonth();
             var nombreMes = meses[f.getMonth()];
-            alert(nombreMes);
+            //alert(nombreMes);
             //cargamos de forma dinamica la tabla
-            for (var i = 0; i < 12; i=i+6) {
+            for (var i = 0; i < 12; i = i + 6) {
                 $('#tbody-tabla-meses').append(" <tr>\n\
                                                                     <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
                                                                     <td>" + meses[i] + "</td>          \n\ \n\
                                                                     <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i+1] + "</td>          \n\ \n\
+                                                                    <td>" + meses[i + 1] + "</td>          \n\ \n\
                                                                     <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i+2] + "</td>          \n\ \n\
+                                                                    <td>" + meses[i + 2] + "</td>          \n\ \n\
                                                                     <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i+3] + "</td>          \n\ \n\
+                                                                    <td>" + meses[i + 3] + "</td>          \n\ \n\
                                                                     <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i+4] + "</td>          \n\ \n\
+                                                                    <td>" + meses[i + 4] + "</td>          \n\ \n\
                                                                     <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i+5] + "</td>          \n\ \n\
+                                                                    <td>" + meses[i + 5] + "</td>          \n\ \n\
                                                                 </tr>");
             }
 
@@ -112,12 +114,27 @@
                 myObj["id_item"] = $("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
+
+
+
+
                 myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
-                myObj["id_impuesto"] = $("#valorImpuesto").val();
 
+
+
+                //Codigo para introducir el tipo de impuesto
+                //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
+                tipoImpuesto = $("#comboTipoImpuesto").val();
+
+                //separamos el id y el valor
+                arrayDeCadenas = tipoImpuesto.split(",");
+                var tipoImp = arrayDeCadenas[0];
+                var valorImp = arrayDeCadenas[1];
+
+                myObj["id_impuesto"] = tipoImp;
 
                 myObj["total"] = $("#total").val().trim();
 
@@ -314,6 +331,11 @@
                                 $("#periodo").val(aux2.periodo);
                                 //Cargamos en el total el importe ya que de inicio tenemos: cantidad = 1, impuesto = 0
                                 $("#total").val(aux2.importe);
+                                //$("#comboTipoImpuesto").val("0,0");
+                                //Si se elige un item activamos el combo del tipo-valor de impuesto                                
+                                document.getElementById("comboTipoImpuesto").disabled = false;
+                                document.getElementById("comboTipoImpuesto").value = "0,0";
+
 
                             });
                         },
@@ -333,6 +355,8 @@
                     $("#cuenta").val("");
                     $("#importe").val("");
                     $("#periodo").val("");
+                    document.getElementById("comboTipoImpuesto").disabled = true;
+                    document.getElementById("comboTipoImpuesto").value = "0,0";
                 }
 
             });
@@ -540,7 +564,7 @@
                     select = document.getElementById('comboTipoImpuesto');
                     //Añadimos la opcion Seleccionar al combo
                     var opt = document.createElement('option');
-                    opt.value = 0;
+                    opt.value = "0,0";
                     opt.innerHTML = "Seleccionar";
                     select.appendChild(opt);
 
@@ -551,12 +575,13 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el valor del impuesto en el value de cada opcion
-                        opt.value = tipoImpuesto2.valor; //.valor;
+                        opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
                         //Guardamos el impuesto en el nombre de cada opcion
                         opt.innerHTML = tipoImpuesto2.impuesto + " " + tipoImpuesto2.valor + "%";
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
+                    document.getElementById("comboTipoImpuesto").value = "0,0";
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -672,24 +697,31 @@
 
         function calcularTotal() {
 
+            //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
+            tipoImpuesto = $("#comboTipoImpuesto").val();
+
+            //separamos el id y el valor
+            arrayDeCadenas = tipoImpuesto.split(",");
+            var tipoImp = arrayDeCadenas[0];
+            var valorImp = arrayDeCadenas[1];
+
+            //Hacemos los calculos de importes e impuestos
             importe = $("#importe").val().trim();
             cantidad = $("#cantidad").val().trim();
-            tipoImpuesto = $("#comboTipoImpuesto").val();
             subtotal = importe * cantidad;
             total = $("#total").val();
 
-            if (tipoImpuesto == 0) {
+            if (tipoImp == 0) {
                 $("#valorImpuesto").val(0);
                 $("#total").val(importe * cantidad);
             } else {
-                $("#valorImpuesto").val(subtotal * tipoImpuesto / 100);
-                $("#total").val((subtotal * tipoImpuesto / 100) + subtotal);
+                $("#valorImpuesto").val(subtotal * valorImp / 100);
+                $("#total").val((subtotal * valorImp / 100) + subtotal);
             }
 
 
         }
         ;
-
 
 
     </script>
@@ -804,12 +836,12 @@
                                 <div class="form-group col-xs-2">
                                     <label for="comboTipoImpuesto">Tipo Impuesto</label>
                                     <div class="form-group-combo">                                        
-                                        <select class="form-control input-sm" id="comboTipoImpuesto" name="comboTipoImpuesto">
+                                        <select class="form-control input-sm" id="comboTipoImpuesto" name="comboTipoImpuesto" disabled>
                                         </select>                                                            
                                     </div>     
                                 </div>                              
                                 <div class="form-group col-xs-2">
-                                    <label for="valorImpuesto">Impuesto</label>
+                                    <label for="valorImpuesto">Impuestos</label>
                                     <input type="text" class="form-control input-sm" id="valorImpuesto" name="valorImpuesto" value="0" disabled>                                    
                                 </div>
 
@@ -819,7 +851,7 @@
                                 </div>
 
                             </div>
-                            
+
                             <div class="datos row" class="col-xs-12">
                                 <div class="form-group col-xs-2">
                                     <label>Tipo Periodicidad:</label>                                    

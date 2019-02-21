@@ -197,6 +197,7 @@
                                                                 <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
                                                                     <td>" + cargo.abreviatura + "</td>         \n\
                                                                     <td>" + cargo.id_tipo_item + "</td>         \n\
+                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cargo.descripcion + "</td>         \n\
                                                                     <td>" + cargo.cuenta + "</td>         \n\
                                                                     <td>" + cargo.importe + "</td>         \n\
                                                                     <td>" + cargo.cantidad + "</td>         \n\
@@ -204,21 +205,23 @@
                                                                     <td>" + cargo.total + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
-                                                                    <td><button type='button' class='btn btn-info miBoton' id='myBtn';>Descripción</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBoton' id='myBtn' value='"+(indice+1)+"';>Descripción</button></td>\n\
                                                                     <td><a href='/Facturacion/MenuController/start.htm' class='btn btn-info' role='button'>Menu principal</a></td>         \n\
                                                                 </tr>");
                     });
 
                     $(document).ready(function () {
-                        $(".miBoton").click(function () {
-                            $("#myModal").modal();
-                            
+                        $(".miBoton").click(function () {       
+                            //Con $(this).val() cogemos el value del boton, lo concatenamos a #descrip para tener el id del campo oculto con
+                            //la descripcion correspondiente a esa fila. Cogemos el text de ese campo y lo añadimos al p del modal para visualizarlo
+                            $("#descripcion").text($("#descrip"+$(this).val()).text());
+                            $("#myModal").modal(); 
                         });
                     });
                     
                     
 
-                }, //<td> <a href='/MenuController/start.htm' >Modifivar</a> </td>
+                }, 
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(xhr.responseText);
