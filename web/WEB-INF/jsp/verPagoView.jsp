@@ -27,10 +27,7 @@
             var userLang = navigator.language || navigator.userLanguage;
 
             //al hacer clic en el boton para mostrar la ventana emergente
-            $(".miBoton").click(function () {
-                $("#myModal").modal();
 
-            });
 
         });
 
@@ -57,7 +54,7 @@
 
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a 
+                        //Cada objeto esta en String y lo pasmoa a  href='/Facturacion/pagoController/eliminarPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' 
                         var EntidadPago = JSON.parse(valor);
 
                         $('#tableContainer tbody').append(" <tr>\n\
@@ -65,12 +62,20 @@
                                                                     <td>" + EntidadPago.nombre_entidad + "</td>         \n\
                                                                     <td>" + EntidadPago.titular_cuenta + "</td>         \n\
                                                                     <td>" + EntidadPago.nombre_banco + "</td>         \n\
-                                                                    <td><a href='/Facturacion/pagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton'> Modificar </button>\n\
-                                                                    <td><a href='/Facturacion/pagoController/eliminarPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-danger'> Eliminar </button>\n\
-                        </tr>");
+\n\
+                                                                    <td><a href='/Facturacion/pagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
+                                                                    <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadPago.id_entidad + "' data-idPago='" + EntidadPago.id_metodo_pago + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
+</tr>");
                     });
 
-
+                    $(document).ready(function () {
+                        $(".miBoton").click(function () {
+                            $("#idEntidadHide").val($(this).attr("data-idEntidad"));
+                            $("#idPagoHide").val($(this).attr("data-idPago"));
+                            $("#idFilaHide").val($(this).attr("data-idIndice"));
+                            $("#myModal").modal();
+                        });
+                    });
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -81,12 +86,47 @@
             });
 
         }
-        
+        function eliminarEntidad() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+            myObj["col1"] = $("#idEntidadHide").val().trim();
+            myObj["col2"] = $("#idPagoHide").val().trim();
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/pagoController/eliminarPago.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
+                    alert("correcto");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+
         //funcion ventana emergente
-         function eliminar(idElim) {
-           
+        function eliminar(idElim) {
+
             $("#eliminar").text("Eliminar metodo de pago");
-        };
+        }
+        ;
+
 
     </script>
     <body>
@@ -127,6 +167,9 @@
         <!-- ventana emergente -->
 
         <div class="modal fade" id="myModal" role="dialog">
+            <input class="hidden" id="idEntidadHide"/>
+            <input class="hidden" id="idPagoHide"/>
+            <input class="hidden" id="idFilaHide"/>
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -139,12 +182,14 @@
                         <p id="eliminar"></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </body>
 </html>
+
+

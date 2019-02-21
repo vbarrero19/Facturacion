@@ -171,7 +171,8 @@
                         </div>
 
                         <button type="button" id="guardarPago" name="guardarPago" class="btn btn-primary pull-right">Modificar método pago</button>
-                        <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>  
+                        <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                                                    
+                        <a href="<c:url value='/verPagoController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
                     </form>
                 </div>
             </div>

@@ -78,8 +78,15 @@
                         console.log(thrownError);
                     }
                 });
+                     resetear();
             });
             
+            
+              /*FUNCION PARA LIMPIAR TODOS LOS CAMPOS DEL FORMULARIO TRAS DARLE CLICK AL BOTON ALTA */
+            function resetear(){
+		document.forms['formulario'].reset();
+		}
+                
             
 
             $("#comboEntidad").change(function () {
@@ -191,7 +198,7 @@
         <div class="container col-xs-12">
             <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                 <div class="form-area">  
-                    <form role="form">
+                    <form role="form" id="formulario">
                         <br style="clear:both">
                         <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA DAR DE ALTA ENTIDAD</h3>
 

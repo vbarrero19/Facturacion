@@ -75,12 +75,8 @@ public class PagoController {
                     + "codigo_csc, titular_tarjeta, cuenta_paypal, correo_paypal, cheque, nombre_banco, direccion_banco, localidad, pais, activado)"+
                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-           
 
-//                    cuenta_paypal, correo_paypal, cheque"
-
-            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
-            
+            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */            
             
             stAux.setInt(1, Integer.parseInt(idEntidad));
             stAux.setString(2, pago.getNumero_cuenta());
@@ -148,7 +144,7 @@ public class PagoController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
+        String resp = "Alta metodo de pago correcta";
 
         //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
         //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
@@ -171,7 +167,7 @@ public class PagoController {
             resp = new Gson().toJson(arrayTipoEntidad);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; //
+            resp = "incorrecto. Error consulta SQL"; //
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
 
@@ -268,7 +264,7 @@ public class PagoController {
     /**CUANDO ELIMINAMOS UN METODO DE PAGO DE LA LISTA , ACTUALIZAMOS ACTIVADO Y LO PONEMOS A FALSE. 
      buscar preparestatement update y cambiar los datos de la funcion*/
     
-       @RequestMapping("/pagoController/eliminarPago.htm")
+     @RequestMapping("/pagoController/eliminarPago.htm")
     @ResponseBody
     public String eliminarPago(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
@@ -276,8 +272,7 @@ public class PagoController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
-
+        String resp = "correcto"; 
         ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {

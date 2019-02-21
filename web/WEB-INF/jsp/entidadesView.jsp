@@ -46,7 +46,7 @@
 
             // LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PRIMERA PESTAÑA Y NOS GUARDA LOS DATOS EN LA TABLA ENTIDAD.
             $("#guardarEntidad").click(function () {
-
+         
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -89,6 +89,7 @@
                 myObj["fecha_alta"] = $('#fecha_alta input').val().trim();
                 myObj["fecha_baja"] = $('#fecha_baja input').val().trim();
 
+                
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
@@ -105,15 +106,18 @@
                         console.log(thrownError);
                     }
                 });
+                  resetear();
+                
             });
-
-            /*  * *******************************************************************************************************
-             * ******************** FUNCIONES PARA LA SEGUNDA PESTAÑA DE ENTIDADESVIEW ****************************** 
-             * ******************************************************************************************************* */
-
-// LA FUNCION QUE AL HACER CLICK, NOS EJECUTA TODO DE LA PESTAÑA DOS Y NOS METE LOS DATOS DEL FORMULARIO EN LA TABLA DIRECCIONES.
-
-
+            
+            
+            /*FUNCION PARA LIMPIAR TODOS LOS CAMPOS DEL FORMULARIO TRAS DARLE CLICK AL BOTON ALTA */
+            function resetear(){
+		document.forms['formulario'].reset();
+		}
+                
+                  
+   /************ mirar esta funcion si la usamos, sino borrarla *****************/
             /*FUNCION PARA VER LOS DATOS DE LA ENTIDAD SELECCIONADA EN EL COMBO. RECOGE POR PARAMETRO EL ID DEL CLIENTE. */
             $("#comboEntidad").change(function () {
                 //recogemos el valor del combo para utilizarlo luego al ver las facturas.
@@ -299,7 +303,7 @@
 
                 <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
                     <div class="form-area">  
-                        <form role="form">
+                        <form role="form" id="formulario">
                             <br style="clear:both">
                         <h3 style="margin-bottom: 25px; text-align: center;">FORMULARIO PARA DAR DE ALTA ENTIDAD</h3>
 

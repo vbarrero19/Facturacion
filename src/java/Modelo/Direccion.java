@@ -20,13 +20,14 @@ public class Direccion {
     private String localidad;
     private String provincia;
     private String pais;
+    private String activado;
 
     //CONSTRUCTOR VACIO
     public Direccion() {
         
     }
 
-    public Direccion(String id_direccion, String id_tipo_direccion, String tipo_via, String nombre_via, String numero_via, String numero_portal, String resto_direccion, String codigo_postal, String localidad, String provincia, String pais) {
+    public Direccion(String id_direccion, String id_tipo_direccion, String tipo_via, String nombre_via, String numero_via, String numero_portal, String resto_direccion, String codigo_postal, String localidad, String provincia, String pais, String activado) {
         this.id_direccion = id_direccion;
         this.id_tipo_direccion = id_tipo_direccion;
         this.tipo_via = tipo_via;
@@ -38,6 +39,7 @@ public class Direccion {
         this.localidad = localidad;
         this.provincia = provincia;
         this.pais = pais;
+        this.activado = activado;
     }
     
   
@@ -131,5 +133,15 @@ public class Direccion {
     public void setPais(String pais) {
         this.pais = pais;
     }
+
+    public String getActivado() {
+        return activado;
+    }
+
+    public void setActivado(String activado) {
+        this.activado = activado;
+    }
+    
+    
 
 }

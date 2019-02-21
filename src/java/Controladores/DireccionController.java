@@ -62,7 +62,7 @@ public class DireccionController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
+        String resp = "Alta de dirección correcta";
         
         String idEntidad = hsr.getParameter("idEnt");
         
@@ -128,7 +128,7 @@ public class DireccionController {
             stAux3.executeUpdate();
 
         } catch (SQLException ex) {
-            resp = "Incorrecto"; // ex.getMessage();
+            resp = "Incorrecto. Error SQL"; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } catch (Exception ex) {

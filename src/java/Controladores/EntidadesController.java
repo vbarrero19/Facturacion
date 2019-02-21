@@ -242,7 +242,7 @@ public class EntidadesController {
             resp = new Gson().toJson(arrayTipoEntidad);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; //
+            resp = "incorrecto. Error SQL"; //
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
 
