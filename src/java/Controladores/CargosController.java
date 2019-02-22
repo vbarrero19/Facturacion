@@ -56,8 +56,8 @@ public class CargosController {
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
-                    + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente,  id_empresa)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");            
+                    + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");            
   
             
             
@@ -91,6 +91,8 @@ public class CargosController {
             
             stAux.setInt(14, Integer.parseInt(cargos.getId_cliente()));
             stAux.setInt(15, Integer.parseInt(cargos.getId_empresa()));
+            
+            stAux.setDouble(16, Double.parseDouble(cargos.getValor_impuesto()));
             
 
             stAux.executeUpdate();

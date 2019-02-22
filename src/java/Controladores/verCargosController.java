@@ -169,8 +169,6 @@ public class verCargosController {
         return resp;
 
     }
-    
-
 
 
 //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todos los cargos.
@@ -196,7 +194,7 @@ public class verCargosController {
             con = pool_local.getConnection();
             
             stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, c.cuenta, c.importe, c.cantidad, c.impuesto,\n" +
-                                         "c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa FROM cargos c inner join \n" +
+                                         "c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, valor_impuesto FROM cargos c inner join \n" +
                                          "tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE id_cliente =  ?");
 
             stAux.setInt(1,idCliente);
@@ -204,7 +202,7 @@ public class verCargosController {
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Cargos(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getString(8)
-                                                , rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16))));
+                                                , rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17))));
             }
 
             resp = new Gson().toJson(arrayTipo);

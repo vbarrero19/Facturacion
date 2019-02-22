@@ -115,9 +115,6 @@
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
 
-
-
-
                 myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
@@ -150,6 +147,8 @@
                 //Id de cliente y empresa
                 myObj["id_cliente"] = $("#id_entidad").text();
                 myObj["id_empresa"] = $("#id_entidad2").text();
+                
+                myObj["valor_impuesto"] = $("#valorImpuesto").val().trim();
 
 
                 var json = JSON.stringify(myObj);

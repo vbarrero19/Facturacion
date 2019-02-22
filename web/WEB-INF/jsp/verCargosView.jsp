@@ -19,38 +19,6 @@
             
             var userLang = navigator.language || navigator.userLanguage;
 
-            //Guarda los datos introducidos en el formulario en la tabla cargos
-//            $("#submit").click(function () {
-//                if (window.XMLHttpRequest) { //mozilla
-//                    ajax = new XMLHttpRequest(); //No Internet explorer
-//                } else {
-//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                }
-//
-//                var myObj = {};
-//                myObj["id_entidad"] = $("#id_entidad").val().trim();
-//                myObj["distinct_code"] = $("#comboEntidad").val().trim();
-//                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-//                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
-//
-//
-//                var json = JSON.stringify(myObj);
-//                $.ajax({
-//                    type: 'POST',
-//                    url: '/Facturacion/verCargosController/nuevoFactura.htm',
-//                    data: json,
-//                    datatype: "json",
-//                    contentType: "application/json",
-//                    success: function (data) {
-//                        alert(data);
-//                    },
-//                    error: function (xhr, ajaxOptions, thrownError) {
-//                        console.log(xhr.status);
-//                        console.log(xhr.responseText);
-//                        console.log(thrownError);
-//                    }
-//                });
-//            });
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
@@ -201,7 +169,7 @@
                                                                     <td>" + cargo.cuenta + "</td>         \n\
                                                                     <td>" + cargo.importe + "</td>         \n\
                                                                     <td>" + cargo.cantidad + "</td>         \n\
-                                                                    <td>" + cargo.impuesto + "</td>         \n\
+                                                                    <td>" + cargo.valor_impuesto + "</td>         \n\
                                                                     <td>" + cargo.total + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
@@ -287,7 +255,7 @@
                                                 <th scope="col">Cuenta</th>
                                                 <th scope="col">Importe</th>
                                                 <th scope="col">Cantidad</th>
-                                                <th scope="col">Impuesto</th>
+                                                <th scope="col">Impuestos</th>
                                                 <th scope="col">Total</th>                                                
                                                 <th scope="col">FechaCargo</th>
                                                 <th scope="col">FechaVencimiento</th>
