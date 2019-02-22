@@ -63,10 +63,10 @@
                                                                     <td>" + EntidadPago.nombre_entidad + "</td>         \n\
                                                                     <td>" + EntidadPago.titular_cuenta + "</td>         \n\
                                                                     <td>" + EntidadPago.nombre_banco + "</td>         \n\
-\n\                                                                 <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadPago.nombre_entidad + "</td>         \n\
+                                                                    <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadPago.nombre_entidad + "</td>         \n\
                                                                     <td><a href='/Facturacion/pagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
                                                                     <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadPago.id_entidad + "' data-idPago='" + EntidadPago.id_metodo_pago + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
-</tr>");
+                                                                    </tr>");
                     });
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                     $(document).ready(function () {
@@ -131,12 +131,6 @@
 
         }
 
-        //funcion ventana emergente
-        function eliminar(idElim) {
-
-            $("#eliminar").text("Eliminar metodo de pago");
-        }
-        ;
 
 
     </script>
