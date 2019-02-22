@@ -355,9 +355,69 @@ public class DireccionController {
 
     
         /**********************************************************************************/
-    /*************** PARA VER LAS DIRECCIONES EN VER/MODIFICAR DIRECION ******************/
+    /*************** PARA ELIMINAR LAS DIRECCIONES EN VER/MODIFICAR DIRECION ******************/
     /**********************************************************************************/
     
-    
+    /*******************MODIFICAR UPDATE*******************************/
+@RequestMapping("/direccionController/eliminarDireccion.htm")
+    @ResponseBody
+    public String eliminarPago(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
 
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+      
+//        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("update metodo_pago SET activado = ? where id_metodo_pago = ?");
+            
+            stAux.setString(1, "FALSE");
+            stAux.setInt(2, Integer.parseInt(resource.getCol1()));
+            
+            rs = stAux.executeQuery();
+
+//            while (rs.next()) {
+//                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
+//            }
+            
+
+
+//            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
 }

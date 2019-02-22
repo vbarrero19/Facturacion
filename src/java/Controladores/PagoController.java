@@ -261,10 +261,16 @@ public class PagoController {
     }
 
     
+         /**********************************************************************************/
+    /*************** PARA ELIMINAR LOS METODOS DE PAGO EN VER/MODIFICAR PAGO ******************/
+    /**********************************************************************************/
+    
+    
+    
     /**CUANDO ELIMINAMOS UN METODO DE PAGO DE LA LISTA , ACTUALIZAMOS ACTIVADO Y LO PONEMOS A FALSE. 
      buscar preparestatement update y cambiar los datos de la funcion*/
     
-     @RequestMapping("/pagoController/eliminarPago.htm")
+    @RequestMapping("/pagoController/eliminarPago.htm")
     @ResponseBody
     public String eliminarPago(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
@@ -280,15 +286,18 @@ public class PagoController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("update metodo_pago SET activado = false where id_metodo_pago = ?");
-
-            stAux.setInt(1, Integer.parseInt(resource.getCol1()));
+            stAux = con.prepareStatement("update metodo_pago SET activado = 'FALSE' where id_metodo_pago = ?");
             
-            rs = stAux.executeQuery();
+            stAux.setString(1, resource.getCol1());
+            stAux.setInt(2, Integer.parseInt(resource.getCol2()));
+            
+            stAux.executeUpdate();
 
 //            while (rs.next()) {
 //                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
 //            }
+            
+
 
 //            resp = new Gson().toJson(arrayTipo);
 

@@ -96,6 +96,7 @@
             });
 
         }
+        
         function eliminarEntidad() {
             if (window.XMLHttpRequest) //mozilla
             {
