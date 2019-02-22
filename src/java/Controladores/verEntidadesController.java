@@ -41,6 +41,8 @@ public class verEntidadesController {
      /**
      * ******** MENU PRINCIPAL PARA VER MODIFICAR ENTIDADES HTM **********
      */
+    
+   
     @RequestMapping("/verEntidadesController/startEntidad.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("modificarEntidadesView");
@@ -48,6 +50,7 @@ public class verEntidadesController {
         return mv;
     }
     
+     /*MUESTRA LA LISTA DE TODAS LAS ENTIDADES CON SUS BOTONES ELIMINAR)MODIFICAR */
     @RequestMapping("/verEntidadesController/verEntidades.htm")
     @ResponseBody
     public String verEntidades(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -181,7 +184,9 @@ public class verEntidadesController {
     }
     
     
-    /*FUNCION PARA MODIFICAR UNA ENTIDAD RECOGIENDO EL ID_ENTIDAD*/
+    /*FUNCION PARA MODIFICAR UNA ENTIDAD RECOGIENDO EL ID_ENTIDAD. AL DARLE AL BOTON ACTUALIZAMOS LOS DATOS
+    ********* NO FUNCIONA **********
+    */
     
     @RequestMapping("/verEntidadesController/actualizarEntidad.htm")
     @ResponseBody

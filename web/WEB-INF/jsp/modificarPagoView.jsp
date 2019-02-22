@@ -18,6 +18,99 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>MODIFICAR PAGO</title>
     </head>
+    <script>
+        
+        $(document).ready(function () {
+
+            var userLang = navigator.language || navigator.userLanguage;
+
+            var idEntidad = obtenerValorParametro("idEnt");
+            var nombreEntidad = obtenerValorParametro("nombreEnt");
+
+            //alert(idEntidad);
+            //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
+            cargarDatosPago(idEntidad);
+            
+            
+
+        });
+
+
+
+        function obtenerValorParametro(sParametroNombre) {
+            var sPaginaURL = window.location.search.substring(1);
+            var sURLVariables = sPaginaURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParametro = sURLVariables[i].split('=');
+                if (sParametro[0] == sParametroNombre) {
+                    return sParametro[1];
+                }
+            }
+            return null;
+        }
+        ;
+
+
+        //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD AL DARLE AL BOTON DE MODIFICAR.
+        function cargarDatosPago(idEntidad) {
+            
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                /*en la url le pasamos como parametro el identificador de empresa*/
+                url: '/Facturacion/verPagoController/modificarPago.htm?entidad=' + idEntidad,
+                success: function (data) {
+                //alert(data);
+                    if (data != "vacio") {
+
+                        var aux = JSON.parse(data);
+                        //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
+                        //$('#tableContainer tbody').empty();
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var pago = JSON.parse(valor);
+                            $("#distinct_code").val(pago.distinct_code);
+                            $("#nombre_entidad").val(pago.nombre_entidad);
+                            $("#numero_cuenta").val(pago.numero_cuenta);
+                            $("#titular_cuenta").val(pago.titular_cuenta);
+                            $("#nombre_banco").val(pago.nombre_banco);
+                            $("#direccion_banco").val(pago.direccion_banco);
+                            $("#tarjeta_credito").val(pago.tarjeta_credito);
+                            $("#localidad").val(pago.localidad);
+                        });
+
+                    } else {
+                        //Si data viene vacio borramos el contenido de los campos                        
+                        $("#distinct_code").val("");
+                        $("#nombre_entidad").val("");
+                        $("#numero_cuenta").val("");
+                        $("#titular_cuenta").val("");
+                        $("#nombre_banco").val("");
+                        $("#direccion_banco").val("");
+                        $("#tarjeta_credito").val("");
+                        $("#localidad").val("");
+                        
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        };
+        
+    </script>
+        
     <body>
         <body>
         <div class="container col-xs-12">

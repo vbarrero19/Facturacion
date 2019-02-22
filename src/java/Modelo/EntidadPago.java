@@ -6,15 +6,34 @@ package Modelo;
  */
 public class EntidadPago {
     private String id_entidad;
+    private String distinct_code;
     private String nombre_entidad;
     
     private String id_metodo_pago;
+    private String numero_cuenta;
     private String titular_cuenta;
     private String nombre_banco;
+    private String direccion_banco;
+    private String localidad;
+    private String pais;
+    private String codigo1;
+    private String codigo2;
+    private String tarjeta_credito;
+    private String titular_tarjeta;
+    private String mes_caducidad;
+    private String anio_caducidad;
+    private String codigo_csc;
+    private String cuenta_paypal;
+    private String correo_paypal;
+    private String cheque;
+            
 
     public EntidadPago() {
     }
 
+    
+        /* PARA MOSTRAR LOS DATOS A LA HORA DE MODIFICAR UN METODO DE PAGO */
+    
     public EntidadPago(String id_entidad, String nombre_entidad, String id_metodo_pago, String titular_cuenta, String nombre_banco) {
         this.id_entidad = id_entidad;
         this.nombre_entidad = nombre_entidad;
@@ -23,6 +42,25 @@ public class EntidadPago {
         this.nombre_banco = nombre_banco;
     }
 
+    public EntidadPago(String distinct_code, String nombre_entidad, String numero_cuenta, String titular_cuenta, String nombre_banco, String direccion_banco, String tarjeta_credito, String localidad) {
+        this.distinct_code = distinct_code;
+        this.nombre_entidad = nombre_entidad;
+        this.numero_cuenta = numero_cuenta;
+        this.titular_cuenta = titular_cuenta;
+        this.nombre_banco = nombre_banco;
+        this.direccion_banco = direccion_banco;
+        this.tarjeta_credito = tarjeta_credito;
+        this.localidad = localidad;
+    }
+    
+
+
+  
+
+    
+   
+
+    
     
     
     public String getId_entidad() {
@@ -32,6 +70,16 @@ public class EntidadPago {
     public void setId_entidad(String id_entidad) {
         this.id_entidad = id_entidad;
     }
+
+    public String getDistinct_code() {
+        return distinct_code;
+    }
+
+    public void setDistinct_code(String distinct_code) {
+        this.distinct_code = distinct_code;
+    }
+    
+        
 
     public String getNombre_entidad() {
         return nombre_entidad;

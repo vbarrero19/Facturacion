@@ -129,7 +129,7 @@
                         $("#apellido2").val("");
                         $("#telefono1").val("");
                         $("#telefono2").val("");
-                        $("#fax").val(entidad.fax);
+                        $("#fax").val("");
                         $("#mail1").val("");
                         $("#mail2cc").val("");
                         
