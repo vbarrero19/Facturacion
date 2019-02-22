@@ -131,12 +131,6 @@
 
         }
 
-        //funcion ventana emergente
-        function eliminar(idElim) {
-
-            $("#eliminar").text("Eliminar metodo de pago");
-        }
-        ;
 
 
     </script>

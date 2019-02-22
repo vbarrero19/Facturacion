@@ -212,11 +212,40 @@
         }
         ;
         
-        
-        function descrip(idDes) {
-           
-            $("#descripcion").text("ddd");
-        };
+        function eliminarCargo() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+            myObj["col1"] = $("#idCargoHide").val();
+            myObj["col2"] = $("#idItemHide").val();
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/verCargosController/eliminarCargo.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $("#tbody-tabla-cargos").children().eq($("#idFilaHide").val()).hide();
+                    alert("Ocultada la fila correctamente");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+
 
     </script>
 
@@ -277,7 +306,7 @@
                                             </tr>                                            
                                         </thead>
 
-                                        <tbody id="tbody-tabla-entidades">
+                                        <tbody id="tbody-tabla-cargos">
 
                                         </tbody>
                                     </table>
@@ -318,9 +347,10 @@
 
         <div class="modal fade" id="myModalEliminar" role="dialog">
             <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-            <input class="hidden" id="idCargodHide"/>
+            <input class="hidden" id="idCargoHide"/>
             <input class="hidden" id="idItemHide"/>
             <input class="hidden" id="idFilaHide"/>
+            
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -334,7 +364,7 @@
                     </div>
                     <div class="modal-footer">
                         <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarCargo()">Si</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>
                 </div>
