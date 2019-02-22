@@ -285,10 +285,10 @@ public class PagoController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("update metodo_pago SET activado = false where id_metodo_pago = ?");
+            stAux = con.prepareStatement("update metodo_pago SET activado = ? where id_metodo_pago = ?");
             
-            //stAux.setBoolean(1,false);
-            stAux.setInt(1, Integer.parseInt(resource.getCol1()));
+            stAux.setBoolean(1,false);
+            stAux.setInt(2, Integer.parseInt(resource.getCol2()));
             
             stAux.executeUpdate();   
 
