@@ -274,7 +274,7 @@ public class PagoController {
         PreparedStatement stAux = null;
         String resp = "correcto";
       
-        ArrayList<String> arrayTipo = new ArrayList<>();
+//        ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
@@ -283,13 +283,14 @@ public class PagoController {
             stAux = con.prepareStatement("update metodo_pago SET activado = false where id_metodo_pago = ?");
 
             stAux.setInt(1, Integer.parseInt(resource.getCol1()));
+            
             rs = stAux.executeQuery();
 
-            while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
-            }
+//            while (rs.next()) {
+//                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
+//            }
 
-            resp = new Gson().toJson(arrayTipo);
+//            resp = new Gson().toJson(arrayTipo);
 
         } catch (SQLException ex) {
             resp = "incorrecto"; // ex.getMessage();
