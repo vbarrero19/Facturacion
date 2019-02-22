@@ -368,27 +368,19 @@ public class DireccionController {
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-      
-//        ArrayList<String> arrayTipo = new ArrayList<>();
+     
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("update metodo_pago SET activado = ? where id_metodo_pago = ?");
+            stAux = con.prepareStatement("update direccion SET activado = ? where id_direccion = ?");
             
-            stAux.setString(1, "FALSE");
-            stAux.setInt(2, Integer.parseInt(resource.getCol1()));
+            stAux.setBoolean(1,false);
+            stAux.setInt(2, Integer.parseInt(resource.getCol2()));
             
-            rs = stAux.executeQuery();
+            stAux.executeUpdate();   
 
-//            while (rs.next()) {
-//                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
-//            }
-            
-
-
-//            resp = new Gson().toJson(arrayTipo);
 
         } catch (SQLException ex) {
             resp = "incorrecto"; // ex.getMessage();

@@ -61,7 +61,7 @@ function cargarDirecciones() {
                                                                     <td>" + EntidadDireccion.localidad + "</td>         \n\
 \n\                                                                 <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadDireccion.nombre_entidad + "</td>         \n\
                                                                     <td><a href='/Facturacion/direccionController/startDireccion.htm?idEnt=" + EntidadDireccion.id_entidad + "&nombreEnt=" + EntidadDireccion.nombre_entidad + "' class='btn btn-primary'> Modificar </button>\n\
-                                                                    <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadDireccion.id_entidad + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
+                                                                    <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadDireccion.id_entidad + "' data-idDir='" + EntidadDireccion.id_direccion +  "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
                         </tr>");
                     });
                     
@@ -74,6 +74,7 @@ function cargarDirecciones() {
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
                              * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
                             $("#idEntidadHide").val($(this).attr("data-idEntidad"));
+                            $("#idDireccionHide").val($(this).attr("data-idDir"));
                             $("#idFilaHide").val($(this).attr("data-idIndice"));
                             
                             /*Mostramos el texto de la desripcion del body de la ventana emergente*/
@@ -97,7 +98,7 @@ function cargarDirecciones() {
         
         
         
-        function eliminarEntidad() {
+        function eliminarDireccion() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -120,7 +121,7 @@ function cargarDirecciones() {
                 contentType: "application/json",
                 success: function (data) {
                     $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
-                    alert("Ocultada la fila correctamente");
+                    alert("DIRECCION ELIMINADA CORRECTAMENTE");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -131,7 +132,7 @@ function cargarDirecciones() {
 
         }
 
-        //funcion ventana emergente
+        //funcion ventana emergente que sale al abrirse
         function eliminar(idElim) {
 
             $("#eliminar").text("Eliminar metodo de pago");

@@ -53,10 +53,28 @@
                                                                     <td>" + entidad.id_entidad + "</td>         \n\
                                                                     <td>" + entidad.distinct_code + "</td>         \n\
                                                                     <td>" + entidad.nombre_entidad + "</td>         \n\
-                                                                    <td>" + entidad.nombre_contacto + "</td>         \n\
-                                                                    <td><a href='/Facturacion/verEntidadesController/startEntidad.htm?idEnt=" + entidad.id_entidad + "&distinctCode=" + entidad.distinct_code + "' class='btn btn-primary'> Modificar </button>\n\
-                                                                    <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
-                        < /tr>");
+                                                                    <td>" + entidad.nombre_contacto + "</td>\n\
+                                                                    <td class='hidden' id='nombreEnt" + indice + "'>" + entidad.nombre_entidad + "</td>         \n\
+                                                                    <td><a href='/Facturacion/verEntidadesController/startEntidad.htm?idEnt=" + entidad.id_entidad + "&distinctCode=" + entidad.distinct_code + "' class='btn btn-primary'> Modificar </button>\n\ \n\
+                                                                    <td><a class='btn btn-danger miBoton' data-idEntidad='" + entidad.id_entidad +  "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
+                        </tr>");
+                    });
+                          /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
+                    $(document).ready(function () {
+                        $(".miBoton").click(function () {
+                            
+                            
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idEntidadHide").val($(this).attr("data-idEntidad"));
+                            $("#idFilaHide").val($(this).attr("data-idIndice"));
+                            
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente*/
+                            $("#eliminar").text($("#nombreEnt"+ $(this).attr("data-idindice")).text());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModal").modal();
+                        });
                     });
                     
                 },
@@ -68,6 +86,48 @@
             });
 
         }
+        
+        
+        
+                function eliminarEntidad() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+            myObj["col1"] = $("#idEntidadHide").val().trim();
+            
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/entidadesController/eliminarEntidad.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
+                    alert("ENTIDAD ELIMINADA CORRECTAMETNE");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+
+        //funcion ventana emergente
+        function eliminar(idElim) {
+
+            $("#eliminar").text("Eliminar entidad");
+        }
+        ;
 
 
 
@@ -109,6 +169,31 @@
                     </div>
                 </div>
             </div>
+                                <!-- ventana emergente -->
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+            <input class="hidden" id="idEntidadHide"/>
+            <input class="hidden" id="idFilaHide"/>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Eliminar entidad</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="eliminar"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>                  
     </body>
 </html>

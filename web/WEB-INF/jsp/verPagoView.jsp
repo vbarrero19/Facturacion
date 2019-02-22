@@ -97,7 +97,7 @@
 
         }
         
-        function eliminarEntidad() {
+        function eliminarPago() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -120,7 +120,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
-                    alert("Ocultada la fila correctamente");
+                    alert("METODO DE PAGO ELIMINADO CORRECTAMETNE");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -194,8 +194,8 @@
                         <p id="eliminar"></p>
                     </div>
                     <div class="modal-footer">
-                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
+                        <!-- Llamamos a la funcion eliminarPago al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarPago()">Si</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>
                 </div>
