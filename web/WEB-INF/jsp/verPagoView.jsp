@@ -80,7 +80,7 @@
                             $("#idFilaHide").val($(this).attr("data-idIndice"));
                             
                             /*Mostramos el texto de la desripcion del body de la ventana emergente*/
-                            $("#eliminar").text($("#nombreEnt"+ $(this).val()).text());
+                            $("#eliminar").text($("#nombreEnt"+ $(this).attr("data-idindice")).text());
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModal").modal();
@@ -96,6 +96,7 @@
             });
 
         }
+        
         function eliminarEntidad() {
             if (window.XMLHttpRequest) //mozilla
             {

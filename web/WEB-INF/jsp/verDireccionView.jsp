@@ -59,10 +59,32 @@ function cargarDirecciones() {
                                                                     <td>" + EntidadDireccion.nombre_entidad + "</td>         \n\
                                                                     <td>" + EntidadDireccion.nombre_via + "</td>         \n\
                                                                     <td>" + EntidadDireccion.localidad + "</td>         \n\
+\n\                                                                 <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadDireccion.nombre_entidad + "</td>         \n\
                                                                     <td><a href='/Facturacion/direccionController/startDireccion.htm?idEnt=" + EntidadDireccion.id_entidad + "&nombreEnt=" + EntidadDireccion.nombre_entidad + "' class='btn btn-primary'> Modificar </button>\n\
-                                                                    <td><button class='btn btn-danger btn-eliminar'> Eliminar </button>\n\</td> \n\\n\
-                        < /tr>");
+                                                                    <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadDireccion.id_entidad + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
+                        </tr>");
                     });
+                    
+                    
+                    
+                     $(document).ready(function () {
+                        $(".miBoton").click(function () {
+                            
+                            
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idEntidadHide").val($(this).attr("data-idEntidad"));
+                            $("#idFilaHide").val($(this).attr("data-idIndice"));
+                            
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente*/
+                            $("#eliminar").text($("#nombreEnt"+ $(this).attr("data-idindice")).text());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModal").modal();
+                        });
+                    });
+
+               
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -72,6 +94,51 @@ function cargarDirecciones() {
             });
 
         }
+        
+        
+        
+        function eliminarEntidad() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+            myObj["col1"] = $("#idEntidadHide").val().trim();
+            myObj["col2"] = $("#idDireccionHide").val().trim();
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/direccionController/eliminarDireccion.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
+                    alert("Ocultada la fila correctamente");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+
+        //funcion ventana emergente
+        function eliminar(idElim) {
+
+            $("#eliminar").text("Eliminar metodo de pago");
+        }
+        ;
+        
+        
 
     </script>
     <body>
@@ -107,6 +174,33 @@ function cargarDirecciones() {
                     </div>
                 </div>
             </div>
+                                
+                                
+                                <div class="modal fade" id="myModal" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+            <input class="hidden" id="idEntidadHide"/>
+            <input class="hidden" id="idDireccionHide"/>
+            <input class="hidden" id="idFilaHide"/>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Eliminar dirección</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="eliminar"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarDireccion()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                
         </div>                  
     </body>
 </html>
