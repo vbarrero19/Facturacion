@@ -82,8 +82,6 @@
         });
 
 
-
-
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
         function getVerEntidad() {
 
@@ -133,9 +131,6 @@
         }
         ;
 
-
-
-
         function verListaCargos(idEntidad) {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -163,7 +158,7 @@
                         /*en las fechas, quitamos la hora con substring*/
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
-                                                                    <td>" + cargo.abreviatura + "</td>         \n\
+                                                                    <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
                                                                     <td>" + cargo.id_tipo_item + "</td>         \n\
                                                                     <td class='hidden' id='descrip" + (indice + 1) + "'>" + cargo.descripcion + "</td>         \n\
                                                                     <td>" + cargo.cuenta + "</td>         \n\
@@ -173,8 +168,9 @@
                                                                     <td>" + cargo.total + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
-                                                                    <td><button type='button' class='btn btn-info miBoton' id='myBtn' value='"+(indice+1)+"';>Descripción</button></td>\n\
-                                                                    <td><a href='/Facturacion/MenuController/start.htm' class='btn btn-info' role='button'>Menu principal</a></td>         \n\
+                                                                    <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='"+(indice+1)+"';>Ver Desc.</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info btn-warning' id='' value='"+(indice+1)+"';>Modificar</button></td>\n\
+\n\                                                                 <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_item + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
                                                                 </tr>");
                     });
 
@@ -187,7 +183,23 @@
                         });
                     });
                     
-                    
+                    /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
+                    $(document).ready(function () {
+                        $(".miBotonEliminar").click(function () {                            
+                            
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idCargoHide").val($(this).attr("data-idCargo"));
+                            $("#idItemHide").val($(this).attr("data-idItem"));
+                            $("#idFilaHide").val($(this).attr("data-idIndice"));
+                            
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreiatura*/
+                            $("#eliminar").text($("#abrev"+ $(this).attr("data-idindice")).text());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalEliminar").modal();
+                        });
+                    });
 
                 }, 
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -257,8 +269,9 @@
                                                 <th scope="col">Cantidad</th>
                                                 <th scope="col">Impuestos</th>
                                                 <th scope="col">Total</th>                                                
-                                                <th scope="col">FechaCargo</th>
-                                                <th scope="col">FechaVencimiento</th>
+                                                <th scope="col">F. Cargo</th>
+                                                <th scope="col">F. Vencimiento</th>
+                                                <th scope="col">Ver Desc.</th>
                                                 <th scope="col">Modificar</th>
                                                 <th scope="col">Borrar</th>
                                             </tr>                                            
@@ -280,6 +293,7 @@
         </div>  
                         
                         
+        <!-- ventana emergente Modificar-->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
 
@@ -297,6 +311,33 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+                        
+        <!-- ventana emergente Eliminar-->
+
+        <div class="modal fade" id="myModalEliminar" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+            <input class="hidden" id="idCargodHide"/>
+            <input class="hidden" id="idItemHide"/>
+            <input class="hidden" id="idFilaHide"/>
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Eliminar cargo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="eliminar"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
