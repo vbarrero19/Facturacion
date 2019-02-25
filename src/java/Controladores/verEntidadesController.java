@@ -50,7 +50,7 @@ public class verEntidadesController {
         return mv;
     }
     
-     /*MUESTRA LA LISTA DE TODAS LAS ENTIDADES CON SUS BOTONES ELIMINAR)MODIFICAR */
+     /*MUESTRA LA LISTA DE TODAS LAS ENTIDADES CON SUS BOTONES ELIMINAR/MODIFICAR */
     @RequestMapping("/verEntidadesController/verEntidades.htm")
     @ResponseBody
     public String verEntidades(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {

@@ -143,10 +143,6 @@
             });
         };
 
-
-
-
-
     </script>
     <body>
         <div class="container col-xs-12">

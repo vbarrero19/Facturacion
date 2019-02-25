@@ -37,7 +37,16 @@ public class verPagoController {
 
         return mv;
     }
+    
+    /******** MENU PRINCIPAL PARA VER MODIFICAR PAGO HTM *********/
+     @RequestMapping("/verPagoController/starPato.htm")
+    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("modificarPagoView");
 
+        return mv;
+    }
+
+    /* MUESTRA LA LISTA DE TODAS LOS METODOS DE PAGO CON LOS BOTONES ELIMINAR/MODIFICAR*/
     @RequestMapping("/verPagoController/verPago.htm")
     @ResponseBody
     public String verDireccion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -121,19 +130,16 @@ public class verPagoController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
         
-            stAux = con.prepareStatement("select e.distinct_code, e.nombre_entidad, p.numero_cuenta, p.titular_cuenta, p.nombre_banco, p.direccion_banco, p.tarjeta_credito, p.localidad"
-                                        + "from entidad e inner join metodo_pago p on e.id_entidad = p.id_entidad where e.id_entidad = ? ");
+            stAux = con.prepareStatement("SELECT e.distinct_code, e.nombre_entidad, p.numero_cuenta"
+                                        + "FROM entidad e inner join metodo_pago p on e.id_entidad = p.id_entidad where e.id_entidad = ? ");
             
             stAux.setInt(1, idEnt);
             rs = stAux.executeQuery();
             
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
-            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
-             */
+            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA */
             while (rs.next()) {
-
-                arrayEntidad.add(new Gson().toJson(new EntidadPago(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
-                        rs.getString(8))));
+                arrayEntidad.add(new Gson().toJson(new EntidadPago(rs.getString(1), rs.getString(2), rs.getString(3))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayEntidad);

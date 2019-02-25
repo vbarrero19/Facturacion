@@ -12,12 +12,9 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>MODIFICAR ENTIDADES</title> 
+        <title>MODIFICAR METODO PAGO</title> 
     </head>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>MODIFICAR PAGO</title>
-    </head>
+
     <script>
         
         $(document).ready(function () {
@@ -27,11 +24,9 @@
             var idEntidad = obtenerValorParametro("idEnt");
             var nombreEntidad = obtenerValorParametro("nombreEnt");
 
-            //alert(idEntidad);
+            alert(idEntidad);
             //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
             cargarDatosPago(idEntidad);
-            
-            
 
         });
 
@@ -81,11 +76,7 @@
                             $("#distinct_code").val(pago.distinct_code);
                             $("#nombre_entidad").val(pago.nombre_entidad);
                             $("#numero_cuenta").val(pago.numero_cuenta);
-                            $("#titular_cuenta").val(pago.titular_cuenta);
-                            $("#nombre_banco").val(pago.nombre_banco);
-                            $("#direccion_banco").val(pago.direccion_banco);
-                            $("#tarjeta_credito").val(pago.tarjeta_credito);
-                            $("#localidad").val(pago.localidad);
+                            
                         });
 
                     } else {
@@ -93,11 +84,6 @@
                         $("#distinct_code").val("");
                         $("#nombre_entidad").val("");
                         $("#numero_cuenta").val("");
-                        $("#titular_cuenta").val("");
-                        $("#nombre_banco").val("");
-                        $("#direccion_banco").val("");
-                        $("#tarjeta_credito").val("");
-                        $("#localidad").val("");
                         
                     }
                 },

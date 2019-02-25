@@ -12,7 +12,7 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
-        <title>VER ENTIDADES</title> 
+        <title>MODIFICAR ENTIDADES</title> 
     </head>
     <script>
         $(document).ready(function () {

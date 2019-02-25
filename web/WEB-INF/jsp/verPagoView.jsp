@@ -64,7 +64,7 @@
                                                                     <td>" + EntidadPago.titular_cuenta + "</td>         \n\
                                                                     <td>" + EntidadPago.nombre_banco + "</td>         \n\
                                                                     <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadPago.nombre_entidad + "</td>         \n\
-                                                                    <td><a href='/Facturacion/pagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/verPagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
                                                                     <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadPago.id_entidad + "' data-idPago='" + EntidadPago.id_metodo_pago + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
                                                                     </tr>");
                     });

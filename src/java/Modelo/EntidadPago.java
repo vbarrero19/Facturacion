@@ -32,7 +32,7 @@ public class EntidadPago {
     }
 
     
-        /* PARA MOSTRAR LOS DATOS A LA HORA DE MODIFICAR UN METODO DE PAGO */
+        /* PARA MOSTRAR LOS DATOS EN LA LISTA, A LA HORA DE MODIFICAR UN METODO DE PAGO */
     
     public EntidadPago(String id_entidad, String nombre_entidad, String id_metodo_pago, String titular_cuenta, String nombre_banco) {
         this.id_entidad = id_entidad;
@@ -42,18 +42,27 @@ public class EntidadPago {
         this.nombre_banco = nombre_banco;
     }
 
-    public EntidadPago(String distinct_code, String nombre_entidad, String numero_cuenta, String titular_cuenta, String nombre_banco, String direccion_banco, String tarjeta_credito, String localidad) {
-        this.distinct_code = distinct_code;
-        this.nombre_entidad = nombre_entidad;
-        this.numero_cuenta = numero_cuenta;
-        this.titular_cuenta = titular_cuenta;
-        this.nombre_banco = nombre_banco;
-        this.direccion_banco = direccion_banco;
-        this.tarjeta_credito = tarjeta_credito;
-        this.localidad = localidad;
-    }
+/*MOSTRAR LOS DATOS QUE SE COMPLETAN AL METERTE EN UNA ENTIDAD */
+    
+//    public EntidadPago(String distinct_code, String nombre_entidad, String numero_cuenta, String titular_cuenta, String nombre_banco, String direccion_banco, String tarjeta_credito, String localidad) {
+//        this.distinct_code = distinct_code;
+//        this.nombre_entidad = nombre_entidad;
+//        this.numero_cuenta = numero_cuenta;
+//        this.titular_cuenta = titular_cuenta;
+//        this.nombre_banco = nombre_banco;
+//        this.direccion_banco = direccion_banco;
+//        this.tarjeta_credito = tarjeta_credito;
+//        this.localidad = localidad;
+//    }
     
 
+    
+    
+     public EntidadPago(String distinct_code, String nombre_entidad, String numero_cuenta) {
+       this.distinct_code = distinct_code;
+       this.nombre_entidad = nombre_entidad;
+       this.numero_cuenta = numero_cuenta;
+    }
 
   
 
