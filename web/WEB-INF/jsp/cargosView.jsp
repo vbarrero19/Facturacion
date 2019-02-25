@@ -147,7 +147,7 @@
                 //Id de cliente y empresa
                 myObj["id_cliente"] = $("#id_entidad").text();
                 myObj["id_empresa"] = $("#id_entidad2").text();
-                
+
                 myObj["valor_impuesto"] = $("#valorImpuesto").val().trim();
 
 
@@ -160,6 +160,8 @@
                     contentType: "application/json",
                     success: function (data) {
                         alert(data);
+                        //Refrescando la pantalla 
+                        location.reload();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -989,14 +991,12 @@
 
 
 
-
-
                         </form>
                     </div>
                 </div>                            
             </div>
         </div>
 
-    </div>
+
 </body> 
 </html>

@@ -33,6 +33,13 @@ public class verCargosController {
 
         return mv;
     }
+    
+    @RequestMapping("/verEntidadesController/startCargo.htm")
+    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("modificarCargoView");
+
+        return mv;
+    }
 
     @RequestMapping("/verCargosController/addResources.htm")
     @ResponseBody
