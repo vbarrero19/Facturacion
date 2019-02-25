@@ -26,7 +26,7 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
-            getEntidadEmpresa();
+            getEntidadEmpresa(); 
             getItem();
             getTipoImpuesto();
 

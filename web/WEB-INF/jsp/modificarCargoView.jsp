@@ -7,11 +7,254 @@
 <!DOCTYPE html>
 
 <html>
-        <%@ include file="infouser.jsp" %>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+    <%@ include file="infouser.jsp" %>
+    <head> 
+        <title>MODIFICAR CARGOS</title> 
+        <style>
+
+            .container {
+                width: 1170px;
+            }
+            .azul{
+                color:blue;
+            }
+
+
+
+        </style>
     </head>
+
+    <script>
+
+        $(document).ready(function () {
+            //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
+            getEntidadCliente();
+            //getEntidadEmpresa(); 
+            //getItem();
+            //getTipoImpuesto();
+
+            //Recuperamos valores de la url 
+            var idCargo = obtenerValorParametro("idCar");
+            var idCliente = obtenerValorParametro("idCli");
+            var idEmpresa = obtenerValorParametro("idEmp");
+
+            alert(idCargo);
+            alert(idCliente);
+            alert(idEmpresa);
+
+            //Mostramos la fecha actual
+//            var f = new Date();
+//            var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+//
+//            var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+//            //alert(fecha)
+//
+//            $('#puntual').show();
+//            $('#periodico').hide();
+//
+//            $("#exampleRadios1").on("click", function () {
+//                $('#puntual').show();
+//                $('#periodico').hide();
+//            });
+//
+//            $("#exampleRadios2").on("click", function () {
+//                $('#puntual').hide();
+//                $('#periodico').show();
+//            });
+//
+//
+//            //tratando de omstrar fechas dinamicamente            
+//            var mes = f.getMonth();
+//            var nombreMes = meses[f.getMonth()];
+//            //alert(nombreMes);
+//            //cargamos de forma dinamica la tabla
+//            for (var i = 0; i < 12; i = i + 6) {
+//                $('#tbody-tabla-meses').append(" <tr>\n\
+//                                                                    <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+//                                                                    <td>" + meses[i] + "</td>          \n\ \n\
+//                                                                    <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+//                                                                    <td>" + meses[i + 1] + "</td>          \n\ \n\
+//                                                                    <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+//                                                                    <td>" + meses[i + 2] + "</td>          \n\ \n\
+//                                                                    <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+//                                                                    <td>" + meses[i + 3] + "</td>          \n\ \n\
+//                                                                    <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+//                                                                    <td>" + meses[i + 4] + "</td>          \n\ \n\
+//                                                                    <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
+//                                                                    <td>" + meses[i + 5] + "</td>          \n\ \n\
+//                                                                </tr>");
+//            }
+
+
+            var userLang = navigator.language || navigator.userLanguage;
+
+            //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
+            //Constructor para el calendario Fecha-Cargo.
+            $('#fecha_cargo').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false//Important! See issue #1075
+                        //defaultDate: '08:32:33',
+                        //                });
+            });
+
+            //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
+            //Constructor para el calendario Fecha-Cargo.
+            $('#fecha_vencimiento').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: userLang.valueOf(),
+                daysOfWeekDisabled: [0, 6],
+                useCurrent: false//Important! See issue #1075
+                        //defaultDate: '08:32:33',
+                        //                });
+            });
+
+
+
+            //Guarda los datos introducidos en el formulario en la tabla cargos
+            $("#grabarCargos").click(function () {
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+                myObj["id_item"] = $("#id_item").val().trim();
+                myObj["abreviatura"] = $("#abreviatura").val().trim();
+                myObj["descripcion"] = $("#descripcion").val().trim();
+
+                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
+                myObj["cuenta"] = $("#cuenta").val().trim();
+                myObj["importe"] = $("#importe").val().trim();
+                myObj["cantidad"] = $("#cantidad").val().trim();
+
+
+
+                //Codigo para introducir el tipo de impuesto
+                //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
+                tipoImpuesto = $("#comboTipoImpuesto").val();
+
+                //separamos el id y el valor
+                arrayDeCadenas = tipoImpuesto.split(",");
+                var tipoImp = arrayDeCadenas[0];
+                var valorImp = arrayDeCadenas[1];
+
+                myObj["id_impuesto"] = tipoImp;
+
+                myObj["total"] = $("#total").val().trim();
+
+                //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
+                myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
+                //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
+                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+
+                //Estas dos tendran valores fijos a true y 0
+                //myObj["estado"] = $("#estado").val().trim();
+                //myObj["id_factura"] = $("#id_factura").val().trim();
+
+                //Id de cliente y empresa
+                myObj["id_cliente"] = $("#id_entidad").text();
+                myObj["id_empresa"] = $("#id_entidad2").text();
+
+                myObj["valor_impuesto"] = $("#valorImpuesto").val().trim();
+
+
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/cargosController/nuevoCargo.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                        //Refrescando la pantalla 
+                        location.reload();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+            });
+        })
+                ;
+
+        function obtenerValorParametro(sParametroNombre) {
+            var sPaginaURL = window.location.search.substring(1);
+            var sURLVariables = sPaginaURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParametro = sURLVariables[i].split('=');
+                if (sParametro[0] == sParametroNombre) {
+                    return sParametro[1];
+                }
+            }
+            return null;
+        }
+        ;
+
+        function getEntidadCliente() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/verCargosController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
+                success: function (data) {
+
+                    //Recogemos los datos del combo y los pasamos a objetos Entidad  
+                    var clienteEntidad = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboClientes');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+                    //Lo vamos cargando
+                    clienteEntidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        var clienteEntidad2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = clienteEntidad2.id_entidad;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        opt.innerHTML = clienteEntidad2.distinct_code;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+    </script>
+
+
+
+
+
+
+
     <body>
 
         <div class="container">
@@ -20,7 +263,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">Modificar CARGOS</h3>                           
 
                             <div class="datos row" class="col-xs-12">
                                 <!--Combo para clientes-->

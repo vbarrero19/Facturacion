@@ -169,7 +169,7 @@
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
-                                                                    <td><a href='/Facturacion/verEntidadesController/startCargo.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "' class='btn btn-info btn-warning'> Modificar </button></td>\n\
+                                                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "' class='btn btn-info btn-warning'> Modificar </button></td>\n\
 \n\                                                                 <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
                                                                 </tr>");
                     });
