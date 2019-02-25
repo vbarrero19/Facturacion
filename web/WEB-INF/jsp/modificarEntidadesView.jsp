@@ -28,7 +28,7 @@
             cargarDatosEntidad(idEntidad);
             
             
-
+/*FUNCION DEL BOTON modificarEntidad PARA HACER EL UPDATE EN EL CONTROLADOR Y ACTUALIZAR LOS DATOS*/
 
 //            $("#modificarEntidad").click(function () {
 //                if (window.XMLHttpRequest) //mozilla
