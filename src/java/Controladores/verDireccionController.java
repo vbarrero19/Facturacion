@@ -41,7 +41,7 @@ public class verDireccionController {
     /**
      * ******** MENU PRINCIPAL PARA VER MODIFICAR DIRECCIONES HTM **********
      */
-     @RequestMapping("/verEntidadesController/startEntidad.htm")
+     @RequestMapping("/verDireccionController/startDireccion.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("modificarDireccionView");
 

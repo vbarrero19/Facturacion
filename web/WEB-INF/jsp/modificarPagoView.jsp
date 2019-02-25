@@ -24,7 +24,7 @@
             var idEntidad = obtenerValorParametro("idEnt");
             var nombreEntidad = obtenerValorParametro("nombreEnt");
 
-            alert(idEntidad);
+            //alert(idEntidad);
             //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
             cargarDatosPago(idEntidad);
 
@@ -76,6 +76,21 @@
                             $("#distinct_code").val(pago.distinct_code);
                             $("#nombre_entidad").val(pago.nombre_entidad);
                             $("#numero_cuenta").val(pago.numero_cuenta);
+                            $("#titular_cuenta").val(pago.titular_cuenta);
+                            $("#nombre_banco").val(pago.nombre_banco);
+                            $("#direccion_banco").val(pago.direccion_banco);
+                            $("#localidad").val(pago.localidad);
+                            $("#pais").val(pago.pais);
+                            $("#codigo1").val(pago.codigo1);
+                            $("#codigo2").val(pago.codigo2);
+                            $("#tarjeta_credito").val(pago.tarjeta_credito);
+                            $("#titular_tarjeta").val(pago.titular_tarjeta);                            
+                            $("#mes_caducidad").val(pago.mes_caducidad);
+                            $("#anio_caducidad").val(pago.anio_caducidad);
+                            $("#codigo_csc").val(pago.codigo_csc);
+                            $("#cuenta_paypal").val(pago.cuenta_paypal);
+                            $("#correo_paypal").val(pago.correo_paypal);
+                            $("#cheque").val(pago.cheque);
                             
                         });
 
@@ -84,6 +99,23 @@
                         $("#distinct_code").val("");
                         $("#nombre_entidad").val("");
                         $("#numero_cuenta").val("");
+                        $("#titular_cuenta").val("");
+                        $("#nombre_banco").val("");
+                        $("#direccion_banco").val("");
+                        $("#localidad").val("");
+                        $("#pais").val("");
+                        $("#codigo1").val("");
+                        $("#codigo2").val("");
+                        $("#tarjeta_credito").val("");
+                        $("#titular_tarjeta").val("");
+                        $("#mes_caducidad").val("");
+                        $("#anio_caducidad").val("");
+                        $("#codigo_csc").val("");
+                        $("#cuenta_paypal").val("");
+                        $("#correo_paypal").val("");
+                        $("#cheque").val("");
+                                
+                        
                         
                     }
                 },
@@ -248,10 +280,11 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="form-group col-xs-12">
                         <button type="button" id="guardarPago" name="guardarPago" class="btn btn-primary pull-right">Modificar método pago</button>
                         <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                                                    
                         <a href="<c:url value='/verPagoController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
+                        </div>
                     </form>
                 </div>
             </div>

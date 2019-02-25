@@ -39,7 +39,7 @@ public class verPagoController {
     }
     
     /******** MENU PRINCIPAL PARA VER MODIFICAR PAGO HTM *********/
-     @RequestMapping("/verPagoController/starPato.htm")
+     @RequestMapping("/verPagoController/startPago.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("modificarPagoView");
 
@@ -112,7 +112,7 @@ public class verPagoController {
     @RequestMapping("/verPagoController/modificarPago.htm")
     @ResponseBody
     /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
-    public String verModificarPago(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         EntidadPago resourceLoad = new EntidadPago();
 
@@ -130,16 +130,20 @@ public class verPagoController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
         
-            stAux = con.prepareStatement("SELECT e.distinct_code, e.nombre_entidad, p.numero_cuenta"
-                                        + "FROM entidad e inner join metodo_pago p on e.id_entidad = p.id_entidad where e.id_entidad = ? ");
+            stAux = con.prepareStatement("SELECT e.distinct_code, e.nombre_entidad, p.numero_cuenta, p.titular_cuenta, p.nombre_banco, p.direccion_banco, p.localidad, p.pais, p.codigo1, p.codigo2,"
+                    + "p.tarjeta_credito, p.titular_tarjeta, p.mes_caducidad, p.anio_caducidad, p.codigo_csc, p.cuenta_paypal, p.correo_paypal, p.cheque"
+                    + " FROM entidad e inner join metodo_pago p on e.id_entidad = p.id_entidad where e.id_entidad = ?  ");
             
             stAux.setInt(1, idEnt);
             rs = stAux.executeQuery();
             
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
-            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA */
+            Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
+             */
             while (rs.next()) {
-                arrayEntidad.add(new Gson().toJson(new EntidadPago(rs.getString(1), rs.getString(2), rs.getString(3))));
+
+                arrayEntidad.add(new Gson().toJson(new EntidadPago(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
+                rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16),rs.getString(17),rs.getString(18))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayEntidad);

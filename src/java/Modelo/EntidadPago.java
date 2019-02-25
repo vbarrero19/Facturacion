@@ -58,10 +58,28 @@ public class EntidadPago {
 
     
     
-     public EntidadPago(String distinct_code, String nombre_entidad, String numero_cuenta) {
+     public EntidadPago(String distinct_code, String nombre_entidad, String numero_cuenta, String titular_cuenta, String nombre_banco, String direccion_banco, String localidad, String pais,
+             String codigo1, String codigo2, String tarjeta_credito, String titular_tarjeta, String mes_caducidad, String anio_caducidad, String codigo_csc, String cuenta_paypal, String correo_paypal,
+             String cheque) {
        this.distinct_code = distinct_code;
        this.nombre_entidad = nombre_entidad;
        this.numero_cuenta = numero_cuenta;
+       this.titular_cuenta = titular_cuenta;
+       this.nombre_banco = nombre_banco;
+       this.direccion_banco = direccion_banco;
+       this.localidad = localidad;
+       this.pais = pais;
+       this.codigo1 = codigo1;
+       this.codigo2 = codigo2;
+       this.tarjeta_credito = tarjeta_credito;
+       this.titular_tarjeta = titular_tarjeta;
+       this.mes_caducidad = mes_caducidad;
+       this.anio_caducidad = anio_caducidad;
+       this.codigo_csc = codigo_csc;
+       this.cuenta_paypal = cuenta_paypal;
+       this.correo_paypal = correo_paypal;
+       this.cheque = cheque;
+       
     }
 
   
