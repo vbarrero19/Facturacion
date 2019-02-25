@@ -56,8 +56,8 @@
         
     <bean class="Controladores.DireccionController" id="direccion"/>
     <bean class="Controladores.verDireccionController" id="verDireccion"/>
-    <bean class="Controladores.PagoController" id="pago"/>  
     
+    <bean class="Controladores.PagoController" id="pago"/>      
     <bean class="Controladores.verPagoController" id="verPago"/>  
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
@@ -72,22 +72,28 @@
                 <prop key="userform.htm">homepage</prop>
                 <prop key="customerView.htm">customerctrl</prop>       
                 <prop key="itemsView.htm">items</prop>  
+                
                 <prop key="entidadesView.htm">entidades</prop>   
-<!--                <prop key="modificarEntidadesView.htm">entidades</prop>    -->
+<!--            <prop key="modificarEntidadesView.htm">entidades</prop>    -->
                 <prop key="modificarEntidadesView.htm">verEntidades</prop>            
                 <prop key="verEntidadesView.htm">verEntidades</prop>
+                
                 <prop key="cargosView.htm">cargos</prop>              
-                <prop key="modificarCargoView">verCargos</prop>     
+                <prop key="modificarCargoView.htm">verCargos</prop> 
+                    
                 <prop key="facturasView.htm">facturas</prop>   
                 <prop key="verDetalleFacturaView.htm">verFacturas</prop> 
-                <prop key="verFacturasView.htm">verFacturas</prop>    
-                <prop key="verCargosView.htm">verCargos</prop>                               
-                <prop key="direccionView.htm">direccion</prop>
-                <prop key="modificarDireccion.htm">direccion</prop>
-                <prop key="modificarDireccion.htm">verDireccion</prop>  
-                <prop key="pagoView.htm">pago</prop> 
-                <prop key="verPagoView.htm">verPago</prop> 
-                <prop key="modificarPagoView">pago</prop> 
+                <prop key="verFacturasView.htm">verFacturas</prop>   
+                 
+                <prop key="verCargosView.htm">verCargos</prop> 
+                                              
+                <prop key="direccionView.htm">direccion</prop>                
+                <prop key="modificarDireccionView.htm">verDireccion</prop>
+                <prop key="verDireccionView.htm">verDireccion</prop>  
+                
+                <prop key="pagoView.htm">pago</prop>                 
+                <prop key="modificarPagoView.htm">verPago</prop>
+                <prop key="verPagoView.htm">verPago</prop>  
                 
                 
             </props>

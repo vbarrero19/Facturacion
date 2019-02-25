@@ -60,7 +60,7 @@ function cargarDirecciones() {
                                                                     <td>" + EntidadDireccion.nombre_via + "</td>         \n\
                                                                     <td>" + EntidadDireccion.localidad + "</td>         \n\
 \n\                                                                 <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadDireccion.nombre_entidad + "</td>         \n\
-                                                                    <td><a href='/Facturacion/direccionController/startDireccion.htm?idEnt=" + EntidadDireccion.id_entidad + "&nombreEnt=" + EntidadDireccion.nombre_entidad + "' class='btn btn-primary'> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/verDireccionController/startDireccion.htm?idEnt=" + EntidadDireccion.id_entidad + "&nombreEnt=" + EntidadDireccion.nombre_entidad + "' class='btn btn-primary'> Modificar </button>\n\
                                                                     <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadDireccion.id_entidad + "' data-idDir='" + EntidadDireccion.id_direccion +  "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
                         </tr>");
                     });
