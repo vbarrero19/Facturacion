@@ -50,6 +50,7 @@
     
     <bean class="Controladores.CargosController" id="cargos"/>   
     <bean class="Controladores.verCargosController" id="verCargos"/> 
+    <bean class="Controladores.modificarCargosController" id="modificarCargos"/>
     
     <bean class="Controladores.FacturasController" id="facturas"/>
     <bean class="Controladores.verFacturasController" id="verFacturas"/>
@@ -74,12 +75,12 @@
                 <prop key="itemsView.htm">items</prop>  
                 
                 <prop key="entidadesView.htm">entidades</prop>   
-<!--            <prop key="modificarEntidadesView.htm">entidades</prop>    -->
                 <prop key="modificarEntidadesView.htm">verEntidades</prop>            
                 <prop key="verEntidadesView.htm">verEntidades</prop>
                 
                 <prop key="cargosView.htm">cargos</prop>              
-                <prop key="modificarCargoView.htm">verCargos</prop> 
+                <prop key="verCargosView.htm">verCargos</prop> 
+                <prop key="modificarCargosView.htm">modificarCargos</prop> 
                     
                 <prop key="facturasView.htm">facturas</prop>   
                 <prop key="verDetalleFacturaView.htm">verFacturas</prop> 

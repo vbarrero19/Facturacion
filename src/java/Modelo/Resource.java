@@ -15,6 +15,8 @@ public class Resource  {
     private String col9;
     private String col10; 
     private String col11; 
+    private String col12; 
+    private String col13; 
 
     public Resource() {
        
@@ -30,6 +32,20 @@ public class Resource  {
         this.col1 = col1;
         this.col2 = col2;
     }
+
+    public Resource(String col1, String col2, String col3) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+    }
+
+    public Resource(String col1, String col2, String col3, String col4) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+    }
+    
     
     public Resource(String col1, String col2, String col3, String col4, String col5) {
         this.col1 = col1;
@@ -48,7 +64,18 @@ public class Resource  {
         this.col6 = col6;
         this.col7 = col7;
     }
-    
+
+    public Resource(String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+        this.col5 = col5;
+        this.col6 = col6;
+        this.col7 = col7;
+        this.col8 = col8;
+    }    
+        
     public Resource(String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8, String col9, String col10, String col11) {
         this.col1 = col1;
         this.col2 = col2;
@@ -63,19 +90,23 @@ public class Resource  {
         this.col11 = col11;
     }
 
-    
-    
-    
-    
-    
-    public Resource(String string, String string0, String string1, String string2) {
-        
+    public Resource(String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8, String col9, String col10, String col11, String col12, String col13) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+        this.col5 = col5;
+        this.col6 = col6;
+        this.col7 = col7;
+        this.col8 = col8;
+        this.col9 = col9;
+        this.col10 = col10;
+        this.col11 = col11;
+        this.col12 = col12;
+        this.col13 = col13;
     }
-    
 
-//    public Resource(String string, String string0, String string1, String string2, String string3, String string4, String string5) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
+
 
     public String getCol1() {
         return col1;

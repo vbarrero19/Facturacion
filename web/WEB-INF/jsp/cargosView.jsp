@@ -862,11 +862,11 @@
                                     <div class="form_radio_button">
 
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="puntual" checked>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
                                             <label class="form-check-label" for="2">Puntual</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="periodico">
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
                                             <label class="form-check-label" for="1">Periódico</label>
                                         </div>
                                     </div>

@@ -169,13 +169,13 @@
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
-                                                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "' class='btn btn-info btn-warning'> Modificar </button></td>\n\
+                                                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "&idTipImp=" + cargo.impuesto + "' class='btn btn-info btn-warning'> Modificar </button></td>\n\
 \n\                                                                 <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
                                                                 </tr>");
                     });
 
 
-//<td><button type='button' class='btn btn-info btn-warning' id='' value='"+(indice+1)+"';>Modificar</button></td>\n\
+
                     $(document).ready(function () {
                         $(".miBoton").click(function () {
                             //Con $(this).val() cogemos el value del boton, lo concatenamos a #descrip para tener el id del campo oculto con
@@ -195,8 +195,8 @@
                             $("#idItemHide").val($(this).attr("data-idItem"));
                             $("#idFilaHide").val($(this).attr("data-idIndice"));
 
-                            /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreiatura*/
-                            $("#eliminar").text($("#abrev" + $(this).attr("data-idindice")).text());
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreviatura*/
+                            $("#eliminar").text($("#abrev" + $(this).attr("data-idindice")).text());                            
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModalEliminar").modal();
@@ -336,6 +336,7 @@
                         </div>
                         <div class="modal-body">
                             <p id="descripcion"></p>
+                            <textarea name="message" id="message" rows="10" cols="30">The cat was playing in the garden.</textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -346,7 +347,6 @@
             </div>
 
             <!-- ventana emergente Eliminar-->
-
             <div class="modal fade" id="myModalEliminar" role="dialog">
                 <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
                 <input class="hidden" id="idCargoHide"/>
@@ -362,7 +362,7 @@
                             <h4 class="modal-title">Eliminar cargo</h4>
                         </div>
                         <div class="modal-body">
-                            <p id="eliminar"></p>
+                            <p id="eliminar"></p>                            
                         </div>
                         <div class="modal-footer">
                             <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
