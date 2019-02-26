@@ -10,14 +10,14 @@ package Modelo;
  * @author Javier
  */
 public class EntidadTipoEntidad {
-    
+
     private String id_entidad;
     private String id_tipo_entidad;
 
     public EntidadTipoEntidad() {
     }
-    
-        public EntidadTipoEntidad(String id_entidad, String id_tipo_entidad) {
+
+    public EntidadTipoEntidad(String id_entidad, String id_tipo_entidad) {
         this.id_entidad = id_entidad;
         this.id_tipo_entidad = id_tipo_entidad;
     }
@@ -37,6 +37,5 @@ public class EntidadTipoEntidad {
     public void setId_tipo_entidad(String id_tipo_entidad) {
         this.id_tipo_entidad = id_tipo_entidad;
     }
-    
-    
+
 }

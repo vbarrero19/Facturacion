@@ -38,19 +38,17 @@ public class verEntidadesController {
         return mv;
     }
 
-     /**
+    /**
      * ******** MENU PRINCIPAL PARA VER MODIFICAR ENTIDADES HTM **********
      */
-    
-   
     @RequestMapping("/verEntidadesController/startEntidad.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("modificarEntidadesView");
 
         return mv;
     }
-    
-     /*MUESTRA LA LISTA DE TODAS LAS ENTIDADES CON SUS BOTONES ELIMINAR/MODIFICAR */
+
+    /*MUESTRA LA LISTA DE TODAS LAS ENTIDADES CON SUS BOTONES ELIMINAR/MODIFICAR */
     @RequestMapping("/verEntidadesController/verEntidades.htm")
     @ResponseBody
     public String verEntidades(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -105,12 +103,11 @@ public class verEntidadesController {
             } catch (Exception e) {
             }
         }
+
+
         return resp;
     }
-    
-    
-    
-    
+
     /* CREAMOS CONSULTA PARA MOSTRAR LOS DATOS DE LA ENTIDAD EN MODIFICAR ENTIDAD */
     @RequestMapping("/verEntidadesController/modificarEntidad.htm")
     @ResponseBody
@@ -124,7 +121,7 @@ public class verEntidadesController {
         PreparedStatement stAux = null;
         String resp = "correcto";
 
-        int idEnt=Integer.parseInt(hsr.getParameter("entidad"));
+        int idEnt = Integer.parseInt(hsr.getParameter("entidad"));
         //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
         //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
         ArrayList<String> arrayEntidad = new ArrayList<>();
@@ -132,19 +129,20 @@ public class verEntidadesController {
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-        
+
             stAux = con.prepareStatement("SELECT id_entidad, distinct_code, nombre_entidad, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc"
                     + " FROM entidad where id_entidad = ?");
-            
+
             stAux.setInt(1, idEnt);
             rs = stAux.executeQuery();
-            
+
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */
             while (rs.next()) {
 
-                arrayEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11))));
+                arrayEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayEntidad);
@@ -182,12 +180,10 @@ public class verEntidadesController {
         //Devolvemos la variable resp al JSP
         return resp;
     }
-    
-    
+
     /*FUNCION PARA MODIFICAR UNA ENTIDAD RECOGIENDO EL ID_ENTIDAD. AL DARLE AL BOTON ACTUALIZAMOS LOS DATOS
     ********* NO FUNCIONA **********
-    */
-    
+     */
     @RequestMapping("/verEntidadesController/actualizarEntidad.htm")
     @ResponseBody
     public String guardarNuevaEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -198,10 +194,9 @@ public class verEntidadesController {
         PreparedStatement stAux = null;
         String resp = "correcto";
 
-        
         /*CODIGO PARA AÑADIR UNA NUEVA ENTIDAD*/
         try {
-            
+
             /*REALIZAMOS LA CONEXION A LA BASE DE DATOS.*/
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
@@ -214,8 +209,6 @@ public class verEntidadesController {
 
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();
-
-           
 
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
