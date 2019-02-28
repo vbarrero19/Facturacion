@@ -130,8 +130,9 @@
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
                 var valorImp = arrayDeCadenas[1];
-
-                myObj["id_impuesto"] = tipoImp;
+                
+                //Grabamos el tipo de impuesto
+                myObj["impuesto"] = tipoImp;
 
                 myObj["total"] = $("#total").val().trim();
 
@@ -364,7 +365,7 @@
 
             //Se ejecuta al cambiar el contenido del importe
             $("#importe").keyup(function () {
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
                 if ($("#comboItems").val() != "0") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
                     calcularTotal();
@@ -372,7 +373,7 @@
             });
             //Se ejecuta al cambiar el contenido de la cantidad
             $("#cantidad").keyup(function () {
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
                 if ($("#comboItems").val() != "0") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
                     calcularTotal();
@@ -380,7 +381,7 @@
             });
             //Se ejecuta al cambiar el contenido del comboTipoImpuesto
             $("#comboTipoImpuesto").change(function () {
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
+                //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
                 if ($("#comboItems").val() != "0") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
                     calcularTotal();
@@ -578,7 +579,7 @@
                         //Guardamos el valor del impuesto en el value de cada opcion
                         opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
                         //Guardamos el impuesto en el nombre de cada opcion
-                        opt.innerHTML = tipoImpuesto2.impuesto + " " + tipoImpuesto2.valor + "%";
+                        opt.innerHTML = tipoImpuesto2.impuesto;
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });

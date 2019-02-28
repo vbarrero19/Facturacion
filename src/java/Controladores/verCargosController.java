@@ -199,7 +199,7 @@ public class verCargosController {
 
             stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, c.cuenta, c.importe, c.cantidad, c.impuesto,\n"
                     + "c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, valor_impuesto FROM cargos c inner join \n"
-                    + "tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE id_cliente =  ?");
+                    + "tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE c.id_factura = 0 and id_cliente =  ?");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();

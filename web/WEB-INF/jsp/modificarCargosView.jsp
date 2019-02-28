@@ -28,7 +28,6 @@
 
         $(document).ready(function () {
 
-
             //Recuperamos valores de la url 
             var idCargo = obtenerValorParametro("idCar");
             var idCliente = obtenerValorParametro("idCli");
@@ -64,7 +63,7 @@
             });
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
-            $("#grabarCargos").click(function () {
+            $("#modificarCargos").click(function () {
                 if (window.XMLHttpRequest) //mozilla
                 {
                     ajax = new XMLHttpRequest(); //No Internet explorer
@@ -74,11 +73,12 @@
                 }
 
                 var myObj = {};
-                myObj["id_item"] = $("#id_item").val().trim();
-                myObj["abreviatura"] = $("#abreviatura").val().trim();
-                myObj["descripcion"] = $("#descripcion").val().trim();
+                myObj["id_cargo"] = $("#id_cargo").text();
+//                myObj["id_item"] = "1"; //$("#id_cargo").val().trim();
+                myObj["abreviatura"] = $("#abreviatura").text();
+                myObj["descripcion"] = $("#descripcion").text();
 
-                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
+                myObj["id_tipo_item"] = "1"; //$("#id_tipo_item").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
@@ -92,8 +92,9 @@
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
                 var valorImp = arrayDeCadenas[1];
-
-                myObj["id_impuesto"] = tipoImp;
+                
+                //Grabamos el tipo de impuesto
+                myObj["impuesto"] = tipoImp;
 
                 myObj["total"] = $("#total").val().trim();
 
@@ -103,8 +104,8 @@
                 myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
 
                 //Estas dos tendran valores fijos a true y 0
-                //myObj["estado"] = $("#estado").val().trim();
-                //myObj["id_factura"] = $("#id_factura").val().trim();
+                //myObj["estado"] = true
+                //myObj["id_factura"] = 0
 
                 //Id de cliente y empresa
                 myObj["id_cliente"] = $("#id_entidad").text();
@@ -116,7 +117,7 @@
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/cargosController/nuevoCargo.htm',
+                    url: '/Facturacion/modificarCargosController/modificarCargo.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -290,7 +291,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/modificarCargosController/getTipoImpuesto.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/modificarCargosController/getTipoImpuesto.htm', //Vamos a modificarCargosController/getTipoImpuesto.htm a recoger los datos
                 success: function (data) {
 
                     var tipoImpuesto = JSON.parse(data);
@@ -329,11 +330,28 @@
                 }
             });
 
+            //Se ejecuta al cambiar el contenido del importe
+            $("#importe").keyup(function () {
+                //Llamamos a la funcion calcularTotal() que calcula el total del cargo
+                calcularTotal();                
+            });
+
+            //Se ejecuta al cambiar el contenido de la cantidad
+            $("#cantidad").keyup(function () {
+                //Llamamos a la funcion calcularTotal() que calcula el total del cargo
+                calcularTotal();
+            });
+
+            //Se ejecuta al cambiar el contenido del comboTipoImpuesto
+            $("#comboTipoImpuesto").change(function () {
+                //Llamamos a la funcion calcularTotal() que calcula el total del cargo
+                calcularTotal();
+            });
+
         }
         ;
 
         function calcularTotal() {
-
             //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
             tipoImpuesto = $("#comboTipoImpuesto").val();
 
@@ -355,10 +373,10 @@
                 $("#valorImpuesto").val(subtotal * valorImp / 100);
                 $("#total").val((subtotal * valorImp / 100) + subtotal);
             }
-
-
         }
         ;
+
+
 
     </script>
 
@@ -463,7 +481,7 @@
                                     <input type="text" class="form-control input-sm" id="importe" name="importe">
                                 </div>
                                 <div class="form-group col-xs-2">
-                                    <label for="importe>">Cantidad</label>
+                                    <label for="cantidad>">Cantidad</label>
                                     <input type="text" class="form-control input-sm" id="cantidad" name="cantidad" value="1">
                                 </div>
                                 <div class="form-group col-xs-2">
@@ -507,23 +525,23 @@
                                         $('#fecha_cargo').datetimepicker();
                                     });
                                 </script>
-                                
+
                                 <div class='col-xs-4 col-md-4'>
-                                        <label class="fechaCargos">Fecha Vencimiento</label>
-                                        <div class="form-group">
-                                            <div class='input-group date' id='fecha_vencimiento' name='fecha_vencimiento'>
-                                                <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
+                                    <label class="fechaCargos">Fecha Vencimiento</label>
+                                    <div class="form-group">
+                                        <div class='input-group date' id='fecha_vencimiento' name='fecha_vencimiento'>
+                                            <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
                                         </div>
                                     </div>
-                                    <script type="text/javascript">
-                                        $(function () {
-                                            $('#fecha_vencimiento').datetimepicker();
-                                        });
-                                    </script>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('#fecha_vencimiento').datetimepicker();
+                                    });
+                                </script>
                             </div>
 
                             <button type="button" id="modificarCargos" name="modificarCargos" class="btn btn-primary pull-right">Modificar</button>

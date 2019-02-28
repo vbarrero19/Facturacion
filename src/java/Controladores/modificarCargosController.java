@@ -223,7 +223,7 @@ public class modificarCargosController {
 
     }
     
-         //Se usa para cargar los datos del combo TipoImpuesto
+    //Se usa para cargar los datos del combo TipoImpuesto
     @RequestMapping("/modificarCargosController/getTipoImpuesto.htm")
     @ResponseBody
     public String cargarComboTipoImpuesto(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -282,183 +282,81 @@ public class modificarCargosController {
 
     }
     
+    //Se usa para modificar cargos
+    @RequestMapping("/modificarCargosController/modificarCargo.htm")
+    @ResponseBody
+    public String modificarCargo(@RequestBody Cargos cargos, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Cargos resourceLoad = new Cargos();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            int cargo = Integer.parseInt(cargos.getId_cargo());
+            String cuenta = cargos.getCuenta();
+            Double importe = Double.parseDouble(cargos.getImporte());
+            Double cantidad = Double.parseDouble(cargos.getCantidad());
+            int impuesto = Integer.parseInt(cargos.getImpuesto());
+            Double total = Double.parseDouble(cargos.getTotal());
+            
+            String test = cargos.getFecha_cargo();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate = dateFormat.parse(test);
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+            //stAux.setTimestamp(10, timestamp);
+
+            String test2 = cargos.getFecha_vencimiento();
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsedDate2 = dateFormat2.parse(test2);
+            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+
+            //stAux.setTimestamp(11, timestamp2);
+            
+            Double valorImpuesto = Double.parseDouble(cargos.getValor_impuesto());            
+  
+            stAux = con.prepareStatement("UPDATE cargos SET cuenta = '"+cuenta+"', importe = '"+importe+"', cantidad = '"+cantidad+"', impuesto = '"+impuesto+"', total = '"+total+"', fecha_cargo = '"+timestamp+"', fecha_vencimiento ='"+timestamp2+"', valor_impuesto= '"+valorImpuesto +"' where id_cargo = '"+cargo+"'");     
+
+            stAux.executeUpdate();
+            
+            resp = "Correcto";
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                } 
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
+
     
 
-//    //Cargamos los datos en los input cuando seleccionamos una opcion del combo
-//    @RequestMapping("/verCargosController/getDatosEntidad.htm")
-//    @ResponseBody
-//    public String cargarDatosEntidad(@RequestBody Entidades entidades, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        Entidades resourceLoad = new Entidades();
-//
-//        Connection con = null;
-//        ResultSet rs = null;
-//        PreparedStatement stAux = null;
-//        String resp = "correcto";
-//
-//        ArrayList<String> arrayTipo = new ArrayList<>();
-//
-//        try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();
-//
-//            stAux = con.prepareStatement("SELECT id_entidad, distinct_code, nombre_entidad, nombre_contacto FROM entidad WHERE id_entidad = ?");
-//
-//            stAux.setInt(1, Integer.parseInt(entidades.getId_entidad()));
-//            rs = stAux.executeQuery();
-//
-//            while (rs.next()) {
-//                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
-//            }
-//
-//            resp = new Gson().toJson(arrayTipo);
-//
-//        } catch (SQLException ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } catch (Exception ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (stAux != null) {
-//                    stAux.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        return resp;
-//
-//    }
-//
-////Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todos los cargos.
-//    @RequestMapping("/verCargosController/getDatosCargos.htm")
-//    @ResponseBody
-////    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//    public String cargarDatosCargos(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        Cargos resourceLoad = new Cargos();
-//
-//        Connection con = null;
-//        ResultSet rs = null;
-//        PreparedStatement stAux = null;
-//        String resp = "correcto";
-//        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con 
-//        hsr.getParameter("idCliente")
-//         */
-//        int idCliente = Integer.parseInt(hsr.getParameter("idCliente"));
-//
-//        ArrayList<String> arrayTipo = new ArrayList<>();
-//
-//        try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();
-//
-//            stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, c.cuenta, c.importe, c.cantidad, c.impuesto,\n"
-//                    + "c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, valor_impuesto FROM cargos c inner join \n"
-//                    + "tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE id_cliente =  ?");
-//
-//            stAux.setInt(1, idCliente);
-//            rs = stAux.executeQuery();
-//
-//            while (rs.next()) {
-//                arrayTipo.add(new Gson().toJson(new Cargos(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17))));
-//            }
-//
-//            resp = new Gson().toJson(arrayTipo);
-//
-//        } catch (SQLException ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } catch (Exception ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (stAux != null) {
-//                    stAux.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        return resp;
-//
-//    }
-//
-//    @RequestMapping("/verCargosController/eliminarCargo.htm")
-//    @ResponseBody
-//    public String eliminarPago(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        Resource resourceLoad = new Resource();
-//
-//        Connection con = null;
-//        ResultSet rs = null;
-//        PreparedStatement stAux = null;
-//        String resp = "correcto";
-//
-//        try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();
-//
-//            stAux = con.prepareStatement("delete from cargos where id_cargo = ?");
-//
-//            stAux.setInt(1, Integer.parseInt(resource.getCol1()));
-//
-//            stAux.executeUpdate();
-//
-//        } catch (SQLException ex) {
-//            resp = "incorrecto sql"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } catch (Exception ex) {
-//            resp = "incorrecto"; // ex.getMessage();
-//            StringWriter errors = new StringWriter();
-//            ex.printStackTrace(new PrintWriter(errors));
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (stAux != null) {
-//                    stAux.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (Exception e) {
-//            }
-//        }
-//        return resp;
-//    }
 }

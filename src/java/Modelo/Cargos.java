@@ -48,6 +48,11 @@ public class Cargos {
         this.id_cliente = id_cliente;
         this.id_empresa = id_empresa;
     }
+
+    public Cargos(String id_cargo) {
+        this.id_cargo = id_cargo;
+    }
+    
     
     public String getId_cargo() {
         return id_cargo;
@@ -117,7 +122,7 @@ public class Cargos {
         return impuesto;
     }
 
-    public void setId_impuesto(String impuesto) {
+    public void setImpuesto(String impuesto) {
         this.impuesto = impuesto;
     }
 

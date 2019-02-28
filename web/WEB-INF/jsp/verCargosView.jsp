@@ -259,7 +259,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">VER CARGOS CLIENTE</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">VER CARGOS PENDIENTES CLIENTE</h3>                           
 
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para entidades-->
@@ -335,8 +335,7 @@
                             <h4 class="modal-title">Descripción</h4>
                         </div>
                         <div class="modal-body">
-                            <p id="descripcion"></p>
-                            <textarea name="message" id="message" rows="10" cols="30">The cat was playing in the garden.</textarea>
+                            <p id="descripcion"></p>                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
