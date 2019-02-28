@@ -108,6 +108,7 @@
                             $("#id_entidad").val(entidad.id_entidad);
                             $("#distinct_code").val(entidad.distinct_code );
                             $("#nombre_entidad").val(entidad.nombre_entidad);
+                            $("#id_tipo_documento").val(entidad.id_tipo_documento);
                             $("#nombre_contacto").val(entidad.nombre_contacto);
                             $("#apellido1").val(entidad.apellido1);
                             $("#apellido2").val(entidad.apellido2);
@@ -125,6 +126,7 @@
                         $("#distinct_code").val("");
                         $("#nombre_entidad").val("");
                         $("#nombre_contacto").val("");
+                        $("#id_tipo_documento").val("");
                         $("#apellido1").val("");
                         $("#apellido2").val("");
                         $("#telefono1").val("");

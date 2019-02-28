@@ -267,11 +267,11 @@
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="2">MasterCard</label>
-                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta2" id="tipo_tarjeta2" value="masterCard">                                            
+                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta" id="tipo_tarjeta2" value="masterCard">                                            
                                     </div>
                                     <div class="form-check">
                                         <label class="fm-check-label" for="3">American Express</label>
-                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta3" id="tipo_tarjeta3" value="American Exrpress">
+                                        <input class="form-check-input inline-block" type="radio" name="tipo_tarjeta" id="tipo_tarjeta3" value="American Exrpress">
                                     </div>
                                 </div>
                             </div>                        
