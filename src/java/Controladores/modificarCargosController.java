@@ -31,7 +31,7 @@ public class modificarCargosController {
     public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("modificarCargosView");
 
-        return mv;
+        return mv; 
     }
 
     @RequestMapping("/modificarCargosController/addResources.htm")
