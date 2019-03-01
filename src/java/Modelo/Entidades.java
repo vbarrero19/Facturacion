@@ -33,6 +33,7 @@ public class Entidades {
     private String activado;
     private String id_direccion;
     
+    
     //Creamos constructor vacío.
     public Entidades(){
     
@@ -67,34 +68,36 @@ public class Entidades {
 //        this.nombre_contacto = nombre_contacto;
 //    }
     
-    
-
-  // CONSTRUCTOR PARA MOSTRAR LOS DATOS DE LAS ENTIDADES EN CARGOSVIEW
-    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto) {
-        this.id_entidad = id_entidad;
-        this.distinct_code = distinct_code;
-        this.nombre_entidad = nombre_entidad;
-        this.nombre_contacto = nombre_contacto;
-    }
-    
-    
     //CONSTRUCTOR PARA MOSTRAR EL COMBO EN VERFACTURAS
     public Entidades(String id_entidad, String distinct_code) {
         this.id_entidad = id_entidad;
         this.distinct_code = distinct_code;
     }   
-    
-    
-    
-    //CONSTRUCTOR PARA MOSTRAR EL COMBO DE ENTIDADES DENTRO DE LA PESTAÑA DIRECCION EN ALTA ENTIDADES.
+
+     //CONSTRUCTOR PARA MOSTRAR EL COMBO DE ENTIDADES DENTRO DE LA PESTAÑA DIRECCION EN ALTA ENTIDADES.
      public Entidades(String id_entidad, String distinct_code, String nombre_entidad) {
         this.id_entidad = id_entidad;
         this.distinct_code = distinct_code;
         this.nombre_entidad = nombre_entidad;
     }
      
+  // CONSTRUCTOR PARA MOSTRAR LOS DATOS DE LAS ENTIDADES EN CARGOSVIEW
+    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto) {
+        this.id_entidad = id_entidad;
+        this.distinct_code = distinct_code;
+        this.nombre_entidad = nombre_entidad;
+        this.nombre_contacto = nombre_contacto;       
+    }
+
+       
+    
+    
+    
+    
+    
+   
      //CONSTRUCTOR PARA MOSTRAR LOS DATOS DE LA ENTIDAD EN MODIFICAR ENTIDAD.
-    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto, String apellido1, String apellido2, String telefono1, String telefono2, String fax, String mail1, String mail2cc) {
+    public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto, String apellido1, String apellido2, String telefono1, String telefono2, String fax, String mail1, String mail2cc, String numero_documento) {
         this.id_entidad = id_entidad;
         this.distinct_code = distinct_code;
         this.nombre_entidad = nombre_entidad;
@@ -106,6 +109,7 @@ public class Entidades {
         this.fax = fax;
         this.mail1 = mail1;
         this.mail2cc = mail2cc;
+        this.numero_documento = numero_documento;
     }
      
      

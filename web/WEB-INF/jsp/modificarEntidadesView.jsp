@@ -109,6 +109,7 @@
                             $("#distinct_code").val(entidad.distinct_code );
                             $("#nombre_entidad").val(entidad.nombre_entidad);
                             $("#id_tipo_documento").val(entidad.id_tipo_documento);
+                            $("#numero_documento").val(entidad.numero_documento);
                             $("#nombre_contacto").val(entidad.nombre_contacto);
                             $("#apellido1").val(entidad.apellido1);
                             $("#apellido2").val(entidad.apellido2);
@@ -127,6 +128,7 @@
                         $("#nombre_entidad").val("");
                         $("#nombre_contacto").val("");
                         $("#id_tipo_documento").val("");
+                        $("#numero_documento").val("");
                         $("#apellido1").val("");
                         $("#apellido2").val("");
                         $("#telefono1").val("");
@@ -187,7 +189,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Numero identificador" required>
+                                    <input type="text" class="form-control" id="numero_documento" name="numero_documento" placeholder="Numero documento" required>
                                 </div>
                             </div>
 

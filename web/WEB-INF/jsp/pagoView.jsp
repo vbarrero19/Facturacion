@@ -53,12 +53,12 @@
                 myObj["cuenta_paypal"] = $("#cuenta_paypal").val().trim();
                 myObj["correo_paypal"] = $("#correo_paypal").val().trim();
                 myObj["cheque"] = $("#cheque").val().trim();
-                myObj["nombre_banco"] = $("#nombre_banco").val().trim();                
+                myObj["nombre_banco"] = $("#nombre_banco").val().trim();
                 myObj["direccion_banco"] = $("#direccion_banco").val().trim();
                 myObj["localidad"] = $("#localidad").val().trim();
-                myObj["pais"] = $("#pais").val().trim();                
+                myObj["pais"] = $("#pais").val().trim();
                 myObj["por_defecto"] = $("#por_defecto").val().trim();
-                
+
                 //COGEMOS EL VALOR DEL COMBO (ID_ENTIDAD)
                 var idEnt = $("#comboEntidad").val();
 
@@ -78,16 +78,16 @@
                         console.log(thrownError);
                     }
                 });
-                     resetear();
+                resetear();
             });
-            
-            
-              /*FUNCION PARA LIMPIAR TODOS LOS CAMPOS DEL FORMULARIO TRAS DARLE CLICK AL BOTON ALTA */
-            function resetear(){
-		document.forms['formulario'].reset();
-		}
-                
-            
+
+
+            /*FUNCION PARA LIMPIAR TODOS LOS CAMPOS DEL FORMULARIO TRAS DARLE CLICK AL BOTON ALTA */
+            function resetear() {
+                document.forms['formulario'].reset();
+            }
+
+
 
             $("#comboEntidad").change(function () {
                 //Si la opcion seleccionada es diferente a Seleccionar se muestran datos
@@ -275,7 +275,7 @@
                                     </div>
                                 </div>
                             </div>                        
-                            
+
                             <div class="form-group col-xs-4">
                                 <label for="idCliente>">Codigo csc</label>
                                 <input type="text" class="form-control" id="codigo_csc" name="codigo_csc" placeholder="cod_csc" required>
@@ -302,7 +302,7 @@
                                 <input type="text" class="form-control" id="cheque" name="cheque" placeholder="cheque" required>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="form-group col-xs-6">
                                 <label for="idCliente>">Nombre banco</label>
@@ -313,7 +313,7 @@
                                 <input type="text" class="form-control" id="direccion_banco" name="direccion_banco" placeholder="direccion banco" required>
                             </div>
                         </div> 
-                        
+
                         <div class="form-group">
                             <div class="form-group col-xs-6">
                                 <label for="idCliente>">Localidad</label>
@@ -324,7 +324,7 @@
                                 <input type="text" class="form-control" id="pais" name="pais" placeholder="Pais" required>
                             </div>
                         </div>
-                        
+
 
                         <div class="form-group">
                             <div class="form-group col-xs-12">
@@ -349,9 +349,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <button type="button" id="guardarPago" name="guardarPago" class="btn btn-primary pull-right">Alta método pago</button>
-                        <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>  
+                        <div class="form-group col-xs-12">
+                            <button type="button" id="guardarPago" name="guardarPago" class="btn btn-primary pull-right">Alta método pago</button>
+                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>  
+                        </div>
                     </form>
                 </div>
             </div>
