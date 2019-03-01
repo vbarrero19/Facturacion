@@ -74,7 +74,15 @@ public class verEntidadesController {
                 arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
             }
             resp = new Gson().toJson(arrayTipo);
+            /**
+             * ******CONSULTA QUE RECOGE LOS DNI DE LAS ENTIDADES ACTIVAS**********************
+             */
 
+            resp = new Gson().toJson(arrayTipo);
+
+            /**
+             * **************************
+             */
         } catch (SQLException ex) {
             resp = "Incorrecto"; // ex.getMessage();
             StringWriter errors = new StringWriter();
@@ -104,7 +112,6 @@ public class verEntidadesController {
             }
         }
 
-
         return resp;
     }
 
@@ -127,11 +134,24 @@ public class verEntidadesController {
         ArrayList<String> arrayEntidad = new ArrayList<>();
 
         try {
+//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+//            con = pool_local.getConnection();
+//
+//            stAux = con.prepareStatement("SELECT id_entidad, distinct_code, nombre_entidad, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc"
+//                    + " FROM entidad where id_entidad = ?");
+//
+//            stAux.setInt(1, idEnt);
+//            rs = stAux.executeQuery();
+
+            /**
+             * ************** INNER JOIN PARA MOSTRAR NUMERO_DOCUMENTO ***************
+             */
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT id_entidad, distinct_code, nombre_entidad, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc"
-                    + " FROM entidad where id_entidad = ?");
+            stAux = con.prepareStatement("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto, e.apellido1, e.apellido2, e.telefono1, e.telefono2, e.fax, e.mail1,"
+                    + "e.mail2cc, d.numero_documento from entidad e inner join entidad_documento ed on e.id_entidad = ed.id_entidad inner join documento d on ed.id_documento = d.id_documento where e.activado = 'TRUE' and e.id_entidad = ?"
+                    + "order by distinct_code");
 
             stAux.setInt(1, idEnt);
             rs = stAux.executeQuery();
@@ -142,8 +162,12 @@ public class verEntidadesController {
             while (rs.next()) {
 
                 arrayEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
-                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12))));
             }
+
+            /**
+             * *****************************
+             */
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayEntidad);
 

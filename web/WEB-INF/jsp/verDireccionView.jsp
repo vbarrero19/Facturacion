@@ -132,12 +132,12 @@ function cargarDirecciones() {
 
         }
 
-        //funcion ventana emergente que sale al abrirse
-        function eliminar(idElim) {
-
-            $("#eliminar").text("Eliminar metodo de pago");
-        }
-        ;
+//        //funcion ventana emergente que sale al abrirse
+//        function eliminar(idElim) {
+//
+//            $("#eliminar").text("Eliminar metodo de pago");
+//        }
+//        ;
         
         
 
