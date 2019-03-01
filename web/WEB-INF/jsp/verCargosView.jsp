@@ -9,6 +9,17 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
+        <style>
+            .container {
+                width: 1400px;
+            }
+            #tableContainer{
+                overflow:scroll;
+                overflow-x: hidden;
+                height:400px;                
+            }
+
+        </style>
         <title>VER CARGOS</title> 
     </head>
     <script>
@@ -156,16 +167,26 @@
                         //Cada objeto esta en String 
                         var cargo = JSON.parse(valor);
                         /*en las fechas, quitamos la hora con substring*/
+
+
+                        //var tot = cargo.total;
+
+                        var impdec = parseFloat(Math.round(cargo.importe * 100) / 100).toFixed(2);
+                        var iptdec = parseFloat(Math.round(cargo.valor_impuesto * 100) / 100).toFixed(2);
+                        var totdec = parseFloat(Math.round(cargo.total * 100) / 100).toFixed(2);
+
+                        //cargo.total
+
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
                                                                     <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
                                                                     <td>" + cargo.id_tipo_item + "</td>         \n\
                                                                     <td class='hidden' id='descrip" + (indice + 1) + "'>" + cargo.descripcion + "</td>         \n\
                                                                     <td>" + cargo.cuenta + "</td>         \n\
-                                                                    <td>" + cargo.importe + "</td>         \n\
+                                                                    <td>" + impdec + "</td>         \n\
                                                                     <td>" + cargo.cantidad + "</td>         \n\
-                                                                    <td>" + cargo.valor_impuesto + "</td>         \n\
-                                                                    <td>" + cargo.total + '€' + "</td>         \n\
+                                                                    <td>" + iptdec + "</td>         \n\
+                                                                    <td>" + totdec + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
@@ -196,7 +217,7 @@
                             $("#idFilaHide").val($(this).attr("data-idIndice"));
 
                             /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreviatura*/
-                            $("#eliminar").text($("#abrev" + $(this).attr("data-idindice")).text());                            
+                            $("#eliminar").text($("#abrev" + $(this).attr("data-idindice")).text());
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModalEliminar").modal();
@@ -297,7 +318,7 @@
                                                 <th scope="col">Tipo Item</th>
                                                 <th scope="col">Cuenta</th>
                                                 <th scope="col">Importe</th>
-                                                <th scope="col">Cantidad</th>
+                                                <th scope="col">Cant.</th>
                                                 <th scope="col">Impuestos</th>
                                                 <th scope="col">Total</th>                                                
                                                 <th scope="col">F. Cargo</th>

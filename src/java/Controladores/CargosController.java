@@ -72,29 +72,24 @@ public class CargosController {
             stAux.setInt(4, identificador); //Guardamos el indentificador
             stAux.setString(5, cargos.getCuenta());
 
-            /**
-             * *********************
-             */
+            //Quitamos decimales al importe
             Double importe = Double.parseDouble(cargos.getImporte());
             Double importeDecimales = Math.round(importe * 100d) / 100d;
             stAux.setDouble(6, importeDecimales);
 
+            //Quitamos decimales a la cantidad
             Double cantidad = Double.parseDouble(cargos.getCantidad());
             Double cantidadDecimales = Math.round(cantidad * 100d) / 100d;
             stAux.setDouble(7, cantidadDecimales);
-
+            
+            stAux.setInt(8, Integer.parseInt(cargos.getImpuesto()));
+            
+            //Quitamos decimales al total
             Double total = Double.parseDouble(cargos.getTotal());
             Double totalDecimales = Math.round(total * 100d) / 100d;
             stAux.setDouble(9, totalDecimales);
 
-            /**
-             * ******************************
-             */
-            //stAux.setDouble(6, Double.parseDouble(cargos.getImporte()));
-            //stAux.setDouble(7, Double.parseDouble(cargos.getCantidad()));
-            stAux.setInt(8, Integer.parseInt(cargos.getImpuesto()));
-            //stAux.setDouble(9, Double.parseDouble(cargos.getTotal()));
-
+            
             String test = cargos.getFecha_cargo();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(test);
@@ -115,11 +110,10 @@ public class CargosController {
             stAux.setInt(14, Integer.parseInt(cargos.getId_cliente()));
             stAux.setInt(15, Integer.parseInt(cargos.getId_empresa()));
 
+            //Quitamos decimales al valor_impuesto
             Double valor = Double.parseDouble(cargos.getValor_impuesto());
             Double valorDecimales = Math.round(valor * 100d) / 100d;
             stAux.setDouble(16, valorDecimales);
-
-            //stAux.setDouble(16, Double.parseDouble(cargos.getValor_impuesto()));
 
             stAux.executeUpdate();
 

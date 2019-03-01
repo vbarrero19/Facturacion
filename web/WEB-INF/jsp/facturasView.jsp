@@ -82,7 +82,7 @@
                                 //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
                                 $('#tableContainer tbody').empty();
                                 aux.forEach(function (valor, indice) {
-                                    //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                                    //Cada objeto esta en String y lo pasmoa a resource
                                     var resource = JSON.parse(valor);
 
                                     idCargo = resource.col1;

@@ -12,7 +12,7 @@
         <style>
 
             .container {
-                width: 1170px;
+                width: 1200px;
             }
             .azul{
                 color:blue;
@@ -712,16 +712,27 @@
             cantidad = $("#cantidad").val().trim();
             subtotal = importe * cantidad;
             total = $("#total").val();
-
+            
+            //Quitamos decimales total sin impuestos
+            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2); 
+            //Quitamos decimales al valorImpuestos
+            var valImp = parseFloat(Math.round((subTot * valorImp / 100) * 100) / 100).toFixed(2);
+            //Calculamos el total con impuestos
+            var valTot = (subtotal * valorImp / 100) + subtotal;            
+            //Quitamos decimales al total con impuestos
+            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);         
+            
             if (tipoImp == 0) {
                 $("#valorImpuesto").val(0);
-                $("#total").val(importe * cantidad);
+                $("#total").val(subTot);
+                //$("#total").val(importe * cantidad);
             } else {
-                $("#valorImpuesto").val(subtotal * valorImp / 100);
-                $("#total").val((subtotal * valorImp / 100) + subtotal);
+                $("#valorImpuesto").val(valImp);
+                $("#total").val(valTotImp);                
+                //$("#valorImpuesto").val(subtotal * valorImp / 100);
+                //$("#total").val((subtotal * valorImp / 100) + subtotal);
             }
-
-
+            
         }
         ;
 

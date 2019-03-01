@@ -77,8 +77,7 @@
 //                myObj["id_item"] = "1"; //$("#id_cargo").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").text();
                 myObj["descripcion"] = $("#descripcion").text();
-
-                myObj["id_tipo_item"] = "1"; //$("#id_tipo_item").val().trim();
+                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();                
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
@@ -87,7 +86,6 @@
                 //Codigo para introducir el tipo de impuesto
                 //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
                 tipoImpuesto = $("#comboTipoImpuesto").val();
-
                 //separamos el id y el valor
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
@@ -366,12 +364,24 @@
             subtotal = importe * cantidad;
             total = $("#total").val();
 
+            //Quitamos decimales total sin impuestos
+            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2); 
+            //Quitamos decimales al valorImpuestos
+            var valImp = parseFloat(Math.round((subTot * valorImp / 100) * 100) / 100).toFixed(2);
+            //Calculamos el total con impuestos
+            var valTot = (subtotal * valorImp / 100) + subtotal;            
+            //Quitamos decimales al total con impuestos
+            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);         
+            
             if (tipoImp == 0) {
                 $("#valorImpuesto").val(0);
-                $("#total").val(importe * cantidad);
+                $("#total").val(subTot);
+                //$("#total").val(importe * cantidad);
             } else {
-                $("#valorImpuesto").val(subtotal * valorImp / 100);
-                $("#total").val((subtotal * valorImp / 100) + subtotal);
+                $("#valorImpuesto").val(valImp);
+                $("#total").val(valTotImp);                
+                //$("#valorImpuesto").val(subtotal * valorImp / 100);
+                //$("#total").val((subtotal * valorImp / 100) + subtotal);
             }
         }
         ;
