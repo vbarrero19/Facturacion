@@ -48,11 +48,19 @@ public class CargosController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
+        
         String resp = "correcto";
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
+            
+            //Codigo para sacar el id_tipo_item. Nos llega el texto con el tipo y sacamos el identificador
+            String tipo = cargos.getId_tipo_item();
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select id_tipo_item from tipo_item where item = '" + tipo + "'");
+            rs.next();
+            int identificador= rs.getInt(1);
 
             stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
                     + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto)"
@@ -60,8 +68,8 @@ public class CargosController {
 
             stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
             stAux.setString(2, cargos.getAbreviatura());
-            stAux.setString(3, cargos.getDescripcion());
-            stAux.setInt(4, 1); //Integer.parseInt(cargos.getId_tipo_item())); //Hacer una select para saber el id del tipo???
+            stAux.setString(3, cargos.getDescripcion());            
+            stAux.setInt(4, identificador); //Guardamos el indentificador
             stAux.setString(5, cargos.getCuenta());
 
             /**
