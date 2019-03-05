@@ -17,6 +17,7 @@ public class Resource  {
     private String col11; 
     private String col12; 
     private String col13; 
+    private String col14; 
 
     public Resource() {
        
@@ -104,6 +105,23 @@ public class Resource  {
         this.col11 = col11;
         this.col12 = col12;
         this.col13 = col13;
+    }
+
+    public Resource(String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8, String col9, String col10, String col11, String col12, String col13, String col14) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+        this.col5 = col5;
+        this.col6 = col6;
+        this.col7 = col7;
+        this.col8 = col8;
+        this.col9 = col9;
+        this.col10 = col10;
+        this.col11 = col11;
+        this.col12 = col12;
+        this.col13 = col13;
+        this.col14 = col14;
     }
 
 
@@ -194,6 +212,30 @@ public class Resource  {
 
     public void setCol11(String col11) {
         this.col11 = col11;
+    }
+
+    public String getCol12() {
+        return col12;
+    }
+
+    public void setCol12(String col12) {
+        this.col12 = col12;
+    }
+
+    public String getCol13() {
+        return col13;
+    }
+
+    public void setCol13(String col13) {
+        this.col13 = col13;
+    }
+
+    public String getCol14() {
+        return col14;
+    }
+
+    public void setCol14(String col14) {
+        this.col14 = col14;
     }
 
     

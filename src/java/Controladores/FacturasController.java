@@ -46,6 +46,7 @@ public class FacturasController {
         return null;
     }
 
+    //Se usa para generar una factura
     @RequestMapping("/facturasController/nuevaFactura.htm")
     @ResponseBody
     public String nuevaFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -148,7 +149,7 @@ public class FacturasController {
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.valor_impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad, "
-                    + "e.nombre_contacto FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and e.id_entidad = ? and id_factura = 0 order by id_cargo");
+                    + "e.nombre_contacto, c.fecha_cargo, c.fecha_vencimiento, c.descripcion FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and e.id_entidad = ? and id_factura = 0 order by id_cargo");
 
             stAux.setInt(1, Integer.parseInt(resource.getCol1()));
             //Ejecutamos                 
@@ -156,7 +157,7 @@ public class FacturasController {
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
-                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14))));
 
                 arrayCargos.add(rs.getString(1));
             }
@@ -244,12 +245,12 @@ public class FacturasController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto \n"
-                    + "FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and c.id_cargo in(" + cadenaNew + ") order by id_cargo");
+            rs = sentencia.executeQuery("SELECT c.id_cargo, c.abreviatura, c.cuenta, c.importe, c.cantidad, c.valor_impuesto, c.total, e.id_entidad, e.distinct_code, e.nombre_entidad,"
+                    + " e.nombre_contacto, c.fecha_cargo, c.fecha_vencimiento, c.descripcion FROM cargos c inner join entidad e on c.id_cliente = e.id_entidad and c.id_cargo in(" + cadenaNew + ") order by id_cargo");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
-                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11))));
+                        rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14))));
             }
 
             resp = new Gson().toJson(arrayTipo);

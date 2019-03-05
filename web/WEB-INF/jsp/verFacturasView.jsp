@@ -22,28 +22,28 @@
             /*********************************  *******************************/
             /*LO PONEMOS DENTRO DEL READY PORQUE TIENE QUE INICARSE AL CARGAR LA PAGINA*/
 
-            var modalConfirm = function (callback) {
-
-                $("#modal-btn-si").on("click", function () {
-                    callback(true);
-                    $("#mi-modal").modal('hide');
-                });
-
-                $("#modal-btn-no").on("click", function () {
-                    callback(false);
-                    $("#mi-modal").modal('hide');
-                });
-            };
-
-            modalConfirm(function (confirm) {
-                if (confirm) {
-                    //Acciones si el usuario confirma
-                    $("#result").html("CONFIRMADO");
-                } else {
-                    //Acciones si el usuario no confirma
-                    $("#result").html("NO CONFIRMADO");
-                }
-            });
+//            var modalConfirm = function (callback) {
+//
+//                $("#modal-btn-si").on("click", function () {
+//                    callback(true);
+//                    $("#mi-modal").modal('hide');
+//                });
+//
+//                $("#modal-btn-no").on("click", function () {
+//                    callback(false);
+//                    $("#mi-modal").modal('hide');
+//                });
+//            };
+//
+//            modalConfirm(function (confirm) {
+//                if (confirm) {
+//                    //Acciones si el usuario confirma
+//                    $("#result").html("CONFIRMADO");
+//                } else {
+//                    //Acciones si el usuario no confirma
+//                    $("#result").html("NO CONFIRMADO");
+//                }
+//            });
 
             /*************************************    ************************************/
 
@@ -233,8 +233,9 @@
                                                                     <td>" + factura.fecha_emision.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td>" + factura.total_factura + '€' + "</td>         \n\
+                                                                    <td>" + factura.id_estado + "</td>         \n\
                                                                     <td><a class='btn btn-primary' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ factura.id_factura +
-                                                                    "&idCliente="+factura.id_cliente+"&idEmpresa="+factura.id_empresa+"'>Detalle</a>\n\</td> \n\\n\
+                                                                    "&idCliente="+factura.id_cliente+"&idEmpresa="+factura.id_empresa+"&idEstado="+factura.id_estado+"'>Detalle</a>\n\</td> \n\\n\
                         < /tr>");
                     });
 
@@ -308,6 +309,7 @@
                                                 <th scope="col">FechaCargo</th>
                                                 <th scope="col">FechaVencimiento</th>
                                                 <th scope="col">Total</th>
+                                                <th scope="col">Estado</th>
                                             </tr>                                            
                                         </thead>
 
