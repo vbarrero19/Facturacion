@@ -407,7 +407,7 @@ public class CargosController {
 
             Statement sentencia = con.createStatement();
             //Podemos llevar solo los dos primeros campos
-            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo FROM items ORDER BY abreviatura");
+            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, estado FROM items ORDER BY abreviatura");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
@@ -464,7 +464,7 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT i.id_item, i.abreviatura, i.descripcion, t.item, i.cuenta, i.importe, i.periodo FROM items i\n"
+            stAux = con.prepareStatement("SELECT i.id_item, i.abreviatura, i.descripcion, t.item, i.cuenta, i.importe, i.estado FROM items i\n"
                     + "inner join tipo_item t on i.id_tipo_item = t.id_tipo_item WHERE id_item =  ?");
 
             stAux.setInt(1, Integer.parseInt(items.getId_item()));

@@ -68,7 +68,8 @@
                 myObj["importe"] = $("#importe").val().trim();
 
                 //Cogemos el valor del radio seleccionado y lo guardamos en periodo
-                myObj["periodo"] = $(".form-check input:checked").val();
+                //myObj["periodo"] = $(".form-check input:checked").val();
+                myObj["estado"] = "0";
 
                 //Convertimos la variable myObj a String
                 var json = JSON.stringify(myObj);

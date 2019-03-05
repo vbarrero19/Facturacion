@@ -330,7 +330,7 @@
                                 $("#id_tipo_item").val(aux2.id_tipo_item);
                                 $("#cuenta").val(aux2.cuenta);
                                 $("#importe").val(aux2.importe);
-                                $("#periodo").val(aux2.periodo);
+                                $("#estado").val(aux2.estado);
                                 //Cargamos en el total el importe ya que de inicio tenemos: cantidad = 1, impuesto = 0
                                 $("#total").val(aux2.importe);
                                 //$("#comboTipoImpuesto").val("0,0");
@@ -356,7 +356,7 @@
                     $("#id_tipo_item").val("");
                     $("#cuenta").val("");
                     $("#importe").val("");
-                    $("#periodo").val("");
+                    $("#estado").val("");
                     document.getElementById("comboTipoImpuesto").disabled = true;
                     document.getElementById("comboTipoImpuesto").value = "0,0";
                 }

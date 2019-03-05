@@ -16,7 +16,8 @@
             #tableContainer{
                 overflow:scroll;
                 overflow-x: hidden;
-                height:400px;                
+                height:400px;    
+                margin-bottom: 25px;
             }
 
         </style>

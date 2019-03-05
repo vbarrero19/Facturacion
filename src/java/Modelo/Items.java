@@ -10,28 +10,20 @@ public class Items  {
     private String id_tipo_item;
     private String cuenta;
     private String importe;
-    private String periodo;
+    private String estado;
 
     public Items() {
     }
 
-//    public Items(String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String periodo) {        
-//        this.abreviatura = abreviatura;
-//        this.descripcion = descripcion;
-//        this.id_tipo_item = id_tipo_item;
-//        this.cuenta = cuenta;
-//        this.importe = importe;
-//        this.periodo = periodo;
-//    }
 
-    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String periodo) {
+    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String estado) {
         this.id_item = id_item;
         this.abreviatura = abreviatura;
         this.descripcion = descripcion;
         this.id_tipo_item = id_tipo_item;
         this.cuenta = cuenta;
         this.importe = importe;
-        this.periodo = periodo;
+        this.estado = estado;
     }
     
     
@@ -86,12 +78,12 @@ public class Items  {
         this.importe = importe;
     }
 
-    public String getPeriodo() {
-        return periodo;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setPeriodo(String periodo) {
-        this.periodo = periodo;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     

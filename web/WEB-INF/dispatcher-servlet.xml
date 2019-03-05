@@ -44,6 +44,8 @@
     <bean class="Controladores.MenuController" id="menu"/>
     
     <bean class="Controladores.ItemsController" id="items"/>
+    <bean class="Controladores.verItemsController" id="verItems"/> 
+    <!--<bean class="Controladores.modificarItemsController" id="modificarItems"/>-->    
     
     <bean class="Controladores.EntidadesController" id="entidades"/>
     <bean class="Controladores.verEntidadesController" id="verEntidades"/>
@@ -71,8 +73,11 @@
             <props>
                 <prop key="index.htm">indexController</prop>
                 <prop key="userform.htm">homepage</prop>
-                <prop key="customerView.htm">customerctrl</prop>       
+                <prop key="customerView.htm">customerctrl</prop> 
+                      
                 <prop key="itemsView.htm">items</prop>  
+                <prop key="verItemsView.htm">verItems</prop> 
+                <!--<prop key="modificarItemsView.htm">modificarItems</prop>--> 
                 
                 <prop key="entidadesView.htm">entidades</prop>   
                 <prop key="modificarEntidadesView.htm">verEntidades</prop>            
@@ -86,7 +91,7 @@
                 <prop key="verDetalleFacturaView.htm">verFacturas</prop> 
                 <prop key="verFacturasView.htm">verFacturas</prop>   
                  
-                <prop key="verCargosView.htm">verCargos</prop> 
+                <!--<prop key="verCargosView.htm">verCargos</prop>--> 
                                               
                 <prop key="direccionView.htm">direccion</prop>                
                 <prop key="modificarDireccionView.htm">verDireccion</prop>

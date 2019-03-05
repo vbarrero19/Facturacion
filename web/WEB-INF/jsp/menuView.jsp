@@ -45,25 +45,40 @@
                                         <li class="mEntidad"><a href="<c:url value='/entidadesController/start.htm'/>">Entidad</a></li>
                                         <li class="mEntidad"><a href="<c:url value='/direccionController/start.htm'/>">Direccion</a></li>
                                         <li class="mEntidad"><a href="<c:url value='/pagoController/start.htm'/>">Pago</a></li>
-                                        
+
                                         <li class="mEntidad">VER/EDITAR</li>
                                         <li class="mEntidad"><a href="<c:url value='/verEntidadesController/start.htm'/>">Entidad</a></li>
                                         <li class="mEntidad"><a href="<c:url value='/verDireccionController/start.htm'/>">Direccion</a></li>
                                         <li class="mEntidad"><a href="<c:url value='/verPagoController/start.htm'/>">Pago</a></li>
-                                        
+
                                     </ul>
                                 </div>
                                 <!-- Fin del menu de entidades -->
                             </div> 
 
+
                             <div class="divName ">
-                                <a href="<c:url value='/itemsController/start.htm'/>" class="btn btn-info" role="button">Items</a>
-                            </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Items
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu btn btn-info" role="button">
+                                        <!--meter href la direccion del controlador que realiza las acciones -->                                        
+                                        <li class="mEntidad"><a href="<c:url value='/itemsController/start.htm'/>">Alta Item</a></li>
+                                        <li class="mEntidad"><a href="<c:url value='/verItemsController/start.htm'/>">Editar Item</a></li>
+                                        <li class="mEntidad"><a href="">Disponible</a></li>                                       
+
+                                    </ul>
+                                </div>
+                                <!-- Fin del menu de entidades -->
+                            </div>             
+
+
+
 
                             <div class="divName">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
                             </div> 
-                            
+
                             <div class="divName">
                                 <a href="<c:url value='/verCargosController/start.htm'/>" class="btn btn-info" role="button">Ver Cargos</a>
                             </div>
@@ -71,7 +86,7 @@
                             <div class="divName ">
                                 <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Facturas</a>
                             </div>
-                            
+
                             <div class="divName ">
                                 <a href="<c:url value='/verFacturasController/start.htm'/>" class="btn btn-info" role="button">Ver facturas</a>
                             </div>
