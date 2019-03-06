@@ -117,8 +117,7 @@
                             $("#telefono2").val(entidad.telefono2);
                             $("#fax").val(entidad.fax);
                             $("#mail1").val(entidad.mail1);
-                            $("#mail2cc").val(entidad.mail2cc);
-                            
+                            $("#mail2cc").val(entidad.mail2cc);                            
                         });
 
                     } else {
@@ -135,8 +134,7 @@
                         $("#telefono2").val("");
                         $("#fax").val("");
                         $("#mail1").val("");
-                        $("#mail2cc").val("");
-                        
+                        $("#mail2cc").val("");                        
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

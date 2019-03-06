@@ -165,11 +165,31 @@ public class verEntidadesController {
                         rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12))));
             }
 
-            /**
-             * *****************************
-             */
-            /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
-            resp = new Gson().toJson(arrayEntidad);
+/***********
+consulta que muestra todos los datos con los combos donde id_entidad = ? 
+
+
+select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto, e.apellido1, e.apellido2, e.telefono1, e.telefono2, e.fax, e.mail1,
+e.mail2cc, d.numero_documento, td.documento, te.tipo_entidad, tde.dedicacion
+from entidad e inner join entidad_documento ed on e.id_entidad = ed.id_entidad inner join documento d on ed.id_documento = d.id_documento 
+inner join tipo_documento td
+on d.id_tipo_documento = td.id_tipo_documento
+inner join entidad_tipo_entidad ete
+on e.id_entidad = ete.id_entidad
+inner join tipo_entidad te
+on ete.id_tipo_entidad = te.id_tipo_entidad
+inner join tipo_dedicacion tde
+on tde.id_dedicacion = e.id_dedicacion
+where e.activado = 'TRUE' and e.id_entidad = ?
+order by distinct_code
+
+* 
+* 
+* 
+* EN LA CONSULTA SE DUPLICAN DATOS SI METEMOS DOS TIPOSD E DOCUMENTO O DOS TIPOS DE ENTIDAD....ETC
+
+**************/         
+            
 
         } catch (SQLException ex) {
             resp = "incorrecto SQL"; //

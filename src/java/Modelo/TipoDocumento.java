@@ -24,6 +24,12 @@ public class TipoDocumento {
         this.documento = documento;
     }
 
+    public TipoDocumento(String documento) {
+        this.documento = documento;
+    }
+    
+    
+
 //GETTERS Y SETTERS
     public String getId_documento() {
         return id_tipo_documento;
