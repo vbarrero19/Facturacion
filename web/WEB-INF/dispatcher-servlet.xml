@@ -46,7 +46,7 @@
     <bean class="Controladores.ItemsController" id="items"/>
     
     <bean class="Controladores.EntidadesController" id="entidades"/>
-    <bean class="Controladores.verEntidadesController" id="verEntidades"/>
+    <bean class="Controladores.VerEntidadesController" id="verEntidades"/>
     
     <bean class="Controladores.CargosController" id="cargos"/>   
     <bean class="Controladores.verCargosController" id="verCargos"/> 
@@ -56,10 +56,11 @@
     <bean class="Controladores.verFacturasController" id="verFacturas"/>
         
     <bean class="Controladores.DireccionController" id="direccion"/>
-    <bean class="Controladores.verDireccionController" id="verDireccion"/>
+    <bean class="Controladores.VerDireccionController" id="verDireccion"/>
+    <bean class="Controladores.ModificarDireccionController" id="modificarDireccion"/>
     
     <bean class="Controladores.PagoController" id="pago"/>      
-    <bean class="Controladores.verPagoController" id="verPago"/>  
+    <bean class="Controladores.VerPagoController" id="verPago"/>  
     
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="interceptors">
@@ -90,7 +91,7 @@
                                               
                 <prop key="direccionView.htm">direccion</prop>                
                 <prop key="modificarDireccionView.htm">verDireccion</prop>
-                <prop key="verDireccionView.htm">verDireccion</prop>  
+                <prop key="verDireccionView.htm">modificarDireccion</prop>  
                 
                 <prop key="pagoView.htm">pago</prop>                 
                 <prop key="modificarPagoView.htm">verPago</prop>
