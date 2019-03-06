@@ -76,7 +76,19 @@ public class Resource  {
         this.col7 = col7;
         this.col8 = col8;
     }    
-        
+
+    public Resource(String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8, String col9) {
+        this.col1 = col1;
+        this.col2 = col2;
+        this.col3 = col3;
+        this.col4 = col4;
+        this.col5 = col5;
+        this.col6 = col6;
+        this.col7 = col7;
+        this.col8 = col8;
+        this.col9 = col9;
+    }        
+       
     public Resource(String col1, String col2, String col3, String col4, String col5, String col6, String col7, String col8, String col9, String col10, String col11) {
         this.col1 = col1;
         this.col2 = col2;

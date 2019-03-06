@@ -184,7 +184,7 @@ public class verFacturasController {
     @ResponseBody
 //    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
     public String cargarDatosFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Facturas resourceLoad = new Facturas();
+        Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
@@ -200,14 +200,15 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f "
-                    + "inner join entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado WHERE archivada = 0 and id_cliente = ?");
+            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n" +
+                                         "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n" +
+                                         "WHERE archivada = 0 and id_cliente = ?");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9))));
             }
 
             resp = new Gson().toJson(arrayTipo);

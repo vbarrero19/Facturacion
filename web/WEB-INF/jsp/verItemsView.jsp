@@ -67,12 +67,10 @@
                                                                     <td>" + item.id_tipo_item + "</td>       \n\
                                                                     <td>" + item.cuenta + "</td>       \n\
                                                                     <td>" + item.importe + "</td>       \n\
+                                                                    <td><a href='/Facturacion/verItemsController/start.htm' class='btn btn-info' role='button'>Modificar</a></td>       \n\
                                                                     <td class='hidden' id='abreviatura" + indice + "'>" + item.abreviatura + "</td>         \n\
-                                                                    <td><a class='btn btn-danger miBoton' data-idItem='" + item.id_item + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
-\n\
-                                            </tr>");
-
-
+                                                                    <td><a class='btn btn-danger miBoton' data-idItem='" + item.id_item + "' data-idIndice='" + indice + "'> Eliminar </a></td>      \n\
+                                                            </tr>");
 
 
         <%--                                                                 <td class='hidden' id='nombreEnt" + indice + "'>" + entidad.nombre_entidad + "</td>         \n\
@@ -111,7 +109,7 @@
         }
         ;
 
-        function eliminarEntidad() {
+        function eliminarItem() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -127,13 +125,13 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'POST',
-                url: '/Facturacion/entidadesController/eliminarEntidad.htm',
+                url: '/Facturacion/verItemsController/eliminarItem.htm',
                 data: json,
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    $("#tbody-tabla-entidades").children().eq($("#idFilaHide").val()).hide();
-                    alert("ENTIDAD ELIMINADA CORRECTAMETNE");
+                    $("#tbody-tabla-items").children().eq($("#idFilaHide").val()).hide();
+                    alert("ITEM ELIMINADO CORRECTAMETNE");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -145,13 +143,6 @@
         }
 
 
-
-        //funcion ventana emergente
-        function eliminar(idElim) {
-
-            $("#eliminar").text("Eliminar entidad");
-        }
-        ;
     </script>
 
 
@@ -182,7 +173,7 @@
                                         </tr>                                            
                                     </thead>
 
-                                    <tbody id="tbody-tabla-cargos">
+                                    <tbody id="tbody-tabla-items">
 
                                     </tbody>
                                 </table>
@@ -237,7 +228,7 @@
                     </div>
                     <div class="modal-footer">
                         <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarEntidad()">Si</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="eliminarItem()">Si</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
                     </div>
                 </div>

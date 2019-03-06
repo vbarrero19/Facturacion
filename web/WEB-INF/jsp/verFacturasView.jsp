@@ -220,22 +220,22 @@
                     var table = $('#table table-striped').DataTable();
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String 
-                        var factura = JSON.parse(valor);
+                        var aux2 = JSON.parse(valor);
                         /*en las fechas, quitamos la hora con substring*/
 
                         
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td id='id" + (indice + 1) + "'>" + factura.id_factura + "</td>         \n\
-                                                                    <td>" + factura.id_cliente + "</td>         \n\
-                                                                    <td>" + factura.id_empresa + "</td>         \n\
-                                                                    <td>" + factura.fecha_emision.substring(0, 10) + "</td>         \n\
-                                                                    <td>" + factura.fecha_vencimiento.substring(0, 10) + "</td>         \n\
-                                                                    <td>" + factura.total_factura + '€' + "</td>         \n\
-                                                                    <td>" + factura.id_estado + "</td>         \n\
-                                                                    <td><a class='btn btn-primary' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ factura.id_factura +
-                                                                    "&idCliente="+factura.id_cliente+"&idEmpresa="+factura.id_empresa+"&idEstado="+factura.id_estado+"'>Detalle</a>\n\</td> \n\\n\
+                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col1 + "</td>         \n\
+                                                                    <td>" + aux2.col3 + "</td>         \n\
+                                                                    <td>" + aux2.col5 + "</td>         \n\
+                                                                    <td>" + aux2.col7.substring(0, 10) + "</td>         \n\
+                                                                    <td>" + aux2.col8.substring(0, 10) + "</td>         \n\
+                                                                    <td>" + aux2.col6 + '€' + "</td>         \n\
+                                                                    <td>" + aux2.col9 + "</td>         \n\
+                                                                    <td><a class='btn btn-primary' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ aux2.col1 +
+                                                                    "&idCliente="+aux2.col2+"&idEmpresa="+aux2.col4+"&idEstado="+aux2.col9+"'>Detalle</a>\n\</td> \n\\n\
                         < /tr>");
                     });
 

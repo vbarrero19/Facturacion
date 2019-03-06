@@ -162,5 +162,6 @@ public class ItemsController {
         //Devolvemos la variable resp al JSP
         return resp;  
         
-    }
+    }    
+
 }

@@ -34,7 +34,8 @@
             cargarDatosFactura(idFactura,idEstado);
             cargarDatosCargos(idFactura);
 
-            alert(idEstado);
+            //alert(idEmpresa);
+            //alert(idCliente);
 
             $("#archivar").click(function () {
                 archivarFactura(idFactura);

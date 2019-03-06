@@ -26,7 +26,7 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
-            getEntidadEmpresa(); 
+            getEntidadEmpresa();
             getItem();
             getTipoImpuesto();
 
@@ -115,7 +115,7 @@
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
 
-                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
+                myObj["id_tipo_item"] = $("#comboTipo").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
@@ -130,7 +130,7 @@
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
                 var valorImp = arrayDeCadenas[1];
-                
+
                 //Grabamos el tipo de impuesto
                 myObj["impuesto"] = tipoImp;
 
@@ -338,6 +338,7 @@
                                 document.getElementById("comboTipoImpuesto").disabled = false;
                                 document.getElementById("comboTipoImpuesto").value = "0,0";
 
+                                cargarTipoItem(aux2.id_tipo_item);
 
                             });
                         },
@@ -697,6 +698,70 @@
         ;
 
 
+        function cargarTipoItem(idTipoItem) {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/cargarTipoItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+                    //Vaciamos el combo
+                    document.getElementById('comboTipo').options.length = 0;
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var tipoItem = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboTipo');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
+                    //Lo vamos cargando
+                    tipoItem.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var tipoItem2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        
+                        //Comtrolamos el tipo de item que es y lo dejamos seleccionado en el combo
+                        if (idTipoItem == tipoItem2.col1) {                            
+                            //Guardamos el id en el value de cada opcion
+                            opt.value = tipoItem2.col1;
+                            //Guardamos el impuesto en el nombre de cada opcion                        
+                            opt.innerHTML = tipoItem2.col2;
+                            //Dejamos marcada una opcion
+                            opt.selected = true;                           
+                        } else {
+                            //Guardamos el id en el value de cada opcion
+                            opt.value = tipoItem2.col1;
+                            //Guardamos el impuesto en el nombre de cada opcion                        
+                            opt.innerHTML = tipoItem2.col2;
+                        }
+
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+
         function calcularTotal() {
 
             //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
@@ -712,27 +777,27 @@
             cantidad = $("#cantidad").val().trim();
             subtotal = importe * cantidad;
             total = $("#total").val();
-            
+
             //Quitamos decimales total sin impuestos
-            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2); 
+            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
             //Quitamos decimales al valorImpuestos
             var valImp = parseFloat(Math.round((subTot * valorImp / 100) * 100) / 100).toFixed(2);
             //Calculamos el total con impuestos
-            var valTot = (subtotal * valorImp / 100) + subtotal;            
+            var valTot = (subtotal * valorImp / 100) + subtotal;
             //Quitamos decimales al total con impuestos
-            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);         
-            
+            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);
+
             if (tipoImp == 0) {
                 $("#valorImpuesto").val(0);
                 $("#total").val(subTot);
                 //$("#total").val(importe * cantidad);
             } else {
                 $("#valorImpuesto").val(valImp);
-                $("#total").val(valTotImp);                
+                $("#total").val(valTotImp);
                 //$("#valorImpuesto").val(subtotal * valorImp / 100);
                 //$("#total").val((subtotal * valorImp / 100) + subtotal);
             }
-            
+
         }
         ;
 
@@ -823,13 +888,20 @@
                                     <label for="abreviatura>">Abreviatura</label>
                                     <input type="text" class="form-control input-sm" id="abreviatura" name="abreviatura">
                                 </div>
-                                <div class="form-group col-xs-5">
+                                <div class="form-group col-xs-3"> <!--Modificao de 5 a 3-->
                                     <label for="descripcion>">Descripción</label>
                                     <input type="text" class="form-control input-sm" id="descripcion" name="descripcion">
                                 </div>
                                 <div class="form-group col-xs-2">
                                     <label for="id_tipo_item>">Tipo Item</label>
                                     <input type="text" class="form-control input-sm" id="id_tipo_item" name="id_tipo_item">
+                                </div>
+                                <div class="form-group col-xs-2">
+                                    <label for="comboTipo">Tipo de Item</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control input-sm" id="comboTipo" name="comboTipo">
+                                        </select>                                                            
+                                    </div>
                                 </div>
                             </div>
 
@@ -1010,5 +1082,5 @@
         </div>
 
 
-</body> 
+    </body> 
 </html>
