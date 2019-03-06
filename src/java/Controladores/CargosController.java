@@ -588,7 +588,7 @@ public class CargosController {
 
             Statement sentencia = con.createStatement();
 
-            rs = sentencia.executeQuery("SELECT id_tipo_impuesto, impuesto, valor, pais FROM tipo_impuesto ORDER BY impuesto");
+            rs = sentencia.executeQuery("SELECT id_tipo_impuesto, impuesto, valor, pais FROM tipo_impuesto ORDER BY id_tipo_impuesto");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
