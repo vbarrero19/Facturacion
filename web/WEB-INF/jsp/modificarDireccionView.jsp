@@ -108,6 +108,81 @@
                 }
             });
         };
+        
+        /*** FUNCION PARA MODIFICAR LOS DATOS DE LA ENTIDAD EN LA BASE DE DATOS AL DARLE AL BOTON MODIFICAR DIRECCION */
+        
+        $("#modificarDireccion").click(function () {
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+                myObj["tipo_via"] = $("#tipo_via").text();
+
+
+
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/modificarDireccionController/modificarDireccion.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                        //Refrescando la pantalla 
+                        location.reload();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+            });
+        })
+                ;
+        
+        /*************/
+        
+         function getEntidad(idEntidad) {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/modificarDireccionController/getEntidad.htm?idEnt=' + idEntidad, 
+                success: function (data) {
+
+                    var entidad = JSON.parse(data);
+
+                    //Lo vamos cargando
+                    entidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        var entidad2 = JSON.parse(valor);
+
+                        //$("#dis_cod_cli").text(clienteEntidad2.col2)
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
 
         
         
@@ -197,7 +272,7 @@
                                 </div>
 
                             </div> 
-                            <button type="button" id="guardarDireccion" name="guardarDireccion" class="btn btn-primary pull-right">Modificar direccion</button>
+                            <button type="button" id="modificarDireccion" name="modificarDireccion" class="btn btn-primary pull-right">Modificar direccion</button>
 
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
                             <a href="<c:url value='/verDireccionController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
