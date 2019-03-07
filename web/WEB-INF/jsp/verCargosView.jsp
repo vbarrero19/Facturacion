@@ -16,7 +16,8 @@
             #tableContainer{
                 overflow:scroll;
                 overflow-x: hidden;
-                height:400px;                
+                height:400px;    
+                margin-bottom: 25px;
             }
 
         </style>
@@ -166,17 +167,12 @@
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cargo = JSON.parse(valor);
-                        /*en las fechas, quitamos la hora con substring*/
-
-
-                        //var tot = cargo.total;
+                        /*en las fechas, quitamos la hora con substring*/                        
 
                         var impdec = parseFloat(Math.round(cargo.importe * 100) / 100).toFixed(2);
                         var iptdec = parseFloat(Math.round(cargo.valor_impuesto * 100) / 100).toFixed(2);
                         var totdec = parseFloat(Math.round(cargo.total * 100) / 100).toFixed(2);
-
-                        //cargo.total
-
+                        
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
                                                                     <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
@@ -191,11 +187,9 @@
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
                                                                     <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
                                                                     <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "&idTipImp=" + cargo.impuesto + "' class='btn btn-info btn-warning'> Modificar </button></td>\n\
-\n\                                                                 <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
                                                                 </tr>");
                     });
-
-
 
                     $(document).ready(function () {
                         $(".miBoton").click(function () {

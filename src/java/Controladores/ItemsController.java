@@ -57,14 +57,14 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();          
             
-            stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo) VALUES (?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, estado) VALUES (?,?,?,?,?,?)");
             
             stAux.setString(1, item.getAbreviatura());  
             stAux.setString(2, item.getDescripcion());  
             stAux.setInt(3, Integer.parseInt(item.getId_tipo_item())); 
             stAux.setString(4, item.getCuenta());
             stAux.setDouble(5, Double.parseDouble(item.getImporte()));              
-            stAux.setString(6, item.getPeriodo());    
+            stAux.setInt(6, Integer.parseInt(item.getEstado()));     
             
             stAux.executeUpdate();            
             
@@ -162,5 +162,6 @@ public class ItemsController {
         //Devolvemos la variable resp al JSP
         return resp;  
         
-    }
+    }    
+
 }

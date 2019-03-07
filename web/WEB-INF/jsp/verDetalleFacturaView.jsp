@@ -26,14 +26,24 @@
             var idEmpresa = obtenerValorParametro('idEmpresa');
             var idCliente = obtenerValorParametro('idCliente');
             var idFactura = obtenerValorParametro('idFact');
-
+            var idEstado = obtenerValorParametro('idEstado');
+            
             //Funcionae para cargar todos los datos de la factura
             cargarDatosEmpresa(idEmpresa);
             cargarDatosCliente(idCliente);
-            cargarDatosFactura(idFactura);
+            cargarDatosFactura(idFactura,idEstado);
             cargarDatosCargos(idFactura);
 
+            //alert(idEmpresa);
+            //alert(idCliente);
+
+            $("#archivar").click(function () {
+                archivarFactura(idFactura);
+            })
+            ;
+            
         });
+
 
         //Funcion para recuperar el valor de la url. Hay que utilizar dos o mas valores ya que recupera a partir de los &
         function obtenerValorParametro(sParametroNombre) {
@@ -152,7 +162,7 @@
 
 
         //Funcion paracargar los datos del cliente
-        function cargarDatosFactura(idFactura) {
+        function cargarDatosFactura(idFactura,idEstado) {
 
             if (window.XMLHttpRequest) //mozilla
             {
@@ -180,6 +190,7 @@
                             $("#fEmision").text(factura.fecha_emision.substring(0, 10));
                             $("#fVencimiento").text(factura.fecha_vencimiento.substring(0, 10));
                             $("#total").text(factura.total_factura);
+                            $("#estado").text(idEstado);
                         });
 
                     } else {
@@ -200,10 +211,8 @@
         ;
 
 
-
-
         function cargarDatosCargos(idFactura) {
-            
+
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -234,9 +243,9 @@
                             var resource = JSON.parse(valor);
 
                             //Calculamos los importes e impuestos que vamos a mostrar
-                            importe = importe + parseInt(resource.col4)*+ parseInt(resource.col5);
-                            impuestos = impuestos + parseInt(resource.col6);
-                            
+                            importe = importe + parseFloat(resource.col4) * +parseFloat(resource.col5);
+                            impuestos = impuestos + parseFloat(resource.col6);
+
 
                             //cargamos de forma dinamica la tabla
                             $('#tableContainer tbody').append(" <tr>\n\
@@ -272,6 +281,42 @@
             });
         }
         ;
+        
+
+        function archivarFactura(idFactura) {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                /*en la url le pasamos como parametro el identificador de empresa*/
+                url: '/Facturacion/verFacturasController/archivarFactura.htm?factura=' + idFactura,
+                success: function (data) {
+
+                    if (data == "correcto") {    
+                        
+                        
+                        alert("correcto")
+                    } else {
+                        alert("mal")
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
 
     </script>        
 
@@ -330,7 +375,7 @@
 
                                 <div class="datos" class="col-xs-12">
                                     <!--Combo para entidades-->
-                                    <div class="form-group col-xs-3">
+                                    <div class="form-group col-xs-2">
                                         <label for="numeroFactura">Numero Fact: </label>
                                         <label id="numeroFactura" name="numeroFactura" class="azul" ></label>
                                     </div> 
@@ -342,9 +387,13 @@
                                         <label for="fVencimiento">F. Vencimiento: </label>
                                         <label id="fVencimiento" name="fVencimiento" class="azul" ></label>
                                     </div> 
-                                    <div class="form-group col-xs-3">
+                                    <div class="form-group col-xs-2">
                                         <label for="total">Total: </label>
                                         <label id="total" name="total" class="azul" ></label>
+                                    </div> 
+                                    <div class="form-group col-xs-2">
+                                        <label for="estado">Estado: </label>
+                                        <label id="estado" name="estado" class="azul" ></label>
                                     </div> 
                                     <br style="clear:both">
                                 </div>          
@@ -392,8 +441,12 @@
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
                                 <a href="<c:url value='/verFacturasController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
-                        </form>
+                                <!--<a class="btn btn-warning" role="button" href="/verFacturasController/archivarFactura.htm?idFactura = '" + idFactura + "'" >Archivar</a> -->
+                                <input type="button" value="Archivar" class="btn btn-warning" id="archivar" name="archivar">
 
+
+                            </div>
+                        </form>
 
                     </div>
                 </div>

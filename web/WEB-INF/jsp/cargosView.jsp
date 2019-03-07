@@ -26,9 +26,9 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
-            getEntidadEmpresa(); 
+            getEntidadEmpresa();
             getItem();
-            getTipoImpuesto();
+            //getTipoImpuesto();
 
             //Mostramos la fecha actual
             var f = new Date();
@@ -115,7 +115,7 @@
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
 
-                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
+                myObj["id_tipo_item"] = $("#comboTipo").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
@@ -130,7 +130,7 @@
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
                 var valorImp = arrayDeCadenas[1];
-                
+
                 //Grabamos el tipo de impuesto
                 myObj["impuesto"] = tipoImp;
 
@@ -327,10 +327,10 @@
                                 $("#id_item").val(aux2.id_item);
                                 $("#abreviatura").val(aux2.abreviatura);
                                 $("#descripcion").val(aux2.descripcion);
-                                $("#id_tipo_item").val(aux2.id_tipo_item);
+                                //$("#id_tipo_item").val(aux2.id_tipo_item);
                                 $("#cuenta").val(aux2.cuenta);
                                 $("#importe").val(aux2.importe);
-                                $("#periodo").val(aux2.periodo);
+                                $("#estado").val(aux2.estado);
                                 //Cargamos en el total el importe ya que de inicio tenemos: cantidad = 1, impuesto = 0
                                 $("#total").val(aux2.importe);
                                 //$("#comboTipoImpuesto").val("0,0");
@@ -338,6 +338,9 @@
                                 document.getElementById("comboTipoImpuesto").disabled = false;
                                 document.getElementById("comboTipoImpuesto").value = "0,0";
 
+                                //Funcion para cargar los tipos de item en un combo
+                                cargarTipoItem(aux2.id_tipo_item);
+                                getTipoImpuesto()
 
                             });
                         },
@@ -356,7 +359,7 @@
                     $("#id_tipo_item").val("");
                     $("#cuenta").val("");
                     $("#importe").val("");
-                    $("#periodo").val("");
+                    $("#estado").val("");
                     document.getElementById("comboTipoImpuesto").disabled = true;
                     document.getElementById("comboTipoImpuesto").value = "0,0";
                 }
@@ -559,20 +562,21 @@
                 type: 'GET',
                 url: '/Facturacion/cargosController/getTipoImpuesto.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
-
+                    //Vaciamos el combo
+                    document.getElementById('comboTipo').options.length = 0;
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var tipoImpuesto = JSON.parse(data);
                     //Identificamos el combo
                     select = document.getElementById('comboTipoImpuesto');
                     //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = "0,0";
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
+//                    var opt = document.createElement('option');
+//                    opt.value = "0,0";
+//                    opt.innerHTML = "Seleccionar";
+//                    select.appendChild(opt);
 
                     //Lo vamos cargando
                     tipoImpuesto.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        //Cada objeto esta en String y lo pasamos a TipoImpuesto
                         var tipoImpuesto2 = JSON.parse(valor);
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
@@ -580,10 +584,25 @@
                         opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
                         //Guardamos el impuesto en el nombre de cada opcion
                         opt.innerHTML = tipoImpuesto2.impuesto;
+                        
+                        if (tipoImpuesto2.id_tipo_impuesto == 1) {
+                            //Guardamos el valor del impuesto en el value de cada opcion
+                            opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
+                            //Guardamos el impuesto en el nombre de cada opcion
+                            opt.innerHTML = tipoImpuesto2.impuesto;
+                            opt.selected = true;
+                            
+                        } else {
+                            //Guardamos el valor del impuesto en el value de cada opcion
+                            opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
+                            //Guardamos el impuesto en el nombre de cada opcion
+                            opt.innerHTML = tipoImpuesto2.impuesto;
+                        }
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
-                    document.getElementById("comboTipoImpuesto").value = "0,0";
+                    //Si no se modifica el combo el valor es (0,0)
+                    //document.getElementById("comboTipoImpuesto").value = "0,0";
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -696,7 +715,66 @@
         }
         ;
 
+        //Funcion para cargar los tipos de item en un combo
+        function cargarTipoItem(idTipoItem) {
 
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/cargarTipoItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+                    //Vaciamos el combo
+                    document.getElementById('comboTipo').options.length = 0;
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var tipoItem = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboTipo');
+
+                    //Lo vamos cargando
+                    tipoItem.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var tipoItem2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+
+                        //Comtrolamos el tipo de item que es y lo dejamos seleccionado en el combo
+                        if (idTipoItem == tipoItem2.col1) {
+                            //Guardamos el id en el value de cada opcion
+                            opt.value = tipoItem2.col1;
+                            //Guardamos el impuesto en el nombre de cada opcion                        
+                            opt.innerHTML = tipoItem2.col2;
+                            //Dejamos marcada una opcion
+                            opt.selected = true;
+                        } else {
+                            //Guardamos el id en el value de cada opcion
+                            opt.value = tipoItem2.col1;
+                            //Guardamos el impuesto en el nombre de cada opcion                        
+                            opt.innerHTML = tipoItem2.col2;
+                        }
+
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+        //Funcion para los calculos de los importes e impuestos
         function calcularTotal() {
 
             //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
@@ -712,27 +790,27 @@
             cantidad = $("#cantidad").val().trim();
             subtotal = importe * cantidad;
             total = $("#total").val();
-            
+
             //Quitamos decimales total sin impuestos
-            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2); 
+            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
             //Quitamos decimales al valorImpuestos
             var valImp = parseFloat(Math.round((subTot * valorImp / 100) * 100) / 100).toFixed(2);
             //Calculamos el total con impuestos
-            var valTot = (subtotal * valorImp / 100) + subtotal;            
+            var valTot = (subtotal * valorImp / 100) + subtotal;
             //Quitamos decimales al total con impuestos
-            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);         
-            
+            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);
+
             if (tipoImp == 0) {
                 $("#valorImpuesto").val(0);
                 $("#total").val(subTot);
                 //$("#total").val(importe * cantidad);
             } else {
                 $("#valorImpuesto").val(valImp);
-                $("#total").val(valTotImp);                
+                $("#total").val(valTotImp);
                 //$("#valorImpuesto").val(subtotal * valorImp / 100);
                 //$("#total").val((subtotal * valorImp / 100) + subtotal);
             }
-            
+
         }
         ;
 
@@ -828,8 +906,11 @@
                                     <input type="text" class="form-control input-sm" id="descripcion" name="descripcion">
                                 </div>
                                 <div class="form-group col-xs-2">
-                                    <label for="id_tipo_item>">Tipo Item</label>
-                                    <input type="text" class="form-control input-sm" id="id_tipo_item" name="id_tipo_item">
+                                    <label for="comboTipo">Tipo de Item</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control input-sm" id="comboTipo" name="comboTipo">
+                                        </select>                                                            
+                                    </div>
                                 </div>
                             </div>
 
@@ -1010,5 +1091,5 @@
         </div>
 
 
-</body> 
+    </body> 
 </html>

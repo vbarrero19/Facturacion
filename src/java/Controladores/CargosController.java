@@ -56,11 +56,11 @@ public class CargosController {
             con = pool_local.getConnection();
             
             //Codigo para sacar el id_tipo_item. Nos llega el texto con el tipo y sacamos el identificador
-            String tipo = cargos.getId_tipo_item();
-            Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("select id_tipo_item from tipo_item where item = '" + tipo + "'");
-            rs.next();
-            int identificador= rs.getInt(1);
+//            String tipo = cargos.getId_tipo_item();
+//            Statement sentencia = con.createStatement();
+//            rs = sentencia.executeQuery("select id_tipo_item from tipo_item where item = '" + tipo + "'");
+//            rs.next();
+//            int identificador= rs.getInt(1);
 
             stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
                     + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto)"
@@ -69,7 +69,7 @@ public class CargosController {
             stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
             stAux.setString(2, cargos.getAbreviatura());
             stAux.setString(3, cargos.getDescripcion());            
-            stAux.setInt(4, identificador); //Guardamos el indentificador
+            stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item())); //identificador); //Guardamos el indentificador
             stAux.setString(5, cargos.getCuenta());
 
             //Quitamos decimales al importe
@@ -407,7 +407,7 @@ public class CargosController {
 
             Statement sentencia = con.createStatement();
             //Podemos llevar solo los dos primeros campos
-            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, periodo FROM items ORDER BY abreviatura");
+            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, estado FROM items ORDER BY abreviatura");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
@@ -447,7 +447,7 @@ public class CargosController {
 
     }
 
-    //Se usa al seleccionar algo en el combo Clientes
+    //Se usa al seleccionar algo en el combo Items
     @RequestMapping("/cargosController/getDatosItem.htm")
     @ResponseBody
     public String cargarDatosItem(@RequestBody Items items, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -464,7 +464,7 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT i.id_item, i.abreviatura, i.descripcion, t.item, i.cuenta, i.importe, i.periodo FROM items i\n"
+            stAux = con.prepareStatement("SELECT i.id_item, i.abreviatura, i.descripcion, i.id_tipo_item, i.cuenta, i.importe, i.estado FROM items i\n"
                     + "inner join tipo_item t on i.id_tipo_item = t.id_tipo_item WHERE id_item =  ?");
 
             stAux.setInt(1, Integer.parseInt(items.getId_item()));
@@ -472,6 +472,67 @@ public class CargosController {
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+        //Se usa al seleccionar algo en el combo Items
+    @RequestMapping("/cargosController/cargarTipoItem.htm")
+    @ResponseBody
+    public String cargarTipoItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+        
+        //int idCliente = Integer.parseInt(hsr.getParameter("idCliente"));
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("SELECT id_tipo_item, item FROM tipo_item");
+            
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
             }
 
             resp = new Gson().toJson(arrayTipo);
@@ -527,7 +588,7 @@ public class CargosController {
 
             Statement sentencia = con.createStatement();
 
-            rs = sentencia.executeQuery("SELECT id_tipo_impuesto, impuesto, valor, pais FROM tipo_impuesto ORDER BY impuesto");
+            rs = sentencia.executeQuery("SELECT id_tipo_impuesto, impuesto, valor, pais FROM tipo_impuesto ORDER BY id_tipo_impuesto");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new TipoImpuesto(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));

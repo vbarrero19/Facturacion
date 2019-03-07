@@ -76,8 +76,8 @@
 
                                 var aux = JSON.parse(data);
 
-                                var subtotal = 0;
-                                var impuestos = 0;
+                                var subtotal = 0.00;
+                                var impuestos = 0.00;
 
                                 //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
                                 $('#tableContainer tbody').empty();
@@ -93,8 +93,8 @@
                                     $("#nombreContactoCli").val(resource.col11);
 
                                     //Calculamos los importe e impuestos que vamos a mostrar
-                                    subtotal = subtotal + (parseInt(resource.col4) * parseInt(resource.col5));
-                                    impuestos = impuestos + parseInt(resource.col6);
+                                    subtotal = subtotal + (parseFloat(resource.col4) * parseFloat(resource.col5));
+                                    impuestos = impuestos + parseFloat(resource.col6);
 
                                     //cargamos de forma dinamica la tabla
                                     $('#tableContainer tbody').append(" <tr>\n\
@@ -106,15 +106,37 @@
                                                                     <td>" + resource.col5 + "</td>                       \n\
                                                                     <td>" + resource.col6 + "</td>                       \n\
                                                                     <td>" + resource.col7 + "</td>                       \n\
-                                                                    <td>" + resource.col8 + "</td>                       \n\
-                                                                    <td><a class='btn btn-primary btn-lg' href='javascript:;' onclick='refrescarCargos($(\"#id" + (indice + 1) + "\").text());' role='button'>Quitar</a></td>        \n\\n\
+                                                                    <td class='hidden'>" + resource.col8 + "</td>                       \n\
+                                                                    <td>" + resource.col12.substring(0, 10) + "</td>                       \n\
+                                                                    <td>" + resource.col13.substring(0, 10) + "</td>                       \n\
+                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + resource.col14 + "</td>         \n\
+                                                                    <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
+                                                                    <td><a class='btn btn-warning btn-md' href='javascript:;' onclick='refrescarCargos($(\"#id" + (indice + 1) + "\").text());' role='button'>Quitar</a></td>        \n\\n\
                                                                 </tr>");
 
 
                                 });
-                                $("#subtotal").val(subtotal);
-                                $("#impuestos").val(impuestos);
-                                $("#total_factura").val(subtotal + impuestos);
+
+                                $(document).ready(function () {
+                                    $(".miBoton").click(function () {
+                                        //Con $(this).val() cogemos el value del boton, lo concatenamos a #descrip para tener el id del campo oculto con
+                                        //la descripcion correspondiente a esa fila. Cogemos el text de ese campo y lo añadimos al p del modal para visualizarlo
+                                        $("#descripcion").text($("#descrip" + $(this).val()).text());
+                                        $("#myModal").modal();
+                                    });
+                                });
+
+                                //Quitamos decimales al subtotal
+                                var valSub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
+                                $("#subtotal").val(valSub);
+                                //Quitamos decimales al impuestos
+                                var valImp = parseFloat(Math.round(impuestos * 100) / 100).toFixed(2);
+                                $("#impuestos").val(valImp);
+                                //Calculamos el total
+                                var total = parseFloat(valSub) + parseFloat(valImp);
+                                var valTot = parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                                $("#total_factura").val(valTot);
+
                             } else {
                                 //Si data viene vacio borramos el contenido de los campos
                                 $('#tableContainer tbody').empty();
@@ -238,9 +260,9 @@
                     contentType: "application/json",
                     success: function (data) {
                         alert(data);
-                        
+
                         location.reload();
-                        
+
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -279,8 +301,8 @@
 
                         var aux = JSON.parse(data);
 
-                        var subtotal = 0;
-                        var impuestos = 0;
+                        var subtotal = 0.00;
+                        var impuestos = 0.00;
 
                         //Vaciamos la tabla cada vez que entramos para que no se dupliquen los datos
                         $('#tableContainer tbody').empty();
@@ -296,9 +318,9 @@
                             $("#nombreContactoCli").val(resource.col11);
 
                             //Calculamos los importe e impuestos que vamos a mostrar
-                            subtotal = subtotal + (parseInt(resource.col4) * parseInt(resource.col5));
-                            impuestos = impuestos + parseInt(resource.col6);
-                            
+                            subtotal = subtotal + (parseFloat(resource.col4) * parseFloat(resource.col5));
+                            impuestos = impuestos + parseFloat(resource.col6);
+
                             //cargamos de forma dinamica la tabla
                             $('#tableContainer tbody').append(" <tr>\n\
                                                                     <th scope=\"row\">" + (indice + 1) + "</th>              \n\
@@ -309,15 +331,36 @@
                                                                     <td>" + resource.col5 + "</td>                       \n\
                                                                     <td>" + resource.col6 + "</td>                       \n\
                                                                     <td>" + resource.col7 + "</td>                       \n\
-                                                                    <td>" + resource.col8 + "</td>                       \n\
-                                                                    <td><a class='btn btn-primary btn-lg' href='javascript:;' onclick='refrescarCargos($(\"#id" + (indice + 1) + "\").text(),idCliente);' role='button'>Quitar</a></td>        \n\\n\
+                                                                    <td class='hidden'>" + resource.col8 + "</td>                       \n\
+                                                                    <td>" + resource.col12.substring(0, 10) + "</td>                       \n\
+                                                                    <td>" + resource.col13.substring(0, 10) + "</td>                       \n\
+                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + resource.col14 + "</td>         \n\
+                                                                    <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
+                                                                    <td><a class='btn btn-warning btn-md' href='javascript:;' onclick='refrescarCargos($(\"#id" + (indice + 1) + "\").text(),idCliente);' role='button'>Quitar</a></td>        \n\\n\
                                                                 </tr>");
 
 
                         });
-                        $("#subtotal").val(subtotal);
-                        $("#impuestos").val(impuestos);
-                        $("#total_factura").val(subtotal + impuestos);
+
+                        $(document).ready(function () {
+                            $(".miBoton").click(function () {
+                                //Con $(this).val() cogemos el value del boton, lo concatenamos a #descrip para tener el id del campo oculto con
+                                //la descripcion correspondiente a esa fila. Cogemos el text de ese campo y lo añadimos al p del modal para visualizarlo
+                                $("#descripcion").text($("#descrip" + $(this).val()).text());
+                                $("#myModal").modal();
+                            });
+                        });
+
+                        //Quitamos decimales al subtotal
+                        var valSub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
+                        $("#subtotal").val(valSub);
+                        //Quitamos decimales al impuestos
+                        var valImp = parseFloat(Math.round(impuestos * 100) / 100).toFixed(2);
+                        $("#impuestos").val(valImp);
+                        //Calculamos el total
+                        var total = parseFloat(valSub) + parseFloat(valImp);
+                        var valTot = parseFloat(Math.round(total * 100) / 100).toFixed(2);
+                        $("#total_factura").val(valTot);
                     } else {
                         //Si data viene vacio borramos el contenido de los campos
                         $('#tableContainer tbody').empty();
@@ -337,8 +380,6 @@
             });
         }
         ;
-
-
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getImpuesto.htm.
@@ -458,7 +499,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Facturas</h3>
+                            <h3 style="margin-bottom: 25px; text-align: center;">Generar Factura</h3>
 
                             <div class="col-xs-12" id="datos">
 
@@ -526,8 +567,9 @@
                                             <th scope="col">Importe</th> 
                                             <th scope="col">Cantidad</th> 
                                             <th scope="col">Impuesto</th>                                            
-                                            <th scope="col">total</th> 
-                                            <th scope="col">Entidad</th> 
+                                            <th scope="col">Total</th>                                            
+                                            <th scope="col">F. Cargo</th> 
+                                            <th scope="col">F. Venc</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -619,6 +661,27 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+
+            <!-- ventana emergente Modificar-->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Descripción</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="descripcion"></p>                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>                  
