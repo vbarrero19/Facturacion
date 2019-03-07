@@ -225,7 +225,6 @@ public class EntidadesController {
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */
             while (rs.next()) {
-
                 arrayTipoEntidad.add(new Gson().toJson(new TipoEntidad(rs.getString(1), rs.getString(2))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
@@ -293,7 +292,6 @@ public class EntidadesController {
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */
             while (rs.next()) {
-
                 arrayTipoDedicacion.add(new Gson().toJson(new TipoDedicacion(rs.getString(1), rs.getString(2))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
