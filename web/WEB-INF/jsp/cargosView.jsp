@@ -26,8 +26,8 @@
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
-            getEntidadEmpresa();
-            getItem();
+            getEntidadEmpresa();//Llenamos el combo de empresas
+            getItem(); //Llenamos el combo de items
             //getTipoImpuesto();
 
             //Mostramos la fecha actual
@@ -115,7 +115,7 @@
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
 
-                myObj["id_tipo_item"] = $("#comboTipo").val().trim();
+                myObj["id_tipo_item"] = $("#comboTipoItem").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
@@ -340,6 +340,7 @@
 
                                 //Funcion para cargar los tipos de item en un combo
                                 cargarTipoItem(aux2.id_tipo_item);
+                                alert(aux2.id_tipo_item);
                                 getTipoImpuesto()
 
                             });
@@ -563,7 +564,7 @@
                 url: '/Facturacion/cargosController/getTipoImpuesto.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
                     //Vaciamos el combo
-                    document.getElementById('comboTipo').options.length = 0;
+                    document.getElementById('comboTipoImpuesto').options.length = 0;
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var tipoImpuesto = JSON.parse(data);
                     //Identificamos el combo
@@ -602,7 +603,7 @@
                         select.appendChild(opt);
                     });
                     //Si no se modifica el combo el valor es (0,0)
-                    //document.getElementById("comboTipoImpuesto").value = "0,0";
+                    document.getElementById("comboTipoImpuesto").value = "0,0";
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -725,18 +726,18 @@
             {
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
-
+            alert(idTipoItem);
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
                 url: '/Facturacion/cargosController/cargarTipoItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
                     //Vaciamos el combo
-                    document.getElementById('comboTipo').options.length = 0;
+                    document.getElementById('comboTipoItem').options.length = 0;
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var tipoItem = JSON.parse(data);
                     //Identificamos el combo
-                    select = document.getElementById('comboTipo');
+                    select = document.getElementById('comboTipoItem');
 
                     //Lo vamos cargando
                     tipoItem.forEach(function (valor, indice) {
@@ -906,9 +907,9 @@
                                     <input type="text" class="form-control input-sm" id="descripcion" name="descripcion">
                                 </div>
                                 <div class="form-group col-xs-2">
-                                    <label for="comboTipo">Tipo de Item</label>
+                                    <label for="comboTipoItem">Tipo de Item</label>
                                     <div class="form-group-combo">                                        
-                                        <select class="form-control input-sm" id="comboTipo" name="comboTipo">
+                                        <select class="form-control input-sm" id="comboTipoItem" name="comboTipoItem">
                                         </select>                                                            
                                     </div>
                                 </div>
