@@ -89,12 +89,6 @@ public class Entidades {
         this.nombre_contacto = nombre_contacto;       
     }
 
-       
-    
-    
-    
-    
-    
    
      //CONSTRUCTOR PARA MOSTRAR LOS DATOS DE LA ENTIDAD EN MODIFICAR ENTIDAD.
     public Entidades(String id_entidad, String distinct_code, String nombre_entidad, String nombre_contacto, String apellido1, String apellido2, String telefono1, String telefono2, String fax, String mail1, String mail2cc, String numero_documento) {

@@ -63,7 +63,7 @@
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO ENTIDAD.
                 myObj["id_tipo_entidad"] = $("#id_tipo_entidad").val();
                 //GUARDAMOS LOS VALORES DEL COMBO DEL TIPO DEDICACION
-                myObj["id_dedicacion"] = $("#id_dedicacion").val();
+                myObj["id_tipo_documento"] = $("#id_tipo_documento").val();
                 //GUARDAMOS EL VALOR DEL TRATAMIENTO
                 myObj["tratamiento"] = $(".form-check input:checked").val();
                 //GUARDAMOS EL VALOR DEL TIPO DE DOCUMENTO
@@ -75,7 +75,7 @@
                 //GUARDAMOS EL APELLIDO 1 Y APELLIDO2
                 myObj["apellido1"] = $("#apellido1").val().trim();
                 myObj["apellido2"] = $("#apellido2").val().trim();
-                //GUARADMOS EL TIPO DE DEDICACION 
+//                GUARADMOS EL TIPO DE DEDICACION 
                 myObj["id_dedicacion"] = $("#id_dedicacion").val();
                 //GUARDAMOS LOS TELEFONOS DE CONTACTO
                 myObj["telefono1"] = $("#telefono1").val().trim();
