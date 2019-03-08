@@ -66,8 +66,8 @@ public class EntidadesController {
             con = pool_local.getConnection();
             /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
 
-            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, id_dedicacion, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja, activado)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO ENTIDAD (distinct_code, nombre_entidad, tratamiento, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc, fecha_alta, fecha_baja, activado)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
             stAux.setString(1, entidades.getDistinct_code());
@@ -76,28 +76,27 @@ public class EntidadesController {
             stAux.setString(4, entidades.getNombre_contacto());
             stAux.setString(5, entidades.getApellido1());
             stAux.setString(6, entidades.getApellido2());
-            stAux.setInt(7, Integer.parseInt(entidades.getId_dedicacion()));
-            stAux.setString(8, entidades.getTelefono1());
-            stAux.setString(9, entidades.getTelefono2());
-            stAux.setString(10, entidades.getFax());
-            stAux.setString(11, entidades.getMail1());
-            stAux.setString(12, entidades.getMail2cc());
+            stAux.setString(7, entidades.getTelefono1());
+            stAux.setString(8, entidades.getTelefono2());
+            stAux.setString(9, entidades.getFax());
+            stAux.setString(10, entidades.getMail1());
+            stAux.setString(11, entidades.getMail2cc());
 
             String fechaAlta = entidades.getFecha_alta();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(fechaAlta);
             Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
-            stAux.setTimestamp(13, timestamp);
+            stAux.setTimestamp(12, timestamp);
 
             String fechaBaja = entidades.getFecha_alta();
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate2 = dateFormat2.parse(fechaBaja);
             Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
-            stAux.setTimestamp(14, timestamp2);
+            stAux.setTimestamp(13, timestamp2);
 
-            stAux.setBoolean(15, true);
+            stAux.setBoolean(14, true);
 
             /*LO EJECUTAMOS*/
             stAux.executeUpdate();
@@ -137,7 +136,26 @@ public class EntidadesController {
 
             /*LO EJECUTAMOS*/
             stAux2.executeUpdate();
+            
 
+            //GUARDAMOS EL TIPO DE DEDICACION EN LA TABLA ENTIDAD_ID_TIPO_DEDICACION
+            
+            Connection con7 = null;
+            ResultSet rs7 = null;
+            PreparedStatement stAux7 = null;
+
+            con7 = pool_local.getConnection();
+            /*REALIZAMOS LA CONSULTA PREPARADA PARA LA NUEVA ENTIDAD*/
+
+            stAux7 = con7.prepareStatement("INSERT INTO ENTIDAD_TIPO_DEDICACION (id_entidad, id_dedicacion) VALUES (?,?)");
+
+            /*VAMOS GUARDANDO LOS VALORES EN LA BASE DE DATOS  Y CONVIRTIENDO LOS QUE NO SEAN STRING) */
+            stAux7.setInt(1, maximo);
+            stAux7.setInt(2, Integer.parseInt(entidades.getId_dedicacion()));
+
+            /*LO EJECUTAMOS*/
+            stAux7.executeUpdate();
+            
             /**
              * ********* INSERTAMOS EN LA TABLA DOCUMENTO EL ID_TIPO_DOCUMENTO DE LA TABLA TIPO_DOCUMENTO(QUE LO COGEMOS DEL COMBO) Y EL NUMERO DEL DOCUMENTO QUE LO SELECCIONAMOS DEL INPUT ***************
              */
@@ -154,6 +172,9 @@ public class EntidadesController {
 
             stAux5.executeUpdate();
 
+            
+            /*INSERTAMOS TIPO DE DOCUMENTO EN LA TABLA ENTIDAD_DOCUMENTO*/
+            
             Connection con6 = null;
             ResultSet rs6 = null;
             PreparedStatement stAux6 = null;
