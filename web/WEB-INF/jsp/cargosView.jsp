@@ -58,20 +58,23 @@
             //cargamos de forma dinamica la tabla
             for (var i = 0; i < 12; i = i + 6) {
                 $('#tbody-tabla-meses').append(" <tr>\n\
-                                                                    <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i] + "</td>          \n\ \n\
-                                                                    <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i + 1] + "</td>          \n\ \n\
-                                                                    <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i + 2] + "</td>          \n\ \n\
-                                                                    <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i + 3] + "</td>          \n\ \n\
-                                                                    <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i + 4] + "</td>          \n\ \n\
-                                                                    <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos' value ='mes' > </td>              \n\
-                                                                    <td>" + meses[i + 5] + "</td>          \n\ \n\
-                                                                </tr>");
+                                            <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+1) + "' > </td>              \n\
+                                            <td>" + meses[i] + "</td>          \n\ \n\
+                                            <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+2) + "' > </td>              \n\
+                                            <td>" + meses[i + 1] + "</td>          \n\ \n\
+                                            <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+3) + "' > </td>              \n\
+                                            <td>" + meses[i + 2] + "</td>          \n\ \n\
+                                            <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+4) + "' > </td>              \n\
+                                            <td>" + meses[i + 3] + "</td>          \n\ \n\
+                                            <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+5) + "' > </td>              \n\
+                                            <td>" + meses[i + 4] + "</td>          \n\ \n\
+                                            <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+6) + "' > </td>              \n\
+                                            <td>" + meses[i + 5] + "</td>          \n\ \n\
+                                        </tr>");
             }
+            
+//Asi pasabamos los nombre de los meses al value
+//<td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + meses[i] + "' > </td> <td>" + meses[i] + "</td>          \n\ \n\
 
 
             var userLang = navigator.language || navigator.userLanguage;
@@ -170,6 +173,54 @@
                         console.log(thrownError);
                     }
                 });
+            });
+
+
+            $('#grabarCargos2').click(function () {
+                var selected = '';
+                $('#formid input[type=checkbox]').each(function () {
+                    if (this.checked) {
+                        selected += $(this).val() + ',';
+                    }
+                });
+
+                if (selected != '')
+                    alert('Has seleccionado: ' + selected);
+                else
+                    alert('Debes seleccionar al menos una opción.');
+                
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                var myObj = {};
+                myObj["col1"] = selected;
+
+
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/cargosController/nuevoCargo2.htm',
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                        //Refrescando la pantalla 
+                        location.reload();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+
+
             });
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
@@ -336,7 +387,7 @@
                                 //$("#comboTipoImpuesto").val("0,0");
                                 //Si se elige un item activamos el combo del tipo-valor de impuesto                                
                                 document.getElementById("comboTipoImpuesto").disabled = false;
-                                document.getElementById("comboTipoImpuesto").value = "0,0";
+                                document.getElementById("comboTipoImpuesto").value = "1,0";
 
                                 //Funcion para cargar los tipos de item en un combo
                                 cargarTipoItem(aux2.id_tipo_item);
@@ -362,7 +413,7 @@
                     $("#importe").val("");
                     $("#estado").val("");
                     document.getElementById("comboTipoImpuesto").disabled = true;
-                    document.getElementById("comboTipoImpuesto").value = "0,0";
+                    document.getElementById("comboTipoImpuesto").value = "1,0";
                 }
 
             });
@@ -386,7 +437,7 @@
             //Se ejecuta al cambiar el contenido del comboTipoImpuesto
             $("#comboTipoImpuesto").change(function () {
                 //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
-                if ($("#comboItems").val() != "0") {
+                if ($("#comboItems").val() != "1") {
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
                     calcularTotal();
                 }
@@ -585,14 +636,14 @@
                         opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
                         //Guardamos el impuesto en el nombre de cada opcion
                         opt.innerHTML = tipoImpuesto2.impuesto;
-                        
+
                         if (tipoImpuesto2.id_tipo_impuesto == 1) {
                             //Guardamos el valor del impuesto en el value de cada opcion
                             opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
                             //Guardamos el impuesto en el nombre de cada opcion
                             opt.innerHTML = tipoImpuesto2.impuesto;
                             opt.selected = true;
-                            
+
                         } else {
                             //Guardamos el valor del impuesto en el value de cada opcion
                             opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
@@ -603,7 +654,7 @@
                         select.appendChild(opt);
                     });
                     //Si no se modifica el combo el valor es (0,0)
-                    document.getElementById("comboTipoImpuesto").value = "0,0";
+                    document.getElementById("comboTipoImpuesto").value = "1,0";
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -822,7 +873,7 @@
             <div class="col-xs-12">
                 <div class="col-md-12 col-xs-5">
                     <div class="form-area">  
-                        <form role="form">
+                        <form role="form" id="formid">
                             <br style="clear:both">
                             <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>                           
 
@@ -1037,7 +1088,9 @@
                             </div>
 
 
-                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
+                            <!--<button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>-->
+
+                            <button type="button" id="grabarCargos2" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
 
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
 

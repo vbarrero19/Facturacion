@@ -11,12 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Formatter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,19 +51,12 @@ public class CargosController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        
+
         String resp = "correcto";
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-            
-            //Codigo para sacar el id_tipo_item. Nos llega el texto con el tipo y sacamos el identificador
-//            String tipo = cargos.getId_tipo_item();
-//            Statement sentencia = con.createStatement();
-//            rs = sentencia.executeQuery("select id_tipo_item from tipo_item where item = '" + tipo + "'");
-//            rs.next();
-//            int identificador= rs.getInt(1);
 
             stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
                     + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto)"
@@ -68,8 +64,8 @@ public class CargosController {
 
             stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
             stAux.setString(2, cargos.getAbreviatura());
-            stAux.setString(3, cargos.getDescripcion());            
-            stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item())); //identificador); //Guardamos el indentificador
+            stAux.setString(3, cargos.getDescripcion());
+            stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item()));
             stAux.setString(5, cargos.getCuenta());
 
             //Quitamos decimales al importe
@@ -81,15 +77,14 @@ public class CargosController {
             Double cantidad = Double.parseDouble(cargos.getCantidad());
             Double cantidadDecimales = Math.round(cantidad * 100d) / 100d;
             stAux.setDouble(7, cantidadDecimales);
-            
+
             stAux.setInt(8, Integer.parseInt(cargos.getImpuesto()));
-            
+
             //Quitamos decimales al total
             Double total = Double.parseDouble(cargos.getTotal());
             Double totalDecimales = Math.round(total * 100d) / 100d;
             stAux.setDouble(9, totalDecimales);
 
-            
             String test = cargos.getFecha_cargo();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsedDate = dateFormat.parse(test);
@@ -118,6 +113,98 @@ public class CargosController {
             stAux.executeUpdate();
 
             resp = "Correcto";
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
+
+    @RequestMapping("/cargosController/nuevoCargo2.htm")
+    @ResponseBody
+    public String nuevoCargo2(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+
+        String resp = "correcto";
+
+        try {
+
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            String dato = resource.getCol1();
+
+            String cadenaNew = dato.substring(0, dato.length() - 1);
+
+            String[] parts = cadenaNew.split(",");
+
+            int cont = 0;
+
+            String cadena = "";
+
+            for (int x = 0; x < parts.length; x++) {
+
+                String numeroMes = parts[x];
+                
+                Formatter obj = new Formatter();
+
+                String valor = String.valueOf(obj.format("%02d", Integer.parseInt(numeroMes)));
+
+                cont++;
+
+                Date fechaActual = new Date();
+                DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");                
+
+                DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+
+                //Fecha actual desglosada:
+                Calendar fecha = Calendar.getInstance();
+                int ano = fecha.get(Calendar.YEAR);
+                //int mes = fecha.get(Calendar.MONTH) + 1;
+                int dia = fecha.get(Calendar.DAY_OF_MONTH);
+                            
+                //Ultimo dia de mes
+                fecha.set(2014, (Integer.parseInt(valor)-1), 1);
+                int ultimoDiaMes = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
+                
+                String fechaCargo = ano + "-" + valor + "-" + ultimoDiaMes;
+
+                stAux = con.prepareStatement("insert into cargos (abreviatura) values('" + fechaCargo + "');");
+                stAux.executeUpdate();
+
+            }
+            cadena = Integer.toString(cont);
+
+            resp = cadena; //parts[0];
 
         } catch (SQLException ex) {
             resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
@@ -407,7 +494,7 @@ public class CargosController {
 
             Statement sentencia = con.createStatement();
             //Podemos llevar solo los dos primeros campos
-            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, estado FROM items ORDER BY abreviatura");
+            rs = sentencia.executeQuery("SELECT id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, estado FROM items where estado = 0 ORDER BY abreviatura");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
@@ -507,8 +594,8 @@ public class CargosController {
         return resp;
 
     }
-    
-        //Se usa al seleccionar algo en el combo Items
+
+    //Se usa al seleccionar algo en el combo Items
     @RequestMapping("/cargosController/cargarTipoItem.htm")
     @ResponseBody
     public String cargarTipoItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -520,15 +607,14 @@ public class CargosController {
         String resp = "correcto";
 
         ArrayList<String> arrayTipo = new ArrayList<>();
-        
-        //int idCliente = Integer.parseInt(hsr.getParameter("idCliente"));
 
+        //int idCliente = Integer.parseInt(hsr.getParameter("idCliente"));
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("SELECT id_tipo_item, item FROM tipo_item");
-            
+
             rs = stAux.executeQuery();
 
             while (rs.next()) {
