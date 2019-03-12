@@ -69,8 +69,9 @@ public class verCargosController {
             con = pool_local.getConnection();
             /*CREAMOS LA CONSULTA PREPARADA Y LO GUARDAMOS EN rs*/
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
-                    + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad\n" +
+                                        " inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in (\n" +
+                                        "select distinct id_cliente from cargos order by id_cliente) ");
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */

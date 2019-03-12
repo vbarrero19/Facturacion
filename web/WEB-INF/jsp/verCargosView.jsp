@@ -19,6 +19,8 @@
                 height:400px;    
                 margin-bottom: 25px;
             }
+            
+           
 
         </style>
         <title>VER CARGOS</title> 
@@ -272,6 +274,7 @@
             });
 
         }
+        ;
 
 
     </script>
@@ -311,11 +314,12 @@
                                 <br style="clear:both">
 
                                 <hr size="10" />
+                                
 
                                 <div class="col-xs-12" id="tableContainer">
                                     <table class="table table-striped">                                    
 
-                                        <thead class="thead-dark">
+                                        <thead class="thead-dark" id="cabecera">
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Abreviatura</th>

@@ -35,7 +35,7 @@ public class verFacturasController {
 
         return mv;
     }
-    
+
     @RequestMapping("/verFacturasController/startArchivadas.htm")
     public ModelAndView startArchivadas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verFacturasArchivadasView");
@@ -50,7 +50,7 @@ public class verFacturasController {
 
         return mv;
     }
-    
+
     @RequestMapping("/verFacturasController/verDetalleFacturaArchivada.htm")
     public ModelAndView starVerDetalleFacturaArchivada(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verDetalleFacturaArchivadaView");
@@ -78,6 +78,9 @@ public class verFacturasController {
         PreparedStatement stAux = null;
         String resp = "correcto";
 
+        //Recuperamos parametrode la URL para saber si piden clietes con facturas activas o archivadas
+        String estado = hsr.getParameter("estado");
+        
         //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
         //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
         ArrayList<String> arrayTipoEntidad = new ArrayList<>();
@@ -87,8 +90,18 @@ public class verFacturasController {
             con = pool_local.getConnection();
             /*CREAMOS LA CONSULTA PREPARADA Y LO GUARDAMOS EN rs*/
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
-                    + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
+            if (estado.equals("activa")) {
+                rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t"
+                        + " on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad "
+                        + "where upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in (select distinct id_cliente from facturas where archivada = 0)");
+
+            } else {
+
+                rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t"
+                        + " on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad "
+                        + "where upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in (select distinct id_cliente from facturas where archivada = 1)");
+            }
+
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
             Y LO GUARDAMOS EN EL ARRAY DECLARADO ARRIBA
              */
@@ -99,12 +112,12 @@ public class verFacturasController {
             resp = new Gson().toJson(arrayTipoEntidad);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; //
+            resp = "incorrecto SQL -> " + ex; //
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
 
         } catch (Exception ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto -> " + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } finally {
@@ -213,9 +226,9 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n" +
-                                         "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n" +
-                                         "WHERE archivada = 0 and id_cliente = ?");
+            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n"
+                    + "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n"
+                    + "WHERE archivada = 0 and id_cliente = ? order by f.fecha_emision");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();
@@ -278,9 +291,9 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n" +
-                                         "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n" +
-                                         "WHERE archivada = 1 and id_cliente = ?");
+            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n"
+                    + "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n"
+                    + "WHERE archivada = 1 and id_cliente = ? order by f.fecha_emision");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();
@@ -467,13 +480,13 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado FROM facturas WHERE id_factura = ?");
+            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado, archivada FROM facturas WHERE id_factura = ?");
 
             stAux.setInt(1, idFact);
             rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));
+                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8))));
             }
 
             resp = new Gson().toJson(arrayTipo);

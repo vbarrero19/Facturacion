@@ -3,9 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!-- para paginar los datos de factura -->
-<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/> 
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+
 
 <!DOCTYPE html>
 <html>
@@ -20,39 +18,6 @@
 
 
             var userLang = navigator.language || navigator.userLanguage;
-
-            //Guarda los datos introducidos en el formulario 
-//            $("#submit").click(function () {
-//
-//                if (window.XMLHttpRequest) { //mozilla
-//                    ajax = new XMLHttpRequest(); //No Internet explorer
-//                } else {
-//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                }
-//
-//                var myObj = {};
-//                myObj["id_entidad"] = $("#id_entidad").val().trim();
-//                myObj["distinct_code"] = $("#comboEntidad").val().trim();
-//                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-//                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
-//
-//                var json = JSON.stringify(myObj);
-//                $.ajax({
-//                    type: 'POST',
-//                    url: '/Facturacion/verFacturasController/nuevoFactura.htm',
-//                    data: json,
-//                    datatype: "json",
-//                    contentType: "application/json",
-//                    success: function (data) {
-//                        alert(data);
-//                    },
-//                    error: function (xhr, ajaxOptions, thrownError) {
-//                        console.log(xhr.status);
-//                        console.log(xhr.responseText);
-//                        console.log(thrownError);
-//                    }
-//                });
-//            });
 
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
@@ -125,7 +90,7 @@
                 //Usamos GET ya que recibimos.
                 type: 'GET',
                 //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/verFacturasController/getVerEntidad.htm',
+                url: '/Facturacion/verFacturasController/getVerEntidad.htm?estado=archivada',
                 success: function (data) {
                     //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
                     var verEntidad = JSON.parse(data);
@@ -277,8 +242,8 @@
                                                 <th scope="col">Nº factura</th>
                                                 <th scope="col">Cliente</th>
                                                 <th scope="col">Empresa</th>
-                                                <th scope="col">FechaCargo</th>
-                                                <th scope="col">FechaVencimiento</th>
+                                                <th scope="col">Fecha Emision</th>
+                                                <th scope="col">Fecha Vencimiento</th>
                                                 <th scope="col">Total</th>
                                                 <th scope="col">Estado</th>
                                             </tr>                                            

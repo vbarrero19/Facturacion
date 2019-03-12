@@ -55,15 +55,15 @@ public class FacturasController {
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
-        String resp = "correcto";
+        String resp = "correcto";        
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
             //Insertamos una nueva factura
-            stAux = con.prepareStatement("INSERT INTO facturas (id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento)"
-                    + " VALUES (?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO facturas (id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado, archivada)"
+                    + " VALUES (?,?,?,?,?,?,?)");
 
             stAux.setInt(1, Integer.parseInt(facturas.getId_cliente()));
             stAux.setInt(2, Integer.parseInt(facturas.getId_empresa()));
@@ -84,6 +84,9 @@ public class FacturasController {
             Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
             stAux.setTimestamp(5, timestamp2);
+            
+            stAux.setInt(6, Integer.parseInt(facturas.getId_estado()));
+            stAux.setInt(7, Integer.parseInt(facturas.getArchivada()));
 
             stAux.executeUpdate();
 
@@ -306,8 +309,10 @@ public class FacturasController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
-                    + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t "
+                                      + "on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where "
+                                      + "upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in(select distinct id_cliente from cargos order by id_cliente)\n" 
+                                      + "order by e.distinct_code");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));

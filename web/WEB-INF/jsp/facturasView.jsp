@@ -8,6 +8,18 @@
 <html>
     <%@ include file="infouser.jsp" %>
     <head> 
+        <style>
+            .container {
+                width: 1400px;
+            }
+            #tableContainer{            
+                overflow:scroll;
+                overflow-x: hidden;
+                height:400px;         
+                margin-bottom: 25px;
+            }
+
+        </style>
         <title>GESTION FACTURAS</title> 
     </head>
     <script>
@@ -66,9 +78,6 @@
                         datatype: "json",
                         contentType: "application/json",
                         success: function (data) {
-
-
-                            //alert(data);
 
                             //Controlamos que un cliente no tenga cargos. En el controller vemos si devuelve datos o no
                             //Si no devuelve datos ponemos resp = "vacio"
@@ -247,8 +256,8 @@
                 //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
                 myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
 
-                myObj["id_estado"] = ""; //Falta por definir               
-
+                myObj["id_estado"] = "1"; //Codigo 1 = emitida               
+                myObj["archivada"] = "0"; //Codigo 0 = activa
 
 
                 var json = JSON.stringify(myObj);

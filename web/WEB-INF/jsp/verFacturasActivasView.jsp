@@ -1,11 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<!-- para paginar los datos de factura -->
-<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/> 
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -91,7 +90,7 @@
                 //Usamos GET ya que recibimos.
                 type: 'GET',
                 //VAMOS A ENTIDADESCONTROLLER A RECOGER LOS DATOS DE LA FUNCION GETTIPOENTIDAD
-                url: '/Facturacion/verFacturasController/getVerEntidad.htm',
+                url: '/Facturacion/verFacturasController/getVerEntidad.htm?estado=activa',
                 success: function (data) {
                     //RECOGEMOS LOS DATOS DEL COMBO Y PASAMOS EL STRING A UN ARRAY DE OBJETOS TIPO ENTIDAD
                     var verEntidad = JSON.parse(data);
@@ -161,27 +160,39 @@
                         var aux2 = JSON.parse(valor);
                         /*en las fechas, quitamos la hora con substring*/
 
-                        
+
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col1 + "</td>         \n\
+                                                                    <td id='id" + indice + "'>" + aux2.col1 + "</td>         \n\
                                                                     <td>" + aux2.col3 + "</td>         \n\
                                                                     <td>" + aux2.col5 + "</td>         \n\
                                                                     <td>" + aux2.col7.substring(0, 10) + "</td>         \n\
                                                                     <td>" + aux2.col8.substring(0, 10) + "</td>         \n\
                                                                     <td>" + aux2.col6 + '€' + "</td>         \n\
                                                                     <td>" + aux2.col9 + "</td>         \n\
-                                                                    <td><a class='btn btn-primary' target ='_blank' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ aux2.col1 +
-                                                                    "&idCliente="+aux2.col2+"&idEmpresa="+aux2.col4+"&idEstado="+aux2.col9+"'>Detalle</a>\n\</td> \n\\n\
-                        < /tr>");
+                                                                    <td><a class='btn btn-success' target ='_blank' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact=" + aux2.col1 +
+                                                                    "&idCliente=" + aux2.col2 + "&idEmpresa=" + aux2.col4 + "&idEstado=" + aux2.col9 + "'>Detalle</a>\n\</td> \n\\n\
+                                                                    <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idFactura='" + aux2.col1 + "' data-idCliente='" + aux2.col2 +
+                                                                    "' data-idIndice='" + indice + "'>Archivar</button></td>\n\
+                                                        < /tr>");
                     });
-
+                    
+                    /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBotonEliminar*/
                     $(document).ready(function () {
-                        /*para cada boton hacer una funcion */
-                        $(".btn-eliminar").on("click", function () {
-                            //guardar id factura
-                            $("#mi-modal").modal('show');
+                        $(".miBotonEliminar").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idFacturaHide").val($(this).attr("data-idFactura"));
+                            $("#idClienteHide").val($(this).attr("data-idCliente"));
+                            $("#idFilaHide").val($(this).attr("data-idIndice"));
+
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreviatura*/
+                            $("#eliminar").text("Desea archivar la factura: " + $("#id" + $(this).attr("data-idIndice")).text());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalEliminar").modal();
                         });
                     });
 
@@ -194,6 +205,44 @@
             });
         }
         ;
+
+        function archivarFactura() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+//            var myObj = {};
+//            myObj["col1"] = $("#idCargoHide").val();
+//            myObj["col2"] = $("#idItemHide").val();
+
+            alert($("#idFacturaHide").val());
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/verFacturasController/archivarFactura.htm?factura=' + idFactura,
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $("#tbody-tabla-cargos").children().eq($("#idFilaHide").val()).hide();
+                    alert("Ocultada la fila correctamente");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+        ;
+
 
 
     </script>
@@ -243,10 +292,12 @@
                                                 <th scope="col">Nº factura</th>
                                                 <th scope="col">Cliente</th>
                                                 <th scope="col">Empresa</th>
-                                                <th scope="col">FechaCargo</th>
-                                                <th scope="col">FechaVencimiento</th>
+                                                <th scope="col">Fecha Emisión</th>
+                                                <th scope="col">Fecha Vencimiento</th>
                                                 <th scope="col">Total</th>
                                                 <th scope="col">Estado</th>
+                                                <th scope="col">Detalle</th>
+                                                <th scope="col">Archivar</th>
                                             </tr>                                            
                                         </thead>
 
@@ -266,23 +317,33 @@
         </div>  
     </div>
 
-    <!--- ----    ------>
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="modal-btn-si">Si</button>
-                    <button type="button" class="btn btn-primary" id="modal-btn-no">No</button>
+    <!-- ventana emergente Eliminar-->
+            <div class="modal fade" id="myModalEliminar" role="dialog">
+                <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                <input class="hidden" id="idFacturaHide"/>
+                <input class="hidden" id="idClienteHide"/>
+                <input class="hidden" id="idFilaHide"/>
+
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Archivar Factura</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="eliminar"></p>                            
+                        </div>
+                        <div class="modal-footer">
+                            <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="archivarFactura()">Si</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!----   ---------->
-    <div class="alert" role="alert" id="result"></div>
+    
 </body> 
 </html>
 
