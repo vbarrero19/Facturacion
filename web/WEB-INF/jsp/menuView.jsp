@@ -56,24 +56,17 @@
                                 <!-- Fin del menu de entidades -->
                             </div> 
 
-
                             <div class="divName ">
                                 <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Items
                                         <span class="caret"></span></button>
-                                    <ul class="dropdown-menu btn btn-info" role="button">
-                                        <!--meter href la direccion del controlador que realiza las acciones -->                                        
-                                        <li class="mEntidad"><a href="<c:url value='/itemsController/start.htm'/>">Alta Item</a></li>
-                                        <li class="mEntidad"><a href="<c:url value='/verItemsController/start.htm'/>">Editar Item</a></li>
-                                        <li class="mEntidad"><a href="">Disponible</a></li>                                       
-
+                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
+                                        <li class="mItem"><a href="/Facturacion/itemsController/start.htm">Alta Item</a></li>
+                                        <li class="mItem"><a href="/Facturacion/verItemsController/start.htm">Editar Item</a></li>
+                                        <li class="mItem"><a href="">Disponible</a></li> 
                                     </ul>
-                                </div>
-                                <!-- Fin del menu de entidades -->
+                                </div>                                
                             </div>             
-
-
-
 
                             <div class="divName">
                                 <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
@@ -88,7 +81,15 @@
                             </div>
 
                             <div class="divName ">
-                                <a href="<c:url value='/verFacturasController/start.htm'/>" class="btn btn-info" role="button">Ver facturas</a>
+                                <div class="dropdown">
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Ver Facturas
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
+                                        <li class="mFactura"><a href="/Facturacion/verFacturasController/startActivas.htm">Activas</a></li>
+                                        <li class="mFactura"><a href="/Facturacion/verFacturasController/startArchivadas.htm">Archivadas</a></li>
+                                        <li class="mFactura"><a href="">Disponible</a></li>  
+                                    </ul>
+                                </div>                                     
                             </div>
                         </div>
                     </div>

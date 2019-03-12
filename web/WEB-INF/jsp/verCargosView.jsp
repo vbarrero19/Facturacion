@@ -11,7 +11,7 @@
     <head> 
         <style>
             .container {
-                width: 1400px;
+                width: 1600px;
             }
             #tableContainer{
                 overflow:scroll;
@@ -28,6 +28,9 @@
 
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
+            //Cargamos todos los cargos pendientes
+            
+            //verListaCargos();
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -158,7 +161,7 @@
                 type: 'POST',
                 url: '/Facturacion/verCargosController/getDatosCargos.htm?idCliente=' + idEntidad,
                 success: function (data) {
-
+                    //alert(data);
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
                     $('#tableContainer tbody').empty();
@@ -173,6 +176,12 @@
                         var iptdec = parseFloat(Math.round(cargo.valor_impuesto * 100) / 100).toFixed(2);
                         var totdec = parseFloat(Math.round(cargo.total * 100) / 100).toFixed(2);
                         
+                        if(cargo.periodicidad == 1){
+                            periodicidad = "Puntual"
+                        }else{
+                            periodicidad = "Periódico"
+                        }
+                        
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
                                                                     <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
@@ -185,8 +194,9 @@
                                                                     <td>" + totdec + '€' + "</td>         \n\
                                                                     <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
                                                                     <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
+                                                                    <td>" + periodicidad + "</td>         \n\
                                                                     <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
-                                                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "&idTipImp=" + cargo.impuesto + "' class='btn btn-info btn-warning'> Modificar </button></td>\n\
+                                                                    <td><a target = '_blank' href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idEmp=" + cargo.id_empresa + "&idTipImp=" + cargo.impuesto + "' class='btn btn-warning'> Modificar </button></td>\n\
                                                                     <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
                                                                 </tr>");
                     });
@@ -317,6 +327,7 @@
                                                 <th scope="col">Total</th>                                                
                                                 <th scope="col">F. Cargo</th>
                                                 <th scope="col">F. Vencimiento</th>
+                                                <th scope="col">Periodicidad</th>
                                                 <th scope="col">Ver Desc.</th>
                                                 <th scope="col">Modificar</th>
                                                 <th scope="col">Borrar</th>

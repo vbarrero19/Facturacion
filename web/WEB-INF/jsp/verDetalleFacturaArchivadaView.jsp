@@ -37,10 +37,10 @@
             //alert(idEmpresa);
             //alert(idCliente);
 
-            $("#archivar").click(function () {
-                archivarFactura(idFactura);
-            })
-            ;
+//            $("#archivar").click(function () {
+//                archivarFactura(idFactura);
+//            })
+//            ;
             
         });
 
@@ -302,7 +302,7 @@
 
                     if (data == "correcto") {  
                         alert("correcto")
-                        location.href = "/Facturacion/verFacturasController/startActivas.htm";
+                        location.href = "/Facturacion/verFacturasController/startArchivadas.htm";
                     } else {
                         alert("mal")
                     }
@@ -327,7 +327,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">VER DETALLE FACTURA ACTIVA</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">VER DETALLE FACTURA ARCHIVADA</h3>                           
 
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para entidades-->
@@ -438,11 +438,10 @@
                                     <br style="clear:both">
                                 </div>          
 
-                                <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>                                
+                                <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>     
                                 <a href="javaScript:window.close();" class="btn btn-info" role="button">Cerrar</a> 
                                 
-                                <input type="button" value="Archivar" class="btn btn-warning" id="archivar" name="archivar">
-                                
+                                <input type="button" value="Activar no funciona" class="btn btn-warning" id="archivar" name="activar">
 
 
                             </div>

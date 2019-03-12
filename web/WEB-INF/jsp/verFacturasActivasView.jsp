@@ -19,69 +19,7 @@
             getVerEntidad();
 
 
-            /*********************************  *******************************/
-            /*LO PONEMOS DENTRO DEL READY PORQUE TIENE QUE INICARSE AL CARGAR LA PAGINA*/
-
-//            var modalConfirm = function (callback) {
-//
-//                $("#modal-btn-si").on("click", function () {
-//                    callback(true);
-//                    $("#mi-modal").modal('hide');
-//                });
-//
-//                $("#modal-btn-no").on("click", function () {
-//                    callback(false);
-//                    $("#mi-modal").modal('hide');
-//                });
-//            };
-//
-//            modalConfirm(function (confirm) {
-//                if (confirm) {
-//                    //Acciones si el usuario confirma
-//                    $("#result").html("CONFIRMADO");
-//                } else {
-//                    //Acciones si el usuario no confirma
-//                    $("#result").html("NO CONFIRMADO");
-//                }
-//            });
-
-            /*************************************    ************************************/
-
             var userLang = navigator.language || navigator.userLanguage;
-
-            //Guarda los datos introducidos en el formulario 
-            $("#submit").click(function () {
-
-                if (window.XMLHttpRequest) { //mozilla
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                var myObj = {};
-                myObj["id_entidad"] = $("#id_entidad").val().trim();
-                myObj["distinct_code"] = $("#comboEntidad").val().trim();
-                myObj["nombre_entidad"] = $("#nombre_entidad").val().trim();
-                myObj["nombre_contacto"] = $("#nombre_contacto").val().trim();
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/verFacturasController/nuevoFactura.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            });
-
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
             $("#comboEntidad").change(function () {
@@ -234,7 +172,7 @@
                                                                     <td>" + aux2.col8.substring(0, 10) + "</td>         \n\
                                                                     <td>" + aux2.col6 + '€' + "</td>         \n\
                                                                     <td>" + aux2.col9 + "</td>         \n\
-                                                                    <td><a class='btn btn-primary' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ aux2.col1 +
+                                                                    <td><a class='btn btn-primary' target ='_blank' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact="+ aux2.col1 +
                                                                     "&idCliente="+aux2.col2+"&idEmpresa="+aux2.col4+"&idEstado="+aux2.col9+"'>Detalle</a>\n\</td> \n\\n\
                         < /tr>");
                     });
@@ -258,7 +196,6 @@
         ;
 
 
-
     </script>
 
 
@@ -269,7 +206,7 @@
                     <div class="form-area">  
                         <form role="form">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">VER FACTURAS ENTIDAD</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">VER FACTURAS ACTIVAS ENTIDAD</h3>                           
 
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para entidades-->

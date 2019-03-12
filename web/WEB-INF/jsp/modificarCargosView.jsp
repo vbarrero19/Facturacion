@@ -36,7 +36,15 @@
             getEntidadEmpresa(idEmpresa);
             getCargo(idCargo, idTipoImp);
 
+            alert(idCliente);
             var userLang = navigator.language || navigator.userLanguage;
+
+            
+
+            $("#volver").click(function () {
+                cli = $("#id_entidad").text();
+                alert(cli);
+            });
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
             //Constructor para el calendario Fecha-Cargo.
@@ -75,7 +83,7 @@
 //                myObj["id_item"] = "1"; //$("#id_cargo").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").text();
                 myObj["descripcion"] = $("#descripcion").text();
-                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();                
+                myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
                 myObj["cuenta"] = $("#cuenta").val().trim();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
@@ -88,7 +96,7 @@
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
                 var valorImp = arrayDeCadenas[1];
-                
+
                 //Grabamos el tipo de impuesto
                 myObj["impuesto"] = tipoImp;
 
@@ -130,8 +138,9 @@
                 });
             });
         })
-                ;
+        ;
 
+        //Funcion para obtener los valores pasados por URL
         function obtenerValorParametro(sParametroNombre) {
             var sPaginaURL = window.location.search.substring(1);
             var sURLVariables = sPaginaURL.split('&');
@@ -294,10 +303,10 @@
                     //Identificamos el combo
                     select = document.getElementById('comboTipoImpuesto');
                     //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = "0,0";
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
+//                    var opt = document.createElement('option');
+//                    opt.value = "0,0";
+//                    opt.innerHTML = "Seleccionar";
+//                    select.appendChild(opt);
 
                     //Lo vamos cargando
                     tipoImpuesto.forEach(function (valor, indice) {
@@ -329,7 +338,7 @@
             //Se ejecuta al cambiar el contenido del importe
             $("#importe").keyup(function () {
                 //Llamamos a la funcion calcularTotal() que calcula el total del cargo
-                calcularTotal();                
+                calcularTotal();
             });
 
             //Se ejecuta al cambiar el contenido de la cantidad
@@ -347,6 +356,7 @@
         }
         ;
 
+        //Funcion que realiza los calculos al modificar la cantidad, importe o impuesto
         function calcularTotal() {
             //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
             tipoImpuesto = $("#comboTipoImpuesto").val();
@@ -363,27 +373,26 @@
             total = $("#total").val();
 
             //Quitamos decimales total sin impuestos
-            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2); 
+            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
             //Quitamos decimales al valorImpuestos
             var valImp = parseFloat(Math.round((subTot * valorImp / 100) * 100) / 100).toFixed(2);
             //Calculamos el total con impuestos
-            var valTot = (subtotal * valorImp / 100) + subtotal;            
+            var valTot = (subtotal * valorImp / 100) + subtotal;
             //Quitamos decimales al total con impuestos
-            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);         
-            
+            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);
+
             if (tipoImp == 0) {
                 $("#valorImpuesto").val(0);
                 $("#total").val(subTot);
                 //$("#total").val(importe * cantidad);
             } else {
                 $("#valorImpuesto").val(valImp);
-                $("#total").val(valTotImp);                
+                $("#total").val(valTotImp);
                 //$("#valorImpuesto").val(subtotal * valorImp / 100);
                 //$("#total").val((subtotal * valorImp / 100) + subtotal);
             }
         }
         ;
-
 
 
     </script>
@@ -552,9 +561,11 @@
                                 </script>
                             </div>
 
-                            <button type="button" id="modificarCargos" name="modificarCargos" class="btn btn-primary pull-right">Modificar</button>
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-                            <a href="<c:url value='/verCargosController/start.htm'/>" class="btn btn-info" role="button">Volver</a> 
+                            <button type="button" id="modificarCargos" name="modificarCargos" class="btn btn-warning pull-right">Modificar</button>
+                            <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>   
+                            
+                            <a href="javaScript:window.close();" class="btn btn-info" role="button">Cerrar</a> 
+                                                    
 
                         </form>
                     </div>

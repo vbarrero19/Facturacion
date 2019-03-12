@@ -30,12 +30,14 @@
             getItem(); //Llenamos el combo de items
             //getTipoImpuesto();
 
+
             //Mostramos la fecha actual
             var f = new Date();
             var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
 
             var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-            //alert(fecha)
+
+
 
             $('#puntual').show();
             $('#periodico').hide();
@@ -54,25 +56,26 @@
             //tratando de omstrar fechas dinamicamente            
             var mes = f.getMonth();
             var nombreMes = meses[f.getMonth()];
+            $('#anio').text(f.getFullYear());
             //alert(nombreMes);
             //cargamos de forma dinamica la tabla
             for (var i = 0; i < 12; i = i + 6) {
                 $('#tbody-tabla-meses').append(" <tr>\n\
-                                            <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+1) + "' > </td>              \n\
+                                            <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 1) + "' > </td>              \n\
                                             <td>" + meses[i] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+2) + "' > </td>              \n\
+                                            <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 2) + "' > </td>              \n\
                                             <td>" + meses[i + 1] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+3) + "' > </td>              \n\
+                                            <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 3) + "' > </td>              \n\
                                             <td>" + meses[i + 2] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+4) + "' > </td>              \n\
+                                            <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 4) + "' > </td>              \n\
                                             <td>" + meses[i + 3] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+5) + "' > </td>              \n\
+                                            <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 5) + "' > </td>              \n\
                                             <td>" + meses[i + 4] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i+6) + "' > </td>              \n\
+                                            <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 6) + "' > </td>              \n\
                                             <td>" + meses[i + 5] + "</td>          \n\ \n\
                                         </tr>");
             }
-            
+
 //Asi pasabamos los nombre de los meses al value
 //<td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + meses[i] + "' > </td> <td>" + meses[i] + "</td>          \n\ \n\
 
@@ -123,12 +126,9 @@
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
 
-
-
                 //Codigo para introducir el tipo de impuesto
                 //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
                 tipoImpuesto = $("#comboTipoImpuesto").val();
-
                 //separamos el id y el valor
                 arrayDeCadenas = tipoImpuesto.split(",");
                 var tipoImp = arrayDeCadenas[0];
@@ -139,10 +139,41 @@
 
                 myObj["total"] = $("#total").val().trim();
 
-                //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
-                myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
-                //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
-                myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+
+                //Codigo para guardar laperiodicidad. Si esta marcado puntual (1)
+                //guardamos las fechas de los input. Si no guardamos los valores de los checkBox
+                if ($("input[name=exampleRadios]:checked").val() == 1) {
+
+                    //dentro de fecha cargo tenemos que coger el valor que hay dentro de input.
+                    myObj["fecha_cargo"] = $("#fecha_cargo input").val().trim();
+                    //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
+                    myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
+
+
+                } else {
+                    //Recuperamos los value de los checkBox marcados. Los pasamos al controlador 
+                    //en las varables de las fechas.
+                    var selected = '';
+                    $('#formid input[type=checkbox]').each(function () {
+                        if (this.checked) {
+                            selected += $(this).val() + ',';
+                        }
+                    });
+
+                    if (selected != '') {
+                        alert('Has seleccionado: ' + selected);
+                    } else {
+                        alert('Debes seleccionar al menos una opción.');
+                    }
+                    ;
+
+                    //Para pasar la cadena con los meses seleccionados al controlador. Lo
+                    ////hacemos e las dos fechas para que no de errores por ir vacio                    
+                    myObj["fecha_cargo"] = selected;
+                    myObj["fecha_vencimiento"] = selected;
+
+                }
+                ;
 
                 //Estas dos tendran valores fijos a true y 0
                 //myObj["estado"] = $("#estado").val().trim();
@@ -153,6 +184,7 @@
                 myObj["id_empresa"] = $("#id_entidad2").text();
 
                 myObj["valor_impuesto"] = $("#valorImpuesto").val().trim();
+                myObj["periodicidad"] = $("input[name=exampleRadios]:checked").val();
 
 
                 var json = JSON.stringify(myObj);
@@ -173,54 +205,6 @@
                         console.log(thrownError);
                     }
                 });
-            });
-
-
-            $('#grabarCargos2').click(function () {
-                var selected = '';
-                $('#formid input[type=checkbox]').each(function () {
-                    if (this.checked) {
-                        selected += $(this).val() + ',';
-                    }
-                });
-
-                if (selected != '')
-                    alert('Has seleccionado: ' + selected);
-                else
-                    alert('Debes seleccionar al menos una opción.');
-                
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                var myObj = {};
-                myObj["col1"] = selected;
-
-
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/cargosController/nuevoCargo2.htm',
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                        //Refrescando la pantalla 
-                        location.reload();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-
-
             });
 
             //Muestra datos de la entidadCliente al seleccionar algo en el combo
@@ -388,10 +372,12 @@
                                 //Si se elige un item activamos el combo del tipo-valor de impuesto                                
                                 document.getElementById("comboTipoImpuesto").disabled = false;
                                 document.getElementById("comboTipoImpuesto").value = "1,0";
+                                $("#valorImpuesto").val(0);
+                                $("#cantidad").val(1);
 
                                 //Funcion para cargar los tipos de item en un combo
                                 cargarTipoItem(aux2.id_tipo_item);
-                                alert(aux2.id_tipo_item);
+                                //alert(aux2.id_tipo_item);
                                 getTipoImpuesto()
 
                             });
@@ -414,6 +400,8 @@
                     $("#estado").val("");
                     document.getElementById("comboTipoImpuesto").disabled = true;
                     document.getElementById("comboTipoImpuesto").value = "1,0";
+                    $("#valorImpuesto").val(0);
+                    $("#cantidad").val(1);
                 }
 
             });
@@ -626,7 +614,7 @@
 //                    opt.innerHTML = "Seleccionar";
 //                    select.appendChild(opt);
 
-                    //Lo vamos cargando
+                    //Lo vamos cargando, dejamos seleccionada la opcion 1
                     tipoImpuesto.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasamos a TipoImpuesto
                         var tipoImpuesto2 = JSON.parse(valor);
@@ -777,7 +765,7 @@
             {
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
-            alert(idTipoItem);
+            //alert(idTipoItem);
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
@@ -1072,9 +1060,10 @@
 
                                             <thead class="thead-dark">                                            
                                                 <tr>
-                                                    <th scope="col">#</th>
                                                     <th scope="col">Mes</th>
-
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Año</th>
+                                                    <th scope="col" id="anio"></th>
                                                 </tr>                                            
                                             </thead>
 
@@ -1090,7 +1079,7 @@
 
                             <!--<button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>-->
 
-                            <button type="button" id="grabarCargos2" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
+                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
 
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
 

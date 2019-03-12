@@ -29,17 +29,31 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class verFacturasController {
 
-    @RequestMapping("/verFacturasController/start.htm")
-    public ModelAndView start(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        ModelAndView mv = new ModelAndView("verFacturasView");
+    @RequestMapping("/verFacturasController/startActivas.htm")
+    public ModelAndView startActivas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("verFacturasActivasView");
+
+        return mv;
+    }
+    
+    @RequestMapping("/verFacturasController/startArchivadas.htm")
+    public ModelAndView startArchivadas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("verFacturasArchivadasView");
 
         return mv;
     }
 
     //Mostramos una factura en detalle en la pagina verDetalleFacturaView
     @RequestMapping("/verFacturasController/verDetalleFactura.htm")
-    public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public ModelAndView starVerDetalleFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("verDetalleFacturaView");
+
+        return mv;
+    }
+    
+    @RequestMapping("/verFacturasController/verDetalleFacturaArchivada.htm")
+    public ModelAndView starVerDetalleFacturaArchivada(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        ModelAndView mv = new ModelAndView("verDetalleFacturaArchivadaView");
 
         return mv;
     }
@@ -182,7 +196,6 @@ public class verFacturasController {
 //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
     @RequestMapping("/verFacturasController/getDatosFactura.htm")
     @ResponseBody
-//    public String cargarDatosFactura(@RequestBody Facturas facturas, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
     public String cargarDatosFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
 
@@ -203,6 +216,71 @@ public class verFacturasController {
             stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n" +
                                          "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n" +
                                          "WHERE archivada = 0 and id_cliente = ?");
+
+            stAux.setInt(1, idCliente);
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+
+    //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
+    @RequestMapping("/verFacturasController/getDatosFacturaArchivadas.htm")
+    @ResponseBody
+    public String cargarDatosFacturaArchivadas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        /*recogemos el valor del parametro pasado por url desde el jsp, lo recogemos con hsr.getParameter("idCliente")
+         */
+        int idCliente = Integer.parseInt(hsr.getParameter("idCliente"));
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n" +
+                                         "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n" +
+                                         "WHERE archivada = 1 and id_cliente = ?");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();

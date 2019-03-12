@@ -58,59 +58,160 @@ public class CargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
-                    + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto)"
-                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            String periodicidad = cargos.getPeriodicidad();
+            if (periodicidad.equals("1")) {
 
-            stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
-            stAux.setString(2, cargos.getAbreviatura());
-            stAux.setString(3, cargos.getDescripcion());
-            stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item()));
-            stAux.setString(5, cargos.getCuenta());
+                stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
+                        + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad)"
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            //Quitamos decimales al importe
-            Double importe = Double.parseDouble(cargos.getImporte());
-            Double importeDecimales = Math.round(importe * 100d) / 100d;
-            stAux.setDouble(6, importeDecimales);
+                stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
+                stAux.setString(2, cargos.getAbreviatura());
+                stAux.setString(3, cargos.getDescripcion());
+                stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item()));
+                stAux.setString(5, cargos.getCuenta());
 
-            //Quitamos decimales a la cantidad
-            Double cantidad = Double.parseDouble(cargos.getCantidad());
-            Double cantidadDecimales = Math.round(cantidad * 100d) / 100d;
-            stAux.setDouble(7, cantidadDecimales);
+                //Quitamos decimales al importe
+                Double importe = Double.parseDouble(cargos.getImporte());
+                Double importeDecimales = Math.round(importe * 100d) / 100d;
+                stAux.setDouble(6, importeDecimales);
 
-            stAux.setInt(8, Integer.parseInt(cargos.getImpuesto()));
+                //Quitamos decimales a la cantidad
+                Double cantidad = Double.parseDouble(cargos.getCantidad());
+                Double cantidadDecimales = Math.round(cantidad * 100d) / 100d;
+                stAux.setDouble(7, cantidadDecimales);
 
-            //Quitamos decimales al total
-            Double total = Double.parseDouble(cargos.getTotal());
-            Double totalDecimales = Math.round(total * 100d) / 100d;
-            stAux.setDouble(9, totalDecimales);
+                stAux.setInt(8, Integer.parseInt(cargos.getImpuesto()));
 
-            String test = cargos.getFecha_cargo();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date parsedDate = dateFormat.parse(test);
-            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+                //Quitamos decimales al total
+                Double total = Double.parseDouble(cargos.getTotal());
+                Double totalDecimales = Math.round(total * 100d) / 100d;
+                stAux.setDouble(9, totalDecimales);
 
-            stAux.setTimestamp(10, timestamp);
+                String test = cargos.getFecha_cargo();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate = dateFormat.parse(test);
+                Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 
-            String test2 = cargos.getFecha_vencimiento();
-            SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-            Date parsedDate2 = dateFormat2.parse(test2);
-            Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+                stAux.setTimestamp(10, timestamp);
 
-            stAux.setTimestamp(11, timestamp2);
+                String test2 = cargos.getFecha_vencimiento();
+                SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsedDate2 = dateFormat2.parse(test2);
+                Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
-            stAux.setBoolean(12, true);
-            stAux.setInt(13, 0);
+                stAux.setTimestamp(11, timestamp2);
 
-            stAux.setInt(14, Integer.parseInt(cargos.getId_cliente()));
-            stAux.setInt(15, Integer.parseInt(cargos.getId_empresa()));
+                stAux.setBoolean(12, true);
+                stAux.setInt(13, 0);
 
-            //Quitamos decimales al valor_impuesto
-            Double valor = Double.parseDouble(cargos.getValor_impuesto());
-            Double valorDecimales = Math.round(valor * 100d) / 100d;
-            stAux.setDouble(16, valorDecimales);
+                stAux.setInt(14, Integer.parseInt(cargos.getId_cliente()));
+                stAux.setInt(15, Integer.parseInt(cargos.getId_empresa()));
 
-            stAux.executeUpdate();
+                //Quitamos decimales al valor_impuesto
+                Double valor = Double.parseDouble(cargos.getValor_impuesto());
+                Double valorDecimales = Math.round(valor * 100d) / 100d;
+                stAux.setDouble(16, valorDecimales);
+
+                stAux.setInt(17, Integer.parseInt(cargos.getPeriodicidad()));
+
+                stAux.executeUpdate();
+
+            } else {
+
+                String cadena = cargos.getFecha_cargo();
+                String cadenaNew = cadena.substring(0, cadena.length() - 1);
+                String[] parts = cadenaNew.split(",");
+
+                for (int x = 0; x < parts.length; x++) {
+
+                    stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
+                            + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad)"
+                            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+                    stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
+                    stAux.setString(2, cargos.getAbreviatura());
+                    stAux.setString(3, cargos.getDescripcion());
+                    stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item()));
+                    stAux.setString(5, cargos.getCuenta());
+
+                    //Quitamos decimales al importe
+                    Double importe = Double.parseDouble(cargos.getImporte());
+                    Double importeDecimales = Math.round(importe * 100d) / 100d;
+                    stAux.setDouble(6, importeDecimales);
+
+                    //Quitamos decimales a la cantidad
+                    Double cantidad = Double.parseDouble(cargos.getCantidad());
+                    Double cantidadDecimales = Math.round(cantidad * 100d) / 100d;
+                    stAux.setDouble(7, cantidadDecimales);
+
+                    stAux.setInt(8, Integer.parseInt(cargos.getImpuesto()));
+
+                    //Quitamos decimales al total
+                    Double total = Double.parseDouble(cargos.getTotal());
+                    Double totalDecimales = Math.round(total * 100d) / 100d;
+                    stAux.setDouble(9, totalDecimales);
+
+                    /**
+                     * *****CODIGO PARA LAS FECHAS ********
+                     */
+                    String numeroMes = parts[x];
+                    Formatter obj = new Formatter();
+                    String valorMes = String.valueOf(obj.format("%02d", Integer.parseInt(numeroMes)));
+
+//                    Date fechaActual = new Date();
+//                    DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+//                    DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+
+                    //Fecha actual desglosada:
+                    Calendar fecha = Calendar.getInstance();
+                    int ano = fecha.get(Calendar.YEAR);
+                    //int mes = fecha.get(Calendar.MONTH) + 1;
+                    int dia = fecha.get(Calendar.DAY_OF_MONTH);
+
+                    
+                    //String primerDia = String.valueOf(obj.format("%02d", dia));                    
+                    String fechaCargo = ano + "-" + valorMes + "-01";// + primerDia;
+                    
+                    //Ultimo dia de mes
+                    fecha.set(ano, (Integer.parseInt(valorMes) - 1), 1);
+                    int ultimoDiaMes = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
+                    String fechaVencimiento = ano + "-" + valorMes + "-" + ultimoDiaMes;
+                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parsedDate = dateFormat.parse(fechaCargo);
+                    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+                    stAux.setTimestamp(10, timestamp);
+
+                    //String test2 = cargos.getFecha_vencimiento();
+                    SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                    Date parsedDate2 = dateFormat2.parse(fechaVencimiento);
+                    Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
+
+                    stAux.setTimestamp(11, timestamp2);
+                    
+                    /*
+                     * *****FIN CODIGO PARA LAS FECHAS ********
+                     */
+                    stAux.setBoolean(12, true);
+                    stAux.setInt(13, 0);
+
+                    stAux.setInt(14, Integer.parseInt(cargos.getId_cliente()));
+                    stAux.setInt(15, Integer.parseInt(cargos.getId_empresa()));
+
+                    //Quitamos decimales al valor_impuesto
+                    Double valor = Double.parseDouble(cargos.getValor_impuesto());
+                    Double valorDecimales = Math.round(valor * 100d) / 100d;
+                    stAux.setDouble(16, valorDecimales);
+
+                    stAux.setInt(17, Integer.parseInt(cargos.getPeriodicidad()));
+
+                    stAux.executeUpdate();
+
+                }
+
+            }
 
             resp = "Correcto";
 
@@ -174,15 +275,15 @@ public class CargosController {
             for (int x = 0; x < parts.length; x++) {
 
                 String numeroMes = parts[x];
-                
+
                 Formatter obj = new Formatter();
 
-                String valor = String.valueOf(obj.format("%02d", Integer.parseInt(numeroMes)));
+                String valorMes = String.valueOf(obj.format("%02d", Integer.parseInt(numeroMes)));
 
                 cont++;
 
                 Date fechaActual = new Date();
-                DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");                
+                DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
                 DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
 
@@ -191,12 +292,12 @@ public class CargosController {
                 int ano = fecha.get(Calendar.YEAR);
                 //int mes = fecha.get(Calendar.MONTH) + 1;
                 int dia = fecha.get(Calendar.DAY_OF_MONTH);
-                            
+
                 //Ultimo dia de mes
-                fecha.set(2014, (Integer.parseInt(valor)-1), 1);
+                fecha.set(2014, (Integer.parseInt(valorMes) - 1), 1);
                 int ultimoDiaMes = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
-                
-                String fechaCargo = ano + "-" + valor + "-" + ultimoDiaMes;
+
+                String fechaCargo = ano + "-" + valorMes + "-" + ultimoDiaMes;
 
                 stAux = con.prepareStatement("insert into cargos (abreviatura) values('" + fechaCargo + "');");
                 stAux.executeUpdate();

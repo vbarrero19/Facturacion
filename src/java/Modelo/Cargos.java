@@ -20,11 +20,17 @@ public class Cargos {
     private String id_cliente; 
     private String id_empresa; 
     private String valor_impuesto;
+    private String periodicidad;
 
     public Cargos() {
     }
 
-    public Cargos(String id_cargo, String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String cantidad, String impuesto, String total, String fecha_cargo, String fecha_vencimiento, String estado, String id_factura, String id_cliente, String id_empresa, String valor_impuesto) {
+    public Cargos(String id_cliente, String id_empresa) {
+        this.id_cliente = id_cliente;
+        this.id_empresa = id_empresa;
+    }
+
+    public Cargos(String id_cargo, String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String cantidad, String impuesto, String total, String fecha_cargo, String fecha_vencimiento, String estado, String id_factura, String id_cliente, String id_empresa, String valor_impuesto, String periodicidad) {
         this.id_cargo = id_cargo;
         this.id_item = id_item;
         this.abreviatura = abreviatura;
@@ -42,12 +48,8 @@ public class Cargos {
         this.id_cliente = id_cliente;
         this.id_empresa = id_empresa;
         this.valor_impuesto = valor_impuesto;
-    }
-        
-    public Cargos(String id_cliente, String id_empresa) {
-        this.id_cliente = id_cliente;
-        this.id_empresa = id_empresa;
-    }
+        this.periodicidad = periodicidad;
+    }    
 
     public Cargos(String id_cargo) {
         this.id_cargo = id_cargo;
@@ -188,6 +190,14 @@ public class Cargos {
 
     public void setValor_impuesto(String valor_impuesto) {
         this.valor_impuesto = valor_impuesto;
+    }
+
+    public String getPeriodicidad() {
+        return periodicidad;
+    }
+
+    public void setPeriodicidad(String periodicidad) {
+        this.periodicidad = periodicidad;
     }
     
 }
