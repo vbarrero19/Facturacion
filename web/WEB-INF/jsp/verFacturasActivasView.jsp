@@ -219,19 +219,20 @@
 //            myObj["col1"] = $("#idCargoHide").val();
 //            myObj["col2"] = $("#idItemHide").val();
 
-            alert($("#idFacturaHide").val());
 
-            var json = JSON.stringify(myObj);
+            var fact = $("#idFacturaHide").val();            
+
+//            var json = JSON.stringify(myObj);
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'POST',
-                url: '/Facturacion/verFacturasController/archivarFactura.htm?factura=' + idFactura,
-                data: json,
-                datatype: "json",
-                contentType: "application/json",
+                url: '/Facturacion/verFacturasController/archivarFactura.htm?factura=' + fact,
+//                data: json,
+//                datatype: "json",
+//                contentType: "application/json",
                 success: function (data) {
-                    $("#tbody-tabla-cargos").children().eq($("#idFilaHide").val()).hide();
-                    alert("Ocultada la fila correctamente");
+                    $("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).hide();
+                    //alert("Ocultada la fila correctamente");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -301,7 +302,7 @@
                                             </tr>                                            
                                         </thead>
 
-                                        <tbody id="tbody-tabla-entidades">
+                                        <tbody id="tbody-tabla-facturas">
 
                                         </tbody>
                                     </table>

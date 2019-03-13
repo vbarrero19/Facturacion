@@ -513,7 +513,7 @@
                             <div class="col-xs-12" id="datos">
 
                                 <div class="col-xs-3 form-group">
-                                    <label for="comboClientes">Distincy Code Empresa</label>
+                                    <label for="comboClientes">Distincy Code Empresa Emisora</label>
                                     <div class="form-group-combo">
                                         <!--Combo para clientes-->
                                         <select class="form-control" id="comboEmpresas" name="comboClientes">
