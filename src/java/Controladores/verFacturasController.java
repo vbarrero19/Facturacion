@@ -68,7 +68,6 @@ public class verFacturasController {
     /*CARGAMOS EL COMBO PARA VER LAS EMPRESAS*/
     @RequestMapping("/verFacturasController/getVerEntidad.htm")
     @ResponseBody
-
     public String cargarComboVerEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         //Entidades resourceLoad = new Entidades();
@@ -95,11 +94,11 @@ public class verFacturasController {
                         + " on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad "
                         + "where upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in (select distinct id_cliente from facturas where archivada = 0)");
 
-            } else {
+            } else if (estado.equals("archivada")){
 
                 rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t"
                         + " on e.id_entidad = t.id_entidad inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad "
-                        + "where upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in (select distinct id_cliente from facturas where archivada = 1)");
+                        + "where upper(te.tipo_entidad) = upper('cliente') and e.id_entidad in (select distinct id_cliente from facturas where archivada = 1 and anulada = 0)");
             }
 
             /*MIENTRAS QUE TENGAMOS REGISTRO, CADA REGISTRO DEL rs LO CONVERTIMOS A STRING CON JSON
@@ -293,7 +292,7 @@ public class verFacturasController {
 
             stAux = con.prepareStatement("SELECT f.id_factura, f.id_cliente, en.distinct_code, f.id_empresa, e.distinct_code, f.total_factura, f.fecha_emision, f.fecha_vencimiento, ef.estado FROM facturas f inner join \n"
                     + "entidad e on f.id_empresa = e.id_entidad inner join tipo_estado_factura ef on f.id_estado = ef.id_estado inner join entidad en on f.id_cliente = en.id_entidad\n"
-                    + "WHERE archivada = 1 and id_cliente = ? order by f.fecha_emision");
+                    + "WHERE archivada = 1 and anulada = 0 and id_cliente = ? order by f.fecha_emision");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();
@@ -613,7 +612,7 @@ public class verFacturasController {
             int afectados = stAux.executeUpdate();
 
             if (afectados == 1) {
-                resp = "correcto";
+                resp = "Factura archivada";
             }
 
         } catch (SQLException ex) {
@@ -646,7 +645,72 @@ public class verFacturasController {
         }
         return resp;
 
-    }
+    }   
+    
+    //Se utiliza para cargar los datos de la empresa en la pagina verDetalleFacturaView
+    @RequestMapping("/verFacturasController/anularFactura.htm")
+    @ResponseBody
+    public String anularFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("empresa")   */
+        int idFactura = Integer.parseInt(hsr.getParameter("factura"));
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("UPDATE facturas set archivada = 1, anulada = 1 WHERE id_factura = ?");                   
+
+            stAux.setInt(1, idFactura);
+            int afectados = stAux.executeUpdate();
+            
+            stAux = con.prepareStatement("update cargos set id_factura = 0 where id_factura = ?");   
+            stAux.setInt(1, idFactura);
+            int afectados2 = stAux.executeUpdate();
+
+            if (afectados == 1 && afectados2 > 0) {
+                resp = "Factura anulada";
+            }
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }    
     
     @RequestMapping("/verFacturasController/getDatosEstado.htm")
     @ResponseBody

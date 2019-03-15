@@ -111,7 +111,7 @@
         ;
 
 
-        //Funcion paracargar los datos del cliente
+        //Funcion para cargar los datos del cliente
         function cargarDatosCliente(idCliente) {
 
             if (window.XMLHttpRequest) //mozilla

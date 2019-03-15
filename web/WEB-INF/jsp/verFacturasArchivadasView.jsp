@@ -75,6 +75,7 @@
                 verListaFacturasArchivadas(idEntidad);
             });
         });
+        
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
         function getVerEntidad() {
 

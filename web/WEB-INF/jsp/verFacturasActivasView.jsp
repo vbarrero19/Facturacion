@@ -53,10 +53,10 @@
                                 var aux2 = JSON.parse(valor);
                                 //Mostramos los datos en la cajas de texto
                                 $("#id_entidad").val(aux2.id_entidad);
-                                
+
                                 $("#idEntidadRecargar").val(aux2.id_entidad);
-                                
-                                
+
+
                                 $("#nombre_entidad").val(aux2.nombre_entidad);
                                 $("#nombre_contacto").val(aux2.nombre_contacto);
                             });
@@ -179,16 +179,36 @@
                                                                     <td><a class='btn btn-success' target ='_blank' href='/Facturacion/verFacturasController/verDetalleFactura.htm?idFact=" + aux2.col1 +
                                 "&idCliente=" + aux2.col2 + "&idEmpresa=" + aux2.col4 + "&idEstado=" + aux2.col9 + "'>Detalle</a>\n\</td> \n\\n\
                 \n\
-                                                                    <td><button type='button' class='btn miBotonEstado btn-warning'  data-idFactura='" + aux2.col1 + "' data-idEstado='" + aux2.col9 +
+                                                                    <td><button type='button' class='btn miBotonEstado btn-info'  data-idFactura='" + aux2.col1 + "' data-idEstado='" + aux2.col9 +
                                 "' data-idIndice='" + indice + "'>Estado</button></td>\n\
                 \n\
-                                                                    <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idFactura='" + aux2.col1 + "' data-idCliente='" + aux2.col2 +
+                \n\                                                 <td><button type='button' class='btn myModalAnular btn-danger'  data-idFactura='" + aux2.col1 + "' data-idEstado='" + aux2.col9 +
+                                "' data-idIndice='" + indice + "'>Anular</button></td>\n\
+                \n\
+                                                                    <td><button type='button' class='btn miBotonEliminar btn-warning'  data-idFactura='" + aux2.col1 + "' data-idCliente='" + aux2.col2 +
                                 "' data-idIndice='" + indice + "'>Archivar</button></td>\n\
                                                         </tr>");
                     });
 
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBotonEliminar*/
                     $(document).ready(function () {
+
+                        $(".myModalAnular").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idAnularFacturaHide").val($(this).attr("data-idFactura"));
+                            $("#idAnularClienteHide").val($(this).attr("data-idCliente"));
+                            $("#idAnularFilaHide").val($(this).attr("data-idIndice"));
+
+                            /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreviatura*/
+                            $("#eliminar").text("Desea ANULAR la factura: " + $("#id" + $(this).attr("data-idIndice")).text());
+                            $("#advertencia").text("Esto implica BORRAR la factura y volver a activar todos los cargos");
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalAnular").modal();
+                        });
+
                         $(".miBotonEliminar").click(function () {
 
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
@@ -204,18 +224,17 @@
                             $("#myModalEliminar").modal();
                         });
 
-
                         $(".miBotonEstado").click(function () {
 
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
-                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/                            
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
                             $("#idFacturaEstadoHide").val($(this).attr("data-idFactura"));
                             $("#idEstadoHide").val($(this).attr("data-idEstado"));
-                            $("#idFilaEstadoHide").val($(this).attr("data-idIndice")); 
-                           
+                            $("#idFilaEstadoHide").val($(this).attr("data-idIndice"));
+
 
                             /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreviatura*/
-                            $("#estadoFact").text("Desea cambiar el estado de la factura: " + $("#idFacturaEstadoHide").val());                         
+                            $("#estadoFact").text("Desea cambiar el estado de la factura: " + $("#idFacturaEstadoHide").val());
 
 
                             if (window.XMLHttpRequest) //mozilla
@@ -229,7 +248,6 @@
                             $.ajax({
                                 //Usamos GET ya que recibimos.
                                 type: 'GET',
-                                
                                 url: '/Facturacion/verFacturasController/getDatosEstado.htm',
                                 success: function (data) {
 
@@ -238,12 +256,12 @@
                                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                                     var aux = JSON.parse(data);
                                     $('#tbody-tabla-estados').empty();
-                                    
+
 //                                    var table = $('#table table-striped').DataTable();
                                     aux.forEach(function (valor, indice) {
                                         //Cada objeto esta en String 
                                         var aux2 = JSON.parse(valor);
-                                        
+
                                         //Comprobaciones para dejar seleccionado el estado
                                         if (aux2.col2 == $("#idEstadoHide").val()) {
 
@@ -251,8 +269,8 @@
                                                                     <td id='id" + (indice + 1) + "'><input type='radio' name='estado' value='" + aux2.col1 + "' checked/></td>         \n\
                                                                     <td>" + aux2.col2 + "</td>\n\
                                                                 </tr>");
-                                                                //Guardamos el texto del estado en una caja de texto oculta
-                                                                $("#TextoEstadoNuevoHide").val(aux2.col2)
+                                            //Guardamos el texto del estado en una caja de texto oculta
+                                            $("#TextoEstadoNuevoHide").val(aux2.col2)
                                         } else {
                                             $('#tbody-tabla-estados').append(" <tr>\n\   \n\
                                                                     <td id='id" + (indice + 1) + "'><input type='radio' name='estado' value='" + aux2.col1 + "'/></td>         \n\
@@ -260,15 +278,15 @@
                                                                </tr>");
                                         }
                                     });
-                                    
-                                     $("#TextoEstadoNuevoHide").val()
+
+                                    $("#TextoEstadoNuevoHide").val()
 
                                     $(document).ready(function () {
                                         $("input[name=estado]").change(function () {
                                             $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
                                             //Guardamos el texto del estado en una caja de texto oculta
                                             $("#TextoEstadoNuevoHide").val($("#tbody-tabla-estados input:checked").parent().next().text());
-                                            
+
                                         });
                                     });
 
@@ -285,8 +303,6 @@
                         });
 
 
-
-
                     });
 
                 },
@@ -296,6 +312,42 @@
                     console.log(thrownError);
                 }
             });
+        }
+        ;
+
+
+        function anularFactura() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var fact = $("#idAnularFacturaHide").val();
+            
+            alert(fact);
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Facturacion/verFacturasController/anularFactura.htm?factura=' + fact,
+                success: function (data) {
+
+                    alert(data);
+                    
+                    //Ocultamos la fila de la factura anulada
+                    $("#tbody-tabla-facturas").children().eq($("#idAnularFilaHide").val()).hide();
+                    //alert("Ocultada la fila correctamente");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
         }
         ;
 
@@ -312,13 +364,13 @@
 
 
             $.ajax({
-
                 type: 'POST',
                 url: '/Facturacion/verFacturasController/archivarFactura.htm?factura=' + fact,
-
                 success: function (data) {
-                    
-                    //$("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).hide();
+
+                    alert(data);
+
+                    $("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).hide();
                     //alert("Ocultada la fila correctamente");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -343,7 +395,7 @@
 
             var myObj = {};
             myObj["col1"] = $("#idFacturaEstadoHide").val();
-            myObj["col2"] = $("#EstadoNuevoHide").val();      
+            myObj["col2"] = $("#EstadoNuevoHide").val();
 
             var json = JSON.stringify(myObj);
             $.ajax({
@@ -354,16 +406,14 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    
+
                     var entidadRefrescar = $("#idEntidadRecargar").val();
-                    
-                    alert(entidadRefrescar);
-                    
+
                     verListaFacturas(entidadRefrescar);
 //                    //Cambiamos el texto de la celda del estado en la fila afectada
 //                    $("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).find(".est").text($("#TextoEstadoNuevoHide").val());
 //                    $("#idEstadoHide").val($("#TextoEstadoNuevoHide").val());
-                    
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -375,7 +425,7 @@
         }
         ;
 
-        
+
 
 
 
@@ -394,9 +444,9 @@
                             <div class="datos" class="col-xs-12">
                                 <!--Combo para entidades-->
                                 <div class="form-group col-xs-3">
-                                    
-                                    <input type="text" id="idEntidadRecargar" name="idFacturaRecargar">     
-                                            
+
+                                    <input type="hidden" id="idEntidadRecargar" name="idFacturaRecargar">     
+
                                     <label for="comboEntidad"> Entidad Distinct code </label>
                                     <div class="form-group-combo">                                        
                                         <select class="form-control" id="comboEntidad" name="comboEntidad">
@@ -435,6 +485,7 @@
                                                 <th scope="col">Estado</th>
                                                 <th scope="col">Detalle</th>
                                                 <th scope="col">Estado</th>
+                                                <th scope="col">Anular</th>
                                                 <th scope="col">Archivar</th>
                                             </tr>                                            
                                         </thead>
@@ -454,6 +505,35 @@
             </div>
         </div>  
     </div>
+
+    <!-- ventana emergente Anular-->
+    <div class="modal fade" id="myModalAnular" role="dialog">
+        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+        <input class="hidden" id="idAnularFacturaHide"/>
+        <input class="hidden" id="idAnularClienteHide"/>
+        <input class="hidden" id="idAnularFilaHide"/>
+
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Archivar Factura</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="eliminar"></p>       
+                    <p id="advertencia"></p>
+                </div>
+                <div class="modal-footer">
+                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="anularFactura()">Si</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- ventana emergente Archivar-->
     <div class="modal fade" id="myModalEliminar" role="dialog">
@@ -485,11 +565,11 @@
     <!-- ventana emergente Estado-->
     <div class="modal fade" id="myModalEstado" role="dialog">
         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-        <input  id="idFacturaEstadoHide"/>
-        <input  id="idEstadoHide"/>
-        <input  id="idFilaEstadoHide"/>
-        <input  id="EstadoNuevoHide"/>
-        <input  id="TextoEstadoNuevoHide"/>
+        <input class="hidden" id="idFacturaEstadoHide"/>
+        <input class="hidden" id="idEstadoHide"/>
+        <input class="hidden" id="idFilaEstadoHide"/>
+        <input class="hidden" id="EstadoNuevoHide"/>
+        <input class="hidden" id="TextoEstadoNuevoHide"/>
 
         <div class="modal-dialog">
 
