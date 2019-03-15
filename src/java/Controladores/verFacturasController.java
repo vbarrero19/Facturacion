@@ -461,6 +461,7 @@ public class verFacturasController {
 
     }
 
+    //Carga los datos de la factura en detalle factura
     @RequestMapping("/verFacturasController/cargarFactura.htm")
     @ResponseBody
     public String cargarFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -523,6 +524,7 @@ public class verFacturasController {
 
     }
 
+    //Carga los datos de los cargos en detalle factura
     @RequestMapping("/verFacturasController/cargarCargos.htm")
     @ResponseBody
     public String cargarCargos(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -645,5 +647,182 @@ public class verFacturasController {
         return resp;
 
     }
+    
+    @RequestMapping("/verFacturasController/getDatosEstado.htm")
+    @ResponseBody
+    public String getDatosEstado(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
 
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";        
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("SELECT id_estado, estado FROM tipo_estado_factura order by id_estado");   
+            
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    //Se utiliza para cargar los tipos de estados de las facturas en el modal
+    @RequestMapping("/verFacturasController/cambiarEstado.htm")
+    @ResponseBody
+    public String cambiarEstado(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("UPDATE facturas set id_estado = ? WHERE id_factura = ?");
+
+            stAux.setInt(1, Integer.parseInt(resource.getCol2()));            
+            stAux.setInt(2, Integer.parseInt(resource.getCol1()));                 
+            
+            int afectados = stAux.executeUpdate();
+
+            if (afectados == 1) {
+                resp = "correcto " + resource.getCol2();
+            }
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto" + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    //Se utiliza para refrescar el estado en verDetalleFactura
+    @RequestMapping("/verFacturasController/refrescarEstado.htm")
+    @ResponseBody
+    public String refrescarEstado(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            
+            stAux = con.prepareStatement("select estado from tipo_estado_factura where id_estado = ?");
+
+            stAux.setInt(1, Integer.parseInt(resource.getCol2()));      
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);            
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto" + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
 }
