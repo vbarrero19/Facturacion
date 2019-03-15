@@ -359,10 +359,10 @@
                     
                     alert(entidadRefrescar);
                     
-                    
-                    //Cambiamos el texto de la celda del estado en la fila afectada
-                    $("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).find(".est").text($("#TextoEstadoNuevoHide").val());
-                    $("#idEstadoHide").val($("#TextoEstadoNuevoHide").val());
+                    verListaFacturas(entidadRefrescar);
+//                    //Cambiamos el texto de la celda del estado en la fila afectada
+//                    $("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).find(".est").text($("#TextoEstadoNuevoHide").val());
+//                    $("#idEstadoHide").val($("#TextoEstadoNuevoHide").val());
                     
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
