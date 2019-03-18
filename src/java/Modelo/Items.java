@@ -7,28 +7,23 @@ public class Items  {
     private String id_item; 
     private String abreviatura;
     private String descripcion;
-    private String id_tipo_item;
-    private String cuenta;
+    private String id_tipo_item;    
     private String importe;
     private String estado;
+    private String id_cuenta;
 
     public Items() {
     }
 
-
-    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String cuenta, String importe, String estado) {
+    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String importe, String estado, String id_cuenta) {
         this.id_item = id_item;
         this.abreviatura = abreviatura;
         this.descripcion = descripcion;
         this.id_tipo_item = id_tipo_item;
-        this.cuenta = cuenta;
         this.importe = importe;
         this.estado = estado;
+        this.id_cuenta = id_cuenta;
     }
-    
-    
-    
-    
 
     public String getId_item() {
         return id_item;
@@ -61,15 +56,7 @@ public class Items  {
     public void setId_tipo_item(String id_tipo_item) {
         this.id_tipo_item = id_tipo_item;
     }
-
-    public String getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(String cuenta) {
-        this.cuenta = cuenta;
-    }
-
+    
     public String getImporte() {
         return importe;
     }
@@ -84,6 +71,14 @@ public class Items  {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getId_cuenta() {
+        return id_cuenta;
+    }
+
+    public void setId_cuenta(String id_cuenta) {
+        this.id_cuenta = id_cuenta;
     }
 
     

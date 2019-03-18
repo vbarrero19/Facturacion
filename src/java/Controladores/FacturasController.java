@@ -62,8 +62,8 @@ public class FacturasController {
             con = pool_local.getConnection();
 
             //Insertamos una nueva factura
-            stAux = con.prepareStatement("INSERT INTO facturas (id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado, archivada)"
-                    + " VALUES (?,?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO facturas (id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado, archivada, anulada)"
+                    + " VALUES (?,?,?,?,?,?,?,?)");
 
             stAux.setInt(1, Integer.parseInt(facturas.getId_cliente()));
             stAux.setInt(2, Integer.parseInt(facturas.getId_empresa()));
@@ -87,6 +87,7 @@ public class FacturasController {
             
             stAux.setInt(6, Integer.parseInt(facturas.getId_estado()));
             stAux.setInt(7, Integer.parseInt(facturas.getArchivada()));
+            stAux.setInt(8, Integer.parseInt(facturas.getAnulada()));
 
             stAux.executeUpdate();
 

@@ -202,7 +202,7 @@
                             $("#idAnularFilaHide").val($(this).attr("data-idIndice"));
 
                             /*Mostramos el texto de la desripcion del body de la ventana emergente, Necesitamos un id unico en el campo abreviatura*/
-                            $("#eliminar").text("Desea ANULAR la factura: " + $("#id" + $(this).attr("data-idIndice")).text());
+                            $("#anularFact").text("Desea ANULAR la factura: " + $("#id" + $(this).attr("data-idIndice")).text());
                             $("#advertencia").text("Esto implica BORRAR la factura y volver a activar todos los cargos");
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
@@ -314,8 +314,7 @@
             });
         }
         ;
-
-
+        
         function anularFactura() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -522,7 +521,7 @@
                     <h4 class="modal-title">Archivar Factura</h4>
                 </div>
                 <div class="modal-body">
-                    <p id="eliminar"></p>       
+                    <p id="anularFact"></p>       
                     <p id="advertencia"></p>
                 </div>
                 <div class="modal-footer">

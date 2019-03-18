@@ -258,6 +258,7 @@
 
                 myObj["id_estado"] = "1"; //Codigo 1 = emitida               
                 myObj["archivada"] = "0"; //Codigo 0 = activa
+                myObj["anulada"] = "0"; //Codigo 0 = no anulada
 
 
                 var json = JSON.stringify(myObj);

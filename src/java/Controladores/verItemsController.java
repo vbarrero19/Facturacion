@@ -107,9 +107,9 @@ public class verItemsController {
         return resp;
     }
 
-    @RequestMapping("/verItemsController/eliminarItem.htm")
+    @RequestMapping("/verItemsController/archivarItem.htm")
     @ResponseBody
-    public String eliminarPago(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String archivarItem(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
 
         Connection con = null;
@@ -159,5 +159,6 @@ public class verItemsController {
         return resp;
     }
 
+    
 
 }

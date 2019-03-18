@@ -480,13 +480,13 @@ public class verFacturasController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado, archivada FROM facturas WHERE id_factura = ?");
+            stAux = con.prepareStatement("SELECT id_factura, id_cliente, id_empresa, total_factura, fecha_emision, fecha_vencimiento, id_estado, archivada, anulada FROM facturas WHERE id_factura = ?");
 
             stAux.setInt(1, idFact);
             rs = stAux.executeQuery();
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8))));
+                arrayTipo.add(new Gson().toJson(new Facturas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9))));
             }
 
             resp = new Gson().toJson(arrayTipo);
