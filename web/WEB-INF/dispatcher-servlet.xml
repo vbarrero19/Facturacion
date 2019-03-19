@@ -96,7 +96,7 @@
                                               
                 <prop key="direccionView.htm">direccion</prop>                
                 <prop key="modificarDireccionView.htm">verDireccion</prop>
-                <prop key="verDireccionView.htm">modificarDireccion</prop>  
+                <prop key="verDireccionView.htm">verDireccion</prop>  
                 
                 <prop key="pagoView.htm">pago</prop>                 
                 <prop key="modificarPagoView.htm">verPago</prop>

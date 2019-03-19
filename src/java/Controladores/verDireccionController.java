@@ -41,13 +41,13 @@ public class verDireccionController {
     /**
      * ******** MENU PRINCIPAL PARA VER MODIFICAR DIRECCIONES HTM **********
      */
-     @RequestMapping("/verDireccionController/startDireccion.htm")
+    @RequestMapping("/verDireccionController/startDireccion.htm")
     public ModelAndView starModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         ModelAndView mv = new ModelAndView("modificarDireccionView");
 
         return mv;
     }
-    
+
     @RequestMapping("/verDireccionController/verDireccion.htm")
     @ResponseBody
     public String verDireccion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -111,7 +111,7 @@ public class verDireccionController {
     @RequestMapping("/verDireccionController/modificarDireccion.htm")
     @ResponseBody
     /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
-    public String verModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verModificarDireccion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         EntidadDireccion resourceLoad = new EntidadDireccion();
 
@@ -129,8 +129,8 @@ public class verDireccionController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("select e.distinct_code, e.nombre_entidad, d.nombre_via, d.tipo_via, d.nombre_via, d.numero_via, d.numero_portal, d.resto_direccion," 
-                    +" d.codigo_postal, d.localidad, d.provincia, d.pais from entidad e inner join entidad_direccion ed on e.id_entidad = ed.id_entidad"
+            stAux = con.prepareStatement("select e.distinct_code, e.nombre_entidad, d.nombre_via, d.tipo_via, d.nombre_via, d.numero_via, d.numero_portal, d.resto_direccion,"
+                    + " d.codigo_postal, d.localidad, d.provincia, d.pais from entidad e inner join entidad_direccion ed on e.id_entidad = ed.id_entidad"
                     + " inner join direccion d on d.id_direccion = ed.id_direccion where e.id_entidad = ?");
 
             stAux.setInt(1, idEnt);
@@ -141,7 +141,7 @@ public class verDireccionController {
              */
             while (rs.next()) {
 
-                arrayEntidad.add(new Gson().toJson(new EntidadDireccion(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),rs.getString(12))));
+                arrayEntidad.add(new Gson().toJson(new EntidadDireccion(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12))));
             }
             /*CONVERTIMOS EL ARRAY DE STRING EN UN STRING Y LO GUARDAMOS EN LA VARIABLE RESP QUE DEVOLVEREMOS AL JSP*/
             resp = new Gson().toJson(arrayEntidad);
@@ -177,6 +177,19 @@ public class verDireccionController {
         }
 
         //Devolvemos la variable resp al JSP
+        return resp;
+    }
+
+    @RequestMapping("/verDireccionController/modificarComboTipoDireccion.htm")
+    @ResponseBody
+    public String verModificarComboTipoDireccion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        String resp = "correcto";
+
+        /*consulta 
+        select e.id_entidad, ed.id_entidad, ed.id_direccion, td.id_tipo_direccion, td.tipo_direccion from tipo_direccion td 
+inner join entidad_direccion ed on td.id_tipo_direccion = ed.id_direccion
+inner join entidad e on ed.id_entidad = e.id_entidad where e.id_entidad =  1;
+         */
         return resp;
     }
 

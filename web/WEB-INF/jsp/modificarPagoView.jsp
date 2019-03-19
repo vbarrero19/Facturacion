@@ -22,9 +22,9 @@
             var userLang = navigator.language || navigator.userLanguage;
 
             var idEntidad = obtenerValorParametro("idEnt");
-            var nombreEntidad = obtenerValorParametro("nombreEnt");
+            //var nombreEntidad = obtenerValorParametro("nombreEnt");
 
-            //alert(idEntidad);
+            alert(idEntidad);
             //FUNCION PARA CARGAR LOS DATOS DE LA ENTIDAD.
             cargarDatosPago(idEntidad);
 
