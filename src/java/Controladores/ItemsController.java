@@ -54,25 +54,25 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, cuenta, importe, estado) VALUES (?,?,?,?,?,?)");
+            stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta) VALUES (?,?,?,?,?,?)");
 
             stAux.setString(1, item.getAbreviatura());
             stAux.setString(2, item.getDescripcion());
-            stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));
-            stAux.setString(4, item.getCuenta());
-            stAux.setDouble(5, Double.parseDouble(item.getImporte()));
-            stAux.setInt(6, Integer.parseInt(item.getEstado()));
+            stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));            
+            stAux.setDouble(4, Double.parseDouble(item.getImporte()));
+            stAux.setInt(5, Integer.parseInt(item.getEstado()));
+            stAux.setInt(6, Integer.parseInt(item.getId_cuenta()));
 
             stAux.executeUpdate();
 
             resp = "Correcto";
 
         } catch (SQLException ex) {
-            resp = "Incorrecto SQLException"; // ex.getMessage();
+            resp = "Incorrecto SQLE -> " + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } catch (Exception ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto" + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } finally {
@@ -163,7 +163,7 @@ public class ItemsController {
     @RequestMapping("/itemsController/getTipoCuenta.htm")
     @ResponseBody
     public String cargarComboCuenta(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        TipoItem resourceLoad = new TipoItem();
+        Resource resourceLoad = new Resource();
 
         Connection con = null;
         ResultSet rs = null;
@@ -171,29 +171,29 @@ public class ItemsController {
         String resp = "correcto";
         //Creamos un array de String para guardar los resultados de la busqueda y
         //lo enviamos con JSON, Los resultados son objetos TipoItem convertidos en String
-        ArrayList<String> arrayTipoItem = new ArrayList<>();
+        ArrayList<String> arrayTipoCuenta = new ArrayList<>();
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_tipo_item, item FROM tipo_item");
+            rs = sentencia.executeQuery("SELECT id_cuenta, cuenta FROM tipo_cuenta");
 
             while (rs.next()) {
                 //Cada registro del rs lo convertimos a String con JSON y los guardamos en el Array
-                arrayTipoItem.add(new Gson().toJson(new TipoItem(rs.getString(1), rs.getString(2))));
+                arrayTipoCuenta.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
             }
 
             //Convertimos el Array a un String, lo guardamos en la variable resp y lo devolvemos al JSP
-            resp = new Gson().toJson(arrayTipoItem);
+            resp = new Gson().toJson(arrayTipoCuenta);
 
         } catch (SQLException ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto SQL ->" + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } catch (Exception ex) {
-            resp = "incorrecto"; // ex.getMessage();
+            resp = "incorrecto ->" + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
             ex.printStackTrace(new PrintWriter(errors));
         } finally {
@@ -221,4 +221,125 @@ public class ItemsController {
         return resp;
 
     }
+    
+        //Se usa para cargar los datos del combo Empresas
+    @RequestMapping("/itemsController/getEntidadEmpresa.htm")
+    @ResponseBody
+    public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Entidades resourceLoad = new Entidades();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
+                    + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('empresa')");
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    //Se usa para cargar los datos del combo Clientes
+    @RequestMapping("/itemsController/getEntidadCliente.htm")
+    @ResponseBody
+    public String cargarComboCliente(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Entidades resourceLoad = new Entidades();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code, e.nombre_entidad, e.nombre_contacto from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad inner join"
+                    + " tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('cliente')");
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    
+    
 }

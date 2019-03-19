@@ -34,12 +34,7 @@ public class verItemsController {
         return mv;
     }
 
-//    @RequestMapping("/verCargosController/startCargo.htm")
-//    public ModelAndView starModificarCargo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-//        ModelAndView mv = new ModelAndView("modificarCargoView");
-//
-//        return mv;
-//    }
+
     @RequestMapping("/verItemsController/addResources.htm")
     @ResponseBody
     public ModelAndView addResources(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -67,8 +62,8 @@ public class verItemsController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("select i.id_item, i.abreviatura, i.descripcion, t.item, i.cuenta, i.importe, i.estado from items i inner join "
-                                      + " tipo_item t on i.id_tipo_item = t.id_tipo_item and i.estado = 0 order by abreviatura");
+            rs = sentencia.executeQuery("select i.id_item, i.abreviatura, i.descripcion, ti.item, i.importe, i.estado, tc.cuenta from items i inner join tipo_item ti "
+                                      + "on i.id_tipo_item = ti.id_tipo_item inner join tipo_cuenta tc on i.id_cuenta = tc.id_cuenta and i.estado = 0 order by abreviatura");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7))));

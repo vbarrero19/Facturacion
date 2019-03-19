@@ -45,7 +45,7 @@
                 type: 'GET',
                 url: '/Facturacion/verItemsController/verItems.htm',
                 success: function (data) {
-
+                    alert(data);
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
 
@@ -60,7 +60,7 @@
                                                                     <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
                                                                     <td>" + item.descripcion + "</td>         \n\
                                                                     <td>" + item.id_tipo_item + "</td>       \n\
-                                                                    <td>" + item.cuenta + "</td>       \n\
+                                                                    <td>" + item.id_cuenta + "</td>       \n\
                                                                     <td>" + item.importe + "</td>       \n\
                                                         \n\
                                                                     <td><button type='button' class='btn miBotonAnadir btn-success'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
