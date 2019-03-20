@@ -54,18 +54,64 @@ public class ItemsController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta) VALUES (?,?,?,?,?,?)");
+            if (item.getCostes() == "No") {
+                stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta, costes) VALUES (?,?,?,?,?,?,?)");
 
-            stAux.setString(1, item.getAbreviatura());
-            stAux.setString(2, item.getDescripcion());
-            stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));            
-            stAux.setDouble(4, Double.parseDouble(item.getImporte()));
-            stAux.setInt(5, Integer.parseInt(item.getEstado()));
-            stAux.setInt(6, Integer.parseInt(item.getId_cuenta()));
+                stAux.setString(1, item.getAbreviatura());
+                stAux.setString(2, item.getDescripcion());
+                stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));
+                stAux.setDouble(4, Double.parseDouble(item.getImporte()));
+                stAux.setInt(5, Integer.parseInt(item.getEstado()));
+                stAux.setInt(6, Integer.parseInt(item.getId_cuenta()));
+                stAux.setString(7, item.getCostes());
 
-            stAux.executeUpdate();
+                stAux.executeUpdate();
 
-            resp = "Correcto";
+                resp = "Item insertado sin costes";
+
+            }else{
+                
+                stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta, costes) VALUES (?,?,?,?,?,?,?)");
+
+                stAux.setString(1, item.getAbreviatura());
+                stAux.setString(2, item.getDescripcion());
+                stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));
+                stAux.setDouble(4, Double.parseDouble(item.getImporte()));
+                stAux.setInt(5, Integer.parseInt(item.getEstado()));
+                stAux.setInt(6, Integer.parseInt(item.getId_cuenta()));
+                stAux.setString(7, "Si");
+
+                stAux.executeUpdate();
+
+                resp = "Item insertado con costes";
+                
+
+                Statement sentencia = con.createStatement();
+                rs = sentencia.executeQuery("select max(id_item) from items");
+                rs.next();
+                int numItem = rs.getInt(1);
+
+                String cadena = item.getCostes();
+                String EntidadCantidad = "";
+
+                String[] costes = cadena.split(",");
+                for (int x = 0; x < costes.length; x++) {
+                    EntidadCantidad = costes[x];
+                    String[] datos = EntidadCantidad.split("-");
+                    int entidad = Integer.parseInt(datos[0]);
+                    Double cantidad = Double.parseDouble(datos[1]);
+
+                    stAux = con.prepareStatement("INSERT INTO costes VALUES (?,?,?)");
+
+                    stAux.setInt(1, numItem);
+                    stAux.setInt(2, entidad);
+                    stAux.setDouble(3, cantidad);
+
+                }
+
+                resp = resp + " Costes insertados";
+
+            }
 
         } catch (SQLException ex) {
             resp = "Incorrecto SQLE -> " + ex; // ex.getMessage();
@@ -221,8 +267,8 @@ public class ItemsController {
         return resp;
 
     }
-    
-        //Se usa para cargar los datos del combo Empresas
+
+    //Se usa para cargar los datos del combo Empresas
     @RequestMapping("/itemsController/getEntidadEmpresa.htm")
     @ResponseBody
     public String cargarComboEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -280,7 +326,7 @@ public class ItemsController {
         return resp;
 
     }
-    
+
     //Se usa para cargar los datos del combo Clientes
     @RequestMapping("/itemsController/getEntidadCliente.htm")
     @ResponseBody
@@ -339,7 +385,5 @@ public class ItemsController {
         return resp;
 
     }
-    
-    
-    
+
 }

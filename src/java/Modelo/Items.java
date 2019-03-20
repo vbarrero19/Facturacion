@@ -11,11 +11,12 @@ public class Items  {
     private String importe;
     private String estado;
     private String id_cuenta;
+    private String costes;
 
     public Items() {
     }
 
-    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String importe, String estado, String id_cuenta) {
+    public Items(String id_item, String abreviatura, String descripcion, String id_tipo_item, String importe, String estado, String id_cuenta, String costes) {
         this.id_item = id_item;
         this.abreviatura = abreviatura;
         this.descripcion = descripcion;
@@ -23,7 +24,8 @@ public class Items  {
         this.importe = importe;
         this.estado = estado;
         this.id_cuenta = id_cuenta;
-    }
+        this.costes = costes;
+    }    
 
     public String getId_item() {
         return id_item;
@@ -81,5 +83,13 @@ public class Items  {
         this.id_cuenta = id_cuenta;
     }
 
+    public String getCostes() {
+        return costes;
+    }
+
+    public void setCostes(String costes) {
+        this.costes = costes;
+    }
     
+        
 }

@@ -140,7 +140,7 @@
                 myObj["total"] = $("#total").val().trim();
 
 
-                //Codigo para guardar laperiodicidad. Si esta marcado puntual (1)
+                //Codigo para guardar la periodicidad. Si esta marcado puntual (1)
                 //guardamos las fechas de los input. Si no guardamos los valores de los checkBox
                 if ($("input[name=exampleRadios]:checked").val() == 1) {
 
