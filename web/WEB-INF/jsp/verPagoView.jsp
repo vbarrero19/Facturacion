@@ -49,7 +49,7 @@
                 url: '/Facturacion/verPagoController/verPago.htm',
                 success: function (data) {
 
-                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                    //Recogemos los datos del combo y los pasamos a objetos Tipopago  
                     var aux = JSON.parse(data);
 
                     //Vamos cargando la tabla
@@ -64,7 +64,7 @@
                                                                     <td>" + EntidadPago.titular_cuenta + "</td>         \n\
                                                                     <td>" + EntidadPago.nombre_banco + "</td>         \n\
                                                                     <td class='hidden' id='nombreEnt" + indice + "'>" + EntidadPago.nombre_entidad + "</td>         \n\
-                                                                    <td><a href='/Facturacion/verPagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&distinctCode=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
+                                                                    <td><a href='/Facturacion/verPagoController/startPago.htm?idEnt=" + EntidadPago.id_entidad + "&idMetPago=" + EntidadPago.id_metodo_pago + "' class='btn btn-primary miBoton '> Modificar </button>\n\
                                                                     <td><a class='btn btn-danger miBoton' data-idEntidad='" + EntidadPago.id_entidad + "' data-idPago='" + EntidadPago.id_metodo_pago + "' data-idIndice='" + indice + "'> Eliminar </button>\n\ \n\
                                                                     </tr>");
                     });

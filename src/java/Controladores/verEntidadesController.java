@@ -134,18 +134,7 @@ public class verEntidadesController {
         ArrayList<String> arrayEntidad = new ArrayList<>();
 
         try {
-//            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-//            con = pool_local.getConnection();
-//
-//            stAux = con.prepareStatement("SELECT id_entidad, distinct_code, nombre_entidad, nombre_contacto, apellido1, apellido2, telefono1, telefono2, fax, mail1, mail2cc"
-//                    + " FROM entidad where id_entidad = ?");
-//
-//            stAux.setInt(1, idEnt);
-//            rs = stAux.executeQuery();
 
-            /**
-             * ************** INNER JOIN PARA MOSTRAR NUMERO_DOCUMENTO ***************
-             */
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
@@ -164,6 +153,8 @@ public class verEntidadesController {
                 arrayEntidad.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
                         rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12))));
             }
+            
+              resp = new Gson().toJson(arrayEntidad);
 
 /***********
 consulta que muestra todos los datos con los combos donde id_entidad = ? 
@@ -186,7 +177,7 @@ order by distinct_code
 * 
 * 
 * 
-* EN LA CONSULTA SE DUPLICAN DATOS SI METEMOS DOS TIPOSD E DOCUMENTO O DOS TIPOS DE ENTIDAD....ETC
+* EN LA CONSULTA SE DUPLICAN DATOS SI METEMOS DOS TIPOS DE DOCUMENTO O DOS TIPOS DE ENTIDAD....ETC
 
 **************/         
             

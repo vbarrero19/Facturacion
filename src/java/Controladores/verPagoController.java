@@ -49,7 +49,7 @@ public class verPagoController {
     /* MUESTRA LA LISTA DE TODAS LOS METODOS DE PAGO CON LOS BOTONES ELIMINAR/MODIFICAR*/
     @RequestMapping("/verPagoController/verPago.htm")
     @ResponseBody
-    public String verDireccion(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verPago(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         EntidadPago resourceLoad = new EntidadPago();
 
         Connection con = null;
@@ -60,7 +60,7 @@ public class verPagoController {
         //CREAMOS UN ARRAY
         ArrayList<String> arrayTipo = new ArrayList<>();
 
-        /*CODIGO PARA VER UNA DIRECCION*/
+        /*CODIGO PARA VER UN METODO DE PAGO*/
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
@@ -112,7 +112,7 @@ public class verPagoController {
     @RequestMapping("/verPagoController/modificarPago.htm")
     @ResponseBody
     /*CREAMOS UNA CLASE QUE NO TIENE REQUEST PORQUE NO ESTAMOS ESPERANDO LOS DATOS DE NINGUNA PETICION*/
-    public String verModificarEntidad(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String verModificarPago(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         /*CREAMOS UN OBJETO DEL TIPO ENTIDAD */
         EntidadPago resourceLoad = new EntidadPago();
 
@@ -121,7 +121,7 @@ public class verPagoController {
         PreparedStatement stAux = null;
         String resp = "correcto";
 
-        int idEnt=Integer.parseInt(hsr.getParameter("entidad"));
+        int idEnt = Integer.parseInt(hsr.getParameter("entidad"));
         //Creamos un array list de tipo String donde guardamos los resultados de la busqueda
         //y lo enviamos con JSON. EL resultado son objetos de tipoEntidad convertidos en String por el JSON.
         ArrayList<String> arrayEntidad = new ArrayList<>();
