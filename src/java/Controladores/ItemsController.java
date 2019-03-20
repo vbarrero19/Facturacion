@@ -42,18 +42,20 @@ public class ItemsController {
     @RequestMapping("/itemsController/newItems.htm")
     @ResponseBody
     public String saveNewItem(@RequestBody Items item, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        //Creamos un objeto Items 
+        
         Items resourceLoad = new Items();
 
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement stAux = null;
+        PreparedStatement stAux2 = null;
         String resp = "correcto";
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
-
+            
+            //Si el item no tiene costes guardamos el importe y en costes ponemos "No"
             if (item.getCostes() == "No") {
                 stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta, costes) VALUES (?,?,?,?,?,?,?)");
 
@@ -69,7 +71,7 @@ public class ItemsController {
 
                 resp = "Item insertado sin costes";
 
-            }else{
+            }else{//Si el item tiene costes guardamos el importe y en costes ponemos "Si". Ademas guardamos el desglose de los costes
                 
                 stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta, costes) VALUES (?,?,?,?,?,?,?)");
 
@@ -83,9 +85,9 @@ public class ItemsController {
 
                 stAux.executeUpdate();
 
-                resp = "Item insertado con costes";
+                resp = "Item insertado ";
                 
-
+                //Insertamos el desglose de los costes
                 Statement sentencia = con.createStatement();
                 rs = sentencia.executeQuery("select max(id_item) from items");
                 rs.next();
@@ -101,15 +103,16 @@ public class ItemsController {
                     int entidad = Integer.parseInt(datos[0]);
                     Double cantidad = Double.parseDouble(datos[1]);
 
-                    stAux = con.prepareStatement("INSERT INTO costes VALUES (?,?,?)");
+                    stAux2 = con.prepareStatement("INSERT INTO costes VALUES (?,?,?)");
 
-                    stAux.setInt(1, numItem);
-                    stAux.setInt(2, entidad);
-                    stAux.setDouble(3, cantidad);
+                    stAux2.setInt(1, numItem);
+                    stAux2.setInt(2, entidad);
+                    stAux2.setDouble(3, cantidad);
 
+                    stAux2.executeUpdate();
                 }
 
-                resp = resp + " Costes insertados";
+                resp = resp + "con costes";
 
             }
 

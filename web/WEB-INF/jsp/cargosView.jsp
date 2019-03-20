@@ -551,7 +551,7 @@
                 type: 'GET',
                 url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
-
+                    alert(data);
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var empresaEntidad = JSON.parse(data);
                     //Identificamos el combo

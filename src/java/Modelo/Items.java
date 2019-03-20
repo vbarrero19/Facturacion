@@ -26,7 +26,7 @@ public class Items  {
         this.id_cuenta = id_cuenta;
         this.costes = costes;
     }    
-
+    
     public String getId_item() {
         return id_item;
     }

@@ -1,6 +1,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jstl/core_rt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -11,7 +11,7 @@
     <head> 
         <style>
             .container {
-                width: 1400px;
+                width: 1500px;
             }
             #tableContainer{            
                 overflow:scroll;
@@ -48,13 +48,14 @@
                     alert(data);
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
-
+                    
+                   
                     //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a 
                         var item = JSON.parse(valor);
-
-                        $('#tableContainer tbody').append(" <tr>\n\
+                        if (item.costes == "No") {
+                            $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
                                                                     <td id='id" + indice + "'>" + item.id_item + "</td>         \n\
                                                                     <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
@@ -62,20 +63,114 @@
                                                                     <td>" + item.id_tipo_item + "</td>       \n\
                                                                     <td>" + item.id_cuenta + "</td>       \n\
                                                                     <td>" + item.importe + "</td>       \n\
+                                                                 \n\<td>" + item.costes + "</td>       \n\
                                                         \n\
                                                                     <td><button type='button' class='btn miBotonAnadir btn-success'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
-                                "' data-idIndice='" + indice + "'>Añadir no func</button></td>\n\    \n\
+                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-plus'></span>   Añadir no func</button></td>\n\    \n\
                                                         \n\
                                                                     <td><button type='button' class='btn miBotonModificar btn-warning'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
-                                "' data-idIndice='" + indice + "'>Modificar no func</button></td>\n\    \n\
+                                    "' data-idIndice='" + indice + "'>Modificar no func</button></td>\n\    \n\
                                                         \n\
                                                                     <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
-                                "' data-idIndice='" + indice + "'>Eliminar</button></td>\n\    \n\
+                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>   Archivar</button></td>\n\    \n\
                                                             </tr>");
-
+                        } else {
+                            $('#tableContainer tbody').append(" <tr>\n\
+                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                                                    <td id='id" + indice + "'>" + item.id_item + "</td>         \n\
+                                                                    <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
+                                                                    <td>" + item.descripcion + "</td>         \n\
+                                                                    <td>" + item.id_tipo_item + "</td>       \n\
+                                                                    <td>" + item.id_cuenta + "</td>       \n\
+                                                                    <td>" + item.importe + "</td>       \n\
+                                                                 \n\<td><button type='button' class='btn miBotonCostes btn-info'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
+                                    "' data-idIndice='" + indice + "'>Si</button></td>\n\    \n\
+                                                        \n\
+                                                                    <td><button type='button' class='btn miBotonAnadir btn-success'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
+                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-plus'></span>   Añadir no func</button></td>\n\    \n\
+                                                        \n\
+                                                                    <td><button type='button' class='btn miBotonModificar btn-warning'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
+                                    "' data-idIndice='" + indice + "'>Modificar no func</button></td>\n\    \n\
+                                                        \n\
+                                                                    <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
+                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>   Archivar</button></td>\n\    \n\
+                                                            </tr>");
+                        }
                     });
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                     $(document).ready(function () {
+
+                        $(".miBotonCostes").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idCostItemHide").val($(this).attr("data-idItem"));
+                            $("#idCostTipoHide").val($(this).attr("data-idTipo"));
+                            $("#idCostFilaHide").val($(this).attr("data-idIndice"));
+
+                            $("#abreviaturaItem").text("Costes del item: " + $("#idCostTipoHide").val());
+                            
+                            idItem = $("#idCostItemHide").val();
+                           
+                            /***** codigo nuevo *****/
+
+                            if (window.XMLHttpRequest) //mozilla
+                            {
+                                ajax = new XMLHttpRequest(); //No Internet explorer
+                            } else
+                            {
+                                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
+
+                            $.ajax({
+                                //Usamos GET ya que recibimos.
+                                type: 'GET',
+                                /*en la url le pasamos como parametro el identificador del item*/
+                                url: '/Facturacion/verItemsController/verCostes.htm?idItem=' + idItem,
+                                success: function (data) {
+
+                                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                                    var aux = JSON.parse(data);
+                                    $('#tbody-tabla-costes').empty();
+
+                                    var table = $('#table table-striped').DataTable();
+                                    aux.forEach(function (valor, indice) {
+                                        //Cada objeto esta en String 
+                                        var aux2 = JSON.parse(valor);
+                                        
+                                        $('#tbody-tabla-costes').append(" <tr>\n\   \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
+                                                                    <td>" + aux2.col3 + "</td>\n\
+                                                               </tr>");
+                                    });
+
+                                    $(document).ready(function () {
+
+                                        $("input[name=estado]").change(function () {
+                                            $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
+                                        });
+
+
+                                    });
+
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    console.log(xhr.status);
+                                    console.log(xhr.responseText);
+                                    console.log(thrownError);
+                                }
+                            });
+
+
+                            /***** codigo nuevo *****/
+
+
+
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalCostes").modal();
+                        })
+                                ;
 
                         $(".miBotonAnadir").click(function () {
 
@@ -177,10 +272,11 @@
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Tipo</th>
                                     <th scope="col">Cuenta</th>
-                                    <th scope="col">Importe</th>     
+                                    <th scope="col">Importe</th>   
+                                    <th scope="col">Costes</th>   
                                     <th scope="col">Añadir</th>
                                     <th scope="col">Modificar</th>
-                                    <th scope="col">Borrar</th>
+                                    <th scope="col">Archivar</th>
                                 </tr>                                            
                             </thead>
 
@@ -193,15 +289,52 @@
                     <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                     <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>                     
 
+                    <!-- ventana emergente Costes-->
+                    <div class="modal fade" id="myModalCostes" role="dialog">
+                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                        <input  id="idCostItemHide"/>
+                        <input  id="idCostTipoHide"/>
+                        <input  id="idCostFilaHide"/>
 
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Ver desglose costes item</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="abreviaturaItem"></p>       
+                                    <table class="table table-striped">                                    
+
+                                        <thead>                                            
+                                            <tr>
+                                                <th scope="col">Entidad</th>
+                                                <th scope="col">Cantidad</th>                                    
+                                            </tr>                                            
+                                        </thead>
+
+                                        <tbody id="tbody-tabla-costes">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <!-- ventana emergente Añadir-->
                     <div class="modal fade modal-lg" id="myModalAnadir" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idElimItemHide"/>
-                        <input  id="idElimTipoHide"/>
-                        <input  id="idElimFilaHide"/>
+                        <input  id="idAnadItemHide"/>
+                        <input  id="idAnadTipoHide"/>
+                        <input  id="idAnadFilaHide"/>
 
                         <div class="modal-dialog">
 
@@ -276,9 +409,9 @@
                     <!-- ventana emergente Archivar-->
                     <div class="modal fade" id="myModalEliminar" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idElimItemHide"/>
-                        <input  id="idElimTipoHide"/>
-                        <input  id="idElimFilaHide"/>
+                        <input class="hidden" id="idElimItemHide"/>
+                        <input class="hidden" id="idElimTipoHide"/>
+                        <input class="hidden" id="idElimFilaHide"/>
 
                         <div class="modal-dialog">
 

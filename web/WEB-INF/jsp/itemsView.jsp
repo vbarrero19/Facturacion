@@ -8,6 +8,17 @@
     <%@ include file="infouser.jsp" %> 
     <head> 
         <title>ITEMS VIEW</title>       </head>
+    <style>
+        .container{
+            width: 1400px;
+
+        }
+
+        .azul{
+            background-color: lightblue;
+            margin-bottom: 25px;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
@@ -19,19 +30,25 @@
 
             $('#conCostes').hide();
 
-            $("input[name=costesRadios]").attr('disabled', true);
+            //$("input[name=costesRadios]").attr('disabled', true);
 
             $("#costesRadios1").on("click", function () {
                 $('#conCostes').hide();
+                $('#sinCostes').show();
+                $('#importe').attr('disabled', false);
             });
 
             $("#costesRadios2").on("click", function () {
                 $('#conCostes').show();
+                $('#importe').attr('disabled', true);
+                //$('#sinCostes').hide();
+                
                 getEntidadEmpresa();
-                $("#costeImporte").val($("#importe").val().trim());
+                //$("#costeImporte").val($("#importe").val().trim());
 
             });
 
+            //Codigo para añadir un coste de forma dinamica
             $('#conCostes').on('click', '#anadirCoste', function () {
                 cont++;
                 $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
@@ -39,11 +56,12 @@
                                                             <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
                                                             <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' size'12'></td>        \n\
                                                             <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
-                                                    </tr>");                
+                                                    </tr>");
                 getEntidadCliente("comboClientes" + cont);
             });
 
 
+            //Codigo para eliminar un coste de forma dinamica
             $('#conCostes').on('click', '.miBoton', function () {
                 var parent = $(this).parent().parent().remove();
 
@@ -65,12 +83,19 @@
                 //Variable para guardar los valores del formulario
                 var myObj = {};
 
+
                 //Codigo para recuperar los costes de un item
+                //Creamos el array donde guardaremos los datos
                 var arrayOption = [];
+
                 $("#tableContainer tbody>tr option:checked").each(function (index) {
                     arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
                 });
+
+
                 alert(arrayOption.toString());
+
+
                 //Cargamos el contenido de los campos del formulario
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
@@ -79,9 +104,9 @@
                 myObj["estado"] = "0";
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["id_cuenta"] = $("#id_cuenta").val();
-                if ($("input[name=costesRadios]:checked").val() == "Si") {               
-                   
-                    myObj["costes"] = arrayOption.toString();                    
+                if ($("input[name=costesRadios]:checked").val() == "Si") {
+
+                    myObj["costes"] = arrayOption.toString();
                 } else {
                     myObj["costes"] = "No";
                 }
@@ -95,6 +120,7 @@
                     contentType: "application/json",
                     success: function (data) {
                         alert(data);
+                        location.reload();
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -346,74 +372,100 @@
     <body>
         <div class="container">
             <div class="col-xs-12">
-                <div class="col-md-8">
-                    <div class="form-area">  
-                        <form role="form" action="">
 
-                            <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para ITEMS</h3>
+                <div class="form-area">  
+                    <form role="form" action="">
 
-                            <div class="col-xs-7"> 
+                        <br style="clear:both">
 
-                                <div class="form-group">
+                        <div class="col-xs-7 azul">                             
+                            <h3 style="margin-bottom: 25px; text-align: center;">Añadir ITEMS</h3>
+
+
+                            <div class="form-group row">
+                                <div class="col-xs-4">
                                     <label for="abreviatura">Abreviatura:</label>
+                                </div>
+                                <div class="col-xs-6">
                                     <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
-                                </div>                            
-                                <div class="form-group">
-                                    <label for="descripcion:">Descripcion:</label>
-                                    <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                                </div>                                    
+                                </div>
 
-                                <div class="form-group-combo">
-                                    <label for="tipo_item">Tipo de Item:</label>                                        
+                            </div>                   
+
+                            <div class="form-group row">
+                                <div class="col-xs-4">
+                                    <label for="descripcion:">Descripcion:</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <!--<input type="text" class="form-control" id="descripcion" name="descripcion" required>-->
+                                    <textarea rows="4" cols="50" class="form-control" id="descripcion" name="descripcion" required></textarea>
+                                </div>
+                            </div>                                    
+
+                            <div class="form-group-combo row">
+                                <div class="col-xs-4">
+                                    <label for="tipo_item">Tipo de Item:</label>      
+                                </div>
+                                <div class="col-xs-6">
                                     <!--Combo para tipos de items-->
                                     <select class="form-control" id="id_tipo_item" name="id_tipo_item">
-                                    </select>                                                                    
+                                    </select>                            
                                 </div>
+                            </div>
 
-                                <div class="form-group-combo">
-                                    <label for="id_cuenta">Cuenta:</label>                                        
+                            <div class="form-group-combo row">
+                                <div class="col-xs-4">
+                                    <label for="id_cuenta">Cuenta:</label>    
+                                </div>
+                                <div class="col-xs-6">
                                     <!--Combo para las cuentas-->
                                     <select class="form-control" id="id_cuenta" name="id_cuenta">
-                                    </select>                                                                    
-                                </div>                               
+                                    </select>             
+                                </div>     
+                            </div>    
 
-                                <div class="form-group">
+                            <div class="form-group row" id="sinCostes" name="sinCostes">
+                                <div class="col-xs-4">
                                     <label for="importe">Importe:</label>
+                                </div>
+                                <div class="col-xs-6">
                                     <input type="text" class="form-control" id="importe" name="importe" required>
                                 </div>
+                            </div>
 
-                                <div class="datos row" class="col-xs-12">
-
-                                    <div class="form-group col-xs-10">
-                                        <!--Radio button para añadir costes-->                                     
-                                        <div class="form_radio_button">
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="costesRadios" id="costesRadios1" value="No" checked>
-                                                <label class="form-check-label" for="2">Sin costes</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="costesRadios" id="costesRadios2" value="Si">
-                                                <label class="form-check-label" for="1">Con costes</label>
-                                            </div>
-                                        </div>
+                            <div class="form-group row">
+                                <!--Radio button para añadir costes-->                                     
+                                <div class="col-xs-4">
+                                    <label for="id_cuenta">Costes:</label>    
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="costesRadios" id="costesRadios1" value="No" checked>
+                                        <label class="form-check-label" for="2">Sin costes</label>
                                     </div>
-
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="costesRadios" id="costesRadios2" value="Si">
+                                        <label class="form-check-label" for="1">Con costes</label>
+                                    </div>
                                 </div>
-                            </div> 
+                            </div>
 
-                            <div class="col-xs-5"  id="conCostes" name="conCostes">
+
+                            <div id="conCostes" name="conCostes">
+
+                                <div class="form-group row" >
+                                    <div class="col-xs-4">
+                                        <label>Añadir costes:</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
-                                    <label>Añadir costes:</label>      
-                                    <button type="button" class="btn btn-success" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir</button>
-                                </div>
+                                    <table id="tableContainer" class="table">                                    
 
-                                <div class="form-group">
-                                    <table id="tableContainer" class="table table-striped">                                    
-
-                                        <thead class="thead-dark">                                            
+                                        <thead>                                            
                                             <tr>
                                                 <th scope="col">Entidad</th>                                                    
                                                 <th scope="col">Importe</th>                                                    
@@ -436,19 +488,19 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
+                        </div>
 
+                        <br style="clear:both">
+                         
+                        <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>    
+                        <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
 
-                            <br style="clear:both">
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a>                             
-                            <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
-
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+
     </div>                  
 </body>
 </html>
