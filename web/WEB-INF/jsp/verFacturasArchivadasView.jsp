@@ -11,6 +11,18 @@
     <head> 
         <title>VER FACTURAS</title> 
     </head>
+    <style>
+
+        #tableContainer{
+            overflow:scroll;
+            overflow-x: hidden;
+            height:400px;    
+            margin-bottom: 25px;
+        }
+
+
+
+    </style>
     <script>
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
@@ -75,7 +87,7 @@
                 verListaFacturasArchivadas(idEntidad);
             });
         });
-        
+
         //CREAMOS LA FUNCION PARA CARGAR EL COMBO DE TIPO ENTIDAD.
         function getVerEntidad() {
 
@@ -161,7 +173,7 @@
                         var aux2 = JSON.parse(valor);
                         /*en las fechas, quitamos la hora con substring*/
 
-                        
+
 
                         $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
@@ -172,8 +184,8 @@
                                                                     <td>" + aux2.col8.substring(0, 10) + "</td>         \n\
                                                                     <td>" + aux2.col6 + '€' + "</td>         \n\
                                                                     <td>" + aux2.col9 + "</td>         \n\
-                                                                    <td><a class='btn btn-primary' target ='_blank' href='/Facturacion/verFacturasController/verDetalleFacturaArchivada.htm?idFact="+ aux2.col1 +
-                                                                    "&idCliente="+aux2.col2+"&idEmpresa="+aux2.col4+"&idEstado="+aux2.col9+"'>Detalle</a>\n\</td> \n\\n\
+                                                                    <td><a class='btn btn-primary' target ='_blank' href='/Facturacion/verFacturasController/verDetalleFacturaArchivada.htm?idFact=" + aux2.col1 +
+                                "&idCliente=" + aux2.col2 + "&idEmpresa=" + aux2.col4 + "&idEstado=" + aux2.col9 + "'>Detalle</a>\n\</td> \n\\n\
                         < /tr>");
                     });
 

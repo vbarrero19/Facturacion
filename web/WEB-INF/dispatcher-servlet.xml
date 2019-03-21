@@ -39,13 +39,16 @@
             </bean>
         </property> 
     </bean>
- <!-- Podemos tener varios .jsp para un controlador, creamos los prop y lo llamamos con el mismo identificador que el que queremos coger del bean. -->
+
     <bean class="Controladores.CustomerController" id="customerctrl"/>    
     <bean class="Controladores.MenuController" id="menu"/>
     
     <bean class="Controladores.ItemsController" id="items"/>
     <bean class="Controladores.verItemsController" id="verItems"/> 
-    <!--<bean class="Controladores.modificarItemsController" id="modificarItems"/>-->    
+    <!--<bean class="Controladores.modificarItemsController" id="modificarItems"/>-->   
+    
+    <bean class="Controladores.CuentasController" id="cuentas"/>
+    <bean class="Controladores.verCuentasController" id="verCuentas"/>
     
     <bean class="Controladores.EntidadesController" id="entidades"/>
     <bean class="Controladores.verEntidadesController" id="verEntidades"/>
@@ -79,6 +82,9 @@
                 <prop key="itemsView.htm">items</prop>  
                 <prop key="verItemsView.htm">verItems</prop> 
                 <!--<prop key="modificarItemsView.htm">modificarItems</prop>--> 
+                
+                <prop key="cuentasView.htm">cuentas</prop>  
+                <prop key="verCuentasView.htm">verCuentas</prop>                 
                 
                 <prop key="entidadesView.htm">entidades</prop>   
                 <prop key="modificarEntidadesView.htm">verEntidades</prop>            

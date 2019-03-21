@@ -12,6 +12,18 @@
     <head> 
         <title>VER FACTURAS</title> 
     </head>
+    <style>
+
+        #tableContainer{
+            overflow:scroll;
+            overflow-x: hidden;
+            height:400px;    
+            margin-bottom: 25px;            
+        }
+
+
+
+    </style>
     <script>
         $(document).ready(function () {
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
@@ -314,7 +326,7 @@
             });
         }
         ;
-        
+
         function anularFactura() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -325,7 +337,7 @@
             }
 
             var fact = $("#idAnularFacturaHide").val();
-            
+
             alert(fact);
 
 
@@ -335,7 +347,7 @@
                 success: function (data) {
 
                     alert(data);
-                    
+
                     //Ocultamos la fila de la factura anulada
                     $("#tbody-tabla-facturas").children().eq($("#idAnularFilaHide").val()).hide();
                     //alert("Ocultada la fila correctamente");
@@ -489,122 +501,123 @@
                                             </tr>                                            
                                         </thead>
 
-                                        <tbody id="tbody-tabla-facturas">
+                                        <tbody id="tbody-tabla-facturas">                                        
 
                                         </tbody>
+
                                     </table>
                                 </div>    
 
                                 <!-- <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>-->
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                            </div>
                         </form>
 
                     </div>                            
                 </div>
             </div>
         </div>  
-    </div>
 
-    <!-- ventana emergente Anular-->
-    <div class="modal fade" id="myModalAnular" role="dialog">
-        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-        <input class="hidden" id="idAnularFacturaHide"/>
-        <input class="hidden" id="idAnularClienteHide"/>
-        <input class="hidden" id="idAnularFilaHide"/>
+        <!-- ventana emergente Anular-->
+        <div class="modal fade" id="myModalAnular" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+            <input class="hidden" id="idAnularFacturaHide"/>
+            <input class="hidden" id="idAnularClienteHide"/>
+            <input class="hidden" id="idAnularFilaHide"/>
 
-        <div class="modal-dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Archivar Factura</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="anularFact"></p>       
-                    <p id="advertencia"></p>
-                </div>
-                <div class="modal-footer">
-                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="anularFactura()">Si</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- ventana emergente Archivar-->
-    <div class="modal fade" id="myModalEliminar" role="dialog">
-        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-        <input class="hidden" id="idFacturaHide"/>
-        <input class="hidden" id="idClienteHide"/>
-        <input class="hidden" id="idFilaHide"/>
-
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Archivar Factura</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="eliminar"></p>                            
-                </div>
-                <div class="modal-footer">
-                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="archivarFactura()">Si</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Archivar Factura</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="anularFact"></p>       
+                        <p id="advertencia"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="anularFactura()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- ventana emergente Estado-->
-    <div class="modal fade" id="myModalEstado" role="dialog">
-        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-        <input class="hidden" id="idFacturaEstadoHide"/>
-        <input class="hidden" id="idEstadoHide"/>
-        <input class="hidden" id="idFilaEstadoHide"/>
-        <input class="hidden" id="EstadoNuevoHide"/>
-        <input class="hidden" id="TextoEstadoNuevoHide"/>
 
-        <div class="modal-dialog">
+        <!-- ventana emergente Archivar-->
+        <div class="modal fade" id="myModalEliminar" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+            <input class="hidden" id="idFacturaHide"/>
+            <input class="hidden" id="idClienteHide"/>
+            <input class="hidden" id="idFilaHide"/>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Cambiar estado Factura</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="estadoFact"></p>       
-                    <table class="table table-striped">                                    
+            <div class="modal-dialog">
 
-                        <thead class="thead-dark">                                            
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Estado</th>                                    
-                            </tr>                                            
-                        </thead>
-
-                        <tbody id="tbody-tabla-estados">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="cambiarEstado()">Si</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Archivar Factura</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="eliminar"></p>                            
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="archivarFactura()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- ventana emergente Estado-->
+        <div class="modal fade" id="myModalEstado" role="dialog">
+            <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+            <input class="hidden" id="idFacturaEstadoHide"/>
+            <input class="hidden" id="idEstadoHide"/>
+            <input class="hidden" id="idFilaEstadoHide"/>
+            <input class="hidden" id="EstadoNuevoHide"/>
+            <input class="hidden" id="TextoEstadoNuevoHide"/>
+
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Cambiar estado Factura</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="estadoFact"></p>       
+                        <table class="table table-striped">                                    
+
+                            <thead class="thead-dark">                                            
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Estado</th>                                    
+                                </tr>                                            
+                            </thead>
+
+                            <tbody id="tbody-tabla-estados">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="cambiarEstado()">Si</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-</body> 
+    </body> 
 </html>
 
 

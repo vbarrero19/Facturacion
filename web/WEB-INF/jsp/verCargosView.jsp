@@ -10,6 +10,7 @@
     <%@ include file="infouser.jsp" %>
     <head> 
         <style>
+            
             .container {
                 width: 1600px;
             }

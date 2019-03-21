@@ -66,15 +66,32 @@
                                         <li class="mItem"><a href="">Disponible</a></li> 
                                     </ul>
                                 </div>                                
-                            </div>             
+                            </div>      
 
-                            <div class="divName">
-                                <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-info" role="button">Cargos</a>
-                            </div> 
+                            <div class="divName ">
+                                <div class="dropdown">
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Cuentas
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
+                                        <li class="mCargo"><a href="/Facturacion/cargosController/start.htm">Alta Cuenta</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/verCargosController/start.htm">Editar Cuenta</a></li>
+                                        <li class="mCargo"><a href="">Disponible</a></li> 
+                                    </ul>
+                                </div>                                
+                            </div>                  
 
-                            <div class="divName">
-                                <a href="<c:url value='/verCargosController/start.htm'/>" class="btn btn-info" role="button">Ver Cargos</a>
-                            </div>
+                            <div class="divName ">
+                                <div class="dropdown">
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Cargos
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
+                                        <li class="mCargo"><a href="/Facturacion/cargosController/start.htm">Alta Cargo</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/verCargosController/start.htm">Editar Cargo</a></li>
+                                        <li class="mCargo"><a href="">Disponible</a></li> 
+                                    </ul>
+                                </div>                                
+                            </div>     
+                            
 
                             <div class="divName ">
                                 <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Generar Factura</a>
