@@ -18,6 +18,17 @@
             background-color: lightblue;
             margin-bottom: 25px;
         }
+
+        /*        .comboEmpresas{
+                    width: 200px !important;
+                }
+                
+                .comboClientes{
+                    width: 200px !important;
+                }*/
+
+
+
     </style>
     <script>
         $(document).ready(function () {
@@ -35,16 +46,12 @@
             $("#costesRadios1").on("click", function () {
                 $('#conCostes').hide();
                 $('#sinCostes').show();
-                $('#importe').attr('disabled', false);
             });
 
             $("#costesRadios2").on("click", function () {
                 $('#conCostes').show();
-                $('#importe').attr('disabled', true);
-                //$('#sinCostes').hide();
-                
+                $('#importe').val(0);
                 getEntidadEmpresa();
-                //$("#costeImporte").val($("#importe").val().trim());
 
             });
 
@@ -54,7 +61,7 @@
                 $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
                                                             <td> <div class='form-group-combo'>\n\
                                                             <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
-                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' size'12'></td>        \n\
+                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
                                                             <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
                                                     </tr>");
                 getEntidadCliente("comboClientes" + cont);
@@ -64,10 +71,15 @@
             //Codigo para eliminar un coste de forma dinamica
             $('#conCostes').on('click', '.miBoton', function () {
                 var parent = $(this).parent().parent().remove();
+                calcularTotal();
 
             });
 
+            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
+                alert("HOLA");
+                calcularTotal();
 
+            });
 
             //Evento .click en el boton submit
             $("#guardarItem").click(function () {
@@ -130,22 +142,6 @@
                 });
             })
 
-            //Se ejecuta al cambiar el contenido del importe
-            $("#importe").keyup(function () {
-                //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
-                if ($("#importe").val() != "") {
-                    //Llamamos a la funcion calcularTotal() que calcula el total del cargo
-                    $("input[name=costesRadios]").attr('disabled', false);
-                }
-            });
-            //Se ejecuta al cambiar el contenido de la cantidad
-            $("#costeImporte").keyup(function () {
-                //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
-                //if ($("#comboItems").val() != "0") {
-                //Llamamos a la funcion calcularTotal() que calcula el total del cargo
-                calcularTotal();
-                //}
-            });
         });
         //Funcion para llenar el combo de tipo de item. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getTipoItem.htm.
@@ -335,39 +331,19 @@
         ;
         //Funcion para los calculos de los importes e impuestos
         function calcularTotal() {
+            var cant = 0;
+            $("#tableContainer tbody>tr option:checked").each(function (index) {
 
-            //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
-            tipoImpuesto = $("#comboTipoImpuesto").val();
-            //separamos el id y el valor
-            arrayDeCadenas = tipoImpuesto.split(",");
-            var tipoImp = arrayDeCadenas[0];
-            var valorImp = arrayDeCadenas[1];
-            //Hacemos los calculos de importes e impuestos
-            importe = $("#importe").val().trim();
-            cantidad = $("#cantidad").val().trim();
-            subtotal = importe * cantidad;
-            total = $("#total").val();
-            //Quitamos decimales total sin impuestos
-            var subTot = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
-            //Quitamos decimales al valorImpuestos
-            var valImp = parseFloat(Math.round((subTot * valorImp / 100) * 100) / 100).toFixed(2);
-            //Calculamos el total con impuestos
-            var valTot = (subtotal * valorImp / 100) + subtotal;
-            //Quitamos decimales al total con impuestos
-            var valTotImp = parseFloat(Math.round(valTot * 100) / 100).toFixed(2);
-            if (tipoImp == 0) {
-                $("#valorImpuesto").val(0);
-                $("#total").val(subTot);
-                //$("#total").val(importe * cantidad);
-            } else {
-                $("#valorImpuesto").val(valImp);
-                $("#total").val(valTotImp);
-                //$("#valorImpuesto").val(subtotal * valorImp / 100);
-                //$("#total").val((subtotal * valorImp / 100) + subtotal);
-            }
+                //arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
+                cant = cant + parseFloat($("#tableContainer tbody>tr input").eq(index).val().trim());
+                alert(cant);
+            });
+
+            $("#importe").val(cant);
 
         }
         ;
+
     </script>
     <body>
         <div class="container">
@@ -398,7 +374,7 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <!--<input type="text" class="form-control" id="descripcion" name="descripcion" required>-->
-                                    <textarea rows="4" cols="50" class="form-control" id="descripcion" name="descripcion" required></textarea>
+                                    <textarea rows="3" cols="50" maxlength="100" class="form-control" id="descripcion" name="descripcion" required></textarea>
                                 </div>
                             </div>                                    
 
@@ -457,9 +433,9 @@
                                     <div class="col-xs-4">
                                         <label>Añadir costes:</label>
                                     </div>
-                                    <div class="col-xs-6">
-                                        <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
-                                    </div>
+                                    <!--                                    <div class="col-xs-6">
+                                                                            <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
+                                                                        </div>-->
                                 </div>
 
                                 <div class="form-group">
@@ -482,7 +458,12 @@
                                                     </div>          
                                                 </td>
                                                 <td>                                                      
-                                                    <input type="text" id="costeImporte" name="costeImporte">  
+                                                    <input type="text" id="costeImporte" name="costeImporte" value="0">  
+                                                </td>
+                                                <td>
+
+                                                    <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -492,7 +473,7 @@
                         </div>
 
                         <br style="clear:both">
-                         
+
                         <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>    
                         <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
 
