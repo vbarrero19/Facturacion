@@ -14,18 +14,26 @@
     </head>
     <style>
 
-        #tableContainer{
+/*        #tableContainer{
             overflow:scroll;
             overflow-x: hidden;
             height:400px;    
             margin-bottom: 25px;            
-        }
+        }*/
 
 
 
     </style>
     <script>
         $(document).ready(function () {
+
+            $('#example').DataTable({
+                "scrollY": "300px",
+                "scrollCollapse": true,
+                "paging": false
+            });
+
+
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
 
@@ -269,7 +277,7 @@
                                     var aux = JSON.parse(data);
                                     $('#tbody-tabla-estados').empty();
 
-//                                    var table = $('#table table-striped').DataTable();
+                                    var table = $('#table table-striped').DataTable();
                                     aux.forEach(function (valor, indice) {
                                         //Cada objeto esta en String 
                                         var aux2 = JSON.parse(valor);
@@ -482,7 +490,7 @@
                                 <hr size="10" />
 
                                 <div class="col-xs-12" id="tableContainer">
-                                    <table class="table table-striped">                                    
+                                    <table id="example" class="table table-striped">                                    
 
                                         <thead class="thead-dark">                                            
                                             <tr>

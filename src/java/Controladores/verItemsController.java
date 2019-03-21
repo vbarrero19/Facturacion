@@ -62,7 +62,7 @@ public class verItemsController {
 
             Statement sentencia = con.createStatement();
             rs = sentencia.executeQuery("select i.id_item, i.abreviatura, i.descripcion, ti.item, i.importe, i.estado, tc.cuenta, i.costes from items i inner join tipo_item ti "
-                    + "on i.id_tipo_item = ti.id_tipo_item inner join tipo_cuenta tc on i.id_cuenta = tc.id_cuenta and i.estado = 0 order by abreviatura");
+                    + "on i.id_tipo_item = ti.id_tipo_item inner join cuentas tc on i.id_cuenta = tc.id_cuenta and i.estado = 0 order by abreviatura");
 
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Items(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8))));
