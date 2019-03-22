@@ -38,6 +38,175 @@ public class CuentasController {
         return null;
     }
 
+    //Se usa para cargar los datos de la tsabla cuentas
+    @RequestMapping("/cuentasController/getCuenta.htm")
+    @ResponseBody
+    public String cargarCuentas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Cuentas resourceLoad = new Cuentas();
 
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
 
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            
+            rs = sentencia.executeQuery("SELECT id_cuenta, cuenta, estado FROM cuentas where estado = 'Si' ORDER BY id_cuenta");
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Cuentas(rs.getString(1), rs.getString(2), rs.getString(3))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    //Se usa para cargar los datos de la tsabla cuentas
+    @RequestMapping("/cuentasController/getEmpresa.htm")
+    @ResponseBody
+    public String cargarEmpresas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Cuentas resourceLoad = new Cuentas();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            
+            rs = sentencia.executeQuery("SELECT id_empresa, nombre, estado FROM cuentas_empresas where estado = 'Si' ORDER BY id_empresa");
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Cuentas(rs.getString(1), rs.getString(2), rs.getString(3))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    //Codigo para archivar cuentas. En estado ponemos un No para indicar que esta desactivado
+    @RequestMapping("/CuentasController/archivarCuenta.htm")
+    @ResponseBody
+    public String archivarItem(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("update cuentas SET estado = ? where id_cuenta = ?");
+
+            //Ponemos el estado en No para indicar que esta archivado
+            stAux.setString(1, "No");
+            stAux.setInt(2, Integer.parseInt(resource.getCol1()));
+
+            stAux.executeUpdate();
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
 }

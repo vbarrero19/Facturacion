@@ -19,15 +19,6 @@
             margin-bottom: 25px;
         }
 
-        /*        .comboEmpresas{
-                    width: 200px !important;
-                }
-                
-                .comboClientes{
-                    width: 200px !important;
-                }*/
-
-
 
     </style>
     <script>

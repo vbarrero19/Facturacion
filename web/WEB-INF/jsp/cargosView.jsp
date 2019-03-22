@@ -57,7 +57,7 @@
             var mes = f.getMonth();
             var nombreMes = meses[f.getMonth()];
             $('#anio').text(f.getFullYear());
-            //alert(nombreMes);
+            
             //cargamos de forma dinamica la tabla
             for (var i = 0; i < 12; i = i + 6) {
                 $('#tbody-tabla-meses').append(" <tr>\n\

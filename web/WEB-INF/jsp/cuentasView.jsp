@@ -23,9 +23,14 @@
     </style>
     <script>
         $(document).ready(function () {
-            alert("Cuentas")
-//            //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
-//            getTipoItem();
+
+            //al cargar la pagina llamamos a la funcion getCuenta() para llenar la tabla
+            getCuentas();
+            getEmpresas();
+
+
+
+
 //            getTipoCuenta();
 //            //getEntidadEmpresa();
 //
@@ -135,9 +140,9 @@
 //            })
 
         });
-        //Funcion para llenar el combo de tipo de item. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
-        //con json. Los datos se obtienen en itemsController/getTipoItem.htm.
-        function getTipoItem() {
+
+
+        function getCuentas() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -146,30 +151,224 @@
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
+
             $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/itemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
+                type: 'POST',
+                url: '/Facturacion/cuentasController/getCuenta.htm',
                 success: function (data) {
 
-                    //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
-                    //Estos objetos estan en formato String
-                    var tipoItem = JSON.parse(data);
-                    //Identificamos el combo por el ID
-                    select = document.getElementById('id_tipo_item');
-                    //Lo vamos cargando
-                    tipoItem.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoItem
-                        var tipoItem2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = tipoItem2.id_tipo_item;
-                        //Guardamos la descripcion de item en el nombre de cada opcion                        //                 
-                        opt.innerHTML = tipoItem2.item;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
+                    var aux = JSON.parse(data);
+                    $('#tableContainer tbody').empty();
+                    //Vamos cargando la tabla
+
+                    aux.forEach(function (valor, indice) {
+                        //var id = cargo.id_cargo;
+                        //Cada objeto esta en String 
+                        var cuenta = JSON.parse(valor);
+
+                        $('#tableContainer1 tbody').append(" <tr>\n\
+                                                                <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                                                                    <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
+                                                                    <td>" + cuenta.cuenta + "</td>         \n\
+                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
+                                                                    <td>" + cuenta.estado + "</td>         \n\
+                                                                    <td><button type='button' class='btn btn-info miBotonAnadir btn-success btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-idIndice='" + indice + "'> Añadir</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBotonModificar btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Modificar</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
+                                                                    </tr>");
                     });
+
+                    /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
+                    $(document).ready(function () {
+
+                        $(".miBotonCostes").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idCostItemHide").val($(this).attr("data-idItem"));
+                            $("#idCostTipoHide").val($(this).attr("data-idTipo"));
+                            $("#idCostFilaHide").val($(this).attr("data-idIndice"));
+
+                            $("#abreviaturaItem").text("Costes del item: " + $("#idCostTipoHide").val());
+
+                            idItem = $("#idCostItemHide").val();
+
+                            /***** codigo nuevo *****/
+
+                            if (window.XMLHttpRequest) //mozilla
+                            {
+                                ajax = new XMLHttpRequest(); //No Internet explorer
+                            } else
+                            {
+                                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
+
+                            $.ajax({
+                                //Usamos GET ya que recibimos.
+                                type: 'GET',
+                                /*en la url le pasamos como parametro el identificador del item*/
+                                url: '/Facturacion/verItemsController/verCostes.htm?idItem=' + idItem,
+                                success: function (data) {
+
+                                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                                    var aux = JSON.parse(data);
+                                    $('#tbody-tabla-costes').empty();
+
+                                    var table = $('#table table-striped').DataTable();
+                                    aux.forEach(function (valor, indice) {
+                                        //Cada objeto esta en String 
+                                        var aux2 = JSON.parse(valor);
+
+                                        $('#tbody-tabla-costes').append(" <tr>\n\   \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
+                                                                    <td>" + aux2.col3 + "</td>\n\
+                                                               </tr>");
+                                    });
+
+                                    $(document).ready(function () {
+
+                                        $("input[name=estado]").change(function () {
+                                            $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
+                                        });
+
+
+                                    });
+
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    console.log(xhr.status);
+                                    console.log(xhr.responseText);
+                                    console.log(thrownError);
+                                }
+                            });
+
+
+                            /***** codigo nuevo *****/
+
+
+
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalCostes").modal();
+                        })
+                                ;
+
+                        $(".miBotonAnadir").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idAnadirCuentaHide").val($(this).attr("data-idCuenta"));
+                            $("#idAnadirCuentaFilaHide").val($(this).attr("data-idIndice"));
+
+                            //$("#eliminarItem").text("Desea eliminar el item: " + $("#idElimTipoHide").val());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalAnadirCuenta").modal();
+                        })
+                                ;
+
+                        $(".miBotonEliminar").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idElimCuentaHide").val($(this).attr("data-idCuenta"));
+                            $("#idElimCuentaTipoHide").val($(this).attr("data-cuenta"));
+                            $("#idElimCuentaFilaHide").val($(this).attr("data-idIndice"));
+
+                            $("#eliminarCuenta").text("Desea eliminar la cuenta: " + $("#idElimCuentaTipoHide").val());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalEliminarCuenta").modal();
+                        });
+
+                    });
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+        ;
+
+        function getEmpresas() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Facturacion/cuentasController/getEmpresa.htm',
+                success: function (data) {
+
+                    var aux = JSON.parse(data);
+                    $('#tableContainer tbody').empty();
+                    //Vamos cargando la tabla
+
+                    aux.forEach(function (valor, indice) {
+                        //var id = cargo.id_cargo;
+                        //Cada objeto esta en String 
+                        var cuenta = JSON.parse(valor);
+
+                        $('#tableContainer2 tbody').append(" <tr>\n\
+                                                                <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                                                                    <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
+                                                                    <td>" + cuenta.cuenta + "</td>         \n\
+                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
+                                                                    <td>" + cuenta.estado + "</td>         \n\
+                                                                    <td><button type='button' class='btn btn-info miBotonAnadir btn-success btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Añadir</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBotonModificar btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Modificar</button></td>\n\
+                                                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
+                                                                    </tr>");
+                    });
+
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+        ;
+
+
+        function archivarCuenta() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+
+            myObj["col1"] = $("#idElimCuentaHide").val().trim();
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/CuentasController/archivarCuenta.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    $("#tbody-tabla-cuentas").children().eq($("#idElimCuentaFilaHide").val()).hide();
+                    alert("Cuenta Archivada Correctamente");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -179,9 +378,8 @@
             });
         }
         ;
-        //Funcion para llenar el combo de cuentas. Los datos nos vienen en un ArrayList de objetos TipoCuenta transformado en String
-        //con json. Los datos se obtienen en itemsController/getTipoCuenta.htm.
-        function getTipoCuenta() {
+
+        function anadirCuenta() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -190,30 +388,24 @@
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
+            var myObj = {};
+
+            myObj["col1"] = $("#denominacion").val().trim();
+
+            var json = JSON.stringify(myObj);
             $.ajax({
                 //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/itemsController/getTipoCuenta.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
+                type: 'POST',
+                url: '/Facturacion/CuentasController/anadirCuenta.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
                 success: function (data) {
-
-                    //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
-                    //Estos objetos estan en formato String
-                    var tipoCuenta = JSON.parse(data);
-                    //Identificamos el combo por el ID
-                    select = document.getElementById('id_cuenta');
-                    //Lo vamos cargando
-                    tipoCuenta.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoItem
-                        var tipoCuenta2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = tipoCuenta2.col1;
-                        //Guardamos la descripcion de item en el nombre de cada opcion                        //                 
-                        opt.innerHTML = tipoCuenta2.col2;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
+                    
+                    getCuentas();
+                    
+                    //$("#tbody-tabla-cuentas").children().eq($("#idElimCuentaFilaHide").val()).hide();
+                    //alert("Cuenta Archivada Correctamente");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -223,257 +415,139 @@
             });
         }
         ;
-        //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
-        function getEntidadEmpresa() {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
 
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/itemsController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
-                success: function (data) {
-                    //Vaciamos el combo clientes
-                    $("#comboEmpresas option").remove();
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var empresaEntidad = JSON.parse(data);
-                    //Identificamos el combo
-                    select = document.getElementById('comboEmpresas');
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-                    //Lo vamos cargando
-                    empresaEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var empresaEntidad2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = empresaEntidad2.id_entidad;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = empresaEntidad2.distinct_code;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
-        //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
-        function getEntidadCliente(idCombo) {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
 
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/itemsController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
-                success: function (data) {
-                    //Vaciamos el combo clientes
-                    //$("#comboClientes1 option").remove();
-                    //Recogemos los datos del combo y los pasamos a objetos Entidad  
-                    var clienteEntidad = JSON.parse(data);
-                    //Identificamos el combo
-                    select = document.getElementById(idCombo);
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-                    //Lo vamos cargando
-                    clienteEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a Cliente
-                        var clienteEntidad2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = clienteEntidad2.id_entidad;
-                        //Guardamos el impuesto en el nombre de cada opcion
-                        opt.innerHTML = clienteEntidad2.distinct_code;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
-        //Funcion para los calculos de los importes e impuestos
-        function calcularTotal() {
-            var cant = 0;
-            $("#tableContainer tbody>tr option:checked").each(function (index) {
 
-                //arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
-                cant = cant + parseFloat($("#tableContainer tbody>tr input").eq(index).val().trim());
-                alert(cant);
-            });
 
-            $("#importe").val(cant);
-
-        }
-        ;
 
     </script>
     <body>
         <div class="container">
             <div class="col-xs-12">
+                <div class="col-md-12 col-xs-5">
 
-                <div class="form-area">  
-                    <form role="form" action="">
+                    <!--<form role="form">-->
+                    <br style="clear:both">
 
-                        <br style="clear:both">
-
-                        <div class="col-xs-7 azul">                             
-                            <h3 style="margin-bottom: 25px; text-align: center;">Añadir ITEMS</h3>
+                    <h3 style="margin-bottom: 25px; text-align: center;">CARTA DE CUENTAS</h3>  
 
 
-                            <div class="form-group row">
-                                <div class="col-xs-4">
-                                    <label for="abreviatura">Abreviatura:</label>
+                    <div class="col-xs-6" id="tableContainer1">
+                        <table class="table table-striped">                                    
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" colspan="4" style="text-align:center;">Cuentas</th>        
+                                </tr>    
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ID CUENTA</th>
+                                    <th scope="col">DENOMINACIÓN</th>
+                                    <th scope="col">ACTIVA</th>
+
+                                </tr>                                            
+                            </thead>
+
+                            <tbody id="tbody-tabla-cuentas">
+
+                            </tbody>
+                        </table>
+                    </div>    
+
+                    <div class="col-xs-6" id="tableContainer2">
+                        <table class="table table-striped">                                    
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" colspan="4" style="text-align:center;">Empresas</th>        
+                                </tr>    
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ID EMPRESA</th>
+                                    <th scope="col">DISTINCT CODE</th>                                    
+                                    <th scope="col">ACTIVA</th>
+                                </tr>                                            
+                            </thead>
+
+                            <tbody id="tbody-tabla-empresas">
+
+                            </tbody>
+                        </table>
+                    </div>       
+
+
+                    <br style="clear:both">
+
+                    <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>                     
+                    <button type="button" id="submit" name="submit" class="btn btn-primary">Submit</button>
+
+
+                    <!-- ventana emergente Añadir-->
+                    <div class="modal fade" id="myModalAnadirCuenta" role="dialog">
+                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                        <input  id="idAnadirCuentaHide"/>
+                        <input  id="idAnadirCuentaFilaHide"/>
+
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Añadir Cuenta</h4>
                                 </div>
-                                <div class="col-xs-6">
-                                    <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
-                                </div>
-
-                            </div>                   
-
-                            <div class="form-group row">
-                                <div class="col-xs-4">
-                                    <label for="descripcion:">Descripcion:</label>
-                                </div>
-                                <div class="col-xs-6">
-                                    <!--<input type="text" class="form-control" id="descripcion" name="descripcion" required>-->
-                                    <textarea rows="3" cols="50" maxlength="100" class="form-control" id="descripcion" name="descripcion" required></textarea>
-                                </div>
-                            </div>                                    
-
-                            <div class="form-group-combo row">
-                                <div class="col-xs-4">
-                                    <label for="tipo_item">Tipo de Item:</label>      
-                                </div>
-                                <div class="col-xs-6">
-                                    <!--Combo para tipos de items-->
-                                    <select class="form-control" id="id_tipo_item" name="id_tipo_item">
-                                    </select>                            
-                                </div>
-                            </div>
-
-                            <div class="form-group-combo row">
-                                <div class="col-xs-4">
-                                    <label for="id_cuenta">Cuenta:</label>    
-                                </div>
-                                <div class="col-xs-6">
-                                    <!--Combo para las cuentas-->
-                                    <select class="form-control" id="id_cuenta" name="id_cuenta">
-                                    </select>             
-                                </div>     
-                            </div>    
-
-                            <div class="form-group row" id="sinCostes" name="sinCostes">
-                                <div class="col-xs-4">
-                                    <label for="importe">Importe:</label>
-                                </div>
-                                <div class="col-xs-6">
-                                    <input type="text" class="form-control" id="importe" name="importe" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <!--Radio button para añadir costes-->                                     
-                                <div class="col-xs-4">
-                                    <label for="id_cuenta">Costes:</label>    
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="costesRadios" id="costesRadios1" value="No" checked>
-                                        <label class="form-check-label" for="2">Sin costes</label>
+                                <div class="modal-body">
+                                    <p id="anadirItem"></p>  
+                                    <div class="form-area">  
+                                        <div class="row"> 
+                                            <div class="form-group col-xs-3">
+                                                <label for="denominacion">Denominación:</label>
+                                            </div>
+                                            <div class="form-group col-xs-5">
+                                                <input type="text" class="form-control" id="denominacion" name="denominacion">
+                                            </div> 
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="costesRadios" id="costesRadios2" value="Si">
-                                        <label class="form-check-label" for="1">Con costes</label>
-                                    </div>
                                 </div>
-                            </div>
-
-
-                            <div id="conCostes" name="conCostes">
-
-                                <div class="form-group row" >
-                                    <div class="col-xs-4">
-                                        <label>Añadir costes:</label>
-                                    </div>
-                                    <!--                                    <div class="col-xs-6">
-                                                                            <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
-                                                                        </div>-->
-                                </div>
-
-                                <div class="form-group">
-                                    <table id="tableContainer" class="table">                                    
-
-                                        <thead>                                            
-                                            <tr>
-                                                <th scope="col">Entidad</th>                                                    
-                                                <th scope="col">Importe</th>                                                    
-                                            </tr>                                            
-                                        </thead>
-
-                                        <tbody id="tbody-tabla-costes">
-                                            <tr>
-                                                <td>
-                                                    <div class="form-group-combo">                                                                               
-                                                        <!--Combo para las empresas-->
-                                                        <select class="form-control input-sm" id="comboEmpresas" name="comboEmpresas">
-                                                        </select>                                                                    
-                                                    </div>          
-                                                </td>
-                                                <td>                                                      
-                                                    <input type="text" id="costeImporte" name="costeImporte" value="0">  
-                                                </td>
-                                                <td>
-
-                                                    <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
-
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="modal-footer">
+                                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="anadirCuenta()">Añadir</button>
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <br style="clear:both">
+                    <!-- ventana emergente Archivar Cuenta-->
+                    <div class="modal fade" id="myModalEliminarCuenta" role="dialog">
+                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                        <input id="idElimCuentaHide"/>
+                        <input id="idElimCuentaTipoHide"/>
+                        <input id="idElimCuentaFilaHide"/>
 
-                        <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>    
-                        <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary pull-right">Guardar</button>
+                        <div class="modal-dialog">
 
-                    </form>
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Archivar Cuenta</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="eliminarCuenta"></p>                            
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="archivarCuenta()">Archivar</button>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
-
-    </div>                  
-</body>
+    </body> 
 </html>
