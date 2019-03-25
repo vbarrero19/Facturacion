@@ -28,117 +28,6 @@
             getCuentas();
             getEmpresas();
 
-
-
-
-//            getTipoCuenta();
-//            //getEntidadEmpresa();
-//
-//            var cont = 0;
-//
-//            $('#conCostes').hide();
-//
-//            //$("input[name=costesRadios]").attr('disabled', true);
-//
-//            $("#costesRadios1").on("click", function () {
-//                $('#conCostes').hide();
-//                $('#sinCostes').show();
-//            });
-//
-//            $("#costesRadios2").on("click", function () {
-//                $('#conCostes').show();
-//                $('#importe').val(0);
-//                getEntidadEmpresa();
-//
-//            });
-//
-//            //Codigo para añadir un coste de forma dinamica
-//            $('#conCostes').on('click', '#anadirCoste', function () {
-//                cont++;
-//                $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
-//                                                            <td> <div class='form-group-combo'>\n\
-//                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
-//                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
-//                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
-//                                                    </tr>");
-//                getEntidadCliente("comboClientes" + cont);
-//            });
-//
-//
-//            //Codigo para eliminar un coste de forma dinamica
-//            $('#conCostes').on('click', '.miBoton', function () {
-//                var parent = $(this).parent().parent().remove();
-//                calcularTotal();
-//
-//            });
-//
-//            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
-//                alert("HOLA");
-//                calcularTotal();
-//
-//            });
-//
-//            //Evento .click en el boton submit
-//            $("#guardarItem").click(function () {
-//                if (window.XMLHttpRequest) //mozilla
-//                {
-//                    ajax = new XMLHttpRequest(); //No Internet explorer
-//                } else
-//                {
-//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                }
-//
-//
-//                //Variable para guardar los valores del formulario
-//                var myObj = {};
-//
-//
-//                //Codigo para recuperar los costes de un item
-//                //Creamos el array donde guardaremos los datos
-//                var arrayOption = [];
-//
-//                $("#tableContainer tbody>tr option:checked").each(function (index) {
-//                    arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
-//                });
-//
-//
-//                alert(arrayOption.toString());
-//
-//
-//                //Cargamos el contenido de los campos del formulario
-//                myObj["abreviatura"] = $("#abreviatura").val().trim();
-//                myObj["descripcion"] = $("#descripcion").val().trim();
-//                myObj["id_tipo_item"] = $("#id_tipo_item").val();
-//                myObj["importe"] = $("#importe").val().trim();
-//                myObj["estado"] = "0";
-//                myObj["importe"] = $("#importe").val().trim();
-//                myObj["id_cuenta"] = $("#id_cuenta").val();
-//                if ($("input[name=costesRadios]:checked").val() == "Si") {
-//
-//                    myObj["costes"] = arrayOption.toString();
-//                } else {
-//                    myObj["costes"] = "No";
-//                }
-//                //Convertimos la variable myObj a String
-//                var json = JSON.stringify(myObj);
-//                $.ajax({
-//                    type: 'POST',
-//                    url: '/Facturacion/itemsController/newItems.htm', //Vamos a newCustomer de itemsController
-//                    data: json,
-//                    datatype: "json",
-//                    contentType: "application/json",
-//                    success: function (data) {
-//                        alert(data);
-//                        location.reload();
-//                    },
-//                    error: function (xhr, ajaxOptions, thrownError) {
-//                        console.log(xhr.status);
-//                        console.log(xhr.responseText);
-//                        console.log(thrownError);
-//                    }
-//                });
-//            })
-
         });
 
 
@@ -158,7 +47,8 @@
                 success: function (data) {
 
                     var aux = JSON.parse(data);
-                    $('#tableContainer tbody').empty();
+                    $('#tableContainer1 tbody').empty();
+
                     //Vamos cargando la tabla
 
                     aux.forEach(function (valor, indice) {
@@ -172,28 +62,23 @@
                                                                     <td>" + cuenta.cuenta + "</td>         \n\
                                                                     <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
                                                                     <td>" + cuenta.estado + "</td>         \n\
-                                                                    <td><button type='button' class='btn btn-info miBotonAnadir btn-success btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-idIndice='" + indice + "'> Añadir</button></td>\n\
-                                                                    <td><button type='button' class='btn btn-info miBotonModificar btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Modificar</button></td>\n\
-                                                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
+                                                                    <td><button type='button' class='btn miBotonModificarCuenta btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Modificar</button></td>\n\
+                                                                    <td><button type='button' class='btn miBotonEliminarCuenta btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Archivar </button></td>\n\
                                                                     </tr>");
                     });
 
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                     $(document).ready(function () {
 
-                        $(".miBotonCostes").click(function () {
+                        $(".miBotonActivarCuenta").click(function () {
 
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
                              * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
-                            $("#idCostItemHide").val($(this).attr("data-idItem"));
-                            $("#idCostTipoHide").val($(this).attr("data-idTipo"));
-                            $("#idCostFilaHide").val($(this).attr("data-idIndice"));
+                            $("#idActivarCuentaHide").val($(this).attr("data-idCuenta"));
 
-                            $("#abreviaturaItem").text("Costes del item: " + $("#idCostTipoHide").val());
+                            $("#denominacionModificar").val($("#idModifCuentaTipoHide").val());
 
-                            idItem = $("#idCostItemHide").val();
-
-                            /***** codigo nuevo *****/
+                            /********Codigo */
 
                             if (window.XMLHttpRequest) //mozilla
                             {
@@ -206,32 +91,44 @@
                             $.ajax({
                                 //Usamos GET ya que recibimos.
                                 type: 'GET',
-                                /*en la url le pasamos como parametro el identificador del item*/
-                                url: '/Facturacion/verItemsController/verCostes.htm?idItem=' + idItem,
+                                url: '/Facturacion/cuentasController/getCuentasDesactivadas.htm',
                                 success: function (data) {
+
+                                   $('#activarCuentaCombo').empty();
 
                                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                                     var aux = JSON.parse(data);
-                                    $('#tbody-tabla-costes').empty();
-
-                                    var table = $('#table table-striped').DataTable();
+                                    //Identificamos el combo
+                                    select = document.getElementById('activarCuentaCombo');
+                                    //Añadimos la opcion Seleccionar al combo
+                                    var opt = document.createElement('option');
+                                    opt.value = 0;
+                                    opt.innerHTML = "Seleccionar";
+                                    select.appendChild(opt);
+                                    //Lo vamos cargando
                                     aux.forEach(function (valor, indice) {
-                                        //Cada objeto esta en String 
+                                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
                                         var aux2 = JSON.parse(valor);
-
-                                        $('#tbody-tabla-costes').append(" <tr>\n\   \n\
-                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
-                                                                    <td>" + aux2.col3 + "</td>\n\
-                                                               </tr>");
+                                        //Creamos las opciones del combo
+                                        var opt = document.createElement('option');
+                                        //Guardamos el id en el value de cada opcion
+                                        opt.value = aux2.id_cuenta;
+                                        //Guardamos el impuesto en el nombre de cada opcion
+                                        //                 opt.innerHTML = aux2.id_impuesto;
+                                        opt.innerHTML = aux2.cuenta;
+                                        //Añadimos la opcion
+                                        select.appendChild(opt);
                                     });
 
-                                    $(document).ready(function () {
+                                    $("#TextoEstadoNuevoHide").val()
 
+                                    $(document).ready(function () {
                                         $("input[name=estado]").change(function () {
                                             $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
+                                            //Guardamos el texto del estado en una caja de texto oculta
+                                            $("#TextoEstadoNuevoHide").val($("#tbody-tabla-estados input:checked").parent().next().text());
+
                                         });
-
-
                                     });
 
                                 },
@@ -242,32 +139,41 @@
                                 }
                             });
 
-
-                            /***** codigo nuevo *****/
-
-
-
+                            /************************/
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
-                            $("#myModalCostes").modal();
+                            $("#myModalActivarCuenta").modal();
                         })
-                                ;
+                        ;
 
-                        $(".miBotonAnadir").click(function () {
+                        $(".miBotonModificarCuenta").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idModifCuentaHide").val($(this).attr("data-idCuenta"));
+                            $("#idModifCuentaTipoHide").val($(this).attr("data-cuenta"));
+                            $("#idModifCuentaFilaHide").val($(this).attr("data-idIndice"));
+
+                            $("#denominacionModificar").val($("#idModifCuentaTipoHide").val());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalModificarCuenta").modal();
+                        })
+                        ;
+
+                        $(".miBotonAnadirCuenta").click(function () {
 
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
                              * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
                             $("#idAnadirCuentaHide").val($(this).attr("data-idCuenta"));
-                            $("#idAnadirCuentaFilaHide").val($(this).attr("data-idIndice"));
-
-                            //$("#eliminarItem").text("Desea eliminar el item: " + $("#idElimTipoHide").val());
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModalAnadirCuenta").modal();
-                        })
-                                ;
 
-                        $(".miBotonEliminar").click(function () {
+                        })
+                        ;
+
+                        $(".miBotonEliminarCuenta").click(function () {
 
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
                              * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
@@ -279,7 +185,8 @@
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModalEliminarCuenta").modal();
-                        });
+                        })
+                        ;
 
                     });
 
@@ -311,7 +218,7 @@
                 success: function (data) {
 
                     var aux = JSON.parse(data);
-                    $('#tableContainer tbody').empty();
+                    $('#tableContainer2 tbody').empty();
                     //Vamos cargando la tabla
 
                     aux.forEach(function (valor, indice) {
@@ -343,7 +250,6 @@
 
         }
         ;
-
 
         function archivarCuenta() {
             if (window.XMLHttpRequest) //mozilla
@@ -390,7 +296,7 @@
 
             var myObj = {};
 
-            myObj["col1"] = $("#denominacion").val().trim();
+            myObj["col1"] = $("#denominacionAnadir").val().trim();
 
             var json = JSON.stringify(myObj);
             $.ajax({
@@ -401,11 +307,9 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    
+                    alert(data);
                     getCuentas();
-                    
-                    //$("#tbody-tabla-cuentas").children().eq($("#idElimCuentaFilaHide").val()).hide();
-                    //alert("Cuenta Archivada Correctamente");
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -416,9 +320,77 @@
         }
         ;
 
+        function modificarCuenta() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
+            var myObj = {};
 
+            myObj["col1"] = $("#denominacionModificar").val().trim();
+            myObj["col2"] = $("#idModifCuentaHide").val().trim();
 
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/CuentasController/modificarCuenta.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert(data);
+                    getCuentas();
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+        function activarCuenta() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+
+            myObj["col1"] = $("#activarCuentaCombo").val();
+            //myObj["col2"] = $("#idModifCuentaHide").val().trim();
+
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'POST',
+                url: '/Facturacion/CuentasController/activarCuenta.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    alert(data);
+                    getCuentas();
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
 
     </script>
     <body>
@@ -444,9 +416,11 @@
                                     <th scope="col">ID CUENTA</th>
                                     <th scope="col">DENOMINACIÓN</th>
                                     <th scope="col">ACTIVA</th>
-
+                                    <th><button type="button" class='btn btn-info miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">&nbsp;  Añadir &nbsp;&nbsp; </button></th>
+                                    <th><button type="button" class='btn btn-info miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">Activar &nbsp;</button></th>
                                 </tr>                                            
                             </thead>
+
 
                             <tbody id="tbody-tabla-cuentas">
 
@@ -482,11 +456,48 @@
                     <button type="button" id="submit" name="submit" class="btn btn-primary">Submit</button>
 
 
-                    <!-- ventana emergente Añadir-->
+                    <!-- ventana emergente Modificar Cuenta-->
+                    <div class="modal fade" id="myModalModificarCuenta" role="dialog">
+                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                        <input id="idModifCuentaHide"/>
+                        <input id="idModifCuentaTipoHide"/>
+                        <input id="idModifCuentaFilaHide"/>
+
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Modificar Cuenta</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="anadirItem"></p>  
+                                    <div class="form-area">  
+                                        <div class="row"> 
+                                            <div class="form-group col-xs-3">
+                                                <label for="denominacionModificar">Denominación:</label>
+                                            </div>
+                                            <div class="form-group col-xs-5">
+                                                <input type="text" class="form-control" id="denominacionModificar" name="denominacionModificar">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
+                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="modificarCuenta()">Modificar</button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ventana emergente Añadir Cuenta-->
                     <div class="modal fade" id="myModalAnadirCuenta" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
                         <input  id="idAnadirCuentaHide"/>
-                        <input  id="idAnadirCuentaFilaHide"/>
+                        <!--                        <input  id="TextoCuentaHide"/>-->
 
                         <div class="modal-dialog">
 
@@ -501,18 +512,18 @@
                                     <div class="form-area">  
                                         <div class="row"> 
                                             <div class="form-group col-xs-3">
-                                                <label for="denominacion">Denominación:</label>
+                                                <label for="denominacionAnadir">Denominación:</label>
                                             </div>
                                             <div class="form-group col-xs-5">
-                                                <input type="text" class="form-control" id="denominacion" name="denominacion">
+                                                <input type="text" class="form-control" id="denominacionAnadir" name="denominacionAnadir">
                                             </div> 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="anadirCuenta()">Añadir</button>
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="anadirCuenta()">Añadir</button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -538,12 +549,48 @@
                                 </div>
                                 <div class="modal-footer">
                                     <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="archivarCuenta()">Archivar</button>
-                                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" onclick="archivarCuenta()">Archivar</button>
+                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- ventana emergente Activar Cuenta-->
+                    <div class="modal fade" id="myModalActivarCuenta" role="dialog">
+                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                        <input  id="idActivarCuentaHide"/>                        
+
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Activar Cuenta</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="anadirItem"></p>  
+                                    <div class="form-area">  
+                                        <div class="row"> 
+                                            <div class="form-group col-xs-3">
+                                                <label for="activarCuentaCombo">Denominación:</label>
+                                            </div>
+                                            <div class="form-group col-xs-5">
+                                                <select class="form-control" id="activarCuentaCombo" name="activarCuentaCombo">
+                                                </select>  
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">                                    
+                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="activarCuenta()">Activar</button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                 </div>
