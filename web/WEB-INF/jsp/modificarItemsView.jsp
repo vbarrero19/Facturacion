@@ -23,15 +23,17 @@
     </style>
     <script>
         $(document).ready(function () {
-            //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
 
             var idItem = obtenerValorParametro("idItem");
+            var idTipo;
+            var idCuenta;
 
-            alert(idItem);
+            getItem(idItem);
 
-//            getTipoItem();
-//            getTipoCuenta();
-//            //getEntidadEmpresa();
+            getTipoItem();
+            getTipoCuenta();
+
+
 //
 //            var cont = 0;
 //
@@ -136,6 +138,66 @@
 //            })
 
         });
+
+
+        function getItem(idItem) {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/modificarItemsController/getItem.htm?idItem=' + idItem, //Vamos a cargosController/getCliente.htm a recoger los datos
+                success: function (data) {                   
+
+                    var item = JSON.parse(data);
+
+                    //Lo vamos cargando
+                    item.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        item2 = JSON.parse(valor);
+                        idTipo = item2.col4;
+                        idCuenta = item2.col7;
+
+                        alert(idTipo);
+                        alert(idCuenta);
+
+
+
+                        $("#id_Item").val(item2.col1);
+
+                        $("#abreviatura").val(item2.col2);
+                        $("#descripcion").text(item2.col3);
+
+                        //Llamamos a una funcion para llenar el combo
+                        getTipoImpuesto(idTipoImp);
+//                        $("#valorImpuesto").val(item2.col9);
+//                        $("#total").val(item2.col10);
+//                        if (item2.col11 == 1) {
+//                            $("#periodicidad").text("Puntual");
+//                        } else {
+//                            $("#periodicidad").text("Periódico");
+//                        }
+//                        $("#fecha_cargo input").val(item2.col12.substr(0, 10));
+//                        $("#fecha_vencimiento input").val(item2.col13.substr(0, 10));
+
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
         //Funcion para llenar el combo de tipo de item. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
         //con json. Los datos se obtienen en itemsController/getTipoItem.htm.
         function getTipoItem() {
@@ -150,8 +212,10 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/itemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
+                url: '/Facturacion/modificarItemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
                 success: function (data) {
+
+                    
 
                     //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
                     //Estos objetos estan en formato String
@@ -164,10 +228,17 @@
                         var tipoItem2 = JSON.parse(valor);
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
+                        //Gestionamos la opcion seleccionada
+
                         //Guardamos el id en el value de cada opcion
                         opt.value = tipoItem2.id_tipo_item;
                         //Guardamos la descripcion de item en el nombre de cada opcion                        //                 
                         opt.innerHTML = tipoItem2.item;
+                        if (tipoItem2.id_tipo_item == idTipo) {
+                            //La dejamos seleccionada
+                            opt.selected = true;
+                            
+                        }
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -180,6 +251,7 @@
             });
         }
         ;
+
         //Funcion para llenar el combo de cuentas. Los datos nos vienen en un ArrayList de objetos TipoCuenta transformado en String
         //con json. Los datos se obtienen en itemsController/getTipoCuenta.htm.
         function getTipoCuenta() {
@@ -194,7 +266,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/itemsController/getTipoCuenta.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
+                url: '/Facturacion/modificarItemsController/getTipoCuenta.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
@@ -212,6 +284,12 @@
                         opt.value = tipoCuenta2.col1;
                         //Guardamos la descripcion de item en el nombre de cada opcion                        //                 
                         opt.innerHTML = tipoCuenta2.col2;
+                       
+                        if (tipoCuenta2.col1 == idCuenta) {                            
+                            
+                            //La dejamos seleccionada
+                            opt.selected = true;                            
+                        }
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
@@ -224,104 +302,7 @@
             });
         }
         ;
-        //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
-        function getEntidadEmpresa() {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
 
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/itemsController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
-                success: function (data) {
-                    //Vaciamos el combo clientes
-                    $("#comboEmpresas option").remove();
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var empresaEntidad = JSON.parse(data);
-                    //Identificamos el combo
-                    select = document.getElementById('comboEmpresas');
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-                    //Lo vamos cargando
-                    empresaEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var empresaEntidad2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = empresaEntidad2.id_entidad;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = empresaEntidad2.distinct_code;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
-        //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
-        function getEntidadCliente(idCombo) {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/itemsController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
-                success: function (data) {
-                    //Vaciamos el combo clientes
-                    //$("#comboClientes1 option").remove();
-                    //Recogemos los datos del combo y los pasamos a objetos Entidad  
-                    var clienteEntidad = JSON.parse(data);
-                    //Identificamos el combo
-                    select = document.getElementById(idCombo);
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-                    //Lo vamos cargando
-                    clienteEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a Cliente
-                        var clienteEntidad2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = clienteEntidad2.id_entidad;
-                        //Guardamos el impuesto en el nombre de cada opcion
-                        opt.innerHTML = clienteEntidad2.distinct_code;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
         //Funcion para los calculos de los importes e impuestos
         function calcularTotal() {
             var cant = 0;
@@ -336,7 +317,6 @@
 
         }
         ;
-
 
         //Funcion para obtener los valores pasados por URL
         function obtenerValorParametro(sParametroNombre) {
@@ -367,6 +347,16 @@
 
                         <div class="col-xs-7 verde">                             
                             <h3 style="margin-bottom: 25px; text-align: center;">Modificar ITEMS</h3>
+
+                            <div class="form-group row">
+                                <div class="col-xs-4">
+                                    <label for="id_Item">Item:</label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control" id="id_Item" name="id_Item" required>
+                                </div>
+
+                            </div>          
 
 
                             <div class="form-group row">

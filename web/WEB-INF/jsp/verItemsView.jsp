@@ -66,7 +66,7 @@
                                                                  \n\<td>" + item.costes + "</td>       \n\
                                                                     <td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\
                                                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;Añadir</a></td>\n\
-                                                                    <td><a href='/Facturacion/modificarItemsController/start.htm' class='btn btn-warning' role='button'>\n\
+                                                                    <td><a href='/Facturacion/modificarItemsController/start.htm?idItem=" + item.id_item + "' class='btn btn-warning' role='button'>\n\
                                                                         <span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar</a></td>\n\
                                                                     <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
                                                                          "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;Archivar</button></td>\n\    \n\
@@ -84,7 +84,7 @@
                                                                          "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;&nbsp;Si</button></td>\n\    \n\
                                                                  \n\<td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\
                                                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;Añadir</a></td>\n\
-                                                                 \n\<td><a href='/Facturacion/modificarItemsController/start.htm' class='btn btn-warning' role='button'>\n\
+                                                                 \n\<td><a href='/Facturacion/modificarItemsController/start.htm?idItem=" + item.id_item + "' class='btn btn-warning' role='button'>\n\
                                                                            <span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar</a></td>\n\
                                                                     <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
                                                                          "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;Archivar</button></td>\n\    \n\
