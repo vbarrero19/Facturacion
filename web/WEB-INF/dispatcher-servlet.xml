@@ -44,7 +44,8 @@
     <bean class="Controladores.MenuController" id="menu"/>
     
     <bean class="Controladores.ItemsController" id="items"/>
-    <bean class="Controladores.verItemsController" id="verItems"/>     
+    <bean class="Controladores.verItemsController" id="verItems"/> 
+    <bean class="Controladores.modificarItemsController" id="modificarItems"/>    
     
     <bean class="Controladores.CuentasController" id="cuentas"/>
     <bean class="Controladores.verCuentasController" id="verCuentas"/>
@@ -80,6 +81,7 @@
                       
                 <prop key="itemsView.htm">items</prop>  
                 <prop key="verItemsView.htm">verItems</prop> 
+                <prop key="modificarItemsView.htm">modificarItems</prop> 
                 
                 <prop key="cuentasView.htm">cuentas</prop>  
                 <prop key="verCuentasView.htm">verCuentas</prop>                 

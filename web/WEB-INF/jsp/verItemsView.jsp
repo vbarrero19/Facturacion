@@ -45,7 +45,7 @@
                 type: 'GET',
                 url: '/Facturacion/verItemsController/verItems.htm',
                 success: function (data) {
-                    alert(data);
+                    //alert(data);
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
                     
@@ -64,16 +64,13 @@
                                                                     <td>" + item.id_cuenta + "</td>       \n\
                                                                     <td>" + item.importe + "</td>       \n\
                                                                  \n\<td>" + item.costes + "</td>       \n\
-                                                        \n\
-                                                                    <td><button type='button' class='btn miBotonAnadir btn-success'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
-                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-plus'></span>   Añadir no func</button></td>\n\    \n\
-                                                        \n\
-                                                                    <td><button type='button' class='btn miBotonModificar btn-warning'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
-                                    "' data-idIndice='" + indice + "'>Modificar no func</button></td>\n\    \n\
-                                                        \n\
+                                                                    <td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\
+                                                                           <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;Añadir</a></td>\n\
+                                                                    <td><a href='/Facturacion/modificarItemsController/start.htm' class='btn btn-warning' role='button'>\n\
+                                                                        <span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar</a></td>\n\
                                                                     <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
-                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>   Archivar</button></td>\n\    \n\
-                                                            </tr>");
+                                                                         "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;Archivar</button></td>\n\    \n\
+                                                                </tr>");
                         } else {
                             $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
@@ -84,17 +81,14 @@
                                                                     <td>" + item.id_cuenta + "</td>       \n\
                                                                     <td>" + item.importe + "</td>       \n\
                                                                  \n\<td><button type='button' class='btn miBotonCostes btn-info'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
-                                    "' data-idIndice='" + indice + "'>Si</button></td>\n\    \n\
-                                                        \n\
-                                                                    <td><button type='button' class='btn miBotonAnadir btn-success'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
-                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-plus'></span>   Añadir no func</button></td>\n\    \n\
-                                                        \n\
-                                                                    <td><button type='button' class='btn miBotonModificar btn-warning'  data-idItem='" + item.id_item + "' data-idTipo='" + item.id_tipo_item +
-                                    "' data-idIndice='" + indice + "'>Modificar no func</button></td>\n\    \n\
-                                                        \n\
+                                                                         "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;&nbsp;Si</button></td>\n\    \n\
+                                                                 \n\<td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\
+                                                                           <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;Añadir</a></td>\n\
+                                                                 \n\<td><a href='/Facturacion/modificarItemsController/start.htm' class='btn btn-warning' role='button'>\n\
+                                                                           <span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar</a></td>\n\
                                                                     <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
-                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>   Archivar</button></td>\n\    \n\
-                                                            </tr>");
+                                                                         "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;Archivar</button></td>\n\    \n\
+                                                                </tr>");
                         }
                     });
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
@@ -237,7 +231,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     $("#tbody-tabla-items").children().eq($("#idElimFilaHide").val()).hide();
-                    alert("ITEM ELIMINADO CORRECTAMETNE");
+                    alert("ITEM ARCHIVADO CORRECTAMETNE");
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -246,6 +240,7 @@
                 }
             });
         }
+
 
 
     </script>
@@ -286,15 +281,15 @@
                         </table>
                     </div>    
 
-                    <button type="button" id="submit" name="submit" class="btn btn-primary pull-right">Submit</button>
                     <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>                     
+                    <button type="button" id="submit" name="submit" class="btn btn-primary">Disponible</button>
 
                     <!-- ventana emergente Costes-->
                     <div class="modal fade" id="myModalCostes" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idCostItemHide"/>
-                        <input  id="idCostTipoHide"/>
-                        <input  id="idCostFilaHide"/>
+                        <input class="hidden"  id="idCostItemHide"/>
+                        <input class="hidden"  id="idCostTipoHide"/>
+                        <input class="hidden"  id="idCostFilaHide"/>
 
                         <div class="modal-dialog">
 
@@ -323,84 +318,6 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- ventana emergente Añadir-->
-                    <div class="modal fade modal-lg" id="myModalAnadir" role="dialog">
-                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idAnadItemHide"/>
-                        <input  id="idAnadTipoHide"/>
-                        <input  id="idAnadFilaHide"/>
-
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Añadir Item</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p id="anadirItem"></p>                      
-
-
-                                    <div id="nuevoItem">
-
-                                        <div class="col-xs-12">
-                                            <div class="form-area">  
-                                                <form role="form">
-
-                                                    <br style="clear:both">
-                                                    <h3 style="margin-bottom: 25px; text-align: center;">Alta ITEMS</h3>
-
-                                                    <div class="row"> 
-
-                                                        <div class="form-group col-xs-2">
-                                                            <label for="abreviatura">Abreviatura:</label>
-                                                            <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
-                                                        </div>                            
-                                                        <div class="form-group col-xs-4">
-                                                            <label for="descripcion:">Descripcion:</label>
-                                                            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                                                        </div>                                    
-
-                                                        <div class="form-group-combo col-xs-3">
-                                                            <label for="tipo_item">Tipo de Item:</label>                                        
-                                                            <!--Combo para tipos de items-->
-                                                            <select class="form-control" id="id_tipo_item" name="id_tipo_item">
-                                                            </select>                                                                    
-                                                        </div>
-
-                                                        <div class="form-group col-xs-1">
-                                                            <label for="cuenta">Cuenta:</label>
-                                                            <input type="text" class="form-control" id="cuenta" name="cuenta" required>
-                                                        </div>
-
-                                                        <div class="form-group col-xs-1">
-                                                            <label for="importe">Importe:</label>
-                                                            <input type="text" class="form-control" id="importe" name="importe" required>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <br style="clear:both">
-                                                </form>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="modal-footer">
-                                    <!-- Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista-->
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="archivarItem()">Añadir</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
                         </div>

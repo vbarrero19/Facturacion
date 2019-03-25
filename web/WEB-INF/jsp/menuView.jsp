@@ -62,7 +62,7 @@
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">                                                                       
                                         <li class="mItem"><a href="/Facturacion/itemsController/start.htm">Alta Item</a></li>
-                                        <li class="mItem"><a href="/Facturacion/verItemsController/start.htm">Editar Item</a></li>
+                                        <li class="mItem"><a href="/Facturacion/verItemsController/start.htm">Ver Items</a></li>
                                         <li class="mItem"><a href="">Disponible</a></li> 
                                     </ul>
                                 </div>                                

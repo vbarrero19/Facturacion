@@ -7,15 +7,15 @@
 <html>
     <%@ include file="infouser.jsp" %> 
     <head> 
-        <title>ITEMS VIEW</title>       </head>
+        <title>MODIFICAR ITEMS VIEW</title>       </head>
     <style>
         .container{
             width: 1400px;
 
         }
 
-        .azul{
-            background-color: lightblue;
+        .verde{
+            background-color: #ffe48d;
             margin-bottom: 25px;
         }
 
@@ -24,111 +24,116 @@
     <script>
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
-            getTipoItem();
-            getTipoCuenta();
-            //getEntidadEmpresa();
 
-            var cont = 0;
+            var idItem = obtenerValorParametro("idItem");
 
-            $('#conCostes').hide();
+            alert(idItem);
 
-            //$("input[name=costesRadios]").attr('disabled', true);
-
-            $("#costesRadios1").on("click", function () {
-                $('#conCostes').hide();
-                $('#sinCostes').show();
-            });
-
-            $("#costesRadios2").on("click", function () {
-                $('#conCostes').show();
-                $('#importe').val(0);
-                getEntidadEmpresa();
-
-            });
-
-            //Codigo para añadir un coste de forma dinamica
-            $('#conCostes').on('click', '#anadirCoste', function () {
-                cont++;
-                $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
-                                                            <td> <div class='form-group-combo'>\n\
-                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
-                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
-                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
-                                                    </tr>");
-                getEntidadCliente("comboClientes" + cont);
-            });
-
-
-            //Codigo para eliminar un coste de forma dinamica
-            $('#conCostes').on('click', '.miBoton', function () {
-                var parent = $(this).parent().parent().remove();
-                calcularTotal();
-
-            });
-
-            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {               
-                calcularTotal();
-            });
-
-            //Evento .click en el boton submit
-            $("#guardarItem").click(function () {
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-
-                //Variable para guardar los valores del formulario
-                var myObj = {};
-
-
-                //Codigo para recuperar los costes de un item
-                //Creamos el array donde guardaremos los datos
-                var arrayOption = [];
-
-                $("#tableContainer tbody>tr option:checked").each(function (index) {
-                    arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
-                });
-
-                //alert(arrayOption.toString());
-
-
-                //Cargamos el contenido de los campos del formulario
-                myObj["abreviatura"] = $("#abreviatura").val().trim();
-                myObj["descripcion"] = $("#descripcion").val().trim();
-                myObj["id_tipo_item"] = $("#id_tipo_item").val();
-                myObj["importe"] = $("#importe").val().trim();
-                myObj["estado"] = "0";
-                myObj["importe"] = $("#importe").val().trim();
-                myObj["id_cuenta"] = $("#id_cuenta").val();
-                if ($("input[name=costesRadios]:checked").val() == "Si") {
-
-                    myObj["costes"] = arrayOption.toString();
-                } else {
-                    myObj["costes"] = "No";
-                }
-                //Convertimos la variable myObj a String
-                var json = JSON.stringify(myObj);
-                $.ajax({
-                    type: 'POST',
-                    url: '/Facturacion/itemsController/newItems.htm', //Vamos a newCustomer de itemsController
-                    data: json,
-                    datatype: "json",
-                    contentType: "application/json",
-                    success: function (data) {
-                        alert(data);
-                        location.reload();
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-            })
+//            getTipoItem();
+//            getTipoCuenta();
+//            //getEntidadEmpresa();
+//
+//            var cont = 0;
+//
+//            $('#conCostes').hide();
+//
+//            //$("input[name=costesRadios]").attr('disabled', true);
+//
+//            $("#costesRadios1").on("click", function () {
+//                $('#conCostes').hide();
+//                $('#sinCostes').show();
+//            });
+//
+//            $("#costesRadios2").on("click", function () {
+//                $('#conCostes').show();
+//                $('#importe').val(0);
+//                getEntidadEmpresa();
+//
+//            });
+//
+//            //Codigo para añadir un coste de forma dinamica
+//            $('#conCostes').on('click', '#anadirCoste', function () {
+//                cont++;
+//                $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
+//                                                            <td> <div class='form-group-combo'>\n\
+//                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
+//                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
+//                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
+//                                                    </tr>");
+//                getEntidadCliente("comboClientes" + cont);
+//            });
+//
+//
+//            //Codigo para eliminar un coste de forma dinamica
+//            $('#conCostes').on('click', '.miBoton', function () {
+//                var parent = $(this).parent().parent().remove();
+//                calcularTotal();
+//
+//            });
+//
+//            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
+//                calcularTotal();
+//            });
+//
+//            //Evento .click en el boton submit
+//            $("#guardarItem").click(function () {
+//                if (window.XMLHttpRequest) //mozilla
+//                {
+//                    ajax = new XMLHttpRequest(); //No Internet explorer
+//                } else
+//                {
+//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                }
+//
+//
+//                //Variable para guardar los valores del formulario
+//                var myObj = {};
+//
+//
+//                //Codigo para recuperar los costes de un item
+//                //Creamos el array donde guardaremos los datos
+//                var arrayOption = [];
+//
+//                $("#tableContainer tbody>tr option:checked").each(function (index) {
+//                    arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
+//                });
+//
+//                //alert(arrayOption.toString());
+//
+//
+//                //Cargamos el contenido de los campos del formulario
+//                myObj["abreviatura"] = $("#abreviatura").val().trim();
+//                myObj["descripcion"] = $("#descripcion").val().trim();
+//                myObj["id_tipo_item"] = $("#id_tipo_item").val();
+//                myObj["importe"] = $("#importe").val().trim();
+//                myObj["estado"] = "0";
+//                myObj["importe"] = $("#importe").val().trim();
+//                myObj["id_cuenta"] = $("#id_cuenta").val();
+//                if ($("input[name=costesRadios]:checked").val() == "Si") {
+//
+//                    myObj["costes"] = arrayOption.toString();
+//                } else {
+//                    myObj["costes"] = "No";
+//                }
+//                //Convertimos la variable myObj a String
+//                var json = JSON.stringify(myObj);
+//                $.ajax({
+//                    type: 'POST',
+//                    url: '/Facturacion/itemsController/newItems.htm', //Vamos a newCustomer de itemsController
+//                    data: json,
+//                    datatype: "json",
+//                    contentType: "application/json",
+//                    success: function (data) {
+//                        alert(data);
+//                        location.reload();
+//                    },
+//                    error: function (xhr, ajaxOptions, thrownError) {
+//                        console.log(xhr.status);
+//                        console.log(xhr.responseText);
+//                        console.log(thrownError);
+//                    }
+//                });
+//            })
 
         });
         //Funcion para llenar el combo de tipo de item. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
@@ -332,6 +337,24 @@
         }
         ;
 
+
+        //Funcion para obtener los valores pasados por URL
+        function obtenerValorParametro(sParametroNombre) {
+            var sPaginaURL = window.location.search.substring(1);
+            var sURLVariables = sPaginaURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParametro = sURLVariables[i].split('=');
+                if (sParametro[0] == sParametroNombre) {
+                    return sParametro[1];
+                }
+            }
+            return null;
+        }
+        ;
+
+
+
+
     </script>
     <body>
         <div class="container">
@@ -342,8 +365,8 @@
 
                         <br style="clear:both">
 
-                        <div class="col-xs-7 azul">                             
-                            <h3 style="margin-bottom: 25px; text-align: center;">Añadir ITEMS</h3>
+                        <div class="col-xs-7 verde">                             
+                            <h3 style="margin-bottom: 25px; text-align: center;">Modificar ITEMS</h3>
 
 
                             <div class="form-group row">
@@ -463,7 +486,7 @@
                         <br style="clear:both">
 
                         <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>    
-                        <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary">Guardar</button>
+                        <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary">Modificar</button>
 
                     </form>
                 </div>

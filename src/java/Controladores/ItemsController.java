@@ -29,7 +29,7 @@ public class ItemsController {
 
         return mv;
     }
-
+    
     //AddResources
     @RequestMapping("/itemsController/addResources.htm")
     @ResponseBody
@@ -227,7 +227,7 @@ public class ItemsController {
             con = pool_local.getConnection();
 
             Statement sentencia = con.createStatement();
-            rs = sentencia.executeQuery("SELECT id_cuenta, cuenta FROM cuentas");
+            rs = sentencia.executeQuery("SELECT id_cuenta, cuenta FROM cuentas where estado = 'Si'");
 
             while (rs.next()) {
                 //Cada registro del rs lo convertimos a String con JSON y los guardamos en el Array
