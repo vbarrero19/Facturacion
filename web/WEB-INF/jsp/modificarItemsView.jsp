@@ -33,113 +33,113 @@
             getTipoItem();
             getTipoCuenta();
 
+            var cont = 0;
 
-//
-//            var cont = 0;
-//
-//            $('#conCostes').hide();
-//
-//            //$("input[name=costesRadios]").attr('disabled', true);
-//
-//            $("#costesRadios1").on("click", function () {
-//                $('#conCostes').hide();
-//                $('#sinCostes').show();
-//            });
-//
-//            $("#costesRadios2").on("click", function () {
-//                $('#conCostes').show();
-//                $('#importe').val(0);
-//                getEntidadEmpresa();
-//
-//            });
-//
-//            //Codigo para añadir un coste de forma dinamica
-//            $('#conCostes').on('click', '#anadirCoste', function () {
-//                cont++;
-//                $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
-//                                                            <td> <div class='form-group-combo'>\n\
-//                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
-//                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
-//                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
-//                                                    </tr>");
-//                getEntidadCliente("comboClientes" + cont);
-//            });
-//
-//
-//            //Codigo para eliminar un coste de forma dinamica
-//            $('#conCostes').on('click', '.miBoton', function () {
-//                var parent = $(this).parent().parent().remove();
-//                calcularTotal();
-//
-//            });
-//
-//            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
-//                calcularTotal();
-//            });
-//
-//            //Evento .click en el boton submit
-//            $("#guardarItem").click(function () {
-//                if (window.XMLHttpRequest) //mozilla
-//                {
-//                    ajax = new XMLHttpRequest(); //No Internet explorer
-//                } else
-//                {
-//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                }
-//
-//
-//                //Variable para guardar los valores del formulario
-//                var myObj = {};
-//
-//
-//                //Codigo para recuperar los costes de un item
-//                //Creamos el array donde guardaremos los datos
-//                var arrayOption = [];
-//
-//                $("#tableContainer tbody>tr option:checked").each(function (index) {
-//                    arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
-//                });
-//
-//                //alert(arrayOption.toString());
-//
-//
-//                //Cargamos el contenido de los campos del formulario
-//                myObj["abreviatura"] = $("#abreviatura").val().trim();
-//                myObj["descripcion"] = $("#descripcion").val().trim();
-//                myObj["id_tipo_item"] = $("#id_tipo_item").val();
-//                myObj["importe"] = $("#importe").val().trim();
-//                myObj["estado"] = "0";
-//                myObj["importe"] = $("#importe").val().trim();
-//                myObj["id_cuenta"] = $("#id_cuenta").val();
-//                if ($("input[name=costesRadios]:checked").val() == "Si") {
-//
-//                    myObj["costes"] = arrayOption.toString();
-//                } else {
-//                    myObj["costes"] = "No";
-//                }
-//                //Convertimos la variable myObj a String
-//                var json = JSON.stringify(myObj);
-//                $.ajax({
-//                    type: 'POST',
-//                    url: '/Facturacion/itemsController/newItems.htm', //Vamos a newCustomer de itemsController
-//                    data: json,
-//                    datatype: "json",
-//                    contentType: "application/json",
-//                    success: function (data) {
-//                        alert(data);
-//                        location.reload();
-//                    },
-//                    error: function (xhr, ajaxOptions, thrownError) {
-//                        console.log(xhr.status);
-//                        console.log(xhr.responseText);
-//                        console.log(thrownError);
-//                    }
-//                });
-//            })
+            $('#conCostes').hide();
+
+            //$("input[name=costesRadios]").attr('disabled', true);
+
+            $("#costesRadios1").on("click", function () {
+                $('#conCostes').hide();
+                $('#sinCostes').show();
+            });
+
+            $("#costesRadios2").on("click", function () {
+                $('#conCostes').show();
+                //$('#importe').val(0);
+                //getEntidadEmpresa();
+
+            });
+
+
+
+            //Codigo para añadir un coste de forma dinamica
+            $('#conCostes').on('click', '#anadirCoste', function () {
+                cont++;
+                $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
+                                                            <td> <div class='form-group-combo'>\n\
+                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
+                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
+                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
+                                                    </tr>");
+               getEntidadCliente("comboClientes" + cont);
+            });
+
+
+            //Codigo para eliminar un coste de forma dinamica
+            $('#conCostes').on('click', '.miBoton', function () {
+                var parent = $(this).parent().parent().remove();
+                calcularTotal();
+
+            });
+
+            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
+                calcularTotal();
+            });
+
+            //Evento .click en el boton submit
+            $("#modificarItem").click(function () {
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                //Variable para guardar los valores del formulario
+                var myObj = {};
+
+                //Codigo para recuperar los costes de un item
+                //Creamos el array donde guardaremos los datos
+                var arrayOption = [];
+
+                $("#tableContainer tbody>tr option:checked").each(function (index) {
+                    arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
+                });
+
+                //alert(arrayOption.toString());
+
+                alert($("input[name=costesRadios]:checked").val());
+                //Cargamos el contenido de los campos del formulario
+                myObj["id_item"] = $("#id_Item").text().trim();
+                myObj["abreviatura"] = $("#abreviatura").val().trim();
+                myObj["descripcion"] = $("#descripcion").val().trim();
+                myObj["id_tipo_item"] = $("#id_tipo_item").val();
+                myObj["importe"] = $("#importe").val().trim();
+                myObj["estado"] = "0";
+                myObj["importe"] = $("#importe").val().trim();
+                myObj["id_cuenta"] = $("#id_cuenta").val();
+                if ($("input[name=costesRadios]:checked").val() == "Si") {
+
+                    myObj["costes"] = arrayOption.toString();
+                } else {
+                    myObj["costes"] = "No";
+                }
+                //Convertimos la variable myObj a String
+                var json = JSON.stringify(myObj);
+                $.ajax({
+                    type: 'POST',
+                    url: '/Facturacion/modificarItemsController/modificarItem.htm', //Vamos a newCustomer de itemsController
+                    data: json,
+                    datatype: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert(data);
+                        location.reload();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+            })
 
         });
 
 
+        //Funcion para llenar los datos del item seleccionado.
         function getItem(idItem) {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -152,8 +152,8 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/modificarItemsController/getItem.htm?idItem=' + idItem, //Vamos a cargosController/getCliente.htm a recoger los datos
-                success: function (data) {                   
+                url: '/Facturacion/modificarItemsController/getItem.htm?idItem=' + idItem,
+                success: function (data) {
 
                     var item = JSON.parse(data);
 
@@ -164,27 +164,26 @@
                         idTipo = item2.col4;
                         idCuenta = item2.col7;
 
-                        alert(idTipo);
-                        alert(idCuenta);
-
-
-
-                        $("#id_Item").val(item2.col1);
+                        $("#id_Item").text(item2.col1);
 
                         $("#abreviatura").val(item2.col2);
                         $("#descripcion").text(item2.col3);
+                        $("#importe").val(item2.col5);
 
-                        //Llamamos a una funcion para llenar el combo
-                        getTipoImpuesto(idTipoImp);
-//                        $("#valorImpuesto").val(item2.col9);
-//                        $("#total").val(item2.col10);
-//                        if (item2.col11 == 1) {
-//                            $("#periodicidad").text("Puntual");
-//                        } else {
-//                            $("#periodicidad").text("Periódico");
-//                        }
-//                        $("#fecha_cargo input").val(item2.col12.substr(0, 10));
-//                        $("#fecha_vencimiento input").val(item2.col13.substr(0, 10));
+                        if (item2.col8 == "No") {
+                            //alert(item2.col8);
+                            $("#costesRadios1").attr('checked', true);
+                            $('#conCostes').hide();
+                            $('#sinCostes').show();
+
+                        } else {
+                            //alert(item2.col8);
+                            $("#costesRadios2").attr('checked', true);
+                            $('#conCostes').show();
+                            $("#importe").val(item2.col5);
+                            getCostes(idItem);
+                        }
+
 
                     });
 
@@ -198,8 +197,7 @@
         }
         ;
 
-        //Funcion para llenar el combo de tipo de item. Los datos nos vienen en un ArrayList de objetos TipoImpuesto transformado en String
-        //con json. Los datos se obtienen en itemsController/getTipoItem.htm.
+        //Funcion para llenar el combo de tipo de item.
         function getTipoItem() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -214,9 +212,6 @@
                 type: 'GET',
                 url: '/Facturacion/modificarItemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
                 success: function (data) {
-
-                    
-
                     //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
                     //Estos objetos estan en formato String
                     var tipoItem = JSON.parse(data);
@@ -237,11 +232,13 @@
                         if (tipoItem2.id_tipo_item == idTipo) {
                             //La dejamos seleccionada
                             opt.selected = true;
-                            
+
                         }
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
+
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -252,8 +249,7 @@
         }
         ;
 
-        //Funcion para llenar el combo de cuentas. Los datos nos vienen en un ArrayList de objetos TipoCuenta transformado en String
-        //con json. Los datos se obtienen en itemsController/getTipoCuenta.htm.
+        //Funcion para llenar el combo de cuentas.
         function getTipoCuenta() {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -284,11 +280,11 @@
                         opt.value = tipoCuenta2.col1;
                         //Guardamos la descripcion de item en el nombre de cada opcion                        //                 
                         opt.innerHTML = tipoCuenta2.col2;
-                       
-                        if (tipoCuenta2.col1 == idCuenta) {                            
-                            
+
+                        if (tipoCuenta2.col1 == idCuenta) {
+
                             //La dejamos seleccionada
-                            opt.selected = true;                            
+                            opt.selected = true;
                         }
                         //Añadimos la opcion
                         select.appendChild(opt);
@@ -318,6 +314,163 @@
         }
         ;
 
+        //Funcion para recuperar los costes de un item
+        function getCostes(idItem) {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/modificarItemsController/getCostes.htm?idItem=' + idItem,
+                success: function (data) {
+
+                    alert(data);
+
+                    var costes = JSON.parse(data);
+
+                    //Lo vamos cargando
+                    costes.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        costes2 = JSON.parse(valor);
+                        if (indice == 0) {
+                            getEntidadEmpresa(costes2.col2);
+                            $("#costeImporte").val(costes2.col3)
+                        } else {
+
+                            $('#anadirCoste').click();
+                            alert(costes2.col2);
+                            //$('#comboClientes' + indice + ' option[value=6]').attr("selected",true);
+                            //getEntidadCliente("comboClientes" + indice,costes2.col2);
+
+                            //$('#comboClientes1 option[value=6]').attr('selected', true);
+                            
+                            $('#costeImporte' + indice).val(costes2.col3);
+
+                            //$("#selector option[value=3]").attr('disabled','disabled');
+                            //$("#menu option[value='2']").attr("selected", true);
+                            //$("#provincia option[value="+ valor +"]").attr("selected",true);'+ costes2.col2 +'    ' + indice + '
+                        }
+
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+        //Funcion para llenar el combo de empresa.
+        function getEntidadEmpresa(idEmpresa) {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/itemsController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+                    //Vaciamos el combo clientes
+                    $("#comboEmpresas option").remove();
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var empresaEntidad = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboEmpresas');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+                    //Lo vamos cargando
+                    empresaEntidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var empresaEntidad2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = empresaEntidad2.id_entidad;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = empresaEntidad2.distinct_code;
+
+                        if (empresaEntidad2.id_entidad == idEmpresa) {
+                            opt.selected = true;
+                        }
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+        //Funcion para llenar el combo de cliente.
+        function getEntidadCliente(idCombo) {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/itemsController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
+                success: function (data) {
+                    //Vaciamos el combo clientes
+                    //$("#comboClientes1 option").remove();
+                    //Recogemos los datos del combo y los pasamos a objetos Entidad  
+                    var clienteEntidad = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById(idCombo);
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+                    //Lo vamos cargando
+                    clienteEntidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        var clienteEntidad2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = clienteEntidad2.id_entidad;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        opt.innerHTML = clienteEntidad2.distinct_code;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
         //Funcion para obtener los valores pasados por URL
         function obtenerValorParametro(sParametroNombre) {
             var sPaginaURL = window.location.search.substring(1);
@@ -331,7 +484,6 @@
             return null;
         }
         ;
-
 
 
 
@@ -353,7 +505,8 @@
                                     <label for="id_Item">Item:</label>
                                 </div>
                                 <div class="col-xs-6">
-                                    <input type="text" class="form-control" id="id_Item" name="id_Item" required>
+                                    <label class="form-control" id="id_Item" name="id_Item"></label>
+                                    <!--<input type="text" class="form-control" id="id_Item" name="id_Item" required>-->
                                 </div>
 
                             </div>          
@@ -476,7 +629,9 @@
                         <br style="clear:both">
 
                         <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>    
-                        <button type="button" id="guardarItem" name="guardarItem" class="btn btn-primary">Modificar</button>
+                        <button type="button" id="modificarItem" name="modificarItem" class="btn btn-primary">Modificar</button>
+                        <!--<button type="button" id="modificarItem2" name="modificarItem2" class="btn btn-primary">Modificar Manteniendo Original</button>-->
+                        <a href="/Facturacion/verItemsController/start.htm" class="btn btn-success" role="button">Ver Items</a>
 
                     </form>
                 </div>

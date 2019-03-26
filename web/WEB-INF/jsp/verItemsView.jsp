@@ -138,14 +138,14 @@
                                                                </tr>");
                                     });
 
-                                    $(document).ready(function () {
-
-                                        $("input[name=estado]").change(function () {
-                                            $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
-                                        });
-
-
-                                    });
+//                                    $(document).ready(function () {
+//
+//                                        $("input[name=estado]").change(function () {
+//                                            $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
+//                                        });
+//
+//
+//                                    });
 
                                 },
                                 error: function (xhr, ajaxOptions, thrownError) {

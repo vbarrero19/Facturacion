@@ -40,7 +40,7 @@ public class modificarItemsController {
     /*Cargamos datos del item*/
     @RequestMapping("/modificarItemsController/getItem.htm")
     @ResponseBody
-    public String cargarDatosCargo(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String getItem(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
 
         Connection con = null;
         ResultSet rs = null;
@@ -222,6 +222,184 @@ public class modificarItemsController {
 
     }
 
+    /*Cargamos datos de los costes de un item*/
+    @RequestMapping("/modificarItemsController/getCostes.htm")
+    @ResponseBody
+    public String getCostes(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        String idItem = hsr.getParameter("idItem");
+        ArrayList<String> arrayTipoEntidad = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            rs = sentencia.executeQuery("select id_item, id_entidad, cantidad from costes where id_item = '" + idItem + "'");
+
+            while (rs.next()) {
+                arrayTipoEntidad.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3))));
+            }
+
+            resp = new Gson().toJson(arrayTipoEntidad);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto"; //
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+
+        } catch (Exception ex) {
+            resp = "incorrecto"; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        return resp;
+
+    }
+    
+    //Insertamos un nuevo item
+    @RequestMapping("/modificarItemsController/modificarItem.htm")
+    @ResponseBody
+    public String modificarItem(@RequestBody Items item, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        
+        Items resourceLoad = new Items();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        PreparedStatement stAux2 = null;
+        String resp = "correcto";
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            
+            String coste = item.getCostes();
+            
+            //Si el item no tiene costes guardamos el importe y en costes ponemos "No"
+            if (item.getCostes().equals("No")) {
+                stAux = con.prepareStatement("update items set abreviatura=?, descripcion=?, id_tipo_item=?, importe=?, estado=?, id_cuenta=?, costes=? where id_item = ?");
+
+                stAux.setString(1, item.getAbreviatura());
+                stAux.setString(2, item.getDescripcion());
+                stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));
+                stAux.setDouble(4, Double.parseDouble(item.getImporte()));
+                stAux.setInt(5, Integer.parseInt(item.getEstado()));
+                stAux.setInt(6, Integer.parseInt(item.getId_cuenta()));
+                stAux.setString(7, item.getCostes());
+                stAux.setInt(8, Integer.parseInt(item.getId_item()));
+
+                stAux.executeUpdate();
+
+                resp = "Item modificado sin costes";
+
+            }else{//Si el item tiene costes guardamos el importe y en costes ponemos "Si". Ademas guardamos el desglose de los costes
+                
+                stAux = con.prepareStatement("update items set abreviatura=?, descripcion=?, id_tipo_item=?, importe=?, estado=?, id_cuenta=?, costes=? where id_item = ?");
+
+                stAux.setString(1, item.getAbreviatura());
+                stAux.setString(2, item.getDescripcion());
+                stAux.setInt(3, Integer.parseInt(item.getId_tipo_item()));
+                stAux.setDouble(4, Double.parseDouble(item.getImporte()));
+                stAux.setInt(5, Integer.parseInt(item.getEstado()));
+                stAux.setInt(6, Integer.parseInt(item.getId_cuenta()));
+                stAux.setString(7, "Si");
+                stAux.setInt(8, Integer.parseInt(item.getId_item()));
+
+                stAux.executeUpdate();
+
+                resp = "Item modificado ";
+                
+                //Insertamos el desglose de los costes
+                //Primero borramos los costes para ese item
+                Statement sentencia = con.createStatement();
+                stAux = con.prepareStatement("delete from costes where id_item = ?");
+                stAux.setInt(1, Integer.parseInt(item.getId_item()));
+                
+                stAux.executeUpdate();
+                
+                
+                int numItem = Integer.parseInt(item.getId_item());
+                
+                //Los volvemos a insertar con las modificaciones
+                String cadena = item.getCostes();
+                String EntidadCantidad = "";
+
+                String[] costes = cadena.split(",");
+                for (int x = 0; x < costes.length; x++) {
+                    EntidadCantidad = costes[x];
+                    String[] datos = EntidadCantidad.split("-");
+                    int entidad = Integer.parseInt(datos[0]);
+                    Double cantidad = Double.parseDouble(datos[1]);
+
+                    stAux2 = con.prepareStatement("INSERT INTO costes VALUES (?,?,?)");
+
+                    stAux2.setInt(1, numItem);
+                    stAux2.setInt(2, entidad);
+                    stAux2.setDouble(3, cantidad);
+
+                    stAux2.executeUpdate();
+                }
+
+                resp = resp + "con costes";
+
+            }
+
+        } catch (SQLException ex) {
+            resp = "Incorrecto SQLE -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto" + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
     
     
     
