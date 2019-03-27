@@ -15,7 +15,7 @@ public class Cuentas {
         this.cuenta = cuenta;
         this.estado = estado;
     }
-
+    
     public String getId_cuenta() {
         return id_cuenta;
     }
