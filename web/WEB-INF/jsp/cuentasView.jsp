@@ -337,7 +337,7 @@
                                         //Añadimos la opcion
                                         select.appendChild(opt);
                                     });
-                                    
+
                                 },
                                 error: function (xhr, ajaxOptions, thrownError) {
                                     console.log(xhr.status);
@@ -516,7 +516,15 @@
                     console.log(xhr.status);
                     console.log(xhr.responseText);
                     console.log(thrownError);
+                },
+                
+                
+                complete: function (xhr, status) {
+                    alert('Petición realizada');
                 }
+
+
+
             });
         }
         ;
@@ -607,7 +615,7 @@
 
 //$('select[name="lineas"] option:selected').text());
 
-           // alert($('#anadirEmpresaCombo option:selected').text());
+            // alert($('#anadirEmpresaCombo option:selected').text());
 
             var json = JSON.stringify(myObj);
             $.ajax({
@@ -618,7 +626,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     alert(data);
-                   getEmpresas();
+                    getEmpresas();
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {

@@ -73,8 +73,8 @@
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Cuentas
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">                                                                       
-                                        <li class="mCargo"><a href="/Facturacion/cuentasController/start.htm">Alta Cuenta</a></li>
-                                        <li class="mCargo"><a href="/Facturacion/verCuentasController/start.htm">Editar Cuenta</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/cuentasController/start.htm">Editar Cuentas</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/verCuentasController/start.htm">Ver Cuentas</a></li>
                                         <li class="mCargo"><a href="">Disponible</a></li> 
                                     </ul>
                                 </div>                                
