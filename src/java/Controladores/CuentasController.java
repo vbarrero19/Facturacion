@@ -41,7 +41,7 @@ public class CuentasController {
     //Se usa para cargar los datos de la tabla cuentas
     @RequestMapping("/cuentasController/getCuenta.htm")
     @ResponseBody
-    public String cargarCuentas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String getCuenta(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Cuentas resourceLoad = new Cuentas();
 
         Connection con = null;
@@ -100,8 +100,8 @@ public class CuentasController {
     //Se usa para cargar los datos de la tabla empresas
     @RequestMapping("/cuentasController/getEmpresa.htm")
     @ResponseBody
-    public String cargarEmpresas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Cuentas resourceLoad = new Cuentas();
+    public String getEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        CuentasEmpresas resourceLoad = new CuentasEmpresas();
 
         Connection con = null;
         ResultSet rs = null;
@@ -119,7 +119,7 @@ public class CuentasController {
             rs = sentencia.executeQuery("SELECT id_empresa, nombre, estado FROM cuentas_empresas where estado = 'Si' ORDER BY id_empresa");
 
             while (rs.next()) {
-                arrayTipo.add(new Gson().toJson(new Cuentas(rs.getString(1), rs.getString(2), rs.getString(3))));
+                arrayTipo.add(new Gson().toJson(new CuentasEmpresas(rs.getString(1), rs.getString(2), rs.getString(3))));
             }
 
             resp = new Gson().toJson(arrayTipo);
@@ -713,6 +713,79 @@ public class CuentasController {
         }
         return resp;
 
+    }    
+    
+    //Se usa para cargar los datos de la tabla empresas
+    @RequestMapping("/cuentasController/getDatosCarta.htm")
+    @ResponseBody
+    public String getDatosCarta(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+        
+        String idEmpresa="";
+
+        idEmpresa = hsr.getParameter("empresa");
+        
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("select cd.id_cuenta, c.cuenta, e.id_empresa, e.nombre, cd.denominacion  from cuentas_denominacion cd "
+                    + "inner join cuentas_empresas e on cd.id_empresa = e.id_empresa inner join cuentas c on c.id_cuenta = cd.id_cuenta "
+                    + "where cd.id_empresa = ? order by id_cuenta");
+            
+            stAux.setInt(1, Integer.parseInt(idEmpresa));
+
+            rs = stAux.executeQuery();
+            
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
+            }                      
+            
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }    
+        
+        return resp;
+
     }
+    
+    
+    
+    
+    
     
 }

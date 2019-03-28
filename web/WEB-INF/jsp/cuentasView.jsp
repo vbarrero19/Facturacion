@@ -10,7 +10,7 @@
         <title>Cuentas VIEW</title>       </head>
     <style>
         .container{
-            width: 1400px;
+            width: 1600px;
 
         }
 
@@ -24,9 +24,14 @@
     <script>
         $(document).ready(function () {
 
+            var numeroColumnas = 0;
+
             //al cargar la pagina llamamos a la funcion getCuentas(), getEmpresas para llenar las tablas
             getCuentas();
             getEmpresas();
+
+
+
 
         });
 
@@ -50,21 +55,22 @@
                     $('#tableContainer1 tbody').empty();
 
                     //Vamos cargando la tabla
-
                     aux.forEach(function (valor, indice) {
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cuenta = JSON.parse(valor);
 
                         $('#tableContainer1 tbody').append(" <tr>\n\
-                                                                <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
-                                                                    <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
-                                                                    <td>" + cuenta.cuenta + "</td>         \n\
-                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
-                                                                    <td>" + cuenta.estado + "</td>         \n\
-                                                                    <td><button type='button' class='btn miBotonModificarCuenta btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Modificar</button></td>\n\
-                                                                    <td><button type='button' class='btn miBotonEliminarCuenta btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Archivar </button></td>\n\
-                                                                    </tr>");
+                            <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                            <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
+                            <td>" + cuenta.cuenta + "</td>         \n\
+                            <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
+                            <td>" + cuenta.estado + "</td>         \n\
+                            <td><button type='button' class='btn miBotonModificarCuenta btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                                "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar&nbsp;</button></td>\n\
+                            <td><button type='button' class='btn miBotonEliminarCuenta btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                                "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp; Archivar </button></td>\n\
+                        </tr>");
                     });
 
                     /*Creamos las funciones que al hacer click en los botones de la tabla nos muestren los modales, identificamos el boton con el nombre miBoton...*/
@@ -76,7 +82,7 @@
                              * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
                             $("#idActivarCuentaHide").val($(this).attr("data-idCuenta"));
 
-                            $("#denominacionModificar").val($("#idModifCuentaTipoHide").val());
+                            //$("#denominacionActivarCuenta").val($("#idModifCuentaTipoHide").val());
 
                             if (window.XMLHttpRequest) //mozilla
                             {
@@ -204,22 +210,24 @@
 
                     var aux = JSON.parse(data);
                     $('#tableContainer2 tbody').empty();
-                    //Vamos cargando la tabla
 
+                    //Vamos cargando la tabla
                     aux.forEach(function (valor, indice) {
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cuenta = JSON.parse(valor);
 
                         $('#tableContainer2 tbody').append(" <tr>\n\
-                                                                <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
-                                                                    <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
-                                                                    <td>" + cuenta.cuenta + "</td>         \n\
-                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
-                                                                    <td>" + cuenta.estado + "</td>         \n\\n\
-                                                                    <td><button type='button' class='btn btn-info miBotonModificar btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Modificar</button></td>\n\
-                                                                    <td><button type='button' class='btn btn-info miBotonEliminarEmpresa btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta + "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'> Archivar </button></td>\n\
-                                                                    </tr>");
+                            <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                            <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
+                            <td>" + cuenta.nombre + "</td>         \n\
+                            <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.nombre + "</td>         \n\
+                            <td>" + cuenta.estado + "</td>         \n\\n\
+                            <td><button type='button' class='btn btn-info miBotonDetallesEmpresa btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                                "' data-cuenta='" + cuenta.nombre + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-eye-open'></span>&nbsp;&nbsp; &nbsp;Detalles&nbsp;</button></td>\n\
+                            <td><button type='button' class='btn btn-info miBotonEliminarEmpresa btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                                "' data-cuenta='" + cuenta.nombre + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp; Archivar </button></td>\n\
+                        </tr>");
                     });
 
                     /*Creamos las funciones que al hacer click en los botones de la tabla nos muestren los modales, identificamos el boton con el nombre miBoton...*/
@@ -280,18 +288,64 @@
                         })
                                 ;
 
-                        $(".miBotonModificarEmpresa").click(function () {
+                        $(".miBotonDetallesEmpresa").click(function () {
 
-                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
-                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
-                            $("#idModifCuentaHide").val($(this).attr("data-idCuenta"));
-                            $("#idModifCuentaTipoHide").val($(this).attr("data-cuenta"));
-                            $("#idModifCuentaFilaHide").val($(this).attr("data-idIndice"));
+                            if (window.XMLHttpRequest) //mozilla
+                            {
+                                ajax = new XMLHttpRequest(); //No Internet explorer
+                            } else
+                            {
+                                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
 
-                            $("#denominacionModificar").val($("#idModifCuentaTipoHide").val());
+                            var idEmpresa = $(this).attr("data-idCuenta");
+                            alert(idEmpresa);
 
-                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
-                            $("#myModalModificarCuenta").modal();
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Facturacion/cuentasController/getDatosCarta.htm?empresa=' + idEmpresa,
+                                success: function (data) {
+
+                                    alert(data);
+
+                                    var aux = JSON.parse(data);
+                                    $('#tableContainer3 tbody').empty();
+
+                                    //Vamos cargando la tabla
+                                    aux.forEach(function (valor, indice) {
+                                        //var id = cargo.id_cargo;
+                                        //Cada objeto esta en String 
+                                        var cuenta = JSON.parse(valor);
+
+                                        $('#tableContainer3 tbody').append(" <tr>\n\
+                            <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                            <td id='id" + indice + "'>" + cuenta.col1 + "</td>         \n\
+                            <td>" + cuenta.col2 + "</td>         \n\
+                            <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.col3 + "</td>         \n\
+                            <td>" + cuenta.col5 + "</td>         \n\\n\
+                        </tr>");
+                                    });
+
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    console.log(xhr.status);
+                                    console.log(xhr.responseText);
+                                    console.log(thrownError);
+                                }
+                            });
+
+
+
+//                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+//                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+//                            $("#idDetallesEmpresaHide").val($(this).attr("data-idCuenta"));
+//                            $("#idDetallesEmpresaTipoHide").val($(this).attr("data-cuenta"));
+//                            $("#idDetallesEmpresaFilaHide").val($(this).attr("data-idIndice"));
+//
+//                            $("#denominacionDetealles").text($("#idDetallesEmpresaTipoHide").val());
+//
+//                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+//                            $("#myModalDetallesEmpresa").modal();
                         })
                                 ;
 
@@ -310,7 +364,7 @@
                                 type: 'GET',
                                 url: '/Facturacion/cuentasController/getEmpresasDisponibles.htm',
                                 success: function (data) {
-                                    alert(data);
+                                    //alert(data);
 
                                     $('#anadirEmpresaCombo').empty();
 
@@ -368,6 +422,163 @@
                                 ;
 
                     });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+
+        }
+        ;
+
+        function getCarta() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Facturacion/cuentasController/getCarta.htm',
+                success: function (data) {
+
+                    var aux = JSON.parse(data);
+                    $('#tableContainer3 tbody').empty();
+
+                    //Vamos cargando la tabla
+
+                    aux.forEach(function (valor, indice) {
+                        //var id = cargo.id_cargo;
+                        //Cada objeto esta en String 
+                        var cuenta = JSON.parse(valor);
+
+                        $('#tableContainer1 tbody').append(" <tr>\n\
+                            <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                            <td id='id" + indice + "'>" + cuenta.id_cuenta + "</td>         \n\
+                            <td>" + cuenta.cuenta + "</td>         \n\
+                            <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
+                            <td>" + cuenta.estado + "</td>         \n\
+                            <td><button type='button' class='btn miBotonModificarCuenta btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                                "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar&nbsp;</button></td>\n\
+                            <td><button type='button' class='btn miBotonEliminarCuenta btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                                "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp; Archivar </button></td>\n\
+                        </tr>");
+                    });
+
+                    /*Creamos las funciones que al hacer click en los botones de la tabla nos muestren los modales, identificamos el boton con el nombre miBoton...*/
+                    $(document).ready(function () {
+
+                        $(".miBotonActivarCuenta").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idActivarCuentaHide").val($(this).attr("data-idCuenta"));
+
+                            //$("#denominacionActivarCuenta").val($("#idModifCuentaTipoHide").val());
+
+                            if (window.XMLHttpRequest) //mozilla
+                            {
+                                ajax = new XMLHttpRequest(); //No Internet explorer
+                            } else
+                            {
+                                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
+
+                            $.ajax({
+                                //Usamos GET ya que recibimos.
+                                type: 'GET',
+                                url: '/Facturacion/cuentasController/getCuentasDesactivadas.htm',
+                                success: function (data) {
+
+                                    $('#activarCuentaCombo').empty();
+
+                                    //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                                    var aux = JSON.parse(data);
+                                    //Identificamos el combo
+                                    select = document.getElementById('activarCuentaCombo');
+                                    //Añadimos la opcion Seleccionar al combo
+                                    var opt = document.createElement('option');
+                                    opt.value = 0;
+                                    opt.innerHTML = "Seleccionar";
+                                    select.appendChild(opt);
+                                    //Lo vamos cargando
+                                    aux.forEach(function (valor, indice) {
+                                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                                        var aux2 = JSON.parse(valor);
+                                        //Creamos las opciones del combo
+                                        var opt = document.createElement('option');
+                                        //Guardamos el id en el value de cada opcion
+                                        opt.value = aux2.id_cuenta;
+                                        //Guardamos el impuesto en el nombre de cada opcion
+                                        //                 opt.innerHTML = aux2.id_impuesto;
+                                        opt.innerHTML = aux2.cuenta;
+                                        //Añadimos la opcion
+                                        select.appendChild(opt);
+                                    });
+
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    console.log(xhr.status);
+                                    console.log(xhr.responseText);
+                                    console.log(thrownError);
+                                }
+                            });
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalActivarCuenta").modal();
+                        })
+                                ;
+
+                        $(".miBotonModificarCuenta").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idModifCuentaHide").val($(this).attr("data-idCuenta"));
+                            $("#idModifCuentaTipoHide").val($(this).attr("data-cuenta"));
+                            $("#idModifCuentaFilaHide").val($(this).attr("data-idIndice"));
+
+                            $("#denominacionModificar").val($("#idModifCuentaTipoHide").val());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalModificarCuenta").modal();
+                        })
+                                ;
+
+                        $(".miBotonAnadirCuenta").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idAnadirCuentaHide").val($(this).attr("data-idCuenta"));
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalAnadirCuenta").modal();
+
+                        })
+                                ;
+
+                        $(".miBotonEliminarCuenta").click(function () {
+
+                            /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                             * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                            $("#idElimCuentaHide").val($(this).attr("data-idCuenta"));
+                            $("#idElimCuentaTipoHide").val($(this).attr("data-cuenta"));
+                            $("#idElimCuentaFilaHide").val($(this).attr("data-idIndice"));
+
+                            $("#eliminarCuenta").text("Desea eliminar la cuenta: " + $("#idElimCuentaTipoHide").val());
+
+                            /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                            $("#myModalEliminarCuenta").modal();
+                        })
+                                ;
+
+                    });
+
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -517,8 +728,6 @@
                     console.log(xhr.responseText);
                     console.log(thrownError);
                 },
-                
-                
                 complete: function (xhr, status) {
                     alert('Petición realizada');
                 }
@@ -613,7 +822,7 @@
             myObj["col1"] = $("#anadirEmpresaCombo").val();
             myObj["col2"] = $("#anadirEmpresaCombo option:selected").text();
 
-//$('select[name="lineas"] option:selected').text());
+            //$('select[name="lineas"] option:selected').text());
 
             // alert($('#anadirEmpresaCombo option:selected').text());
 
@@ -638,11 +847,16 @@
         }
         ;
 
+//        function detallesEmpresa() {
+//
+//        }
+        ;
+
     </script>
     <body>
         <div class="container">
             <div class="col-xs-12">
-                <div class="col-md-12 col-xs-5">
+                <div class="col-md-12">
 
                     <!--<form role="form">-->
                     <br style="clear:both">
@@ -663,8 +877,8 @@
                                     <th scope="col">ID CUENTA</th>
                                     <th scope="col">DENOMINACIÓN</th>
                                     <th scope="col">ACTIVA</th>
-                                    <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">&nbsp;  Añadir &nbsp;&nbsp; </button></th>
-                                    <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">Activar &nbsp;</button></th>
+                                    <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
+                                    <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
                                 </tr>                                            
                             </thead>
 
@@ -675,9 +889,7 @@
                         </table>
 
 
-                        <!--</div>-->    
 
-                        <!--                    <div class="col-xs-6">-->
                         <table class="table table-striped"  id="tableContainer2">                                    
 
                             <thead class="thead-dark">
@@ -689,8 +901,8 @@
                                     <th scope="col">ID EMPRESA</th>
                                     <th scope="col">DISTINCT CODE</th>                                    
                                     <th scope="col">ACTIVA</th>
-                                    <th><button type="button" class='btn miBotonAnadirEmpresa btn-success btn-sm' data-dismiss="modal">&nbsp;  Añadir &nbsp;&nbsp; </button></th>
-                                    <th><button type="button" class='btn miBotonActivarEmpresa btn-info btn-sm' data-dismiss="modal">Activar &nbsp;</button></th>
+                                    <th><button type="button" class='btn miBotonAnadirEmpresa btn-success btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp; </button></th>
+                                    <th><button type="button" class='btn miBotonActivarEmpresa btn-info btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
                                 </tr>                                            
                             </thead>
 
@@ -700,17 +912,43 @@
                         </table>
                     </div>       
 
+                    <div class="col-xs-6">
+
+                        <table class="table table-striped"  id="tableContainer3">
+
+                            <thead id="thead-tabla-carta">
+                                <tr>
+                                    <th scope="col" colspan="4" style="text-align:center;"><h4>Detalle Cuentas Empresa</h4></th>        
+                                </tr>    
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Id Cuenta</th>
+                                    <th scope="col">General</th>  
+                                    <th scope="col">Empresa</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="tbody-tabla-carta">
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
                     <br style="clear:both">
 
                     <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>                     
                     <button type="button" id="submit" name="submit" class="btn btn-primary">Submit</button>
 
+
                     <!-- ventana emergente Modificar Cuenta-->
                     <div class="modal fade" id="myModalModificarCuenta" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input id="idModifCuentaHide"/>
-                        <input id="idModifCuentaTipoHide"/>
-                        <input id="idModifCuentaFilaHide"/>
+                        <input class="hidden" id="idModifCuentaHide"/>
+                        <input class="hidden" id="idModifCuentaTipoHide"/>
+                        <input class="hidden" id="idModifCuentaFilaHide"/>
 
                         <div class="modal-dialog">
 
@@ -745,7 +983,7 @@
                     <!-- ventana emergente Añadir Cuenta-->
                     <div class="modal fade" id="myModalAnadirCuenta" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idAnadirCuentaHide"/>
+                        <input class="hidden" id="idAnadirCuentaHide"/>
                         <!--                        <input  id="TextoCuentaHide"/>-->
 
                         <div class="modal-dialog">
@@ -781,9 +1019,9 @@
                     <!-- ventana emergente Archivar Cuenta-->
                     <div class="modal fade" id="myModalEliminarCuenta" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input id="idElimCuentaHide"/>
-                        <input id="idElimCuentaTipoHide"/>
-                        <input id="idElimCuentaFilaHide"/>
+                        <input class="hidden" id="idElimCuentaHide"/>
+                        <input class="hidden" id="idElimCuentaTipoHide"/>
+                        <input class="hidden" id="idElimCuentaFilaHide"/>
 
                         <div class="modal-dialog">
 
@@ -808,7 +1046,7 @@
                     <!-- ventana emergente Activar Cuenta-->
                     <div class="modal fade" id="myModalActivarCuenta" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idActivarCuentaHide"/>                        
+                        <input class="hidden" id="idActivarCuentaHide"/>                        
 
                         <div class="modal-dialog">
 
@@ -843,9 +1081,9 @@
                     <!-- ventana emergente Archivar Empresa-->
                     <div class="modal fade" id="myModalEliminarEmpresa" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input id="idElimEmpresaHide"/>
-                        <input id="idElimEmpresaTipoHide"/>
-                        <input id="idElimEmpresaFilaHide"/>
+                        <input class="hidden" id="idElimEmpresaHide"/>
+                        <input class="hidden" id="idElimEmpresaTipoHide"/>
+                        <input class="hidden" id="idElimEmpresaFilaHide"/>
 
                         <div class="modal-dialog">
 
@@ -870,7 +1108,7 @@
                     <!-- ventana emergente Activar Empresa-->
                     <div class="modal fade" id="myModalActivarEmpresa" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idActivarEmpresaHide"/>                        
+                        <input class="hidden" id="idActivarEmpresaHide"/>                        
 
                         <div class="modal-dialog">
 
@@ -905,7 +1143,7 @@
                     <!-- ventana emergente Añadir Empresa-->
                     <div class="modal fade" id="myModalAnadirEmpresa" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input  id="idAnadirEmpresaHide"/>                        
+                        <input class="hidden" id="idAnadirEmpresaHide"/>                        
 
                         <div class="modal-dialog">
 
@@ -935,6 +1173,47 @@
                                 </div>
                             </div>
                         </div>
+                    </div>                    
+
+                    <!-- ventana emergente Detalles Empresa-->
+                    <div class="modal fade" id="myModalDetallesEmpresa" role="dialog">
+<!--                         Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos 
+                        <input class="hidden" id="idDetallesEmpresaHide"/>
+                        <input class="hidden" id="idDetallesEmpresaTipoHide"/>
+                        <input class="hidden" id="idDetallesEmpresaFilaHide"/>
+
+                        <div class="modal-dialog">
+
+                             Modal content
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Detalles Empresa</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="modificarCuenta"></p>  
+                                    <div class="form-area">  
+                                        <div class="row"> 
+                                            <div class="form-group col-xs-3">
+                                                <label>Denominación:</label>
+                                            </div>
+                                            <div class="form-group col-xs-5">
+                                                <label id="denominacionDetealles" name="denominacionDetealles"></label>
+                                            </div> 
+                                        </div>                                        
+                                        <div class="form-group col-xs-12">
+                                            <label>Se necesita enlazar con detalles empresa. Pendiente.</label>
+                                        </div>     
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                     Llamamos a la funcion eliminarEntidad al pusar en si, al pulsar en no, no hacemos nada y volvemos a la pagina donde mostramos la lista
+                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="detallesEmpresa()">Detalles</button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>-->
                     </div>
 
                 </div>

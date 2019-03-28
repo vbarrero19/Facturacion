@@ -21,15 +21,18 @@
             }
 
         </style>
-        <title>VER ITEMS</title> 
+        <title>EDITAR CUENTAS</title> 
     </head>
     <script>
         $(document).ready(function () {
             alert("verCuentas");
             
+            cargarEmpresas();
 //            getCargarItems();
 //            var userLang = navigator.language || navigator.userLanguage;
         });
+        
+        
         //CREAMOS LA FUNCION PARA CARGAR los items
         function getCargarItems() {
             if (window.XMLHttpRequest) //mozilla
