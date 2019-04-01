@@ -209,7 +209,7 @@ public class CuentasController {
         }
         return resp;
     }
-    
+
     //Codigo para archivar cuentas. En estado ponemos un Si para indicar que esta activada
     @RequestMapping("/CuentasController/activarCuenta.htm")
     @ResponseBody
@@ -371,7 +371,7 @@ public class CuentasController {
         }
         return resp;
     }
-            
+
     //Se usa para cargar los datos del combo de cuentas desactivadas
     @RequestMapping("/cuentasController/getCuentasDesactivadas.htm")
     @ResponseBody
@@ -484,8 +484,8 @@ public class CuentasController {
         }
         return resp;
     }
-    
-     //Codigo para activar empresas. En estado ponemos un No para indicar que esta desactivado
+
+    //Codigo para activar empresas. En estado ponemos un No para indicar que esta desactivado
     @RequestMapping("/CuentasController/activarEmpresa.htm")
     @ResponseBody
     public String activarEmpresa(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -538,7 +538,7 @@ public class CuentasController {
         }
         return resp;
     }
-    
+
     //Codigo para añadir cuentas. En estado ponemos un Si para indicar que esta activada
     @RequestMapping("/CuentasController/anadirEmpresa.htm")
     @ResponseBody
@@ -652,7 +652,7 @@ public class CuentasController {
         return resp;
 
     }
-    
+
     //Se usa para cargar los datos del combo de cuentas desactivadas
     @RequestMapping("/cuentasController/getEmpresasDisponibles.htm")
     @ResponseBody
@@ -672,11 +672,10 @@ public class CuentasController {
 
             Statement sentencia = con.createStatement();
 
-            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad\n" +
-                                        " inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('empresa')\n" +
-                                        "  and e.id_entidad not in (SELECT id_empresa FROM cuentas_empresas)");
-            
-                         
+            rs = sentencia.executeQuery("select e.id_entidad, e.distinct_code from entidad e inner join entidad_tipo_entidad t on e.id_entidad = t.id_entidad\n"
+                    + " inner join tipo_entidad te on t.id_tipo_entidad = te.id_tipo_entidad where upper(te.tipo_entidad) = upper('empresa')\n"
+                    + "  and e.id_entidad not in (SELECT id_empresa FROM cuentas_empresas)");
+
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
             }
@@ -713,8 +712,8 @@ public class CuentasController {
         }
         return resp;
 
-    }    
-    
+    }
+
     //Se usa para cargar los datos de la tabla empresas
     @RequestMapping("/cuentasController/getDatosCarta.htm")
     @ResponseBody
@@ -725,29 +724,29 @@ public class CuentasController {
         ResultSet rs = null;
         PreparedStatement stAux = null;
         String resp = "correcto";
-        
-        String idEmpresa="";
+
+        String idEmpresa = "";
 
         idEmpresa = hsr.getParameter("empresa");
-        
+
         ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("select cd.id_cuenta, c.cuenta, e.id_empresa, e.nombre, cd.denominacion  from cuentas_denominacion cd "
+            stAux = con.prepareStatement("select cd.id_cuenta, c.cuenta, e.id_empresa, e.nombre, COALESCE(cd.denominacion,'Sin definir')  from cuentas_denominacion cd "
                     + "inner join cuentas_empresas e on cd.id_empresa = e.id_empresa inner join cuentas c on c.id_cuenta = cd.id_cuenta "
                     + "where cd.id_empresa = ? order by id_cuenta");
-            
+
             stAux.setInt(1, Integer.parseInt(idEmpresa));
 
             rs = stAux.executeQuery();
-            
+
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
-            }                      
-            
+            }
+
             resp = new Gson().toJson(arrayTipo);
 
         } catch (SQLException ex) {
@@ -777,15 +776,139 @@ public class CuentasController {
                 }
             } catch (Exception e) {
             }
-        }    
-        
+        }
+
         return resp;
 
     }
-    
-    
-    
-    
-    
-    
+
+    //Se usa para cargar los datos de la tabla empresas
+    @RequestMapping("/cuentasController/getCartaSinValor.htm")
+    @ResponseBody
+    public String getCartaSinValor(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        Connection con2 = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();       
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+            con2 = pool_local.getConnection();
+            
+            Statement sentencia = con.createStatement();
+
+            rs = sentencia.executeQuery("SELECT min(id_empresa)FROM cuentas_empresas");
+
+            rs.next();
+
+            String idEmpresa = Integer.toString(rs.getInt(1));
+
+            stAux = con2.prepareStatement("select cd.id_cuenta, c.cuenta, e.id_empresa, e.nombre, COALESCE(cd.denominacion,'Sin definir')  from cuentas_denominacion cd "
+                    + "inner join cuentas_empresas e on cd.id_empresa = e.id_empresa inner join cuentas c on c.id_cuenta = cd.id_cuenta "
+                    + "where cd.id_empresa = ? order by id_cuenta");
+
+            stAux.setInt(1, Integer.parseInt(idEmpresa));
+
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        return resp;
+
+    }
+
+    //Codigo para modificar cuentas. En estado ponemos lo que nos llega del formulario, será un Si ya que esta activada
+    @RequestMapping("/CuentasController/modificarDetalle.htm")
+    @ResponseBody
+    public String modificarDetalle(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "Detalle modificado";
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("update cuentas_denominacion SET denominacion = ? where id_cuenta = ? and id_empresa = ?");
+
+            //Ponemos el estado en Si para indicar que esta activa            
+            stAux.setString(1, resource.getCol3());
+            stAux.setInt(2, Integer.parseInt(resource.getCol1()));
+            stAux.setInt(3, Integer.parseInt(resource.getCol2()));
+
+            stAux.executeUpdate();
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
+
 }

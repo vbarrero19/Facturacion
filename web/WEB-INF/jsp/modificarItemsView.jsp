@@ -29,9 +29,10 @@
             var idCuenta;
 
             getItem(idItem);
-
-            getTipoItem();
-            getTipoCuenta();
+            
+            //Cargamos el tipo y la cuenta dentro de getItem para que se carguen correctamente con los datos del item.
+            //getTipoItem();
+            //getTipoCuenta();
 
             var cont = 0;
 
@@ -51,8 +52,6 @@
 
             });
 
-
-
             //Codigo para añadir un coste de forma dinamica
             $('#conCostes').on('click', '#anadirCoste', function () {
                 cont++;
@@ -62,7 +61,7 @@
                                                             <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
                                                             <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
                                                     </tr>");
-               getEntidadCliente("comboClientes" + cont);
+                getEntidadCliente("comboClientes" + cont);
             });
 
 
@@ -70,7 +69,6 @@
             $('#conCostes').on('click', '.miBoton', function () {
                 var parent = $(this).parent().parent().remove();
                 calcularTotal();
-
             });
 
             $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
@@ -125,8 +123,9 @@
                     datatype: "json",
                     contentType: "application/json",
                     success: function (data) {
-                        alert(data);
-                        location.reload();
+                        alert("data");
+                        //location.reload();
+                        window.location.href="/Facturacion/verItemsController/start.htm";
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -183,7 +182,8 @@
                             $("#importe").val(item2.col5);
                             getCostes(idItem);
                         }
-
+            getTipoItem();
+            getTipoCuenta();
 
                     });
 
@@ -210,7 +210,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/modificarItemsController/getTipoItem.htm', //Vamos a itemsController/getTipoItem.htm a recoger los datos
+                url: '/Facturacion/modificarItemsController/getTipoItem.htm', //Vamos a modificarItemsController/getTipoItem.htm a recoger los datos
                 success: function (data) {
                     //Recogemos los datos del combo y pasamos el String a un Array de objetos tipoItem
                     //Estos objetos estan en formato String
@@ -349,7 +349,7 @@
                             //getEntidadCliente("comboClientes" + indice,costes2.col2);
 
                             //$('#comboClientes1 option[value=6]').attr('selected', true);
-                            
+
                             $('#costeImporte' + indice).val(costes2.col3);
 
                             //$("#selector option[value=3]").attr('disabled','disabled');
@@ -508,9 +508,7 @@
                                     <label class="form-control" id="id_Item" name="id_Item"></label>
                                     <!--<input type="text" class="form-control" id="id_Item" name="id_Item" required>-->
                                 </div>
-
                             </div>          
-
 
                             <div class="form-group row">
                                 <div class="col-xs-4">
@@ -519,7 +517,6 @@
                                 <div class="col-xs-6">
                                     <input type="text" class="form-control" id="abreviatura" name="abreviatura" required>
                                 </div>
-
                             </div>                   
 
                             <div class="form-group row">
@@ -631,7 +628,7 @@
                         <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>    
                         <button type="button" id="modificarItem" name="modificarItem" class="btn btn-primary">Modificar</button>
                         <!--<button type="button" id="modificarItem2" name="modificarItem2" class="btn btn-primary">Modificar Manteniendo Original</button>-->
-                        <a href="/Facturacion/verItemsController/start.htm" class="btn btn-success" role="button">Ver Items</a>
+                        <a href="/Facturacion/verItemsController/start.htm" class="btn btn-success" role="button" id="startItem">Ver Items</a>
 
                     </form>
                 </div>
