@@ -59,7 +59,7 @@ public class CargosController {
             con = pool_local.getConnection();
 
             String periodicidad = cargos.getPeriodicidad();
-            if (periodicidad.equals("1")) {
+            if (periodicidad.equals("1")) { //Sin periodicidad
 
                 stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
                         + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad)"
@@ -69,7 +69,7 @@ public class CargosController {
                 stAux.setString(2, cargos.getAbreviatura());
                 stAux.setString(3, cargos.getDescripcion());
                 stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item()));
-                stAux.setString(5, cargos.getCuenta());
+                stAux.setInt(5, Integer.parseInt(cargos.getCuenta()));
 
                 //Quitamos decimales al importe
                 Double importe = Double.parseDouble(cargos.getImporte());
@@ -117,7 +117,7 @@ public class CargosController {
 
                 stAux.executeUpdate();
 
-            } else {
+            } else { //Con periodicidad
 
                 String cadena = cargos.getFecha_cargo();
                 String cadenaNew = cadena.substring(0, cadena.length() - 1);
@@ -133,7 +133,7 @@ public class CargosController {
                     stAux.setString(2, cargos.getAbreviatura());
                     stAux.setString(3, cargos.getDescripcion());
                     stAux.setInt(4, Integer.parseInt(cargos.getId_tipo_item()));
-                    stAux.setString(5, cargos.getCuenta());
+                    stAux.setInt(5, Integer.parseInt(cargos.getCuenta()));
 
                     //Quitamos decimales al importe
                     Double importe = Double.parseDouble(cargos.getImporte());
@@ -214,98 +214,6 @@ public class CargosController {
             }
 
             resp = "Correcto";
-
-        } catch (SQLException ex) {
-            resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors));
-        } catch (Exception ex) {
-            resp = "incorrecto -> " + ex; // ex.getMessage();
-            StringWriter errors = new StringWriter();
-            ex.printStackTrace(new PrintWriter(errors));
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (stAux != null) {
-                    stAux.close();
-                }
-            } catch (Exception e) {
-            }
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-            }
-        }
-        return resp;
-    }
-
-    @RequestMapping("/cargosController/nuevoCargo2.htm")
-    @ResponseBody
-    public String nuevoCargo2(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-        Resource resourceLoad = new Resource();
-
-        Connection con = null;
-        ResultSet rs = null;
-        PreparedStatement stAux = null;
-
-        String resp = "correcto";
-
-        try {
-
-            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
-            con = pool_local.getConnection();
-
-            String dato = resource.getCol1();
-
-            String cadenaNew = dato.substring(0, dato.length() - 1);
-
-            String[] parts = cadenaNew.split(",");
-
-            int cont = 0;
-
-            String cadena = "";
-
-            for (int x = 0; x < parts.length; x++) {
-
-                String numeroMes = parts[x];
-
-                Formatter obj = new Formatter();
-
-                String valorMes = String.valueOf(obj.format("%02d", Integer.parseInt(numeroMes)));
-
-                cont++;
-
-                Date fechaActual = new Date();
-                DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-
-                DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-
-                //Fecha actual desglosada:
-                Calendar fecha = Calendar.getInstance();
-                int ano = fecha.get(Calendar.YEAR);
-                //int mes = fecha.get(Calendar.MONTH) + 1;
-                int dia = fecha.get(Calendar.DAY_OF_MONTH);
-
-                //Ultimo dia de mes
-                fecha.set(2014, (Integer.parseInt(valorMes) - 1), 1);
-                int ultimoDiaMes = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                String fechaCargo = ano + "-" + valorMes + "-" + ultimoDiaMes;
-
-                stAux = con.prepareStatement("insert into cargos (abreviatura) values('" + fechaCargo + "');");
-                stAux.executeUpdate();
-
-            }
-            cadena = Integer.toString(cont);
-
-            resp = cadena; //parts[0];
 
         } catch (SQLException ex) {
             resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
@@ -756,6 +664,68 @@ public class CargosController {
 
     }
 
+    
+    //Se usa al seleccionar algo en el combo Items
+    @RequestMapping("/cargosController/cargarCuentas.htm")
+    @ResponseBody
+    public String cargarCuentas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        //int idCliente = Integer.parseInt(hsr.getParameter("idCliente"));
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("SELECT id_cuenta, cuenta FROM cuentas where estado = 'Si'");
+
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException ->" + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto ->" + ex; // ex.getMessage();
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+    
+    
     //Se usa para cargar los datos del combo TipoImpuesto
     @RequestMapping("/cargosController/getTipoImpuesto.htm")
     @ResponseBody

@@ -29,17 +29,17 @@
             //Recuperamos valores de la url 
             var idCargo = obtenerValorParametro("idCar");
             var idCliente = obtenerValorParametro("idCli");
-            var idEmpresa = obtenerValorParametro("idEmp");
+            var idCuenta = obtenerValorParametro("idCue");
             var idTipoImp = obtenerValorParametro("idTipImp");
 
             getEntidadCliente(idCliente);
-            getEntidadEmpresa(idEmpresa);
+            //getEntidadEmpresa(idEmpresa);
             getCargo(idCargo, idTipoImp);
 
-            alert(idCliente);
+            alert(idCuenta);
             var userLang = navigator.language || navigator.userLanguage;
 
-            
+
 
             $("#volver").click(function () {
                 cli = $("#id_entidad").text();
@@ -68,6 +68,9 @@
                         //                });
             });
 
+
+
+
             //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#modificarCargos").click(function () {
                 if (window.XMLHttpRequest) //mozilla
@@ -84,7 +87,7 @@
                 myObj["abreviatura"] = $("#abreviatura").text();
                 myObj["descripcion"] = $("#descripcion").text();
                 myObj["id_tipo_item"] = $("#id_tipo_item").val().trim();
-                myObj["cuenta"] = $("#cuenta").val().trim();
+                myObj["cuenta"] = $("#comboCuenta").val();
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["cantidad"] = $("#cantidad").val().trim();
 
@@ -93,7 +96,7 @@
                 //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
                 tipoImpuesto = $("#comboTipoImpuesto").val();
                 //separamos el id y el valor
-                arrayDeCadenas = tipoImpuesto.split(",");
+                arrayDeCadenas = tipoImpuesto.split("-");//xxx
                 var tipoImp = arrayDeCadenas[0];
                 var valorImp = arrayDeCadenas[1];
 
@@ -138,7 +141,7 @@
                 });
             });
         })
-        ;
+                ;
 
         //Funcion para obtener los valores pasados por URL
         function obtenerValorParametro(sParametroNombre) {
@@ -193,40 +196,40 @@
         ;
 
         function getEntidadEmpresa(idEmpresa) {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/modificarCargosController/getEntidadEmpresa.htm?idEmp=' + idEmpresa, //Vamos a cargosController/getCliente.htm a recoger los datos
-                success: function (data) {
-
-                    var clienteEntidad = JSON.parse(data);
-
-                    //Lo vamos cargando
-                    clienteEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a Cliente
-                        var clienteEntidad2 = JSON.parse(valor);
-
-                        $("#dis_cod_emp").text(clienteEntidad2.col2);
-                        $("#id_entidad2").text(clienteEntidad2.col1);
-                        $("#nombre_entidad2").text(clienteEntidad2.col3);
-                        $("#nombre_contacto2").text(clienteEntidad2.col4);
-                    });
-
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
+//            if (window.XMLHttpRequest) //mozilla
+//            {
+//                ajax = new XMLHttpRequest(); //No Internet explorer
+//            } else
+//            {
+//                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//            }
+//
+//            $.ajax({
+//                //Usamos GET ya que recibimos.
+//                type: 'GET',
+//                url: '/Facturacion/modificarCargosController/getEntidadEmpresa.htm?idEmp=' + idEmpresa, //Vamos a cargosController/getCliente.htm a recoger los datos
+//                success: function (data) {
+//
+//                    var clienteEntidad = JSON.parse(data);
+//
+//                    //Lo vamos cargando
+//                    clienteEntidad.forEach(function (valor, indice) {
+//                        //Cada objeto esta en String y lo pasmoa a Cliente
+//                        var clienteEntidad2 = JSON.parse(valor);
+//
+//                        $("#dis_cod_emp").text(clienteEntidad2.col2);
+//                        $("#id_entidad2").text(clienteEntidad2.col1);
+//                        $("#nombre_entidad2").text(clienteEntidad2.col3);
+//                        $("#nombre_contacto2").text(clienteEntidad2.col4);
+//                    });
+//
+//                },
+//                error: function (xhr, ajaxOptions, thrownError) {
+//                    console.log(xhr.status);
+//                    console.log(xhr.responseText);
+//                    console.log(thrownError);
+//                }
+//            });
         }
         ;
 
@@ -304,7 +307,7 @@
                     select = document.getElementById('comboTipoImpuesto');
                     //Añadimos la opcion Seleccionar al combo
 //                    var opt = document.createElement('option');
-//                    opt.value = "0,0";
+//                    opt.value = "0-0";//xxx
 //                    opt.innerHTML = "Seleccionar";
 //                    select.appendChild(opt);
 
@@ -315,7 +318,7 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
                         //Guardamos el valor del impuesto en el value de cada opcion
-                        opt.value = tipoImpuesto2.id_tipo_impuesto + "," + tipoImpuesto2.valor;
+                        opt.value = tipoImpuesto2.id_tipo_impuesto + "-" + tipoImpuesto2.valor;//xxx
                         //Guardamos el impuesto en el nombre de cada opcion
                         opt.innerHTML = tipoImpuesto2.impuesto;
                         //Controlamos que opcion estaba marcada
@@ -325,7 +328,7 @@
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
-                    //document.getElementById("comboTipoImpuesto").value = "0,0";
+                    //document.getElementById("comboTipoImpuesto").value = "0-0";//xxx
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -356,13 +359,15 @@
         }
         ;
 
+        
+
         //Funcion que realiza los calculos al modificar la cantidad, importe o impuesto
         function calcularTotal() {
             //cogemos el valor del combo comboTipoImpuesto que trae el id y el valor
             tipoImpuesto = $("#comboTipoImpuesto").val();
 
             //separamos el id y el valor
-            arrayDeCadenas = tipoImpuesto.split(",");
+            arrayDeCadenas = tipoImpuesto.split("-");//xxx
             var tipoImp = arrayDeCadenas[0];
             var valorImp = arrayDeCadenas[1];
 
@@ -435,33 +440,33 @@
 
                             <br style="clear:both">
 
-                            <!--DATOS EMPRESA--> 
-                            <div class="datos row" class="col-xs-12">
-
-                                <div class="form-group col-xs-2">
-                                    <label for="dis_cod_emp">Empresa </label>
-                                    <br>
-                                    <label class="azul" id="dis_cod_emp" name="dis_cod_emp"></label>                                    
-                                </div> 
-                                <div class="form-group col-xs-2">
-                                    <label for="id_entidad2>">Id Empresa</label>
-                                    <br>
-                                    <label class="azul" id="id_entidad2" name="id_entidad2"></label>                                    
-                                </div>
-                                <div class="form-group col-xs-4">
-                                    <label for="nombre_entidad2>">Nombre Empresa</label>
-                                    <br>
-                                    <label class="azul" id="nombre_entidad2" name="nombre_entidad2"></label>                                    
-                                </div>
-                                <div class="form-group col-xs-3">
-                                    <label for="nombre_contacto2>">Nombre Empresa</label>
-                                    <br>
-                                    <label class="azul" id="nombre_contacto2" name="nombre_contacto2"></label>
-
-                                </div>
-                            </div>           
-
-                            <br style="clear:both">
+                            <!--                            DATOS EMPRESA 
+                                                        <div class="datos row" class="col-xs-12">
+                            
+                                                            <div class="form-group col-xs-2">
+                                                                <label for="dis_cod_emp">Empresa </label>
+                                                                <br>
+                                                                <label class="azul" id="dis_cod_emp" name="dis_cod_emp"></label>                                    
+                                                            </div> 
+                                                            <div class="form-group col-xs-2">
+                                                                <label for="id_entidad2>">Id Empresa</label>
+                                                                <br>
+                                                                <label class="azul" id="id_entidad2" name="id_entidad2"></label>                                    
+                                                            </div>
+                                                            <div class="form-group col-xs-4">
+                                                                <label for="nombre_entidad2>">Nombre Empresa</label>
+                                                                <br>
+                                                                <label class="azul" id="nombre_entidad2" name="nombre_entidad2"></label>                                    
+                                                            </div>
+                                                            <div class="form-group col-xs-3">
+                                                                <label for="nombre_contacto2>">Nombre Empresa</label>
+                                                                <br>
+                                                                <label class="azul" id="nombre_contacto2" name="nombre_contacto2"></label>
+                            
+                                                            </div>
+                                                        </div>           
+                            
+                                                        <br style="clear:both">-->
 
                             <!--DATOS ITEMS--> 
                             <div class="datos row" class="col-xs-12">                                
@@ -490,8 +495,11 @@
 
                             <div class="datos row" class="col-xs-12">
                                 <div class="form-group col-xs-2">
-                                    <label for="importe>">Cuenta</label>
-                                    <input type="text" class="form-control input-sm" id="cuenta" name="cuenta">
+                                    <label for="comboCuenta>">Cuenta</label>
+                                    <div class="form-group-combo">                                        
+                                        <select class="form-control input-sm" id="comboCuenta" name="comboCuenta">
+                                        </select>                                                            
+                                    </div>
                                 </div>   
                                 <div class="form-group col-xs-2">
                                     <label for="importe>">Importe</label>
@@ -563,9 +571,9 @@
 
                             <button type="button" id="modificarCargos" name="modificarCargos" class="btn btn-warning pull-right">Modificar</button>
                             <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>   
-                            
-                            <a href="javaScript:window.close();" class="btn btn-info" role="button">Cerrar</a> 
-                                                    
+
+                            <a href="javaScript:window.history.back();" class="btn btn-info" role="button">Volver</a> 
+
 
                         </form>
                     </div>

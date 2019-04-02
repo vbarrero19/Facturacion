@@ -56,7 +56,7 @@ public class ItemsController {
             con = pool_local.getConnection();
             
             //Si el item no tiene costes guardamos el importe y en costes ponemos "No"
-            if (item.getCostes() == "No") {
+            if (item.getCostes().equals("No")) {
                 stAux = con.prepareStatement("INSERT INTO items (abreviatura, descripcion, id_tipo_item, importe, estado, id_cuenta, costes) VALUES (?,?,?,?,?,?,?)");
 
                 stAux.setString(1, item.getAbreviatura());

@@ -198,9 +198,9 @@ public class verCargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, c.cuenta, c.importe, c.cantidad, c.impuesto,\n"
-                    + "c.total, c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, valor_impuesto,periodicidad FROM cargos c inner join \n"
-                    + "tipo_item t on c.id_tipo_item = t.id_tipo_item WHERE c.id_factura = 0 and id_cliente =  ? order by c.fecha_cargo");
+            stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, cu.cuenta, c.importe, c.cantidad, c.impuesto, c.total,"
+                    + " c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, valor_impuesto,periodicidad FROM cargos c inner join "
+                    + "tipo_item t on c.id_tipo_item = t.id_tipo_item inner join cuentas cu on c.cuenta = cu.id_cuenta WHERE c.id_factura = 0 and id_cliente = ? order by c.fecha_cargo");
 
             stAux.setInt(1, idCliente);
             rs = stAux.executeQuery();

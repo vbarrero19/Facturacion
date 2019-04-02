@@ -25,8 +25,7 @@
         $(document).ready(function () {
 
             var numeroColumnas = 0;
-
-
+            
             //al cargar la pagina llamamos a la funcion getCuentas(), getEmpresas para llenar las tablas
             getCuentas();
             getEmpresas();
