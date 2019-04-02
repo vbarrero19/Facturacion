@@ -30,15 +30,23 @@
 
             var userLang = navigator.language || navigator.userLanguage;
 
+            //Capturamos la fecha actual
+            var f = new Date();
+            var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();            
+
+            //Fecha para las cajas de fechas. Formato yyyy-mm-dd
+            var fechaCajasEmision = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
+            $('#fecha_emision input').val(fechaCajasEmision);
+            var fechaCajasVencimiento = f.getFullYear() + "-" + (f.getMonth() + 2) + "-" + f.getDate();
+            $('#fecha_vencimiento input').val(fechaCajasVencimiento);
+
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
             //Constructor para el calendario Fecha-Cargo.
             $('#fecha_emision').datetimepicker({
                 format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
-                useCurrent: false//Important! See issue #1075
-                        //defaultDate: '08:32:33',
-                        //                });
+                useCurrent: false
             });
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
@@ -47,9 +55,7 @@
                 format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
-                useCurrent: false//Important! See issue #1075
-                        //defaultDate: '08:32:33',
-                        //                });
+                useCurrent: false
             });
 
             //Al pulsar el boton de consultar facturas recogemos los datos del cliente y (sus cargos sin numero de factura) -> Esto ultimo falta por hacer    

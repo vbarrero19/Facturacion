@@ -29,7 +29,7 @@
             var idCuenta;
 
             getItem(idItem);
-            
+
             //Cargamos el tipo y la cuenta dentro de getItem para que se carguen correctamente con los datos del item.
             //getTipoItem();
             //getTipoCuenta();
@@ -125,7 +125,7 @@
                     success: function (data) {
                         alert("data");
                         //location.reload();
-                        window.location.href="/Facturacion/verItemsController/start.htm";
+                        window.location.href = "/Facturacion/verItemsController/start.htm";
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -182,8 +182,8 @@
                             $("#importe").val(item2.col5);
                             getCostes(idItem);
                         }
-            getTipoItem();
-            getTipoCuenta();
+                        getTipoItem();
+                        getTipoCuenta();
 
                     });
 
@@ -330,7 +330,7 @@
                 url: '/Facturacion/modificarItemsController/getCostes.htm?idItem=' + idItem,
                 success: function (data) {
 
-                    alert(data);
+                    //alert(data);
 
                     var costes = JSON.parse(data);
 
@@ -338,23 +338,29 @@
                     costes.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a Cliente
                         costes2 = JSON.parse(valor);
+                        //Llenamos el combo de empresas
                         if (indice == 0) {
                             getEntidadEmpresa(costes2.col2);
                             $("#costeImporte").val(costes2.col3)
+                            //Llenamos el resto de combos
                         } else {
-
+                            var valor = costes2.col2;
+                            //alert(valor);
+                            //Añadimos un combo
                             $('#anadirCoste').click();
-                            alert(costes2.col2);
-                            //$('#comboClientes' + indice + ' option[value=6]').attr("selected",true);
-                            //getEntidadCliente("comboClientes" + indice,costes2.col2);
+                            //alert(costes2.col2);
 
-                            //$('#comboClientes1 option[value=6]').attr('selected', true);
+                            //Codigo para rellenar combo dinamicamente, no funciona
+                            //$("#comboClientes"+ indice +" option[value="+ valor +"]").attr("selected",true); 
 
-                            $('#costeImporte' + indice).val(costes2.col3);
-
+                            //$("#comboClientes"+ indice +" option[value='1']").attr("selected",true);    
                             //$("#selector option[value=3]").attr('disabled','disabled');
                             //$("#menu option[value='2']").attr("selected", true);
                             //$("#provincia option[value="+ valor +"]").attr("selected",true);'+ costes2.col2 +'    ' + indice + '
+
+                            //Añadimos un importe               
+                            $('#costeImporte' + indice).val(costes2.col3);
+
                         }
 
                     });

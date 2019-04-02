@@ -70,18 +70,6 @@
 
                             <div class="divName ">
                                 <div class="dropdown">
-                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Cuentas
-                                        <span class="caret"></span></button>
-                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
-                                        <li class="mCargo"><a href="/Facturacion/cuentasController/start.htm">Editar Cuentas</a></li>
-                                        <li class="mCargo"><a href="/Facturacion/verCuentasController/start.htm">Ver Cuentas</a></li>
-                                        <li class="mCargo"><a href="">Disponible</a></li> 
-                                    </ul>
-                                </div>                                
-                            </div>                  
-
-                            <div class="divName ">
-                                <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Cargos
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">                                                                       
@@ -90,24 +78,33 @@
                                         <li class="mCargo"><a href="">Disponible</a></li> 
                                     </ul>
                                 </div>                                
-                            </div>     
-                            
-
-                            <div class="divName ">
-                                <a href="<c:url value='/facturasController/start.htm'/>" class="btn btn-info" role="button">Generar Factura</a>
-                            </div>
+                            </div>                                 
 
                             <div class="divName ">
                                 <div class="dropdown">
-                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Ver Facturas
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Facturas
                                         <span class="caret"></span></button>
-                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
+                                    <ul class="dropdown-menu btn btn-info" role="button">    
+                                        <li class="mFactura"><a href="/facturasController/start.htm">Generar Factura</a></li>
                                         <li class="mFactura"><a href="/Facturacion/verFacturasController/startActivas.htm">Activas</a></li>
                                         <li class="mFactura"><a href="/Facturacion/verFacturasController/startArchivadas.htm">Archivadas</a></li>
                                         <li class="mFactura"><a href="">Disponible</a></li>  
                                     </ul>
                                 </div>                                     
                             </div>
+
+                            <div class="divName ">
+                                <div class="dropdown">
+                                    <button class="btn btn-info" type="button" data-toggle="dropdown">Cuentas
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
+                                        <li class="mCuentas"><a href="/Facturacion/cuentasController/start.htm">Editar Cuentas</a></li>
+                                        <li class="mCuentas"><a href="/Facturacion/verCuentasController/start.htm">Ver Cuentas</a></li>
+                                        <li class="mCuentas"><a href="">Disponible</a></li> 
+                                    </ul>
+                                </div>                                
+                            </div>             
+                            
                         </div>
                     </div>
                     <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->

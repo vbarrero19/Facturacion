@@ -25,8 +25,7 @@
         $(document).ready(function () {
             //al cargar la pagina llamamos a la funcion getImpuesto() para llenar el combo 
             getTipoItem();
-            getTipoCuenta();
-            //getEntidadEmpresa();
+            getTipoCuenta();            
 
             var cont = 0;
 

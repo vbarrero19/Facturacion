@@ -665,7 +665,7 @@ public class CargosController {
     }
 
     
-    //Se usa al seleccionar algo en el combo Items
+    //Se usa para llenar el combo cuentas
     @RequestMapping("/cargosController/cargarCuentas.htm")
     @ResponseBody
     public String cargarCuentas(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {

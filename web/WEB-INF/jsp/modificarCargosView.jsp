@@ -33,13 +33,12 @@
             var idTipoImp = obtenerValorParametro("idTipImp");
 
             getEntidadCliente(idCliente);
-            //getEntidadEmpresa(idEmpresa);
             getCargo(idCargo, idTipoImp);
+            cargarCuentas(idCuenta);
 
+            alert(idCargo);
             alert(idCuenta);
             var userLang = navigator.language || navigator.userLanguage;
-
-
 
             $("#volver").click(function () {
                 cli = $("#id_entidad").text();
@@ -359,7 +358,73 @@
         }
         ;
 
-        
+        //Funcion para cargar las cuentas en un combo
+        function cargarCuentas(idCuenta) {
+
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosController/cargarCuentas.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+
+                    //Vaciamos el combo
+                    document.getElementById('comboCuenta').options.length = 0;
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var tipoCuenta = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboCuenta');
+
+                    //Lo vamos cargando
+                    tipoCuenta.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var tipoCuenta2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+
+                        //Comtrolamos el tipo de item que es y lo dejamos seleccionado en el combo
+
+                        
+                        newname = idCuenta.replace(/%20/g," ");
+                        //alert(newname);
+                        //if (idCuenta == tipoCuenta2.col2) {
+                        //alert("Entra");
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = tipoCuenta2.col1;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = tipoCuenta2.col2;
+                        //alert(opt.innerHTML);
+                        if (newname == opt.innerHTML) {
+                            //Dejamos marcada una opcion
+                            opt.selected = true;
+                        }
+//                        } else {
+//                            //Guardamos el id en el value de cada opcion
+//                            opt.value = tipoCuenta2.col1;
+//                            //Guardamos el impuesto en el nombre de cada opcion                        
+//                            opt.innerHTML = tipoCuenta2.col2;
+//                        }
+
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
 
         //Funcion que realiza los calculos al modificar la cantidad, importe o impuesto
         function calcularTotal() {
@@ -503,7 +568,7 @@
                                 </div>   
                                 <div class="form-group col-xs-2">
                                     <label for="importe>">Importe</label>
-                                    <input type="text" class="form-control input-sm" id="importe" name="importe">
+                                    <input type="text" class="form-control input-sm" id="importe" name="importe" disabled>  
                                 </div>
                                 <div class="form-group col-xs-2">
                                     <label for="cantidad>">Cantidad</label>

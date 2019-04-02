@@ -27,21 +27,10 @@
             //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
             getEntidadCliente(); //Llenamos el combo de clientes
             //getEntidadEmpresa();//Llenamos el combo de empresas
-            getItem(); //Llenamos el combo de items
-            //getTipoImpuesto();
-
-
-            //Mostramos la fecha actual
-            var f = new Date();
-            var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+            getItem(); //Llenamos el combo de items        
 
             var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-
-            //Fecha para las cajas de fechas. Formato yyyy-mm-dd
-            var fechaCajasEmision = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
-            $('#fecha_cargo input').val(fechaCajasEmision);
-            var fechaCajasVencimiento = f.getFullYear() + "-" + (f.getMonth() + 2) + "-" + f.getDate();
-            $('#fecha_vencimiento input').val(fechaCajasVencimiento);
+            
 
             $('#puntual').show();
             $('#periodico').hide();
@@ -54,13 +43,7 @@
             $("#exampleRadios2").on("click", function () {
                 $('#puntual').hide();
                 $('#periodico').show();
-            });
-
-
-            //tratando de omstrar fechas dinamicamente            
-            var mes = f.getMonth();
-            var nombreMes = meses[f.getMonth()];
-            $('#anio').text(f.getFullYear());
+            });            
 
             //cargamos de forma dinamica la tabla
             for (var i = 0; i < 12; i = i + 6) {
@@ -80,9 +63,6 @@
                                         </tr>");
             }
 
-//Asi pasabamos los nombre de los meses al value
-//<td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + meses[i] + "' > </td> <td>" + meses[i] + "</td>          \n\ \n\
-
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -92,9 +72,7 @@
                 format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
-                useCurrent: false//Important! See issue #1075
-                        //defaultDate: '08:32:33',
-                        //                });
+                useCurrent: false
             });
 
             //Se pone dentro del ready porque se ejecuta cada vez que entramos en la pagina.
@@ -103,12 +81,54 @@
                 format: 'YYYY-MM-DD',
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
-                useCurrent: false//Important! See issue #1075
-                        //defaultDate: '08:32:33',
-                        //                });
+                useCurrent: false
+                
             });
+            
+            //Capturamos la fecha actual
+            var f = new Date();
+            var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
+            
+            //tratando de mostrar fechas dinamicamente            
+            var mes = f.getMonth();
+            var nombreMes = meses[f.getMonth()];
+            $('#anio').text(f.getFullYear());
+            
+            //Fecha para las cajas de fechas. Formato yyyy-mm-dd
+            var fechaCajasEmision = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
+            $('#fecha_cargo input').val(fechaCajasEmision);
+            var fechaCajasVencimiento = f.getFullYear() + "-" + (f.getMonth() + 2) + "-" + f.getDate();
+            $('#fecha_vencimiento input').val(fechaCajasVencimiento);                       
+            
+            //$("#fecha_cargo input").change(function () {
+            $("#fecha_cargo input").keyup(function () {
+//                var fechaEmi = $("#fecha_cargo input").val();
+//                //separamos el id y el valor
+//                arrayEmi = fechaEmi.split("-");
+//                //alert(arrayEmi[0]);
+//                var valorDiaEmi = arrayEmi[0];
+//                var valorMesEmi = arrayEmi[1];
+//                var valorAnoEmi = arrayEmi[2];
+//                
+//                $("#fecha_vencimiento input").val(valorDiaEmi+"-"+(valorMesEmi+1)+"-"+valorAnoEmi);
 
-
+            });
+            
+            
+            $("#fecha_cargo input").change(function () {
+//                var fechaEmi = $("#fecha_cargo input").val();
+//                //separamos el id y el valor
+//                arrayEmi = fechaEmi.split("-");
+//                alert(arrayEmi[0]);
+//                var valorDiaEmi = arrayEmi[0];
+//                var valorMesEmi = arrayEmi[1];
+//                var valorAnoEmi = arrayEmi[2];
+//
+//                $("#fecha_vencimiento input").val(valorDiaEmi+"-"+(valorMesEmi+1)+"-"+valorAnoEmi);
+                
+            });
+            
+            
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#grabarCargos").click(function () {
@@ -425,6 +445,7 @@
                     calcularTotal();
                 }
             });
+            
             //Se ejecuta al cambiar el contenido de la cantidad
             $("#cantidad").keyup(function () {
                 //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
@@ -433,6 +454,7 @@
                     calcularTotal();
                 }
             });
+            
             //Se ejecuta al cambiar el contenido del comboTipoImpuesto
             $("#comboTipoImpuesto").change(function () {
                 //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
@@ -443,27 +465,7 @@
             });
 
 
-//            $("#fecha_cargo input").change(function () {
-            $("#fecha_cargo input").keyup(function () {
-//                var fechaEmi = $("#fecha_cargo input").val();
-//                //separamos el id y el valor
-//                arrayEmi = fechaEmi.split("-");
-//                var valorDiaEmi = arrayEmi[0];
-//                var valorMesEmi = arrayEmi[1];
-//                var valorAnoEmi = arrayEmi[2];
-//
-//                var fechaVen = $("#fecha_vencimiento input").val();
-//                //alert(fechaVen);
-//
-//                //separamos el id y el valor
-//                arrayVen = fechaVen.split("-");
-//                var valorDiaVen = arrayEmi[0];
-//                var valorMesVen = arrayEmi[1];
-//                var valorAnoVen = arrayEmi[2];
-//
-//                $("#fecha_vencimiento input").val("2222-02-22");//valorDiaVen+"-"+(valorMesVen+1)+"-"+valorAnoVen);
 
-            });
         });
 
         //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
@@ -861,7 +863,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/cargarCuentas.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/modificarCargosController/cargarCuentas.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
 
                     //Vaciamos el combo
@@ -1001,7 +1003,7 @@
                                 </div>
                                 <div class="form-group col-xs-1">
                                     <label for="id_item>">Id.Item</label>
-                                    <input type="text" class="form-control input-sm" id="id_item" name="id_item">
+                                    <input type="text" class="form-control input-sm" id="id_item" name="id_item" disabled>
                                 </div>
                                 <div class="form-group col-xs-2">
                                     <label for="abreviatura>">Abreviatura</label>
@@ -1015,7 +1017,7 @@
                                     <label for="comboTipoItem">Tipo de Item</label>
                                     <div class="form-group-combo">                                        
                                         <select class="form-control input-sm" id="comboTipoItem" name="comboTipoItem" disabled>
-                                        </select>                                                            
+                                        </select>                                         
                                     </div>
                                 </div>
                             </div>
@@ -1030,7 +1032,8 @@
                                     </div>
                                 </div>   
                                 <div class="form-group col-xs-2">
-                                    <label for="importe>">Importe</label>
+                                    <label for="importe>">Importe</label>&nbsp;&nbsp;&nbsp;
+                                    <button type='button' class='btn miBotonEliminar btn-warning btn-xs'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Modificar</button>
                                     <input type="text" class="form-control input-sm" id="importe" name="importe" disabled>
                                 </div>
                                 <div class="form-group col-xs-1">
@@ -1092,7 +1095,7 @@
                                             <label class="fechaCargos"> EMISIÓN </label>
                                             <div class="form-group">
                                                 <div class='input-group date' id='fecha_cargo'>
-                                                    <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
+                                                    <input id='inputFechaCargo' data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -1156,48 +1159,6 @@
                             <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
 
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-
-
-                            <!--    Codigo para insertar una tabla con varios combos Para mas adelante --> 
-                            <!--                            <div class="col-xs-12" id="tableContainer">
-                                                            <table class="table table-striped">
-                                                                <thead class="thead-dark">
-                                                                    <tr>
-                                                                        <th scope="col">Item</th>
-                                                                        <th scope="col">Abreviatura</th>
-                                                                        <th scope="col">Descripción</th>
-                                                                        <th scope="col">Tipo Item</th> 
-                                                                        <th scope="col">Cuenta</th> 
-                                                                        <th scope="col">Importe</th> 
-                                                                        <th scope="col">Botón</th> 
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                            
-                                                                </tbody>
-                                                            </table>
-                                                        </div>-->
-
-
-                            <!--                            <div class="form-group">
-                                                            <input type="text" class="form-control" id="id_adeudo" name="id_adeudo">
-                                                        </div>                          
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="id_factura" name="id_factura">
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="cantidad" name="cantidad">
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="impuesto" name="impuesto">
-                                                        </div>
-                            
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="cargo" name="cargo">                                                    
-                                                        </div>-->
 
 
 
