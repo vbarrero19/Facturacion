@@ -72,10 +72,13 @@
                                 <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Cargos
                                         <span class="caret"></span></button>
-                                    <ul class="dropdown-menu btn btn-info" role="button">                                                                       
-                                        <li class="mCargo"><a href="/Facturacion/cargosController/start.htm">Alta Cargo</a></li>
+                                    <ul class="dropdown-menu btn btn-info" role="button">      
+                                        
+                                        <li class="mCargo"><a href="/Facturacion/cargosController/start.htm">Alta Cargo con Item</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/MenuController/start.htm">Alta Cargo sin Item</a></li>
+                                        <li role="presentation" class="divider"></li>
                                         <li class="mCargo"><a href="/Facturacion/verCargosController/start.htm">Editar Cargo</a></li>
-                                        <li class="mCargo"><a href="">Disponible</a></li> 
+
                                     </ul>
                                 </div>                                
                             </div>                                 
@@ -85,9 +88,9 @@
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Facturas
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu btn btn-info" role="button">    
-                                        <li class="mFactura"><a href="/facturasController/start.htm">Generar Factura</a></li>
-                                        <li class="mFactura"><a href="/Facturacion/verFacturasController/startActivas.htm">Activas</a></li>
-                                        <li class="mFactura"><a href="/Facturacion/verFacturasController/startArchivadas.htm">Archivadas</a></li>
+                                        <li class="mFactura"><a href="/Facturacion/facturasController/start.htm">Generar Factura</a></li>
+                                        <li class="mFactura"><a href="/Facturacion/verFacturasController/startActivas.htm">Ver Activas</a></li>
+                                        <li class="mFactura"><a href="/Facturacion/verFacturasController/startArchivadas.htm">Ver Archivadas</a></li>
                                         <li class="mFactura"><a href="">Disponible</a></li>  
                                     </ul>
                                 </div>                                     
@@ -104,7 +107,7 @@
                                     </ul>
                                 </div>                                
                             </div>             
-                            
+
                         </div>
                     </div>
                     <!--BUSCAR EN EL CSS PARA METER EL STYLE. -->

@@ -14,11 +14,10 @@
             .container {
                 width: 1200px;
             }
+            
             .azul{
                 color:blue;
             }
-
-
 
         </style>
     </head>
@@ -30,7 +29,6 @@
             getItem(); //Llenamos el combo de items        
 
             var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-            
 
             $('#puntual').show();
             $('#periodico').hide();
@@ -43,9 +41,9 @@
             $("#exampleRadios2").on("click", function () {
                 $('#puntual').hide();
                 $('#periodico').show();
-            });            
+            });
 
-            //cargamos de forma dinamica la tabla
+            //cargamos de forma dinamica la tabla de meses
             for (var i = 0; i < 12; i = i + 6) {
                 $('#tbody-tabla-meses').append(" <tr>\n\
                                             <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 1) + "' > </td>              \n\
@@ -62,7 +60,6 @@
                                             <td>" + meses[i + 5] + "</td>          \n\ \n\
                                         </tr>");
             }
-
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -82,24 +79,24 @@
                 locale: userLang.valueOf(),
                 daysOfWeekDisabled: [0, 6],
                 useCurrent: false
-                
+
             });
-            
+
             //Capturamos la fecha actual
             var f = new Date();
             var fecha = f.getDate() + "/" + (f.getMonth() + 1) + "/" + f.getFullYear();
-            
+
             //tratando de mostrar fechas dinamicamente            
             var mes = f.getMonth();
             var nombreMes = meses[f.getMonth()];
             $('#anio').text(f.getFullYear());
-            
+
             //Fecha para las cajas de fechas. Formato yyyy-mm-dd
             var fechaCajasEmision = f.getFullYear() + "-" + (f.getMonth() + 1) + "-" + f.getDate();
             $('#fecha_cargo input').val(fechaCajasEmision);
             var fechaCajasVencimiento = f.getFullYear() + "-" + (f.getMonth() + 2) + "-" + f.getDate();
-            $('#fecha_vencimiento input').val(fechaCajasVencimiento);                       
-            
+            $('#fecha_vencimiento input').val(fechaCajasVencimiento);
+
             //$("#fecha_cargo input").change(function () {
             $("#fecha_cargo input").keyup(function () {
 //                var fechaEmi = $("#fecha_cargo input").val();
@@ -113,8 +110,7 @@
 //                $("#fecha_vencimiento input").val(valorDiaEmi+"-"+(valorMesEmi+1)+"-"+valorAnoEmi);
 
             });
-            
-            
+
             $("#fecha_cargo input").change(function () {
 //                var fechaEmi = $("#fecha_cargo input").val();
 //                //separamos el id y el valor
@@ -125,10 +121,8 @@
 //                var valorAnoEmi = arrayEmi[2];
 //
 //                $("#fecha_vencimiento input").val(valorDiaEmi+"-"+(valorMesEmi+1)+"-"+valorAnoEmi);
-                
+
             });
-            
-            
 
             //Guarda los datos introducidos en el formulario en la tabla cargos
             $("#grabarCargos").click(function () {
@@ -209,6 +203,7 @@
 
                 myObj["valor_impuesto"] = $("#valorImpuesto").val().trim();
                 myObj["periodicidad"] = $("input[name=exampleRadios]:checked").val();
+                myObj["costes"] = $("#costes").val().trim();
 
 
                 var json = JSON.stringify(myObj);
@@ -294,57 +289,57 @@
             $("#comboEmpresas").change(function () {
 
                 //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-                if ($("#comboEmpresas").val() != "0") {
-
-                    if (window.XMLHttpRequest) //mozilla
-                    {
-                        ajax = new XMLHttpRequest(); //No Internet explorer
-                    } else
-                    {
-                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    var myObj = {};
-
-                    myObj["id_entidad"] = $("#comboEmpresas").val().trim();
-
-                    var json = JSON.stringify(myObj);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Facturacion/cargosController/getDatosEntidadEmpresa.htm',
-                        data: json,
-                        datatype: "json",
-                        contentType: "application/json",
-                        success: function (data) {
-
-                            //En el data viene la informacion del combo en forma de String.
-                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-                            var aux = JSON.parse(data);
-
-                            aux.forEach(function (valor, indice) {
-                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-                                var aux2 = JSON.parse(valor);
-                                //Mostramos los datos en la cajas de texto
-                                $("#id_entidad2").text(aux2.id_entidad);
-                                $("#nombre_entidad2").text(aux2.nombre_entidad);
-                                $("#nombre_contacto2").text(aux2.nombre_contacto);
-
-                            });
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            console.log(xhr.status);
-                            console.log(xhr.responseText);
-                            console.log(thrownError);
-                        }
-                    });
-
-                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-                } else {
-                    $("#id_entidad2").text("");
-                    $("#nombre_entidad2").text("");
-                    $("#nombre_contacto2").text("");
-                }
+//                if ($("#comboEmpresas").val() != "0") {
+//
+//                    if (window.XMLHttpRequest) //mozilla
+//                    {
+//                        ajax = new XMLHttpRequest(); //No Internet explorer
+//                    } else
+//                    {
+//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                    }
+//
+//                    var myObj = {};
+//
+//                    myObj["id_entidad"] = $("#comboEmpresas").val().trim();
+//
+//                    var json = JSON.stringify(myObj);
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: '/Facturacion/cargosController/getDatosEntidadEmpresa.htm',
+//                        data: json,
+//                        datatype: "json",
+//                        contentType: "application/json",
+//                        success: function (data) {
+//
+//                            //En el data viene la informacion del combo en forma de String.
+//                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
+//                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
+//                            var aux = JSON.parse(data);
+//
+//                            aux.forEach(function (valor, indice) {
+//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
+//                                var aux2 = JSON.parse(valor);
+//                                //Mostramos los datos en la cajas de texto
+//                                $("#id_entidad2").text(aux2.id_entidad);
+//                                $("#nombre_entidad2").text(aux2.nombre_entidad);
+//                                $("#nombre_contacto2").text(aux2.nombre_contacto);
+//
+//                            });
+//                        },
+//                        error: function (xhr, ajaxOptions, thrownError) {
+//                            console.log(xhr.status);
+//                            console.log(xhr.responseText);
+//                            console.log(thrownError);
+//                        }
+//                    });
+//
+//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
+//                } else {
+//                    $("#id_entidad2").text("");
+//                    $("#nombre_entidad2").text("");
+//                    $("#nombre_contacto2").text("");
+//                }
 
             });
 
@@ -389,6 +384,11 @@
                                 $("#descripcion").val(aux2.descripcion);
                                 $("#importe").val(aux2.importe);
                                 $("#costes").val(aux2.costes);
+                                if (aux2.costes == "Si") {
+                                    $('#botonCostes').prop("disabled", false);
+                                } else {
+                                    $('#botonCostes').prop("disabled", true);
+                                }
                                 $("#estado").val(aux2.estado);
                                 //Cargamos en el total el importe ya que de inicio tenemos: cantidad = 1, impuesto = 0
                                 $("#total").val(aux2.importe);
@@ -445,7 +445,7 @@
                     calcularTotal();
                 }
             });
-            
+
             //Se ejecuta al cambiar el contenido de la cantidad
             $("#cantidad").keyup(function () {
                 //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
@@ -454,7 +454,7 @@
                     calcularTotal();
                 }
             });
-            
+
             //Se ejecuta al cambiar el contenido del comboTipoImpuesto
             $("#comboTipoImpuesto").change(function () {
                 //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
@@ -464,7 +464,56 @@
                 }
             });
 
+            //Muestra una ventana emergente con los costes del item
+            $("#botonCostes").click(function () {
 
+
+                $("#abreviaturaItem").text("Costes del item: " + $("#abreviatura").val());
+
+                idItem = $("#id_item").val();
+
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                $.ajax({
+                    //Usamos GET ya que recibimos.
+                    type: 'GET',
+                    /*en la url le pasamos como parametro el identificador del item*/
+                    url: '/Facturacion/verCargosController/verCostes.htm?idItem=' + idItem,
+                    success: function (data) {
+
+                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                        var aux = JSON.parse(data);
+                        $('#tbody-tabla-costes').empty();
+
+                        var table = $('#table table-striped').DataTable();
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String 
+                            var aux2 = JSON.parse(valor);
+
+                            $('#tbody-tabla-costes').append(" <tr>\n\   \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
+                                                                    <td>" + aux2.col3 + "</td>\n\
+                                                               </tr>");
+                        });
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+
+                /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                $("#myModalCostes").modal();
+
+            });
 
         });
 
@@ -621,7 +670,6 @@
         }
         ;
 
-
         function getTipoImpuesto() {
 
             if (window.XMLHttpRequest) //mozilla
@@ -643,11 +691,6 @@
                     var tipoImpuesto = JSON.parse(data);
                     //Identificamos el combo
                     select = document.getElementById('comboTipoImpuesto');
-                    //Añadimos la opcion Seleccionar al combo
-//                    var opt = document.createElement('option');
-//                    opt.value = "0-0"; //xxx
-//                    opt.innerHTML = "Seleccionar";
-//                    select.appendChild(opt);
 
                     //Lo vamos cargando, dejamos seleccionada la opcion 1
                     tipoImpuesto.forEach(function (valor, indice) {
@@ -909,7 +952,6 @@
         }
         ;
 
-
         //Funcion para los calculos de los importes e impuestos
         function calcularTotal() {
 
@@ -1032,16 +1074,16 @@
                                     </div>
                                 </div>   
                                 <div class="form-group col-xs-2">
-                                    <label for="importe>">Importe</label>&nbsp;&nbsp;&nbsp;
-                                    <button type='button' class='btn miBotonEliminar btn-warning btn-xs'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Modificar</button>
+                                    <label for="importe>">Importe</label>&nbsp;&nbsp;&nbsp;                                    
                                     <input type="text" class="form-control input-sm" id="importe" name="importe" disabled>
                                 </div>
                                 <div class="form-group col-xs-1">
                                     <label for="importe>">Cantidad</label>
                                     <input type="text" class="form-control input-sm" id="cantidad" name="cantidad" value="1">
                                 </div>
-                                <div class="form-group col-xs-1">
-                                    <label for="importe>">Costes</label>
+                                <div class="form-group col-xs-2">
+                                    <label for="costes>">Costes</label>&nbsp;&nbsp;
+                                    <button type='button' id="botonCostes" class='btn btn-warning btn-xs'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "' disabled> Ver</button>
                                     <input type="text" class="form-control input-sm" id="costes" name="costes" disabled>
                                 </div>
                                 <div class="form-group col-xs-2">
@@ -1051,7 +1093,7 @@
                                         </select>                                                            
                                     </div>     
                                 </div>                              
-                                <div class="form-group col-xs-2">
+                                <div class="form-group col-xs-1">
                                     <label for="valorImpuesto">Impuestos</label>
                                     <input type="text" class="form-control input-sm" id="valorImpuesto" name="valorImpuesto" value="0" disabled>                                    
                                 </div>
@@ -1164,7 +1206,46 @@
 
                         </form>
                     </div>
-                </div>                            
+                </div>                 
+
+                <!-- ventana emergente Costes-->
+                <div class="modal fade" id="myModalCostes" role="dialog">
+                    <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                    <input class="hidden"  id="idCostItemHide"/>
+                    <input class="hidden"  id="idCostTipoHide"/>
+                    <input class="hidden"  id="idCostFilaHide"/>
+
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Ver desglose costes item</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p id="abreviaturaItem"></p>       
+                                <table class="table table-striped">                                    
+
+                                    <thead>                                            
+                                        <tr>
+                                            <th scope="col">Entidad</th>
+                                            <th scope="col">Cantidad</th>                                    
+                                        </tr>                                            
+                                    </thead>
+
+                                    <tbody id="tbody-tabla-costes">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>             
+                </div>
+
             </div>
         </div>
 

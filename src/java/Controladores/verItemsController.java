@@ -155,7 +155,7 @@ public class verItemsController {
         return resp;
     }
 
-    /*Muestra la lista de los items con sus botones eliminar, modificar, ...  */
+    /*Muestra la lista de los costes */
     @RequestMapping("/verItemsController/verCostes.htm")
     @ResponseBody
     public String verCostes(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {

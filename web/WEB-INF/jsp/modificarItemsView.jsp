@@ -56,12 +56,14 @@
             $('#conCostes').on('click', '#anadirCoste', function () {
                 cont++;
                 $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
-                                                            <td> <div class='form-group-combo'>\n\
-                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
-                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
-                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
+                                        <td> <div class='form-group-combo'>\n\
+                                        <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
+                                        <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
+                                        <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
                                                     </tr>");
-                getEntidadCliente("comboClientes" + cont);
+                var identificador = "comboClientes" + cont;
+                alert(identificador);
+                getEntidadCliente(identificador);
             });
 
 
@@ -133,7 +135,8 @@
                         console.log(thrownError);
                     }
                 });
-            })
+            });
+
 
         });
 
@@ -337,34 +340,30 @@
                     //Lo vamos cargando
                     costes.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a Cliente
+                        cont = indice;
                         costes2 = JSON.parse(valor);
+
                         //Llenamos el combo de empresas
                         if (indice == 0) {
                             getEntidadEmpresa(costes2.col2);
                             $("#costeImporte").val(costes2.col3)
+
                             //Llenamos el resto de combos
                         } else {
                             var valor = costes2.col2;
-                            //alert(valor);
+                            alert(" col 2: " + costes2.col2);
                             //Añadimos un combo
                             $('#anadirCoste').click();
-                            //alert(costes2.col2);
-
-                            //Codigo para rellenar combo dinamicamente, no funciona
-                            //$("#comboClientes"+ indice +" option[value="+ valor +"]").attr("selected",true); 
-
-                            //$("#comboClientes"+ indice +" option[value='1']").attr("selected",true);    
-                            //$("#selector option[value=3]").attr('disabled','disabled');
-                            //$("#menu option[value='2']").attr("selected", true);
-                            //$("#provincia option[value="+ valor +"]").attr("selected",true);'+ costes2.col2 +'    ' + indice + '
 
                             //Añadimos un importe               
                             $('#costeImporte' + indice).val(costes2.col3);
 
+                            //Añadimos a la caja del importe el valor del combo, es para que al llenar el combo del clienteque seleccionado el cliente
+                            $('#costeImporte' + indice).attr("data-idSelect", costes2.col2);
+
                         }
 
                     });
-
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -374,6 +373,17 @@
             });
         }
         ;
+
+        //Funcion para asignar el valor a los combos de los clientes en los costes 
+        function asignarValorCombos() {
+            for (var i = 1; i < $("input[name=costeImporte]").length; i++) {
+                if ($("input[name=costeImporte]").eq(i).data("idselect") == null) {                    
+                    $("#comboClientes" + i).val(0);
+                }else{                    
+                    $("#comboClientes" + i).val($("input[name=costeImporte]").eq(i).data("idselect"));
+                }
+            }
+        }
 
         //Funcion para llenar el combo de empresa.
         function getEntidadEmpresa(idEmpresa) {
@@ -448,6 +458,7 @@
                     //Recogemos los datos del combo y los pasamos a objetos Entidad  
                     var clienteEntidad = JSON.parse(data);
                     //Identificamos el combo
+                    alert(idCombo);
                     select = document.getElementById(idCombo);
                     //Añadimos la opcion Seleccionar al combo
                     var opt = document.createElement('option');
@@ -467,6 +478,9 @@
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
+
+                    //Llamamos a la funcion que asigna un valor a los combos de los clientes dinamicamente
+                    asignarValorCombos();
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -589,10 +603,7 @@
                                 <div class="form-group row" >
                                     <div class="col-xs-4">
                                         <label>Añadir costes:</label>
-                                    </div>
-                                    <!--                                    <div class="col-xs-6">
-                                                                            <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
-                                                                        </div>-->
+                                    </div>                                    
                                 </div>
 
                                 <div class="form-group">

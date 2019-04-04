@@ -91,6 +91,7 @@
                                                                 </tr>");
                         }
                     });
+                    
                     /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                     $(document).ready(function () {
 
@@ -104,9 +105,7 @@
 
                             $("#abreviaturaItem").text("Costes del item: " + $("#idCostTipoHide").val());
                             
-                            idItem = $("#idCostItemHide").val();
-                           
-                            /***** codigo nuevo *****/
+                            idItem = $("#idCostItemHide").val();  
 
                             if (window.XMLHttpRequest) //mozilla
                             {
@@ -154,12 +153,6 @@
                                     console.log(thrownError);
                                 }
                             });
-
-
-                            /***** codigo nuevo *****/
-
-
-
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModalCostes").modal();

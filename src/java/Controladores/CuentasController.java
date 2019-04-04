@@ -653,7 +653,7 @@ public class CuentasController {
 
     }
 
-    //Se usa para cargar los datos del combo de cuentas desactivadas
+    //Se usa para cargar los datos del combo de empresas activas
     @RequestMapping("/cuentasController/getEmpresasDisponibles.htm")
     @ResponseBody
     public String getEmpresasDisponibles(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -782,7 +782,7 @@ public class CuentasController {
 
     }
 
-    //Se usa para cargar los datos de la tabla empresas
+    //Se usa para cargar las cuentas de una empresa nada mas entrar en cuentas
     @RequestMapping("/cuentasController/getCartaSinValor.htm")
     @ResponseBody
     public String getCartaSinValor(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -794,13 +794,13 @@ public class CuentasController {
         PreparedStatement stAux = null;
         String resp = "correcto";
 
-        ArrayList<String> arrayTipo = new ArrayList<>();       
+        ArrayList<String> arrayTipo = new ArrayList<>();
 
         try {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
             con2 = pool_local.getConnection();
-            
+
             Statement sentencia = con.createStatement();
 
             rs = sentencia.executeQuery("SELECT min(id_empresa)FROM cuentas_empresas");
@@ -856,7 +856,7 @@ public class CuentasController {
 
     }
 
-    //Codigo para modificar cuentas. En estado ponemos lo que nos llega del formulario, será un Si ya que esta activada
+    //Codigo para modificar cuentas. 
     @RequestMapping("/CuentasController/modificarDetalle.htm")
     @ResponseBody
     public String modificarDetalle(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
@@ -873,8 +873,12 @@ public class CuentasController {
 
             stAux = con.prepareStatement("update cuentas_denominacion SET denominacion = ? where id_cuenta = ? and id_empresa = ?");
 
-            //Ponemos el estado en Si para indicar que esta activa            
-            stAux.setString(1, resource.getCol3());
+            //Si lo deja en blanco ponemos null para que pinte "Sin definir" 
+            if (resource.getCol3().equals("")) {
+                stAux.setString(1, null);
+            } else {
+                stAux.setString(1, resource.getCol3());
+            }
             stAux.setInt(2, Integer.parseInt(resource.getCol1()));
             stAux.setInt(3, Integer.parseInt(resource.getCol2()));
 
@@ -911,4 +915,126 @@ public class CuentasController {
         return resp;
     }
 
+    //Se usa para cargar los datos del combo de empresas activas
+    @RequestMapping("/cuentasController/getCargarCuentaEmpresa.htm")
+    @ResponseBody
+    public String getCargarCuentaEmpresa(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Entidades resourceLoad = new Entidades();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        String idEmpresa = "";
+
+        idEmpresa = hsr.getParameter("empresa");
+
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            Statement sentencia = con.createStatement();
+            
+            stAux = con.prepareStatement("select id_cuenta, cuenta from cuentas where estado = 'Si' and id_cuenta not in (select id_cuenta from cuentas_denominacion where id_empresa = ?)");
+
+            stAux.setInt(1, Integer.parseInt(idEmpresa));
+
+            rs = stAux.executeQuery();
+            
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Entidades(rs.getString(1), rs.getString(2))));
+            }
+
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQLException -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+
+    }
+
+    //Codigo para añadir cuentas a una empresa.
+    @RequestMapping("/CuentasController/anadirCuentaEmpresa.htm")
+    @ResponseBody
+    public String anadirCuentaEmpresa(@RequestBody Resource resource, HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "Detalle cuenta insertada";
+
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("insert into cuentas_denominacion values (?,?,?)");
+                       
+            stAux.setInt(1, Integer.parseInt(resource.getCol1()));
+            stAux.setInt(2, Integer.parseInt(resource.getCol2()));
+            stAux.setString(3, resource.getCol3());
+
+            stAux.executeUpdate();
+
+        } catch (SQLException ex) {
+            resp = "incorrecto SQL -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "incorrecto -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return resp;
+    }
+    
+    
 }

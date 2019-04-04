@@ -296,4 +296,69 @@ public class verCargosController {
         return resp;
     }
 
+    /*Muestra la lista de los costes */
+    @RequestMapping("/verCargosController/verCostes.htm")
+    @ResponseBody
+    public String verCostes(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("empresa")   */
+        int idItem = Integer.parseInt(hsr.getParameter("idItem"));
+
+        //Creamos un array
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        /*Codigo para ver los items*/
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("select i.abreviatura, e.distinct_code, c.cantidad from costes c inner join items i on c.id_item = i.id_item inner join entidad e"
+                    + " on c.id_entidad = e.id_entidad where i.id_item = ?");
+            
+            stAux.setInt(1, idItem);
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3))));
+            }
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "Incorrecto SQL -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "Incorrecto -> " + ex; // 
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        return resp;
+    }
+
 }

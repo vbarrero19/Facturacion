@@ -25,13 +25,70 @@
         $(document).ready(function () {
 
             var numeroColumnas = 0;
-            
-            //al cargar la pagina llamamos a la funcion getCuentas(), getEmpresas para llenar las tablas
+
+            //Al cargar la pagina llamamos a la funcion getCuentas(), getEmpresas para llenar las tablas
             getCuentas();
             getEmpresas();
             //Cargamos los detalles de las cuentas de una empresa al inicio
             getCartaSinValor();
 
+            $(".miBotonAnadirCuentaEmpresa").click(function () {
+
+                var idEmpresa = $('#idEmpresaAnadirCuentaHidden').val();
+                alert(idEmpresa);
+
+                if (window.XMLHttpRequest) //mozilla
+                {
+                    ajax = new XMLHttpRequest(); //No Internet explorer
+                } else
+                {
+                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                $.ajax({
+                    //Usamos GET ya que recibimos.
+                    type: 'GET',
+                    url: '/Facturacion/cuentasController/getCargarCuentaEmpresa.htm?empresa=' + idEmpresa,
+                    success: function (data) {
+
+                        $('#anadirCuentaEmpresaCombo').empty();
+
+                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                        var aux = JSON.parse(data);
+                        //Identificamos el combo
+                        select = document.getElementById('anadirCuentaEmpresaCombo');
+                        //Añadimos la opcion Seleccionar al combo
+                        var opt = document.createElement('option');
+                        opt.value = 0;
+                        opt.innerHTML = "Seleccionar";
+                        select.appendChild(opt);
+                        //Lo vamos cargando
+                        aux.forEach(function (valor, indice) {
+                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                            var aux2 = JSON.parse(valor);
+                            //Creamos las opciones del combo
+                            var opt = document.createElement('option');
+                            //Guardamos el id en el value de cada opcion
+                            opt.value = aux2.id_entidad;
+                            //Guardamos el impuesto en el nombre de cada opcion
+                            opt.innerHTML = aux2.distinct_code;
+                            //opt.data(nombre, aux2.distinct_code);
+                            //Añadimos la opcion
+                            select.appendChild(opt);
+                        });
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    }
+                });
+
+                /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                $("#myModalAnadirCuentaEmpresa").modal();
+
+            });
 
         });
 
@@ -316,7 +373,7 @@
                                 type: 'GET',
                                 url: '/Facturacion/cuentasController/getEmpresasDisponibles.htm',
                                 success: function (data) {
-                                    
+
 
                                     $('#anadirEmpresaCombo').empty();
 
@@ -386,6 +443,7 @@
         }
         ;
 
+        //Al pulsar en detalle empresa mostramos las cuentas de una empresa
         function getCarta(idEmpresa) {
 
             if (window.XMLHttpRequest) //mozilla
@@ -401,8 +459,6 @@
                 url: '/Facturacion/cuentasController/getDatosCarta.htm?empresa=' + idEmpresa,
                 success: function (data) {
 
-                    //alert(data);
-
                     var aux = JSON.parse(data);
                     $('#tableContainer3 tbody').empty();
 
@@ -411,6 +467,9 @@
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cuenta = JSON.parse(valor);
+
+                        //Guardamos en un campo oculto el id de la empresa que se muestra en pantalla
+                        $('#idEmpresaAnadirCuentaHidden').val(cuenta.col3);
 
                         $('#tableContainer3 tbody').append(" <tr>\n\
                             <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
@@ -424,8 +483,6 @@
                         //Mostramos en el thead el nombre de la empresa
                         $('#nomEmp').text(cuenta.col4);
                     });
-
-
 
                     $(document).ready(function () {
 
@@ -445,6 +502,8 @@
                             $("#myModalModificarDetalle").modal();
                         });
 
+
+
                     });
 
                 },
@@ -455,11 +514,10 @@
                 }
             });
 
-
-
         }
         ;
 
+        //Funcion para cargar una empresa al inicio. Carga la empresa con menor id.
         function getCartaSinValor() {
 
             if (window.XMLHttpRequest) //mozilla
@@ -474,7 +532,7 @@
                 type: 'GET',
                 url: '/Facturacion/cuentasController/getCartaSinValor.htm',
                 success: function (data) {
-                    
+
                     var aux = JSON.parse(data);
                     $('#tableContainer3 tbody').empty();
 
@@ -483,6 +541,11 @@
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cuenta = JSON.parse(valor);
+
+                        //alert(cuenta.col3);
+
+                        //Guardamos en un campo oculto el id de la empresa que se muestra en pantalla
+                        $('#idEmpresaAnadirCuentaHidden').val(cuenta.col3);
 
                         $('#tableContainer3 tbody').append(" <tr>\n\
                             <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
@@ -496,6 +559,8 @@
                         //Mostramos en el thead el nombre de la empresa
                         $('#nomEmp').text(cuenta.col4);
                     });
+
+
 
                     $(document).ready(function () {
 
@@ -824,6 +889,50 @@
         }
         ;
 
+        //Para añadir una cuenta a una empresa
+        function anadirCuentaEmpresa() {
+            
+            var idEmpresa = $("#idEmpresaAnadirCuentaHidden").val(); 
+            
+            alert(idEmpresa);
+                        
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            var myObj = {};
+
+            myObj["col1"] = $("#anadirCuentaEmpresaCombo").val();            
+            myObj["col2"] = $("#idEmpresaAnadirCuentaHidden").val();
+            myObj["col3"] = $("#myDenominacionCuentaEmpresa").val();            
+            
+            var json = JSON.stringify(myObj);
+            $.ajax({
+                type: 'POST',
+                url: '/Facturacion/CuentasController/anadirCuentaEmpresa.htm',
+                data: json,
+                datatype: "json",
+                contentType: "application/json",
+                success: function (data) {
+                    
+                    getCarta(idEmpresa);
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+
+
     </script>
     <body>
         <div class="container">
@@ -834,7 +943,6 @@
                     <br style="clear:both">
 
                     <h3 style="margin-bottom: 25px; text-align: center;">CARTA DE CUENTAS</h3>  
-
 
                     <div class="col-xs-6">
 
@@ -849,18 +957,18 @@
                                     <th scope="col">ID CUENTA</th>
                                     <th scope="col">DENOMINACIÓN</th>
                                     <th scope="col">ACTIVA</th>
-                                    <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
-                                    <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
+                                    <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">
+                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
+                                    <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">
+                                            <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
+
                                 </tr>                                            
                             </thead>
-
 
                             <tbody id="tbody-tabla-cuentas">
 
                             </tbody>
                         </table>
-
-
 
                         <table class="table table-striped"  id="tableContainer2">                                    
 
@@ -873,8 +981,10 @@
                                     <th scope="col">ID EMPRESA</th>
                                     <th scope="col">DISTINCT CODE</th>                                    
                                     <th scope="col">ACTIVA</th>
-                                    <th><button type="button" class='btn miBotonAnadirEmpresa btn-success btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp; </button></th>
-                                    <th><button type="button" class='btn miBotonActivarEmpresa btn-info btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
+                                    <th><button type="button" class='btn miBotonAnadirEmpresa btn-success btn-sm' data-dismiss="modal">
+                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp; </button></th>
+                                    <th><button type="button" class='btn miBotonActivarEmpresa btn-info btn-sm' data-dismiss="modal">
+                                            <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
                                 </tr>                                            
                             </thead>
 
@@ -885,24 +995,23 @@
                     </div>       
 
                     <div class="col-xs-6">
-
                         <table class="table table-striped"  id="tableContainer3">
-
                             <thead id="thead-tabla-carta">
                                 <tr>
                                     <th scope="col" colspan="4" style="text-align:center;"><h4>Detalle Cuentas Empresa <label id="nomEmp" name="nomEmp"></label></h4></th>
-                                    
                                 </tr>    
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Id Cuenta</th>
                                     <th scope="col">General</th>  
                                     <th scope="col">Empresa</th>
-                                    <th><button type="button" class='btn miBotonAnadirDetalle btn-success btn-sm' data-dismiss="modal"><span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
+                                    <th><button type="button" class='btn miBotonAnadirCuentaEmpresa btn-success btn-sm' data-dismiss="modal">
+                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
                                 </tr>
 
                             </thead>
 
+                            <input class="hidden" id="idEmpresaAnadirCuentaHidden"/>
 
                             <tbody id="tbody-tabla-carta">
 
@@ -1147,10 +1256,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>                   
 
-
-                    <!-- ventana emergente Modificar Detalle Cuenta - Empresa-->
+                    <!-- ventana emergente Modificar Detalle Cuenta Empresa-->
                     <div class="modal fade" id="myModalModificarDetalle" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
                         <input id="idModifDetalleIdCuentaHide"/>
@@ -1195,7 +1303,48 @@
                         </div>
                     </div>
 
+                    <!-- ventana emergente Añadir Cuenta a Empresa-->
+                    <div class="modal fade" id="myModalAnadirCuentaEmpresa" role="dialog">
+                        <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                        <input class="hidden" id="myModalAnadirCuentaEmpresaHidden"/>                        
 
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Añadir Cuenta</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="anadirCuentaEmpresa"></p>  
+                                    <div class="form-area">  
+                                        <div class="row"> 
+                                            <div class="form-group col-xs-3">
+                                                <label for="anadirCuentaEmpresaCombo">Cuenta:</label>
+                                            </div>
+                                            <div class="form-group col-xs-5">
+                                                <select class="form-control" id="anadirCuentaEmpresaCombo" name="anadirCuentaEmpresaCombo">
+                                                </select>  
+                                            </div> 
+                                        </div>
+                                        <div class="row"> 
+                                            <div class="form-group col-xs-3">
+                                                <label for="myDenominacionCuentaEmpresa">Denominacion:</label>
+                                            </div>
+                                            <div class="form-group col-xs-5">                                                
+                                                <input type="text" class="form-control" id="myDenominacionCuentaEmpresa" name="myDenominacionCuentaEmpresa">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">                                    
+                                    <button type="button" class="btn btn-info btn-sm" data-dismiss="modal" onclick="anadirCuentaEmpresa()">Añadir</button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                   
 
 
                 </div>

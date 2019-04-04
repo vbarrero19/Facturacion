@@ -50,7 +50,10 @@ public class CargosController {
 
         Connection con = null;
         ResultSet rs = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
         PreparedStatement stAux = null;
+        PreparedStatement stAux2 = null;
 
         String resp = "correcto";
 
@@ -59,11 +62,13 @@ public class CargosController {
             con = pool_local.getConnection();
 
             String periodicidad = cargos.getPeriodicidad();
+
+            //Comprobamos si tiene periodicidad o no
             if (periodicidad.equals("1")) { //Sin periodicidad
 
                 stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
-                        + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad)"
-                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                        + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad, costes)"
+                        + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                 stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
                 stAux.setString(2, cargos.getAbreviatura());
@@ -114,8 +119,42 @@ public class CargosController {
                 stAux.setDouble(16, valorDecimales);
 
                 stAux.setInt(17, Integer.parseInt(cargos.getPeriodicidad()));
+                stAux.setString(18, cargos.getCostes());
 
-                stAux.executeUpdate();
+                int afect = stAux.executeUpdate();
+
+                resp = "Cargo sin periodicidad";
+
+                //Codigo para insertar costes
+                if (cargos.getCostes().equalsIgnoreCase("Si")) {
+                    //Insertamos el desglose de los costes
+                    Statement sentencia = con.createStatement();
+                    rs = sentencia.executeQuery("select max(id_cargo) from cargos");
+                    rs.next();
+                    int numCargo = rs.getInt(1);
+
+                    String idItem = cargos.getId_item();
+
+                    Statement sentencia2 = con.createStatement();
+                    rs2 = sentencia2.executeQuery("select id_item, id_entidad, cantidad from costes where id_item = '" + idItem + "'");
+
+                    while (rs2.next()) {
+
+                        int idEntidad = rs2.getInt(2);
+                        int idCantidad = rs2.getInt(3);
+
+                        stAux2 = con.prepareStatement("INSERT INTO cargos_costes (id_cargo,id_entidad,cantidad) VALUES (?,?,?)");
+
+                        stAux2.setInt(1, numCargo);
+                        stAux2.setInt(2, idEntidad);
+                        stAux2.setDouble(3, idCantidad);
+
+                        stAux2.executeUpdate();
+
+                    }
+
+                    resp = resp + " y con costes";
+                }
 
             } else { //Con periodicidad
 
@@ -126,8 +165,8 @@ public class CargosController {
                 for (int x = 0; x < parts.length; x++) {
 
                     stAux = con.prepareStatement("INSERT INTO cargos (id_item, abreviatura, descripcion, id_tipo_item, cuenta, importe, cantidad, "
-                            + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad)"
-                            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                            + "  impuesto, total, fecha_cargo, fecha_vencimiento, estado, id_factura, id_cliente, id_empresa, valor_impuesto, periodicidad, costes)"
+                            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                     stAux.setInt(1, Integer.parseInt(cargos.getId_item()));
                     stAux.setString(2, cargos.getAbreviatura());
@@ -152,16 +191,10 @@ public class CargosController {
                     Double totalDecimales = Math.round(total * 100d) / 100d;
                     stAux.setDouble(9, totalDecimales);
 
-                    /**
-                     * *****CODIGO PARA LAS FECHAS ********
-                     */
+                    // CODIGO PARA LAS FECHAS 
                     String numeroMes = parts[x];
                     Formatter obj = new Formatter();
                     String valorMes = String.valueOf(obj.format("%02d", Integer.parseInt(numeroMes)));
-
-//                    Date fechaActual = new Date();
-//                    DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-//                    DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
 
                     //Fecha actual desglosada:
                     Calendar fecha = Calendar.getInstance();
@@ -169,15 +202,14 @@ public class CargosController {
                     //int mes = fecha.get(Calendar.MONTH) + 1;
                     int dia = fecha.get(Calendar.DAY_OF_MONTH);
 
-                    
                     //String primerDia = String.valueOf(obj.format("%02d", dia));                    
                     String fechaCargo = ano + "-" + valorMes + "-01";// + primerDia;
-                    
+
                     //Ultimo dia de mes
                     fecha.set(ano, (Integer.parseInt(valorMes) - 1), 1);
                     int ultimoDiaMes = fecha.getActualMaximum(Calendar.DAY_OF_MONTH);
                     String fechaVencimiento = ano + "-" + valorMes + "-" + ultimoDiaMes;
-                    
+
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Date parsedDate = dateFormat.parse(fechaCargo);
                     Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
@@ -190,10 +222,8 @@ public class CargosController {
                     Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 
                     stAux.setTimestamp(11, timestamp2);
-                    
-                    /*
-                     * *****FIN CODIGO PARA LAS FECHAS ********
-                     */
+
+                    // FIN CODIGO PARA LAS FECHAS 
                     stAux.setBoolean(12, true);
                     stAux.setInt(13, 0);
 
@@ -207,14 +237,42 @@ public class CargosController {
 
                     stAux.setInt(17, Integer.parseInt(cargos.getPeriodicidad()));
 
-                    stAux.executeUpdate();
+                    stAux.setString(18, cargos.getCostes());
 
-                }
+                    stAux.executeUpdate();                  
+                    
+                    //Codigo para insertar costes
+                    if (cargos.getCostes().equalsIgnoreCase("Si")) {
+                        //Insertamos el desglose de los costes
+                        Statement sentencia = con.createStatement();
+                        rs = sentencia.executeQuery("select max(id_cargo) from cargos");
+                        rs.next();
+                        int numCargo = rs.getInt(1);
 
+                        String idItem = cargos.getId_item();
+
+                        Statement sentencia2 = con.createStatement();
+                        rs2 = sentencia2.executeQuery("select id_item, id_entidad, cantidad from costes where id_item = '" + idItem + "'");
+
+                        while (rs2.next()) {
+
+                            int idEntidad = rs2.getInt(2);
+                            int idCantidad = rs2.getInt(3);
+
+                            stAux2 = con.prepareStatement("INSERT INTO cargos_costes (id_cargo,id_entidad,cantidad) VALUES (?,?,?)");
+
+                            stAux2.setInt(1, numCargo);
+                            stAux2.setInt(2, idEntidad);
+                            stAux2.setDouble(3, idCantidad);
+
+                            stAux2.executeUpdate();
+                        }
+                        resp = "Cargo con costes";
+                    }                    
+                }                
+                resp = resp + " y con periodicidad";
             }
-
-            resp = "Correcto";
-
+            
         } catch (SQLException ex) {
             resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
@@ -664,7 +722,6 @@ public class CargosController {
 
     }
 
-    
     //Se usa para llenar el combo cuentas
     @RequestMapping("/cargosController/cargarCuentas.htm")
     @ResponseBody
@@ -724,8 +781,7 @@ public class CargosController {
         return resp;
 
     }
-    
-    
+
     //Se usa para cargar los datos del combo TipoImpuesto
     @RequestMapping("/cargosController/getTipoImpuesto.htm")
     @ResponseBody
