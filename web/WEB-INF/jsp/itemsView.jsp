@@ -83,17 +83,13 @@
                 //Variable para guardar los valores del formulario
                 var myObj = {};
 
-
                 //Codigo para recuperar los costes de un item
                 //Creamos el array donde guardaremos los datos
                 var arrayOption = [];
 
                 $("#tableContainer tbody>tr option:checked").each(function (index) {
                     arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
-                });
-
-                //alert(arrayOption.toString());
-
+                });             
 
                 //Cargamos el contenido de los campos del formulario
                 myObj["abreviatura"] = $("#abreviatura").val().trim();

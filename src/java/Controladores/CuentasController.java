@@ -737,7 +737,7 @@ public class CuentasController {
 
             stAux = con.prepareStatement("select cd.id_cuenta, c.cuenta, e.id_empresa, e.nombre, COALESCE(cd.denominacion,'Sin definir')  from cuentas_denominacion cd "
                     + "inner join cuentas_empresas e on cd.id_empresa = e.id_empresa inner join cuentas c on c.id_cuenta = cd.id_cuenta "
-                    + "where cd.id_empresa = ? order by id_cuenta");
+                    + "where cd.id_empresa = ? and c.estado = 'Si' order by id_cuenta");
 
             stAux.setInt(1, Integer.parseInt(idEmpresa));
 
@@ -803,7 +803,7 @@ public class CuentasController {
 
             Statement sentencia = con.createStatement();
 
-            rs = sentencia.executeQuery("SELECT min(id_empresa)FROM cuentas_empresas");
+            rs = sentencia.executeQuery("SELECT min(id_empresa)FROM cuentas_empresas where estado = 'Si'");
 
             rs.next();
 
@@ -811,7 +811,7 @@ public class CuentasController {
 
             stAux = con2.prepareStatement("select cd.id_cuenta, c.cuenta, e.id_empresa, e.nombre, COALESCE(cd.denominacion,'Sin definir')  from cuentas_denominacion cd "
                     + "inner join cuentas_empresas e on cd.id_empresa = e.id_empresa inner join cuentas c on c.id_cuenta = cd.id_cuenta "
-                    + "where cd.id_empresa = ? order by id_cuenta");
+                    + "where cd.id_empresa = ? and c.estado = 'Si' order by id_cuenta");
 
             stAux.setInt(1, Integer.parseInt(idEmpresa));
 

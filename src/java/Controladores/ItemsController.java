@@ -89,16 +89,24 @@ public class ItemsController {
                 
                 //Insertamos el desglose de los costes
                 Statement sentencia = con.createStatement();
+                
+                //Buscamos el maximo id_item para insertar los costes
                 rs = sentencia.executeQuery("select max(id_item) from items");
                 rs.next();
                 int numItem = rs.getInt(1);
 
+                //Si lleva costes van guardados en una cadena en el campo costes
                 String cadena = item.getCostes();
                 String EntidadCantidad = "";
 
+                //Separamos la cadena en un array
                 String[] costes = cadena.split(",");
                 for (int x = 0; x < costes.length; x++) {
-                    EntidadCantidad = costes[x];
+                    
+                    //Cada parte de la cadena (EntidadCantidad) trae: idEntidad-cantidad.
+                    EntidadCantidad = costes[x];            
+                    
+                    //Separamos idEntidad-cantidad
                     String[] datos = EntidadCantidad.split("-");
                     int entidad = Integer.parseInt(datos[0]);
                     Double cantidad = Double.parseDouble(datos[1]);

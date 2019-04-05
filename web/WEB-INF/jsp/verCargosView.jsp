@@ -10,18 +10,21 @@
     <%@ include file="infouser.jsp" %>
     <head> 
         <style>
-            
+
             .container {
                 width: 1600px;
             }
             #tableContainer{
                 overflow:scroll;
                 overflow-x: hidden;
-                height:400px;    
+                height:500px;    
                 margin-bottom: 25px;
             }
-            
-           
+            .Si{
+                padding-top: 5px;
+            }
+
+
 
         </style>
         <title>VER CARGOS</title> 
@@ -29,10 +32,10 @@
     <script>
         $(document).ready(function () {
 
-            //Al cargar la pagina llamamos a las funcion para que cargue el combo
+            //Al cargar la pagina llamamos a la funcion para que cargue el combo
             getVerEntidad();
             //Cargamos todos los cargos pendientes
-            
+
             //verListaCargos();
 
             var userLang = navigator.language || navigator.userLanguage;
@@ -173,35 +176,59 @@
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cargo = JSON.parse(valor);
-                        /*en las fechas, quitamos la hora con substring*/                        
+                        /*en las fechas, quitamos la hora con substring*/
 
                         var impdec = parseFloat(Math.round(cargo.importe * 100) / 100).toFixed(2);
                         var iptdec = parseFloat(Math.round(cargo.valor_impuesto * 100) / 100).toFixed(2);
                         var totdec = parseFloat(Math.round(cargo.total * 100) / 100).toFixed(2);
-                        
-                        if(cargo.periodicidad == 1){
+
+                        if (cargo.periodicidad == 1) {
                             periodicidad = "Puntual"
-                        }else{
+                        } else {
                             periodicidad = "Periódico"
                         }
-                        
-                        $('#tableContainer tbody').append(" <tr>\n\
-                                                                <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
-                                                                    <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
-                                                                    <td>" + cargo.id_tipo_item + "</td>         \n\
-                                                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cargo.descripcion + "</td>         \n\
-                                                                    <td>" + cargo.cuenta + "</td>         \n\
-                                                                    <td>" + impdec + "</td>         \n\
-                                                                    <td>" + cargo.cantidad + "</td>         \n\
-                                                                    <td>" + iptdec + "</td>         \n\
-                                                                    <td>" + totdec + '€' + "</td>         \n\
-                                                                    <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
-                                                                    <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
-                                                                    <td>" + periodicidad + "</td>         \n\
-                                                                    <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
-                                                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idCue=" + cargo.cuenta + "&idTipImp=" + cargo.impuesto + "' class='btn btn-warning'> Modificar </button></td>\n\
-                                                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
-                                                                </tr>");
+                        //alert(cargo.id_cargo);
+                        if (cargo.costes == "No") {
+                            $('#tableContainer tbody').append(" <tr>\n\
+                                    <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                                    <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
+                                    <td>" + cargo.id_tipo_item + "</td>         \n\
+                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cargo.descripcion + "</td>         \n\
+                                    <td>" + cargo.cuenta + "</td>         \n\
+                                    <td>" + impdec + "</td>         \n\
+                                    <td>" + cargo.cantidad + "</td>         \n\
+                                    <td>" + iptdec + "</td>         \n\
+                                    <td>" + totdec + "</td>         \n\
+                                    <td>" + cargo.costes + "</td>         \n\
+                                    <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
+                                    <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
+                                    <td>" + periodicidad + "</td>         \n\
+                                    <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
+                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idCue=" + cargo.cuenta + "&idTipImp=" + cargo.impuesto + "' class='btn btn-warning'> Modificar </button></td>\n\
+                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
+                                </tr>");
+                        } else {
+                            $('#tableContainer tbody').append(" <tr>\n\
+                                    <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
+                                    <td id='abrev" + indice + "'>" + cargo.abreviatura + "</td>         \n\
+                                    <td>" + cargo.id_tipo_item + "</td>         \n\
+                                    <td class='hidden' id='descrip" + (indice + 1) + "'>" + cargo.descripcion + "</td>         \n\
+                                    <td>" + cargo.cuenta + "</td>         \n\
+                                    <td>" + impdec + "</td>         \n\
+                                    <td>" + cargo.cantidad + "</td>         \n\
+                                    <td>" + iptdec + "</td>         \n\
+                                    <td>" + totdec + "</td>         \n\
+                                    <td><button type='button' class='btn miBotonCostes btn-info btn-xs Si'  data-idItem='" + cargo.id_cargo + "' data-idTipo='" + cargo.id_cargo +
+                                    "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;&nbsp;Si</button></td>\n\    \n\
+                                    <td>" + cargo.fecha_cargo.substring(0, 10) + "</td>         \n\
+                                    <td>" + cargo.fecha_vencimiento.substring(0, 10) + "</td>         \n\
+                                    <td>" + periodicidad + "</td>         \n\
+                                    <td><button type='button' class='btn btn-info miBoton btn-success' id='myBtn' value='" + (indice + 1) + "';>Ver Desc.</button></td>\n\
+                                    <td><a href='/Facturacion/modificarCargosController/start.htm?idCar=" + cargo.id_cargo + "&idCli=" + cargo.id_cliente + "&idCue=" + cargo.cuenta + "&idTipImp=" + cargo.impuesto + "' class='btn btn-warning'> Modificar </button></td>\n\
+                                    <td><button type='button' class='btn btn-info miBotonEliminar btn-danger'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "'> Borrar</button></td>\n\
+                                </tr>");
+
+                        }
                     });
 
                     $(document).ready(function () {
@@ -211,10 +238,66 @@
                             $("#descripcion").text($("#descrip" + $(this).val()).text());
                             $("#myModal").modal();
                         });
-                    });
 
-                    /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
-                    $(document).ready(function () {
+                        /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
+                        $(document).ready(function () {
+
+                            $(".miBotonCostes").click(function () {
+
+                                /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
+                                 * en los campos ocultos que nos hemos declarado en el html para que al pinchar en el boton no se pierdan los datos.*/
+                                $("#idCostCargoHide").val($(this).attr("data-idItem"));
+                                $("#idCostTipoHide").val($(this).attr("data-idTipo"));
+                                $("#idCostFilaHide").val($(this).attr("data-idIndice"));
+
+                                $("#abreviaturaItem").text("Costes del item: " + $("#idCostTipoHide").val());
+
+                                idCargo = $("#idCostCargoHide").val();
+
+                                if (window.XMLHttpRequest) //mozilla
+                                {
+                                    ajax = new XMLHttpRequest(); //No Internet explorer
+                                } else
+                                {
+                                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                                }
+
+                                $.ajax({
+                                    //Usamos GET ya que recibimos.
+                                    type: 'GET',
+                                    /*en la url le pasamos como parametro el identificador del item*/
+                                    url: '/Facturacion/verCargosController/verCostes.htm?idCargo=' + idCargo,
+                                    success: function (data) {
+
+                                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+                                        var aux = JSON.parse(data);
+                                        $('#tbody-tabla-costes').empty();
+
+                                        var table = $('#table table-striped').DataTable();
+                                        aux.forEach(function (valor, indice) {
+                                            //Cada objeto esta en String 
+                                            var aux2 = JSON.parse(valor);
+
+                                            $('#tbody-tabla-costes').append(" <tr>\n\   \n\
+                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
+                                                                    <td>" + aux2.col3 + "</td>\n\
+                                                               </tr>");
+                                        });
+
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        console.log(xhr.status);
+                                        console.log(xhr.responseText);
+                                        console.log(thrownError);
+                                    }
+                                });
+
+                                /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+                                $("#myModalCostes").modal();
+                            })
+                        });
+
+                        /*Creamos la funcion que al hacer click en el boton eliminar nos muestre el modal, identificamos el boton con el nombre miBoton*/
                         $(".miBotonEliminar").click(function () {
 
                             /*Guardamos los valores que recogemos de los parametros declarados en el boton(arriba) y lo recogemos con .val($this...) 
@@ -314,9 +397,6 @@
                                 </div>  
                                 <br style="clear:both">
 
-                                <hr size="10" />
-                                
-
                                 <div class="col-xs-12" id="tableContainer">
                                     <table class="table table-striped">                                    
 
@@ -329,7 +409,8 @@
                                                 <th scope="col">Importe</th>
                                                 <th scope="col">Cant.</th>
                                                 <th scope="col">Impuestos</th>
-                                                <th scope="col">Total</th>                                                
+                                                <th scope="col">Total</th>  
+                                                <th scope="col">Costes</th> 
                                                 <th scope="col">F. Cargo</th>
                                                 <th scope="col">F. Vencimiento</th>
                                                 <th scope="col">Periodicidad</th>
@@ -353,7 +434,6 @@
                     </div>
                 </div>
             </div>  
-
 
             <!-- ventana emergente Modificar-->
             <div class="modal fade" id="myModal" role="dialog">
@@ -402,6 +482,46 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ventana emergente Costes-->
+            <div class="modal fade" id="myModalCostes" role="dialog">
+                <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
+                <input class="hidden"  id="idCostCargoHide"/>
+                <input class="hidden"  id="idCostTipoHide"/>
+                <input class="hidden"  id="idCostFilaHide"/>
+
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Ver desglose costes cargo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="abreviaturaItem"></p>       
+                            <table class="table table-striped">                                    
+
+                                <thead>                                            
+                                    <tr>
+                                        <th scope="col">Entidad</th>
+                                        <th scope="col">Cantidad</th>                                    
+                                    </tr>                                            
+                                </thead>
+
+                                <tbody id="tbody-tabla-costes">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body> 
 </html>

@@ -14,6 +14,13 @@
 
         }
 
+        #tableContainer11,#tableContainer33{
+            overflow:scroll;
+            overflow-x: hidden;
+            height:500px;    
+            margin-bottom: 25px;
+        }
+
         .azul{
             background-color: lightblue;
             margin-bottom: 25px;
@@ -35,7 +42,7 @@
             $(".miBotonAnadirCuentaEmpresa").click(function () {
 
                 var idEmpresa = $('#idEmpresaAnadirCuentaHidden').val();
-                alert(idEmpresa);
+                //alert(idEmpresa);
 
                 if (window.XMLHttpRequest) //mozilla
                 {
@@ -423,7 +430,7 @@
                             $("#idElimEmpresaTipoHide").val($(this).attr("data-cuenta"));
                             $("#idElimEmpresaFilaHide").val($(this).attr("data-idIndice"));
 
-                            $("#eliminarEmpresa").text("Desea eliminar la empresa " + $("#idElimEmpresaTipoHide").val());
+                            $("#eliminarEmpresa").text("Desea archivar la empresa " + $("#idElimEmpresaTipoHide").val());
 
                             /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
                             $("#myModalEliminarEmpresa").modal();
@@ -445,6 +452,10 @@
 
         //Al pulsar en detalle empresa mostramos las cuentas de una empresa
         function getCarta(idEmpresa) {
+
+            //Guardamos en un campo oculto el id de la empresa que se muestra en pantalla
+            //alert("getCarta" + idEmpresa);
+            $('#idEmpresaAnadirCuentaHidden').val(idEmpresa);
 
             if (window.XMLHttpRequest) //mozilla
             {
@@ -468,8 +479,13 @@
                         //Cada objeto esta en String 
                         var cuenta = JSON.parse(valor);
 
+
+
                         //Guardamos en un campo oculto el id de la empresa que se muestra en pantalla
-                        $('#idEmpresaAnadirCuentaHidden').val(cuenta.col3);
+/////////                        $('#idEmpresaAnadirCuentaHidden').val(cuenta.col3);
+
+
+
 
                         $('#tableContainer3 tbody').append(" <tr>\n\
                             <td id='id" + (indice + 1) + "'>" + (indice + 1) + "</td>     \n\
@@ -541,8 +557,6 @@
                         //var id = cargo.id_cargo;
                         //Cada objeto esta en String 
                         var cuenta = JSON.parse(valor);
-
-                        //alert(cuenta.col3);
 
                         //Guardamos en un campo oculto el id de la empresa que se muestra en pantalla
                         $('#idEmpresaAnadirCuentaHidden').val(cuenta.col3);
@@ -617,8 +631,11 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    $("#tbody-tabla-cuentas").children().eq($("#idElimCuentaFilaHide").val()).hide();
-                    alert("Cuenta Archivada Correctamente");
+
+                    getCuentas();
+                    var idEmpresaNew = $("#idEmpresaAnadirCuentaHidden").val();
+                    getCarta(idEmpresaNew);
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -651,7 +668,6 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    alert(data);
                     getCuentas();
 
                 },
@@ -687,8 +703,11 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    alert($("#nomEmp").text());
+                    //alert($("#nomEmp").text());
                     getCuentas();
+
+                    var idEmpresaNew = $("#idEmpresaAnadirCuentaHidden").val();
+                    getCarta(idEmpresaNew);
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -726,18 +745,17 @@
                     //alert(data);
                     getCuentas();
 
+                    var idEmpresaNew = $("#idEmpresaAnadirCuentaHidden").val();
+                    getCarta(idEmpresaNew);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                     console.log(xhr.responseText);
                     console.log(thrownError);
                 },
-                complete: function (xhr, status) {
-                    alert('Cuenta activada con exito');
-                }
-
-
-
+//                complete: function (xhr, status) {
+//                    alert('Cuenta activada con exito');
+//                }
             });
         }
         ;
@@ -764,8 +782,23 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    $("#tbody-tabla-empresas").children().eq($("#idElimEmpresaFilaHide").val()).hide();
-                    alert("Empresa Archivada Correctamente");
+                    getEmpresas();
+//                    $("#tbody-tabla-empresas").children().eq($("#idElimEmpresaFilaHide").val()).hide();
+//                    alert("Empresa Archivada Correctamente");
+
+                    var empArc = $("#idElimEmpresaHide").val().trim();
+                    var empAct = $("#idEmpresaAnadirCuentaHidden").val().trim();
+
+                    if (empArc == empAct) {
+                        getCartaSinValor();
+                    } else {
+                        getCarta(empAct);
+                    }
+                    ;
+
+                    //getCartaSinValor();
+
+
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -799,8 +832,9 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    alert(data);
+                    //alert(data);
                     getEmpresas();
+                    
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -838,7 +872,7 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    alert(data);
+                    //alert(data);
                     getEmpresas();
 
                 },
@@ -876,7 +910,7 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    alert(data);
+                    //alert(data);
                     getCarta(idEmpresa);
 
                 },
@@ -891,11 +925,11 @@
 
         //Para añadir una cuenta a una empresa
         function anadirCuentaEmpresa() {
-            
-            var idEmpresa = $("#idEmpresaAnadirCuentaHidden").val(); 
-            
-            alert(idEmpresa);
-                        
+
+            var idEmpresa = $("#idEmpresaAnadirCuentaHidden").val();
+
+            //alert(idEmpresa);
+
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -906,10 +940,10 @@
 
             var myObj = {};
 
-            myObj["col1"] = $("#anadirCuentaEmpresaCombo").val();            
+            myObj["col1"] = $("#anadirCuentaEmpresaCombo").val();
             myObj["col2"] = $("#idEmpresaAnadirCuentaHidden").val();
-            myObj["col3"] = $("#myDenominacionCuentaEmpresa").val();            
-            
+            myObj["col3"] = $("#myDenominacionCuentaEmpresa").val();
+
             var json = JSON.stringify(myObj);
             $.ajax({
                 type: 'POST',
@@ -918,7 +952,7 @@
                 datatype: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    
+
                     getCarta(idEmpresa);
 
                 },
@@ -945,79 +979,82 @@
                     <h3 style="margin-bottom: 25px; text-align: center;">CARTA DE CUENTAS</h3>  
 
                     <div class="col-xs-6">
+                        <div id="tableContainer11"> <!--Para el scroll-->
+                            <table class="table table-striped"  id="tableContainer1">                                    
 
-                        <table class="table table-striped"  id="tableContainer1">                                    
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Cuentas</h4></th>        
+                                    </tr>    
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID CUENTA</th>
+                                        <th scope="col">DENOMINACIÓN</th>
+                                        <th scope="col">ACTIVA</th>
+                                        <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">
+                                                <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
+                                        <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">
+                                                <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
 
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col" colspan="4" style="text-align:center;"><h4>Cuentas</h4></th>        
-                                </tr>    
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID CUENTA</th>
-                                    <th scope="col">DENOMINACIÓN</th>
-                                    <th scope="col">ACTIVA</th>
-                                    <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">
-                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
-                                    <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">
-                                            <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
+                                    </tr>                                            
+                                </thead>
 
-                                </tr>                                            
-                            </thead>
+                                <tbody id="tbody-tabla-cuentas">
 
-                            <tbody id="tbody-tabla-cuentas">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tableContainer22"> <!--Para el scroll-->
+                            <table class="table table-striped"  id="tableContainer2">                                    
 
-                            </tbody>
-                        </table>
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Empresas</h4></th>        
+                                    </tr>    
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID EMPRESA</th>
+                                        <th scope="col">DISTINCT CODE</th>                                    
+                                        <th scope="col">ACTIVA</th>
+                                        <th><button type="button" class='btn miBotonAnadirEmpresa btn-success btn-sm' data-dismiss="modal">
+                                                <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp; </button></th>
+                                        <th><button type="button" class='btn miBotonActivarEmpresa btn-info btn-sm' data-dismiss="modal">
+                                                <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
+                                    </tr>                                            
+                                </thead>
 
-                        <table class="table table-striped"  id="tableContainer2">                                    
+                                <tbody id="tbody-tabla-empresas">
 
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col" colspan="4" style="text-align:center;"><h4>Empresas</h4></th>        
-                                </tr>    
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">ID EMPRESA</th>
-                                    <th scope="col">DISTINCT CODE</th>                                    
-                                    <th scope="col">ACTIVA</th>
-                                    <th><button type="button" class='btn miBotonAnadirEmpresa btn-success btn-sm' data-dismiss="modal">
-                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp; </button></th>
-                                    <th><button type="button" class='btn miBotonActivarEmpresa btn-info btn-sm' data-dismiss="modal">
-                                            <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
-                                </tr>                                            
-                            </thead>
-
-                            <tbody id="tbody-tabla-empresas">
-
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>       
 
                     <div class="col-xs-6">
-                        <table class="table table-striped"  id="tableContainer3">
-                            <thead id="thead-tabla-carta">
-                                <tr>
-                                    <th scope="col" colspan="4" style="text-align:center;"><h4>Detalle Cuentas Empresa <label id="nomEmp" name="nomEmp"></label></h4></th>
-                                </tr>    
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Id Cuenta</th>
-                                    <th scope="col">General</th>  
-                                    <th scope="col">Empresa</th>
-                                    <th><button type="button" class='btn miBotonAnadirCuentaEmpresa btn-success btn-sm' data-dismiss="modal">
-                                            <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
-                                </tr>
+                        <div id="tableContainer33"> <!--Para el scroll-->
+                            <table class="table table-striped"  id="tableContainer3">
+                                <thead id="thead-tabla-carta">
+                                    <tr>
+                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Detalle Cuentas Empresa <label id="nomEmp" name="nomEmp"></label></h4></th>
+                                    </tr>    
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Id Cuenta</th>
+                                        <th scope="col">General</th>  
+                                        <th scope="col">Empresa</th>
+                                        <th><button type="button" class='btn miBotonAnadirCuentaEmpresa btn-success btn-sm' data-dismiss="modal">
+                                                <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
+                                    </tr>
 
-                            </thead>
+                                </thead>
+                                <!--class="hidden"-->
+                                <input  id="idEmpresaAnadirCuentaHidden"/>
 
-                            <input class="hidden" id="idEmpresaAnadirCuentaHidden"/>
+                                <tbody id="tbody-tabla-carta">
 
-                            <tbody id="tbody-tabla-carta">
-
-                            </tbody>
-                        </table>
-
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <br style="clear:both">

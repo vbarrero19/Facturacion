@@ -56,21 +56,21 @@
                         var item = JSON.parse(valor);
                         if (item.costes == "No") {
                             $('#tableContainer tbody').append(" <tr>\n\
-                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td id='id" + indice + "'>" + item.id_item + "</td>         \n\
-                                                                    <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
-                                                                    <td>" + item.descripcion + "</td>         \n\
-                                                                    <td>" + item.id_tipo_item + "</td>       \n\
-                                                                    <td>" + item.id_cuenta + "</td>       \n\
-                                                                    <td>" + item.importe + "</td>       \n\
-                                                                 \n\<td>" + item.costes + "</td>       \n\
-                                                                    <td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\
-                                                                           <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;Añadir</a></td>\n\
-                                                                    <td><a href='/Facturacion/modificarItemsController/start.htm?idItem=" + item.id_item + "' class='btn btn-warning' role='button'>\n\
-                                                                        <span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar</a></td>\n\
-                                                                    <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
-                                                                         "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;Archivar</button></td>\n\    \n\
-                                                                </tr>");
+                                    <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                    <td id='id" + indice + "'>" + item.id_item + "</td>         \n\
+                                    <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
+                                    <td>" + item.descripcion + "</td>         \n\
+                                    <td>" + item.id_tipo_item + "</td>       \n\
+                                    <td>" + item.id_cuenta + "</td>       \n\
+                                    <td>" + item.importe + "</td>       \n\
+                                    <td>" + item.costes + "</td>       \n\
+                                    <td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\
+                                        <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;Añadir</a></td>\n\
+                                    <td><a href='/Facturacion/modificarItemsController/start.htm?idItem=" + item.id_item + "' class='btn btn-warning' role='button'>\n\
+                                        <span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar</a></td>\n\
+                                    <td><button type='button' class='btn miBotonEliminar btn-danger'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
+                                        "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp;Archivar</button></td>\n\    \n\
+                                    </tr>");
                         } else {
                             $('#tableContainer tbody').append(" <tr>\n\
                                                                 <th scope=\"row\">" + (indice + 1) + "</th>     \n\
@@ -137,15 +137,6 @@
                                                                </tr>");
                                     });
 
-//                                    $(document).ready(function () {
-//
-//                                        $("input[name=estado]").change(function () {
-//                                            $("#EstadoNuevoHide").val($('input[name=estado]:checked').val());
-//                                        });
-//
-//
-//                                    });
-
                                 },
                                 error: function (xhr, ajaxOptions, thrownError) {
                                     console.log(xhr.status);
@@ -201,6 +192,7 @@
             });
         }
         ;
+        
         function archivarItem() {
             if (window.XMLHttpRequest) //mozilla
             {

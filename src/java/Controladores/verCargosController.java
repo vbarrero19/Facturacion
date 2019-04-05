@@ -199,7 +199,7 @@ public class verCargosController {
             con = pool_local.getConnection();
 
             stAux = con.prepareStatement("SELECT c.id_cargo, c.id_item, c.abreviatura, c.descripcion, t.item, cu.cuenta, c.importe, c.cantidad, c.impuesto, c.total,"
-                    + " c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, valor_impuesto,periodicidad FROM cargos c inner join "
+                    + " c.fecha_cargo, c.fecha_vencimiento, c.estado, c.id_factura, c.id_cliente, id_empresa, c.valor_impuesto, c.periodicidad, c.costes FROM cargos c inner join "
                     + "tipo_item t on c.id_tipo_item = t.id_tipo_item inner join cuentas cu on c.cuenta = cu.id_cuenta WHERE c.id_factura = 0 and id_cliente = ? order by c.fecha_cargo");
 
             stAux.setInt(1, idCliente);
@@ -208,7 +208,7 @@ public class verCargosController {
             while (rs.next()) {
                 arrayTipo.add(new Gson().toJson(new Cargos(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),
                 rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16),
-                rs.getString(17), rs.getString(18))));
+                rs.getString(17), rs.getString(18), rs.getString(19))));
             }
 
             resp = new Gson().toJson(arrayTipo);
@@ -308,7 +308,7 @@ public class verCargosController {
         String resp = "correcto";
 
         /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("empresa")   */
-        int idItem = Integer.parseInt(hsr.getParameter("idItem"));
+        int idItem = Integer.parseInt(hsr.getParameter("idCargo"));
 
         //Creamos un array
         ArrayList<String> arrayTipo = new ArrayList<>();
@@ -318,8 +318,8 @@ public class verCargosController {
             PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
             con = pool_local.getConnection();
 
-            stAux = con.prepareStatement("select i.abreviatura, e.distinct_code, c.cantidad from costes c inner join items i on c.id_item = i.id_item inner join entidad e"
-                    + " on c.id_entidad = e.id_entidad where i.id_item = ?");
+            stAux = con.prepareStatement("select c.abreviatura, e.distinct_code, cc.cantidad from cargos_costes cc inner join "
+                    + "cargos c on cc.id_cargo = c.id_cargo inner join entidad e on cc.id_entidad = e.id_entidad where c.id_cargo = ?");
             
             stAux.setInt(1, idItem);
             rs = stAux.executeQuery();
