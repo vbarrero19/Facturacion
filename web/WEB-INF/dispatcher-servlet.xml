@@ -54,6 +54,7 @@
     <bean class="Controladores.verEntidadesController" id="verEntidades"/>
     
     <bean class="Controladores.CargosController" id="cargos"/>   
+    <bean class="Controladores.CargosSinController" id="sinCargos"/> 
     <bean class="Controladores.verCargosController" id="verCargos"/> 
     <bean class="Controladores.modificarCargosController" id="modificarCargos"/>
     
@@ -90,7 +91,8 @@
                 <prop key="modificarEntidadesView.htm">verEntidades</prop>            
                 <prop key="verEntidadesView.htm">verEntidades</prop>
                 
-                <prop key="cargosView.htm">cargos</prop>              
+                <prop key="cargosView.htm">cargos</prop>        
+                <prop key="cargosSinView.htm">sinCargos</prop>        
                 <prop key="verCargosView.htm">verCargos</prop> 
                 <prop key="modificarCargosView.htm">modificarCargos</prop> 
                     

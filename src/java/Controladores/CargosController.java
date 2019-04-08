@@ -141,13 +141,15 @@ public class CargosController {
                     while (rs2.next()) {
 
                         int idEntidad = rs2.getInt(2);
+                        //Para insertar la cantidad adecuada multiplicamos el coste por la cantidad de items que se van a cargar                        
                         int idCantidad = rs2.getInt(3);
+                        double cantidadTotal = cantidadDecimales * idCantidad;
 
                         stAux2 = con.prepareStatement("INSERT INTO cargos_costes (id_cargo,id_entidad,cantidad) VALUES (?,?,?)");
 
                         stAux2.setInt(1, numCargo);
                         stAux2.setInt(2, idEntidad);
-                        stAux2.setDouble(3, idCantidad);
+                        stAux2.setDouble(3, cantidadTotal);
 
                         stAux2.executeUpdate();
 
@@ -239,8 +241,8 @@ public class CargosController {
 
                     stAux.setString(18, cargos.getCostes());
 
-                    stAux.executeUpdate();                  
-                    
+                    stAux.executeUpdate();
+
                     //Codigo para insertar costes
                     if (cargos.getCostes().equalsIgnoreCase("Si")) {
                         //Insertamos el desglose de los costes
@@ -257,22 +259,25 @@ public class CargosController {
                         while (rs2.next()) {
 
                             int idEntidad = rs2.getInt(2);
+
+                            //Para insertar la cantidad adecuada multiplicamos el coste por la cantidad de items que se van a cargar                        
                             int idCantidad = rs2.getInt(3);
+                            double cantidadTotal = cantidadDecimales * idCantidad;
 
                             stAux2 = con.prepareStatement("INSERT INTO cargos_costes (id_cargo,id_entidad,cantidad) VALUES (?,?,?)");
 
                             stAux2.setInt(1, numCargo);
                             stAux2.setInt(2, idEntidad);
-                            stAux2.setDouble(3, idCantidad);
+                            stAux2.setDouble(3, cantidadTotal);
 
                             stAux2.executeUpdate();
                         }
                         resp = "Cargo con costes";
-                    }                    
-                }                
+                    }
+                }
                 resp = resp + " y con periodicidad";
             }
-            
+
         } catch (SQLException ex) {
             resp = "incorrecto SQLException -> " + ex; // ex.getMessage();
             StringWriter errors = new StringWriter();
@@ -839,6 +844,71 @@ public class CargosController {
         }
         return resp;
 
+    }
+
+    /*Muestra la lista de los costes */
+    @RequestMapping("/cargosController/verCostes.htm")
+    @ResponseBody
+    public String verCostes(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+        Resource resourceLoad = new Resource();
+
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement stAux = null;
+        String resp = "correcto";
+
+        /*recogemos los valores de los parametros pasados por url desde el jsp, lo recogemos con hsr.getParameter("empresa")   */
+        int idItem = Integer.parseInt(hsr.getParameter("idItem"));
+
+        //Creamos un array
+        ArrayList<String> arrayTipo = new ArrayList<>();
+
+        /*Codigo para ver los costes*/
+        try {
+            PoolC3P0_Local pool_local = PoolC3P0_Local.getInstance();
+            con = pool_local.getConnection();
+
+            stAux = con.prepareStatement("select i.abreviatura, e.distinct_code, c.cantidad from costes c inner join items i on c.id_item = i.id_item inner join entidad e"
+                    + " on c.id_entidad = e.id_entidad where i.id_item = ?");
+
+            stAux.setInt(1, idItem);
+            rs = stAux.executeQuery();
+
+            while (rs.next()) {
+                arrayTipo.add(new Gson().toJson(new Resource(rs.getString(1), rs.getString(2), rs.getString(3))));
+            }
+            resp = new Gson().toJson(arrayTipo);
+
+        } catch (SQLException ex) {
+            resp = "Incorrecto SQL -> " + ex;
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } catch (Exception ex) {
+            resp = "Incorrecto -> " + ex; // 
+            StringWriter errors = new StringWriter();
+            ex.printStackTrace(new PrintWriter(errors));
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (stAux != null) {
+                    stAux.close();
+                }
+            } catch (Exception e) {
+            }
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        return resp;
     }
 
 }

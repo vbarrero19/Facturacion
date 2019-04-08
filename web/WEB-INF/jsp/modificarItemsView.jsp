@@ -14,12 +14,6 @@
 
         }
 
-        .verde{
-            background-color: #ffe48d;
-            margin-bottom: 25px;
-        }
-
-
     </style>
     <script>
         $(document).ready(function () {
@@ -517,7 +511,7 @@
 
                         <br style="clear:both">
 
-                        <div class="col-xs-7 verde">                             
+                        <div class="col-xs-7">                             
                             <h3 style="margin-bottom: 25px; text-align: center;">Modificar ITEMS</h3>
 
                             <div class="form-group row">

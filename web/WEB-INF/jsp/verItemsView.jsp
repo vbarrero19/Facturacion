@@ -73,13 +73,13 @@
                                     </tr>");
                         } else {
                             $('#tableContainer tbody').append(" <tr>\n\
-                                                                <th scope=\"row\">" + (indice + 1) + "</th>     \n\
-                                                                    <td id='id" + indice + "'>" + item.id_item + "</td>         \n\
-                                                                    <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
-                                                                    <td>" + item.descripcion + "</td>         \n\
-                                                                    <td>" + item.id_tipo_item + "</td>       \n\
-                                                                    <td>" + item.id_cuenta + "</td>       \n\
-                                                                    <td>" + item.importe + "</td>       \n\
+                                    <th scope=\"row\">" + (indice + 1) + "</th>     \n\
+                                    <td id='id" + indice + "'>" + item.id_item + "</td>         \n\
+                                    <td id='ab" + indice + "'>" + item.abreviatura + "</td>         \n\
+                                    <td>" + item.descripcion + "</td>         \n\
+                                    <td>" + item.id_tipo_item + "</td>       \n\
+                                    <td>" + item.id_cuenta + "</td>       \n\
+                                    <td>" + item.importe + "</td>       \n\
                                                                  \n\<td><button type='button' class='btn miBotonCostes btn-info'  data-idItem='" + item.id_item + "' data-idTipo='" + item.abreviatura +
                                                                          "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;&nbsp;Si</button></td>\n\    \n\
                                                                  \n\<td><a href='/Facturacion/itemsController/start.htm' class='btn btn-success' role='button'>\n\

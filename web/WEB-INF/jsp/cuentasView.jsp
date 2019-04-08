@@ -835,6 +835,8 @@
                     //alert(data);
                     getEmpresas();
                     
+                    var idEmpresaNew = $("#activarEmpresaCombo").val();
+                    getCarta(idEmpresaNew);                    
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -1048,7 +1050,7 @@
 
                                 </thead>
                                 <!--class="hidden"-->
-                                <input  id="idEmpresaAnadirCuentaHidden"/>
+                                <input class="hidden" id="idEmpresaAnadirCuentaHidden"/>
 
                                 <tbody id="tbody-tabla-carta">
 

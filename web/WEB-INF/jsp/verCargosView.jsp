@@ -232,6 +232,7 @@
                     });
 
                     $(document).ready(function () {
+                        
                         $(".miBoton").click(function () {
                             //Con $(this).val() cogemos el value del boton, lo concatenamos a #descrip para tener el id del campo oculto con
                             //la descripcion correspondiente a esa fila. Cogemos el text de ese campo y lo añadimos al p del modal para visualizarlo
