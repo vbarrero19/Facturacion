@@ -11,7 +11,6 @@
     <style>
         .container{
             width: 1600px;
-
         }
 
         #tableContainer11,#tableContainer33{
@@ -24,8 +23,7 @@
         .azul{
             background-color: lightblue;
             margin-bottom: 25px;
-        }
-
+        } 
 
     </style>
     <script>
@@ -834,9 +832,9 @@
                 success: function (data) {
                     //alert(data);
                     getEmpresas();
-                    
+
                     var idEmpresaNew = $("#activarEmpresaCombo").val();
-                    getCarta(idEmpresaNew);                    
+                    getCarta(idEmpresaNew);
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -986,14 +984,14 @@
 
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Cuentas</h4></th>        
+                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Denominación cuentas <label>General</label></h4></th>        
                                     </tr>    
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">ID CUENTA</th>
                                         <th scope="col">DENOMINACIÓN</th>
                                         <th scope="col">ACTIVA</th>
-                                        <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">
+                                        <th><button type="button" class='btn miBotonAnadirCuenta btn-sample btn-sm' data-dismiss="modal">
                                                 <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
                                         <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">
                                                 <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
@@ -1011,7 +1009,7 @@
 
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Empresas</h4></th>        
+                                        <th scope="col" colspan="4" style="text-align:center;"><h4>Detalle empresas</h4></th>        
                                     </tr>    
                                     <tr>
                                         <th scope="col">#</th>

@@ -9,9 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Menu principal</title><script>
-//    $(document).ready(function () {
-//        $('logoutmodal').hide();
-//    });
+
             function logout() {
                 document.location.href = "<c:url value="/cerrarLogin.htm"/>";
             }
@@ -72,10 +70,10 @@
                                 <div class="dropdown">
                                     <button class="btn btn-info" type="button" data-toggle="dropdown">Cargos
                                         <span class="caret"></span></button>
-                                    <ul class="dropdown-menu btn btn-info" role="button">      
+                                    <ul class="dropdown-menu btn btn-info" role="button">     
                                         
-                                        <li class="mCargo"><a href="/Facturacion/cargosController/start.htm">Alta Cargo con Item</a></li>
-                                        <li class="mCargo"><a href="/Facturacion/MenuController/start.htm">Alta Cargo sin Item</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/cargosController/start.htm">Alta Con Item</a></li>
+                                        <li class="mCargo"><a href="/Facturacion/cargosSinController/start.htm">Alta Sin Item</a></li>
                                         <li role="presentation" class="divider"></li>
                                         <li class="mCargo"><a href="/Facturacion/verCargosController/start.htm">Editar Cargo</a></li>
 

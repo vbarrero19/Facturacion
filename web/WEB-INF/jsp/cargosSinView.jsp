@@ -14,7 +14,7 @@
             .container {
                 width: 1200px;
             }
-            
+
             .azul{
                 color:blue;
             }
@@ -23,10 +23,14 @@
     </head>
     <script>
         $(document).ready(function () {
-            //Al cargar la pagina llamamos a las funciones getCliente() y getEmpresa() para llenar los combos
-            getEntidadCliente(); //Llenamos el combo de clientes
-            //getEntidadEmpresa();//Llenamos el combo de empresas
-            getItem(); //Llenamos el combo de items        
+
+            getEntidadClienteCargo();
+
+            cargarTipoItem();
+            cargarCuentas();
+            getTipoImpuesto();
+
+            var cont = 0;
 
             var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
 
@@ -43,21 +47,52 @@
                 $('#periodico').show();
             });
 
+
+            $('#conCostes').hide();
+
+            $("#radioCostes1").on("click", function () {
+                $('#conCostes').hide();
+                $('#sinCostes').show();
+                $('#importe').attr("disabled", false);
+            });
+
+            $("#radioCostes2").on("click", function () {
+                $('#conCostes').show();
+                $('#importe').val(0);
+                $('#importe').attr("disabled", true);
+                getEntidadEmpresa();
+            });
+
+            //Codigo para añadir un coste de forma dinamica
+            $('#conCostes').on('click', '#anadirCoste', function () {
+                cont++;
+                $('#tableContainer tbody').append(" <tr class='eliminar'>\n\
+                                                            <td> <div class='form-group-combo'>\n\
+                                                            <select class='form-control input-sm' id='comboClientes" + cont + "' name='comboClientes'></select></div> </td>     \n\
+                                                            <td><input type='text' id='costeImporte" + cont + "' name='costeImporte' value='0'></td>        \n\
+                                                            <td><button type='button' class='btn miBoton btn-danger' id='myBtn';>Eliminar</button></td>\n\
+                                                    </tr>");
+                getEntidadClienteCoste("comboClientes" + cont);
+            });
+
+            //Codigo para eliminar un coste de forma dinamica
+            $('#conCostes').on('click', '.miBoton', function () {
+                var parent = $(this).parent().parent().remove();
+                calcularTotalCostes();
+
+            });
+
+            $('#conCostes').on('keyup', 'input[name=costeImporte]', function () {
+                calcularTotalCostes();
+            });
+
             //cargamos de forma dinamica la tabla de meses
-            for (var i = 0; i < 12; i = i + 6) {
+            for (var i = 0; i < 12; i = i + 2) {
                 $('#tbody-tabla-meses').append(" <tr>\n\
                                             <td id='id" + (i + 1) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 1) + "' > </td>              \n\
                                             <td>" + meses[i] + "</td>          \n\ \n\
                                             <td id='id" + (i + 2) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 2) + "' > </td>              \n\
                                             <td>" + meses[i + 1] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 3) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 3) + "' > </td>              \n\
-                                            <td>" + meses[i + 2] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 4) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 4) + "' > </td>              \n\
-                                            <td>" + meses[i + 3] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 5) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 5) + "' > </td>              \n\
-                                            <td>" + meses[i + 4] + "</td>          \n\ \n\
-                                            <td id='id" + (i + 6) + "'> <input type='checkbox' name='chkHos[]' value ='" + (i + 6) + "' > </td>              \n\
-                                            <td>" + meses[i + 5] + "</td>          \n\ \n\
                                         </tr>");
             }
 
@@ -166,7 +201,6 @@
                     //dentro de fecha vencimiento tenemos que coger el valor que hay dentro de input.
                     myObj["fecha_vencimiento"] = $("#fecha_vencimiento input").val().trim();
 
-
                 } else {
                     //Recuperamos los value de los checkBox marcados. Los pasamos al controlador 
                     //en las varables de las fechas.
@@ -247,7 +281,7 @@
                     var json = JSON.stringify(myObj);
                     $.ajax({
                         type: 'POST',
-                        url: '/Facturacion/cargosController/getDatosEntidadCliente.htm',
+                        url: '/Facturacion/cargosSinController/getDatosEntidadCliente.htm',
                         data: json,
                         datatype: "json",
                         contentType: "application/json",
@@ -284,157 +318,6 @@
 
             });
 
-            //Muestra datos de la entidadCliente al seleccionar algo en el combo
-            $("#comboEmpresas").change(function () {
-
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-//                if ($("#comboEmpresas").val() != "0") {
-//
-//                    if (window.XMLHttpRequest) //mozilla
-//                    {
-//                        ajax = new XMLHttpRequest(); //No Internet explorer
-//                    } else
-//                    {
-//                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                    }
-//
-//                    var myObj = {};
-//
-//                    myObj["id_entidad"] = $("#comboEmpresas").val().trim();
-//
-//                    var json = JSON.stringify(myObj);
-//                    $.ajax({
-//                        type: 'POST',
-//                        url: '/Facturacion/cargosController/getDatosEntidadEmpresa.htm',
-//                        data: json,
-//                        datatype: "json",
-//                        contentType: "application/json",
-//                        success: function (data) {
-//
-//                            //En el data viene la informacion del combo en forma de String.
-//                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-//                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-//                            var aux = JSON.parse(data);
-//
-//                            aux.forEach(function (valor, indice) {
-//                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-//                                var aux2 = JSON.parse(valor);
-//                                //Mostramos los datos en la cajas de texto
-//                                $("#id_entidad2").text(aux2.id_entidad);
-//                                $("#nombre_entidad2").text(aux2.nombre_entidad);
-//                                $("#nombre_contacto2").text(aux2.nombre_contacto);
-//
-//                            });
-//                        },
-//                        error: function (xhr, ajaxOptions, thrownError) {
-//                            console.log(xhr.status);
-//                            console.log(xhr.responseText);
-//                            console.log(thrownError);
-//                        }
-//                    });
-//
-//                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-//                } else {
-//                    $("#id_entidad2").text("");
-//                    $("#nombre_entidad2").text("");
-//                    $("#nombre_contacto2").text("");
-//                }
-
-            });
-
-            //Muestra los datos del item al seleccionar algo en el combo
-            $("#comboItems").change(function () {
-
-                //Si la opcion seleccionada es diferente a "Seleccionar" se muestran datos
-                if ($("#comboItems").val() != "0") {
-
-                    if (window.XMLHttpRequest) //mozilla
-                    {
-                        ajax = new XMLHttpRequest(); //No Internet explorer
-                    } else
-                    {
-                        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-
-                    var myObj = {};
-
-                    myObj["id_item"] = $("#comboItems").val().trim();
-
-                    var json = JSON.stringify(myObj);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Facturacion/cargosController/getDatosItem.htm',
-                        data: json,
-                        datatype: "json",
-                        contentType: "application/json",
-                        success: function (data) {
-
-                            //En el data viene la informacion del combo en forma de String.
-                            //Primero lo pasamos a objetos tipo String y luego estos a objetos tipo cliente
-                            //Recogemos el data como una cadena String y los pasamos a objetos Tipo String con JSON
-                            var aux = JSON.parse(data);
-
-                            aux.forEach(function (valor, indice) {
-                                //Recogemos cada objeto en String y los pasamos a objetos Tipo cliente con JSON
-                                var aux2 = JSON.parse(valor);
-                                //Mostramos los datos en la cajas de texto
-                                $("#id_item").val(aux2.id_item);
-                                $("#abreviatura").val(aux2.abreviatura);
-                                $("#descripcion").val(aux2.descripcion);
-                                $("#importe").val(aux2.importe);
-                                $("#costes").val(aux2.costes);
-                                if (aux2.costes == "Si") {
-                                    $('#botonCostes').prop("disabled", false);
-                                } else {
-                                    $('#botonCostes').prop("disabled", true);
-                                }
-                                $("#estado").val(aux2.estado);
-                                //Cargamos en el total el importe ya que de inicio tenemos: cantidad = 1, impuesto = 0
-                                $("#total").val(aux2.importe);
-                                //$("#comboTipoImpuesto").val("0-0"); //xxx
-                                //Si se elige un item activamos el combo del tipo-valor de impuesto                                
-                                document.getElementById("comboTipoItem").disabled = false;
-                                document.getElementById("comboCuenta").disabled = false;
-                                document.getElementById("comboTipoImpuesto").disabled = false;
-                                document.getElementById("comboTipoImpuesto").value = "1-0"; //xxx
-                                $("#valorImpuesto").val(0);
-                                $("#cantidad").val(1);
-
-                                //Funcion para cargar los tipos de item en un combo
-                                cargarTipoItem(aux2.id_tipo_item);
-                                //Funcion para cargar las cuentas en un combo                                
-                                cargarCuentas(aux2.id_cuenta);
-
-                                getTipoImpuesto()
-
-                            });
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            console.log(xhr.status);
-                            console.log(xhr.responseText);
-                            console.log(thrownError);
-                        }
-                    });
-
-                    //Si se seleciona lo opcion "Seleccionar" se limpian las cajas de texto
-                } else {
-                    $("#id_item").val("");
-                    $("#abreviatura").val("");
-                    $("#descripcion").val("");
-                    $("#comboTipoItem").val("");
-                    $("#comboCuenta").val(""); //xxx
-                    $("#importe").val("");
-                    $("#costes").val("");
-                    $("#estado").val("");
-                    document.getElementById("comboTipoItem").disabled = true;
-                    document.getElementById("comboCuenta").disabled = true;
-                    document.getElementById("comboTipoImpuesto").disabled = true;
-                    document.getElementById("comboTipoImpuesto").value = "1-0"; //xxx
-                    $("#valorImpuesto").val(0);
-                    $("#cantidad").val(1);
-                }
-
-            });
 
             //Se ejecuta al cambiar el contenido del importe
             $("#importe").keyup(function () {
@@ -466,58 +349,57 @@
             //Muestra una ventana emergente con los costes del item
             $("#botonCostes").click(function () {
 
-                $("#abreviaturaItem").text("Costes del item: " + $("#abreviatura").val());
-
-                idItem = $("#id_item").val();
-
-                if (window.XMLHttpRequest) //mozilla
-                {
-                    ajax = new XMLHttpRequest(); //No Internet explorer
-                } else
-                {
-                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-
-                $.ajax({
-                    //Usamos GET ya que recibimos.
-                    type: 'GET',
-                    /*en la url le pasamos como parametro el identificador del item*/
-                    url: '/Facturacion/cargosController/verCostes.htm?idItem=' + idItem,
-                    success: function (data) {
-                       
-                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
-                        var aux = JSON.parse(data);
-                        $('#tbody-tabla-costes').empty();
-
-                        var table = $('#table table-striped').DataTable();
-                        aux.forEach(function (valor, indice) {
-                            //Cada objeto esta en String 
-                            var aux2 = JSON.parse(valor);
-
-                            $('#tbody-tabla-costes').append(" <tr>\n\   \n\
-                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
-                                                                    <td>" + aux2.col3 + "</td>\n\
-                                                               </tr>");
-                        });
-
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {                        
-                        console.log(xhr.status);
-                        console.log(xhr.responseText);
-                        console.log(thrownError);
-                    }
-                });
-
-                /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
-                $("#myModalCostes").modal();
+//                $("#abreviaturaItem").text("Costes del item: " + $("#abreviatura").val());
+//
+//                idItem = $("#id_item").val();
+//
+//                if (window.XMLHttpRequest) //mozilla
+//                {
+//                    ajax = new XMLHttpRequest(); //No Internet explorer
+//                } else
+//                {
+//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
+//                }
+//
+//                $.ajax({
+//                    //Usamos GET ya que recibimos.
+//                    type: 'GET',
+//                    /*en la url le pasamos como parametro el identificador del item*/
+//                    url: '/Facturacion/cargosController/verCostes.htm?idItem=' + idItem,
+//                    success: function (data) {
+//
+//                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
+//                        var aux = JSON.parse(data);
+//                        $('#tbody-tabla-costes').empty();
+//
+//                        var table = $('#table table-striped').DataTable();
+//                        aux.forEach(function (valor, indice) {
+//                            //Cada objeto esta en String 
+//                            var aux2 = JSON.parse(valor);
+//
+//                            $('#tbody-tabla-costes').append(" <tr>\n\   \n\
+//                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
+//                                                                    <td>" + aux2.col3 + "</td>\n\
+//                                                               </tr>");
+//                        });
+//
+//                    },
+//                    error: function (xhr, ajaxOptions, thrownError) {
+//                        console.log(xhr.status);
+//                        console.log(xhr.responseText);
+//                        console.log(thrownError);
+//                    }
+//                });
+//
+//                /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
+//                $("#myModalCostes").modal();
 
             });
 
         });
 
-        //Funcion para llenar el combo de cliente. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getCliente.htm.
-        function getEntidadCliente() {
+        //Funcion para cargar los clientes en el combo del cargo
+        function getEntidadClienteCargo() {
             if (window.XMLHttpRequest) //mozilla
             {
                 ajax = new XMLHttpRequest(); //No Internet explorer
@@ -529,13 +411,14 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
+                url: '/Facturacion/cargosSinController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
                 success: function (data) {
 
                     //Recogemos los datos del combo y los pasamos a objetos Entidad  
                     var clienteEntidad = JSON.parse(data);
                     //Identificamos el combo
                     select = document.getElementById('comboClientes');
+
                     //Añadimos la opcion Seleccionar al combo
                     var opt = document.createElement('option');
                     opt.value = 0;
@@ -566,108 +449,6 @@
         }
         ;
 
-        //Funcion para llenar el combo de empresa. Los datos nos vienen en un ArrayList de objetos cliente transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
-        function getEntidadEmpresa() {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/cargosController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
-                success: function (data) {
-
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var empresaEntidad = JSON.parse(data);
-                    //Identificamos el combo
-                    select = document.getElementById('comboEmpresas');
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-
-                    //Lo vamos cargando
-                    empresaEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var empresaEntidad2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = empresaEntidad2.id_entidad;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = empresaEntidad2.distinct_code;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
-
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
-
-        //Funcion para llenar el combo de item. Los datos nos vienen en un ArrayList de objetos item transformados en String
-        //y estos a su vez en otra cadena String con json. Los datos se obtienen en cargosController/getEmpresa.htm.
-        function getItem() {
-            if (window.XMLHttpRequest) //mozilla
-            {
-                ajax = new XMLHttpRequest(); //No Internet explorer
-            } else
-            {
-                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-
-            $.ajax({
-                //Usamos GET ya que recibimos.
-                type: 'GET',
-                url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
-                success: function (data) {
-
-                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
-                    var empresaEntidad = JSON.parse(data);
-                    //Identificamos el combo
-                    select = document.getElementById('comboItems');
-                    //Añadimos la opcion Seleccionar al combo
-                    var opt = document.createElement('option');
-                    opt.value = 0;
-                    opt.innerHTML = "Seleccionar";
-                    select.appendChild(opt);
-
-                    //Lo vamos cargando
-                    empresaEntidad.forEach(function (valor, indice) {
-                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-                        var empresaEntidad2 = JSON.parse(valor);
-                        //Creamos las opciones del combo
-                        var opt = document.createElement('option');
-                        //Guardamos el id en el value de cada opcion
-                        opt.value = empresaEntidad2.id_item;
-                        //Guardamos el impuesto en el nombre de cada opcion                        
-                        opt.innerHTML = empresaEntidad2.abreviatura;
-                        //Añadimos la opcion
-                        select.appendChild(opt);
-                    });
-
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                }
-            });
-        }
-        ;
-
         function getTipoImpuesto() {
 
             if (window.XMLHttpRequest) //mozilla
@@ -681,7 +462,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/getTipoImpuesto.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/cargosSinController/getTipoImpuesto.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
                 success: function (data) {
                     //Vaciamos el combo
                     document.getElementById('comboTipoImpuesto').options.length = 0;
@@ -731,108 +512,8 @@
         }
         ;
 
-        //Codigo para cargar los items en una tabla, para mas adelante.        
-        function getItemTabla() {
-//            if (window.XMLHttpRequest) //mozilla
-//            {
-//                ajax = new XMLHttpRequest(); //No Internet explorer
-//            } else
-//            {
-//                ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//            }
-//
-//            $.ajax({
-//                //Usamos GET ya que recibimos. 
-//                type: 'GET',
-//                url: '/Facturacion/cargosController/getItem.htm', //Vamos a cargosController/getItem.htm a recoger los datos
-//                success: function (data) {
-//
-//                    //Creamos una tabla con 5 filas para insertar datos
-//                    for (i = 0; i < 5; i++) {
-//
-//
-//                        /* Codigo para cargar una tabla con varios combos. Solo vamos a cargar un combo con los items*/
-//
-//                        //cargamos de forma dinamica la tabla
-//                        $('#tableContainer tbody').append(" <tr>\n\
-//                                                                    <td scope=\"row\">" + (i + 1) + "</td>              \n\
-//                                                                    <td>" + "<select class='form-control comboItems' id='comboItems" + (i + 1) + "' name='comboItems'></select> " + "</td>   \n\
-//                                                                    <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                        \n\
-//                                                                    <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                       \n\
-//\n\                                                                 <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                       \n\
-//\n\                                                                 <td>" + "<input type='text' id='id_adeudo" + (i + 1) + "' name='id_adeudo'>" + "</td>                       \n\
-//                                                                    <td>" + "<button value='actualizar' tittle='actualizar' id='btnedit' >Prueba</button>" + "</td>     \n\ \n\
-//                                                                </tr>");
-//                        //Recogemos los datos del combo y los pasamos a objetos Cliente  
-//                        var aux = JSON.parse(data);
-//
-//                        //Identificamos el combo
-//                        select = document.getElementById("comboItems" + (i + 1));
-//                        //Añadimos la opcion Seleccionar al combo
-//                        var opt = document.createElement('option');
-//                        opt.value = 0;
-//                        opt.innerHTML = "Seleccionar";
-//                        select.append(opt);
-//                        //Lo vamos cargando
-//                        aux.forEach(function (valor, indice) {
-//                            //Cada objeto esta en String y lo pasmoa a TipoImpuesto
-//                            var aux2 = JSON.parse(valor);
-//                            //Creamos las opciones del combo
-//                            var opt = document.createElement('option');
-//                            //Guardamos el id en el value de cada opcion
-//                            opt.value = aux2.id_item;
-//                            //Guardamos el impuesto en el nombre de cada opcion                        
-//                            opt.innerHTML = aux2.abreviatura;
-//                            //Añadimos la opcion
-//                            select.append(opt);
-//
-//                        });
-//
-//
-//
-//
-//                    }
-//                    
-//                    
-//                    //Codigo para control del cambio en cualquiera de los combos. Codigo de David
-//                    
-//                    $(".comboItems").change(function () {
-//                        if (window.XMLHttpRequest) //mozilla
-//                        {
-//                            ajax = new XMLHttpRequest(); //No Internet explorer
-//                        } else
-//                        {
-//                            ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                        }
-//                        
-//                        //Recogemos en una variable 
-//                        var idOpcion = this.value;
-//                        alert(idOpcion);
-//                        
-//                        var numFila = this.parentElement.previousElementSibling.textContent;
-//                        //ajax
-//                        //success               
-//                        //
-//                        //Codigo para identificar las cajas de texto
-//                        $("#id_adeudo" + idfila).val("example");
-//
-//
-//                    });
-//
-//                },
-//                error: function (xhr, ajaxOptions, thrownError) {
-//                    console.log(xhr.status);
-//                    console.log(xhr.responseText);
-//                    console.log(thrownError);
-//                }
-//
-//
-//            });
-        }
-        ;
-
         //Funcion para cargar los tipos de item en un combo
-        function cargarTipoItem(idTipoItem) {
+        function cargarTipoItem() {
 
             if (window.XMLHttpRequest) //mozilla
             {
@@ -841,18 +522,27 @@
             {
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
-            //alert(idTipoItem);
+
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/cargosController/cargarTipoItem.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/cargosSinController/cargarTipoItem.htm',
                 success: function (data) {
                     //Vaciamos el combo
                     document.getElementById('comboTipoItem').options.length = 0;
                     //Recogemos los datos del combo y los pasamos a objetos Cliente  
                     var tipoItem = JSON.parse(data);
+
                     //Identificamos el combo
                     select = document.getElementById('comboTipoItem');
+
+
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
 
                     //Lo vamos cargando
                     tipoItem.forEach(function (valor, indice) {
@@ -861,20 +551,12 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
 
-                        //Comtrolamos el tipo de item que es y lo dejamos seleccionado en el combo
-                        if (idTipoItem == tipoItem2.col1) {
-                            //Guardamos el id en el value de cada opcion
-                            opt.value = tipoItem2.col1;
-                            //Guardamos el impuesto en el nombre de cada opcion                        
-                            opt.innerHTML = tipoItem2.col2;
-                            //Dejamos marcada una opcion
-                            opt.selected = true;
-                        } else {
-                            //Guardamos el id en el value de cada opcion
-                            opt.value = tipoItem2.col1;
-                            //Guardamos el impuesto en el nombre de cada opcion                        
-                            opt.innerHTML = tipoItem2.col2;
-                        }
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = tipoItem2.col1;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = tipoItem2.col2;
+                        //Dejamos marcada una opcion
+
 
                         //Añadimos la opcion
                         select.appendChild(opt);
@@ -891,7 +573,7 @@
         ;
 
         //Funcion para cargar las cuentas en un combo
-        function cargarCuentas(idCuenta) {
+        function cargarCuentas() {
 
             if (window.XMLHttpRequest) //mozilla
             {
@@ -904,7 +586,7 @@
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
-                url: '/Facturacion/modificarCargosController/cargarCuentas.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                url: '/Facturacion/cargosSinController/cargarCuentas.htm',
                 success: function (data) {
 
                     //Vaciamos el combo
@@ -914,6 +596,12 @@
                     //Identificamos el combo
                     select = document.getElementById('comboCuenta');
 
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+
                     //Lo vamos cargando
                     tipoCuenta.forEach(function (valor, indice) {
                         //Cada objeto esta en String y lo pasmoa a TipoImpuesto
@@ -921,25 +609,112 @@
                         //Creamos las opciones del combo
                         var opt = document.createElement('option');
 
-                        //Comtrolamos el tipo de item que es y lo dejamos seleccionado en el combo
-                        if (idCuenta == tipoCuenta2.col1) {
-                            //Guardamos el id en el value de cada opcion
-                            opt.value = tipoCuenta2.col1;
-                            //Guardamos el impuesto en el nombre de cada opcion                        
-                            opt.innerHTML = tipoCuenta2.col2;
-                            //Dejamos marcada una opcion
-                            opt.selected = true;
-                        } else {
-                            //Guardamos el id en el value de cada opcion
-                            opt.value = tipoCuenta2.col1;
-                            //Guardamos el impuesto en el nombre de cada opcion                        
-                            opt.innerHTML = tipoCuenta2.col2;
-                        }
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = tipoCuenta2.col1;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = tipoCuenta2.col2;
 
                         //Añadimos la opcion
                         select.appendChild(opt);
                     });
 
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+        function getEntidadEmpresa() {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosSinController/getEntidadEmpresa.htm', //Vamos a cargosController/getEmpresa.htm a recoger los datos
+                success: function (data) {
+                    //Vaciamos el combo clientes
+                    $("#comboEmpresas option").remove();
+                    //Recogemos los datos del combo y los pasamos a objetos Cliente  
+                    var empresaEntidad = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById('comboEmpresas');
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+                    //Lo vamos cargando
+                    empresaEntidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a TipoImpuesto
+                        var empresaEntidad2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = empresaEntidad2.id_entidad;
+                        //Guardamos el impuesto en el nombre de cada opcion                        
+                        opt.innerHTML = empresaEntidad2.distinct_code;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                }
+            });
+        }
+        ;
+
+        //Funcion para cargar los clientes en el combo del coste
+        function getEntidadClienteCoste(idCombo) {
+            if (window.XMLHttpRequest) //mozilla
+            {
+                ajax = new XMLHttpRequest(); //No Internet explorer
+            } else
+            {
+                ajax = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            $.ajax({
+                //Usamos GET ya que recibimos.
+                type: 'GET',
+                url: '/Facturacion/cargosSinController/getEntidadCliente.htm', //Vamos a cargosController/getCliente.htm a recoger los datos
+                success: function (data) {
+                    //Vaciamos el combo clientes
+                    //$("#comboClientes1 option").remove();
+                    //Recogemos los datos del combo y los pasamos a objetos Entidad  
+                    var clienteEntidad = JSON.parse(data);
+                    //Identificamos el combo
+                    select = document.getElementById(idCombo);
+                    //Añadimos la opcion Seleccionar al combo
+                    var opt = document.createElement('option');
+                    opt.value = 0;
+                    opt.innerHTML = "Seleccionar";
+                    select.appendChild(opt);
+                    //Lo vamos cargando
+                    clienteEntidad.forEach(function (valor, indice) {
+                        //Cada objeto esta en String y lo pasmoa a Cliente
+                        var clienteEntidad2 = JSON.parse(valor);
+                        //Creamos las opciones del combo
+                        var opt = document.createElement('option');
+                        //Guardamos el id en el value de cada opcion
+                        opt.value = clienteEntidad2.id_entidad;
+                        //Guardamos el impuesto en el nombre de cada opcion
+                        opt.innerHTML = clienteEntidad2.distinct_code;
+                        //Añadimos la opcion
+                        select.appendChild(opt);
+                    });
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -991,6 +766,20 @@
         }
         ;
 
+        function calcularTotalCostes() {
+            var cant = 0;
+            $("#tableContainer tbody>tr option:checked").each(function (index) {
+
+                //arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
+                cant = cant + parseFloat($("#tableContainer tbody>tr input").eq(index).val().trim());
+
+            });
+
+            $("#importe").val(cant);
+
+        }
+        ;
+
 
     </script>
     <body>
@@ -1000,7 +789,7 @@
                     <div class="form-area">  
                         <form role="form" id="formid">
                             <br style="clear:both">
-                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS</h3>                           
+                            <h3 style="margin-bottom: 25px; text-align: center;">Formulario para CARGOS sin ITEM</h3>                           
 
                             <div class="datos row" class="col-xs-12">
                                 <!--Combo para clientes-->
@@ -1035,15 +824,16 @@
                             <!--DATOS ITEMS--> 
                             <div class="datos row" class="col-xs-12">                                
                                 <div class="form-group col-xs-2">
-                                    <label for="comboItems">Items</label>
-                                    <div class="form-group-combo">                                        
-                                        <select class="form-control input-sm" id="comboItems" name="comboItems">
-                                        </select>                                                            
+                                    <label>Items</label>
+                                    <div class="form-group">                                        
+                                        <label>Cargo sin Items</label>                                                           
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-1">
                                     <label for="id_item>">Id.Item</label>
-                                    <input type="text" class="form-control input-sm" id="id_item" name="id_item" disabled>
+                                    <div class="form-group">                                        
+                                        <label>00</label>                                                           
+                                    </div>                                    
                                 </div>
                                 <div class="form-group col-xs-2">
                                     <label for="abreviatura>">Abreviatura</label>
@@ -1056,7 +846,7 @@
                                 <div class="form-group col-xs-2">
                                     <label for="comboTipoItem">Tipo de Item</label>
                                     <div class="form-group-combo">                                        
-                                        <select class="form-control input-sm" id="comboTipoItem" name="comboTipoItem" disabled>
+                                        <select class="form-control input-sm" id="comboTipoItem" name="comboTipoItem">
                                         </select>                                         
                                     </div>
                                 </div>
@@ -1067,31 +857,26 @@
                                 <div class="form-group col-xs-2">
                                     <label for="comboCuenta>">Cuenta</label>
                                     <div class="form-group-combo">                                        
-                                        <select class="form-control input-sm" id="comboCuenta" name="comboCuenta" disabled>
+                                        <select class="form-control input-sm" id="comboCuenta" name="comboCuenta">
                                         </select>                                                            
                                     </div>
                                 </div>   
                                 <div class="form-group col-xs-2">
                                     <label for="importe>">Importe</label>&nbsp;&nbsp;&nbsp;                                    
-                                    <input type="text" class="form-control input-sm" id="importe" name="importe" disabled>
+                                    <input type="text" class="form-control input-sm" id="importe" name="importe">
                                 </div>
-                                <div class="form-group col-xs-1">
+                                <div class="form-group col-xs-2">
                                     <label for="importe>">Cantidad</label>
                                     <input type="text" class="form-control input-sm" id="cantidad" name="cantidad" value="1">
                                 </div>
                                 <div class="form-group col-xs-2">
-                                    <label for="costes>">Costes</label>&nbsp;&nbsp;
-                                    <button type='button' id="botonCostes" class='btn btn-warning btn-xs'  data-idCargo='" + cargo.id_cargo + "' data-idItem='" + cargo.id_cliente + "' data-idIndice='" + indice + "' disabled> Ver</button>
-                                    <input type="text" class="form-control input-sm" id="costes" name="costes" disabled>
-                                </div>
-                                <div class="form-group col-xs-2">
                                     <label for="comboTipoImpuesto">Tipo Impuesto</label>
                                     <div class="form-group-combo">                                        
-                                        <select class="form-control input-sm" id="comboTipoImpuesto" name="comboTipoImpuesto" disabled>
+                                        <select class="form-control input-sm" id="comboTipoImpuesto" name="comboTipoImpuesto">
                                         </select>                                                            
                                     </div>     
                                 </div>                              
-                                <div class="form-group col-xs-1">
+                                <div class="form-group col-xs-2">
                                     <label for="valorImpuesto">Impuestos</label>
                                     <input type="text" class="form-control input-sm" id="valorImpuesto" name="valorImpuesto" value="0" disabled>                                    
                                 </div>
@@ -1104,10 +889,11 @@
                             </div>
 
                             <div class="datos row" class="col-xs-12">
+
                                 <div class="form-group col-xs-2">
                                     <label>Tipo Periodicidad:</label>                                    
                                 </div>
-                                <div class="form-group col-xs-10">
+                                <div class="form-group col-xs-4">
                                     <!--Radio button para tipo de periodicidad-->                                     
                                     <div class="form_radio_button">
 
@@ -1122,127 +908,145 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group col-xs-1 col-xs-offset-2">
+                                    <label>Costes:</label>                                    
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <!--Radio button para tipo de periodicidad-->                                     
+                                    <div class="form_radio_button">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radioCostes" id="radioCostes1" value="1" checked>
+                                            <label class="form-check-label" for="2">Sin costes</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="radioCostes" id="radioCostes2" value="2">
+                                            <label class="form-check-label" for="1">Con costes</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <br style="clear:both">                                
 
 
                             <div class="datos row" class="col-xs-12">
-                                <div class="col-xs-4" id="puntual">
 
-                                    <div class="row col-xs-12">
-                                        <div class='col-xs-12 col-md-4'>
-                                            <label class="fechaCargos"> EMISIÓN </label>
-                                            <div class="form-group">
-                                                <div class='input-group date' id='fecha_cargo'>
-                                                    <input id='inputFechaCargo' data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
+                                <div class="col-xs-6" id="period">
+                                    <div class="col-xs-4" id="puntual">
+
+                                        <div class="row col-xs-12">
+                                            <div class='col-xs-12 col-md-4'>
+                                                <label class="fechaCargos"> EMISIÓN </label>
+                                                <div class="form-group">
+                                                    <div class='input-group date' id='fecha_cargo'>
+                                                        <input id='inputFechaCargo' data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <script type="text/javascript">
+                                                $(function () {
+                                                    $('#fecha_cargo').datetimepicker();
+                                                });
+                                            </script>
                                         </div>
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('#fecha_cargo').datetimepicker();
-                                            });
-                                        </script>
-                                    </div>
 
-                                    <div class="row col-xs-12">
-                                        <div class='col-xs-12 col-md-4'>
-                                            <label class="fechaCargos"> VENCIMIENTO </label>
-                                            <div class="form-group">
-                                                <div class='input-group date' id='fecha_vencimiento'>
-                                                    <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
-                                                    <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                    </span>
+                                        <div class="row col-xs-12">
+                                            <div class='col-xs-12 col-md-4'>
+                                                <label class="fechaCargos"> VENCIMIENTO </label>
+                                                <div class="form-group">
+                                                    <div class='input-group date' id='fecha_vencimiento'>
+                                                        <input  data-format="yyyy-MM-dd hh:mm:ss" type='text' class="form-control"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <script type="text/javascript">
+                                                $(function () {
+                                                    $('#fecha_vencimiento').datetimepicker();
+                                                });
+                                            </script>
                                         </div>
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('#fecha_vencimiento').datetimepicker();
-                                            });
-                                        </script>
                                     </div>
+
+
+                                    <div class="col-xs-8"  id="periodico">
+
+                                        <div class="form-group">
+                                            <table class="table table-striped">                                    
+
+                                                <thead class="thead-dark">                                            
+                                                    <tr>
+                                                        <th scope="col">Mes</th>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Año</th>
+                                                        <th scope="col" id="anio"></th>
+                                                    </tr>                                            
+                                                </thead>
+
+                                                <tbody id="tbody-tabla-meses">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
-                                <div class="col-xs-8 col-xs-offset-4"  id="periodico">
-
+                                <div class="col-xs-6" id="conCostes" name="conCostes" >
 
                                     <div class="form-group">
-                                        <table class="table table-striped">                                    
+                                        <table id="tableContainer" class="table">                                    
 
-                                            <thead class="thead-dark">                                            
+                                            <thead>                                            
                                                 <tr>
-                                                    <th scope="col">Mes</th>
-                                                    <th scope="col"></th>
-                                                    <th scope="col">Año</th>
-                                                    <th scope="col" id="anio"></th>
+                                                    <th scope="col">Entidad</th>                                                    
+                                                    <th scope="col">Importe</th>                                                    
                                                 </tr>                                            
                                             </thead>
 
-                                            <tbody id="tbody-tabla-meses">
+                                            <tbody id="tbody-tabla-costes">
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group-combo">                                                                               
+                                                            <!--Combo para las empresas-->
+                                                            <select class="form-control input-sm" id="comboEmpresas" name="comboEmpresas">
+                                                            </select>                                                                    
+                                                        </div>          
+                                                    </td>
+                                                    <td>                                                      
+                                                        <input type="text" id="costeImporte" name="costeImporte" value="0">  
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
 
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </div>
+
                             </div>
 
+                            <br style="clear:both">
 
-                            <!--<button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>-->
+                            <div class="botonera">
 
-                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
+                                <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
+                                <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary">Guardar</button>
 
-                            <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-
-
+                            </div>
 
                         </form>
                     </div>
-                </div>                 
-
-                <!-- ventana emergente Costes-->
-                <div class="modal fade" id="myModalCostes" role="dialog">
-                    <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                    <input class="hidden"  id="idCostItemHide"/>
-                    <input class="hidden"  id="idCostTipoHide"/>
-                    <input class="hidden"  id="idCostFilaHide"/>
-
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Ver desglose costes item</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p id="abreviaturaItem"></p>       
-                                <table class="table table-striped">                                    
-
-                                    <thead>                                            
-                                        <tr>
-                                            <th scope="col">Entidad</th>
-                                            <th scope="col">Cantidad</th>                                    
-                                        </tr>                                            
-                                    </thead>
-
-                                    <tbody id="tbody-tabla-costes">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-                            </div>
-                        </div>
-                    </div>             
-                </div>
+                </div>       
 
             </div>
         </div>

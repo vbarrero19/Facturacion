@@ -31,8 +31,6 @@
 
             $('#conCostes').hide();
 
-            //$("input[name=costesRadios]").attr('disabled', true);
-
             $("#costesRadios1").on("click", function () {
                 $('#conCostes').hide();
                 $('#sinCostes').show();
@@ -42,7 +40,6 @@
                 $('#conCostes').show();
                 $('#importe').val(0);
                 getEntidadEmpresa();
-
             });
 
             //Codigo para añadir un coste de forma dinamica
@@ -415,10 +412,7 @@
                                 <div class="form-group row" >
                                     <div class="col-xs-4">
                                         <label>Añadir costes:</label>
-                                    </div>
-                                    <!--                                    <div class="col-xs-6">
-                                                                            <button type="button" class="btn btn-success btn-sm" id="anadirCoste" name="anadirCoste" data-dismiss="modal" >Añadir Coste</button>
-                                                                        </div>-->
+                                    </div>                                    
                                 </div>
 
                                 <div class="form-group">
