@@ -97,7 +97,6 @@
                 myObj["importe"] = $("#importe").val().trim();
                 myObj["id_cuenta"] = $("#id_cuenta").val();
                 if ($("input[name=costesRadios]:checked").val() == "Si") {
-
                     myObj["costes"] = arrayOption.toString();
                 } else {
                     myObj["costes"] = "No";

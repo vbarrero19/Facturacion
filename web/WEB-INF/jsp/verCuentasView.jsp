@@ -25,9 +25,8 @@
     </head>
     <script>
         $(document).ready(function () {
-            alert("verCuentas");
             
-            cargarEmpresas();
+           //cargarEmpresas();
 //            getCargarItems();
 //            var userLang = navigator.language || navigator.userLanguage;
         });

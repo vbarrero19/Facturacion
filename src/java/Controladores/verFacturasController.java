@@ -208,7 +208,7 @@ public class verFacturasController {
 //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
     @RequestMapping("/verFacturasController/getDatosFactura.htm")
     @ResponseBody
-    public String cargarDatosFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+    public String getDatosFactura(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
         Resource resourceLoad = new Resource();
 
         Connection con = null;
@@ -268,8 +268,8 @@ public class verFacturasController {
         }
         return resp;
 
-    }
-
+    }    
+    
     //Cargamos los datos en los input cuando seleccionamos el cliente en el combo y mostramos los datos de todas las facturas.
     @RequestMapping("/verFacturasController/getDatosFacturaArchivadas.htm")
     @ResponseBody

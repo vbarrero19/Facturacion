@@ -125,7 +125,7 @@ public class CargosController {
 
                 resp = "Cargo sin periodicidad";
 
-                //Codigo para insertar costes
+                //Codigo para insertar costes.
                 if (cargos.getCostes().equalsIgnoreCase("Si")) {
                     //Insertamos el desglose de los costes
                     Statement sentencia = con.createStatement();

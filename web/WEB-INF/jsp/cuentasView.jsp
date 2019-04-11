@@ -25,6 +25,19 @@
             margin-bottom: 25px;
         } 
 
+        .btn.btn-default {
+            color: #ffffff;
+            background-color: #f0d735;
+            background-image: linear-gradient(to bottom, #f0d735, #f0d735);
+            border-color: #f0d735 #f0d735 #f0d735;
+        }
+        .btn.btn-default:hover {
+            color: #ffffff;
+            background-color: #f0d735;
+            background-image: linear-gradient(to bottom, #f0d735, #f0d735);
+            border-color: #f0d735 #f0d735 #f0d735;
+        }
+
     </style>
     <script>
         $(document).ready(function () {
@@ -128,7 +141,7 @@
                             <td>" + cuenta.cuenta + "</td>         \n\
                             <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.cuenta + "</td>         \n\
                             <td>" + cuenta.estado + "</td>         \n\
-                            <td><button type='button' class='btn miBotonModificarCuenta btn-warning btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
+                            <td><button type='button' class='btn miBotonModificarCuenta btn-default btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
                                 "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar&nbsp;</button></td>\n\
                             <td><button type='button' class='btn miBotonEliminarCuenta btn-danger btn-sm'  data-idCuenta='" + cuenta.id_cuenta +
                                 "' data-cuenta='" + cuenta.cuenta + "' data-idIndice='" + indice + "'><span class='glyphicon glyphicon-remove'></span>&nbsp;&nbsp; Archivar </button></td>\n\
@@ -491,7 +504,7 @@
                             <td>" + cuenta.col2 + "</td>         \n\
                             <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.col3 + "</td>         \n\
                             <td>" + cuenta.col5 + "</td>         \n\\n\
-                            <td><button type='button' class='btn miBotonModificarDetalle btn-warning btn-sm'  data-idCuenta='" + cuenta.col1 + "' data-cuenta='" + cuenta.col2 +
+                            <td><button type='button' class='btn miBotonModificarDetalle btn-default btn-sm'  data-idCuenta='" + cuenta.col1 + "' data-cuenta='" + cuenta.col2 +
                                 "' data-idEmpresa='" + cuenta.col3 + "' data-denominacion='" + cuenta.col5 + "'><span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar&nbsp;</button></td>\n\
                         </tr>");
                         //Mostramos en el thead el nombre de la empresa
@@ -565,7 +578,7 @@
                             <td>" + cuenta.col2 + "</td>         \n\
                             <td class='hidden' id='descrip" + (indice + 1) + "'>" + cuenta.col3 + "</td>         \n\
                             <td>" + cuenta.col5 + "</td>         \n\\n\
-                            <td><button type='button' class='btn miBotonModificarDetalle btn-warning btn-sm'  data-idCuenta='" + cuenta.col1 + "' data-cuenta='" + cuenta.col2 +
+                            <td><button type='button' class='btn miBotonModificarDetalle btn-default btn-sm'  data-idCuenta='" + cuenta.col1 + "' data-cuenta='" + cuenta.col2 +
                                 "' data-idEmpresa='" + cuenta.col3 + "' data-denominacion='" + cuenta.col5 + "'><span class='glyphicon glyphicon-edit'></span>&nbsp;&nbsp;Modificar&nbsp;</button></td>\n\
                         </tr>");
                         //Mostramos en el thead el nombre de la empresa
@@ -991,7 +1004,7 @@
                                         <th scope="col">ID CUENTA</th>
                                         <th scope="col">DENOMINACIÓN</th>
                                         <th scope="col">ACTIVA</th>
-                                        <th><button type="button" class='btn miBotonAnadirCuenta btn-sample btn-sm' data-dismiss="modal">
+                                        <th><button type="button" class='btn miBotonAnadirCuenta btn-success btn-sm' data-dismiss="modal">
                                                 <span class='glyphicon glyphicon-plus'></span>&nbsp;&nbsp;&nbsp;  Añadir &nbsp;&nbsp;&nbsp; </button></th>
                                         <th><button type="button" class='btn miBotonActivarCuenta btn-info btn-sm' data-dismiss="modal">
                                                 <span class='glyphicon glyphicon-check'></span>&nbsp;&nbsp;&nbsp;Activar &nbsp;</button></th>
@@ -1060,7 +1073,7 @@
                     <br style="clear:both">
 
                     <a href="/Facturacion/MenuController/start.htm" class="btn btn-info" role="button">Menu principal</a>                     
-                    <button type="button" id="submit" name="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" id="submit" name="submit" class="btn btn-primary">Disponible</button>
 
 
                     <!-- ventana emergente Modificar Cuenta-->
@@ -1298,10 +1311,10 @@
                     <!-- ventana emergente Modificar Detalle Cuenta Empresa-->
                     <div class="modal fade" id="myModalModificarDetalle" role="dialog">
                         <!-- Declaramos los campos ocultos para en la funcion de ajax podamos guardar los datos -->
-                        <input id="idModifDetalleIdCuentaHide"/>
-                        <input id="idModifDetalleCuentaHide"/>
-                        <input id="idModifDetalleIdEmpresaHide"/>
-                        <input id="idModifDetalleDenominacionHide"/>
+                        <input class="hidden" id="idModifDetalleIdCuentaHide"/>
+                        <input class="hidden"  id="idModifDetalleCuentaHide"/>
+                        <input class="hidden"  id="idModifDetalleIdEmpresaHide"/>
+                        <input class="hidden"  id="idModifDetalleDenominacionHide"/>
 
                         <div class="modal-dialog">
 

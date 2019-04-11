@@ -11,32 +11,32 @@
     <%@ include file="infouser.jsp" %>
     <head> 
         <title>VER FACTURAS</title> 
+        
     </head>
     <style>
 
-/*        #tableContainer{
-            overflow:scroll;
-            overflow-x: hidden;
-            height:400px;    
-            margin-bottom: 25px;            
-        }*/
-
-
+        /*        #tableContainer{
+                    overflow:scroll;
+                    overflow-x: hidden;
+                    height:400px;    
+                    margin-bottom: 25px;            
+                }*/
 
     </style>
     <script>
         $(document).ready(function () {
 
             $('#example').DataTable({
-                "scrollY": "300px",
+                "scrollY": "400px",
                 "scrollCollapse": true,
-                "paging": false
+                "paging": false,
+                "ordering": false,
+                'info': false,
+                'searching': false,
             });
-
 
             //Al cargar la pagina llamamos a las funcion para que cargue el combo
             getVerEntidad();
-
 
             var userLang = navigator.language || navigator.userLanguage;
 
@@ -144,10 +144,8 @@
             });
         }
         ;
-
-        /*funcion para ver la lista de facturas del cliente seleccionado en el combo. Recoge por parametro 
-         el id del cliente 
-         */
+        
+        /*funcion para ver la lista de facturas del cliente seleccionado en el combo. Recoge por parametro el id del cliente  */
         function verListaFacturas(idEntidad) {
             if (window.XMLHttpRequest) //mozilla
             {
@@ -157,7 +155,6 @@
                 ajax = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
-
             $.ajax({
                 //Usamos GET ya que recibimos.
                 type: 'GET',
@@ -165,7 +162,7 @@
                  cuando modificamos el combo cargamos el valor del idCliente asi: var idEntidad = $("#comboEntidad").val();*/
                 url: '/Facturacion/verFacturasController/getDatosFactura.htm?idCliente=' + idEntidad,
                 success: function (data) {
-
+                    
                     //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                     var aux = JSON.parse(data);
                     $('#tableContainer tbody').empty();
@@ -429,10 +426,7 @@
                     var entidadRefrescar = $("#idEntidadRecargar").val();
 
                     verListaFacturas(entidadRefrescar);
-//                    //Cambiamos el texto de la celda del estado en la fila afectada
-//                    $("#tbody-tabla-facturas").children().eq($("#idFilaHide").val()).find(".est").text($("#TextoEstadoNuevoHide").val());
-//                    $("#idEstadoHide").val($("#TextoEstadoNuevoHide").val());
-
+                    
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -443,8 +437,6 @@
 
         }
         ;
-
-
 
 
 
@@ -464,7 +456,7 @@
                                 <!--Combo para entidades-->
                                 <div class="form-group col-xs-3">
 
-                                    <input type="hidden" id="idEntidadRecargar" name="idFacturaRecargar">     
+                                    <input class="hidden" id="idEntidadRecargar" name="idFacturaRecargar">     
 
                                     <label for="comboEntidad"> Entidad Distinct code </label>
                                     <div class="form-group-combo">                                        
@@ -495,11 +487,11 @@
                                         <thead class="thead-dark">                                            
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Nº factura</th>
+                                                <th scope="col">Nº</th>
                                                 <th scope="col">Cliente</th>
                                                 <th scope="col">Empresa</th>
-                                                <th scope="col">Fecha Emisión</th>
-                                                <th scope="col">Fecha Vencimiento</th>
+                                                <th scope="col">F. Emisión</th>
+                                                <th scope="col">F. Vencimiento</th>
                                                 <th scope="col">Total</th>
                                                 <th scope="col">Estado</th>
                                                 <th scope="col">Detalle</th>

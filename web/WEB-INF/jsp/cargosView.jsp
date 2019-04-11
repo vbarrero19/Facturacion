@@ -14,7 +14,7 @@
             .container {
                 width: 1200px;
             }
-            
+
             .azul{
                 color:blue;
             }
@@ -484,7 +484,7 @@
                     /*en la url le pasamos como parametro el identificador del item*/
                     url: '/Facturacion/cargosController/verCostes.htm?idItem=' + idItem,
                     success: function (data) {
-                       
+
                         //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
                         var aux = JSON.parse(data);
                         $('#tbody-tabla-costes').empty();
@@ -501,7 +501,7 @@
                         });
 
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {                        
+                    error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
                         console.log(xhr.responseText);
                         console.log(thrownError);
@@ -1193,14 +1193,9 @@
                                 </div>
                             </div>
 
-
-                            <!--<button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>-->
-
-                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary pull-right">Guardar</button>
-
                             <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-
-
+                            <a href="<c:url value='/cargosSinController/start.htm'/>" class="btn btn-success" role="button">Cargos sin Item</a>
+                            <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-warning pull-right">Guardar</button>
 
                         </form>
                     </div>

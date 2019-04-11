@@ -170,7 +170,18 @@
                 }
 
                 var myObj = {};
-                myObj["id_item"] = $("#id_item").val().trim();
+
+                //Codigo para recuperar los costes de un item
+                //Creamos el array donde guardaremos los datos
+                var arrayOption = [];
+
+                $("#tableContainer tbody>tr option:checked").each(function (index) {
+                    arrayOption.push(this.value + "-" + $("#tableContainer tbody>tr input").eq(index).val());
+                });
+
+                //alert(arrayOption);
+
+                myObj["id_item"] = 00; //$("#id_item").val().trim();
                 myObj["abreviatura"] = $("#abreviatura").val().trim();
                 myObj["descripcion"] = $("#descripcion").val().trim();
 
@@ -236,13 +247,18 @@
 
                 myObj["valor_impuesto"] = $("#valorImpuesto").val().trim();
                 myObj["periodicidad"] = $("input[name=exampleRadios]:checked").val();
-                myObj["costes"] = $("#costes").val().trim();
 
+
+                if ($("input[name=radioCostes]:checked").val() == "Si") {
+                    myObj["costes"] = arrayOption.toString();
+                } else {
+                    myObj["costes"] = "No";
+                }
 
                 var json = JSON.stringify(myObj);
                 $.ajax({
                     type: 'POST',
-                    url: '/Facturacion/cargosController/nuevoCargo.htm',
+                    url: '/Facturacion/cargosSinController/nuevoCargoSin.htm',
                     data: json,
                     datatype: "json",
                     contentType: "application/json",
@@ -318,7 +334,6 @@
 
             });
 
-
             //Se ejecuta al cambiar el contenido del importe
             $("#importe").keyup(function () {
                 //Si la opcion seleccionada en comboItems es diferente a "Seleccionar" se muestran datos
@@ -344,57 +359,7 @@
                     //Llamamos a la funcion calcularTotal() que calcula el total del cargo
                     calcularTotal();
                 }
-            });
-
-            //Muestra una ventana emergente con los costes del item
-            $("#botonCostes").click(function () {
-
-//                $("#abreviaturaItem").text("Costes del item: " + $("#abreviatura").val());
-//
-//                idItem = $("#id_item").val();
-//
-//                if (window.XMLHttpRequest) //mozilla
-//                {
-//                    ajax = new XMLHttpRequest(); //No Internet explorer
-//                } else
-//                {
-//                    ajax = new ActiveXObject("Microsoft.XMLHTTP");
-//                }
-//
-//                $.ajax({
-//                    //Usamos GET ya que recibimos.
-//                    type: 'GET',
-//                    /*en la url le pasamos como parametro el identificador del item*/
-//                    url: '/Facturacion/cargosController/verCostes.htm?idItem=' + idItem,
-//                    success: function (data) {
-//
-//                        //Recogemos los datos del combo y los pasamos a objetos TipoImpuesto  
-//                        var aux = JSON.parse(data);
-//                        $('#tbody-tabla-costes').empty();
-//
-//                        var table = $('#table table-striped').DataTable();
-//                        aux.forEach(function (valor, indice) {
-//                            //Cada objeto esta en String 
-//                            var aux2 = JSON.parse(valor);
-//
-//                            $('#tbody-tabla-costes').append(" <tr>\n\   \n\
-//                                                                    <td id='id" + (indice + 1) + "'>" + aux2.col2 + "'</td>         \n\
-//                                                                    <td>" + aux2.col3 + "</td>\n\
-//                                                               </tr>");
-//                        });
-//
-//                    },
-//                    error: function (xhr, ajaxOptions, thrownError) {
-//                        console.log(xhr.status);
-//                        console.log(xhr.responseText);
-//                        console.log(thrownError);
-//                    }
-//                });
-//
-//                /*Una vez guardados los datos en los campos ocultos, mostramos el modal con los datos*/
-//                $("#myModalCostes").modal();
-
-            });
+            });   
 
         });
 
@@ -776,7 +741,8 @@
             });
 
             $("#importe").val(cant);
-
+            $("#importe").keyup();
+            
         }
         ;
 
@@ -916,11 +882,11 @@
                                     <div class="form_radio_button">
 
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioCostes" id="radioCostes1" value="1" checked>
+                                            <input class="form-check-input" type="radio" name="radioCostes" id="radioCostes1" value="No" checked>
                                             <label class="form-check-label" for="2">Sin costes</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radioCostes" id="radioCostes2" value="2">
+                                            <input class="form-check-input" type="radio" name="radioCostes" id="radioCostes2" value="Si">
                                             <label class="form-check-label" for="1">Con costes</label>
                                         </div>
                                     </div>
@@ -1040,7 +1006,9 @@
                             <div class="botonera">
 
                                 <a href="<c:url value='/MenuController/start.htm'/>" class="btn btn-info" role="button">Menu principal</a> 
-                                <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-primary">Guardar</button>
+                                <a href="<c:url value='/cargosController/start.htm'/>" class="btn btn-success" role="button">Cargos con Item</a> 
+                                
+                                <button type="button" id="grabarCargos" name="grabarCargos" class="btn btn-warning pull-right">Guardar</button>
 
                             </div>
 
